@@ -1,0 +1,38 @@
+.pokemonsContainer {
+  display: grid;
+  grid-template-columns: 2fr 3fr 3fr;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  box-shadow: var(--shadow-3);
+}
+
+.pokemon {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  gap: 20px;
+}
+
+.titleName {
+  grid-area: titleName;
+}
+
+.titleDescription {
+  grid-area: titleDescription;
+}
+
+.name,
+.description {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  display: flex;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+}

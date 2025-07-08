@@ -1,0 +1,11 @@
+.resultContainer {
+  display: grid;
+  align-items: center;
+  grid-template:
+    'titleName titleDescription titleImage' auto
+    / 2fr 3fr 3fr;
+  gap: 20px;
+  box-shadow: var(--shadow-3);
+  width: 100%;
+  padding: 20px;
+}
