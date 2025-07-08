@@ -15,8 +15,7 @@
   "dependencies": {
     "eslint-plugin-unicorn": "^59.0.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "stylelint": "^16.21.1"
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
@@ -42,6 +41,11 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "3.6.2",
+    "sass": "^1.89.2",
+    "stylelint": "^14.16.1",
+    "stylelint-config-prettier": "^9.0.5",
+    "stylelint-config-standard-scss": "^6.0.0",
+    "stylelint-scss": "^4.3.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0",
@@ -57,6 +61,10 @@
       "prettier --write"
     ],
     "*.css": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.scss": [
       "stylelint --fix",
       "prettier --write"
     ]
