@@ -74,6 +74,7 @@ export default tseslint
         '@typescript-eslint/member-ordering': 'error',
         '@typescript-eslint/no-misused-promises': 'off',
         '@typescript-eslint/no-unsafe-enum-comparison': 'off',
+        '@typescript-eslint/no-unsafe-return': 'off',
         'class-methods-use-this': 'off',
         'unicorn/max-func-body-length': 'off',
         'unicorn/no-empty-file': 'off',

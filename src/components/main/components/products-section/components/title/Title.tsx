@@ -5,11 +5,11 @@ import { messages } from './messages';
 export class Title extends Component {
   public render() {
     return (
-      <div className={styles.resultContainer}>
+      <h4 className={styles.resultContainer}>
         <p className={styles.titleName}>{messages.titleName}</p>
         <p className={styles.titleDescription}>{messages.titleDescription}</p>
         <p className={styles.titleImage}>{messages.titleImage}</p>
-      </div>
+      </h4>
     );
   }
 }

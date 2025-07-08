@@ -1,26 +1,22 @@
 import { Component } from 'react';
-import styles from './Pokemons.module.scss';
-import { fetchPokemonData } from '@/api/fetchPokemonData';
+import styles from './PokemonsCards.module.scss';
 import type { PokemonData } from '@/sources/types';
 import { messages } from './messages';
 
-export class Pokemons extends Component {
-  public state = {
-    pokemons: [],
-  };
+interface Props {
+  pokemons: PokemonData[];
+}
 
-  public componentDidMount(): void {
-    void fetchPokemonData((pokemons: PokemonData[]) => {
-      this.setState({ pokemons });
-    });
+export class PokemonsCards extends Component<Props> {
+  constructor(props: Props) {
+    super(props);
   }
 
   public render() {
-    const { pokemons } = this.state;
+    const { pokemons } = this.props;
 
     return (
-      <div className={styles.pokemonsContainer}>
-        {pokemons.length === 0 && <p>{messages.emptyList}</p>}
+      <>
         {pokemons.map((pokemon: PokemonData) => (
           <div key={pokemon.id} className={styles.pokemon}>
             <div className={styles.name}>
@@ -34,14 +30,14 @@ export class Pokemons extends Component {
             </div>
             <div className={styles.image}>
               <img
-                src={pokemon.image?.front_default || messages.titleNotImg}
+                src={pokemon.image?.front_default || ''}
                 alt={pokemon.name}
                 className={styles.img}
               />
             </div>
           </div>
         ))}
-      </div>
+      </>
     );
   }
 }

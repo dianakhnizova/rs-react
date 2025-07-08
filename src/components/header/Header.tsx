@@ -5,9 +5,9 @@ import { messages } from './messages';
 export class Header extends Component {
   public render() {
     return (
-      <div className={styles.container}>
-        <p>{messages.appTitle}</p>
-      </div>
+      <header className={styles.container}>
+        <h3>{messages.appTitle}</h3>
+      </header>
     );
   }
 }
