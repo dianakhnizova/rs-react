@@ -1,7 +1,8 @@
-import './App.css';
+import { Component } from 'react';
+import { HomePage } from './pages/home-page/HomePage';
 
-function App() {
-  return <h2>Init project</h2>;
+export class App extends Component {
+  public render() {
+    return <HomePage />;
+  }
 }
-
-export default App;

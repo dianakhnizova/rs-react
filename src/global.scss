@@ -1,0 +1,49 @@
+@import 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap';
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+:root {
+  --ff-base: 'Poppins', sans-serif;
+  --clr-disabled-100: #cacaca;
+  --clr-disabled-300: #a0a0a0;
+  --clr-disabled-600: #5f5f5f;
+  --clr-error-1: #f00;
+  --clr-bg-1: #000;
+  --clr-line: #fff;
+  --shadow-1: rgb(0 0 0 / 16%) 0 1px 4px;
+  --shadow-2: rgb(0 0 0 / 5%) 0 6px 24px 0, rgb(0 0 0 / 8%) 0 0 0 1px;
+}
+
+html,
+body {
+  font-family: var(--ff-base);
+  color: var(--clr-line);
+  background-color: var(--clr-bg-1);
+  min-height: 100vh;
+}
+
+@media (hover: hover) {
+  a {
+    cursor: pointer;
+  }
+}
