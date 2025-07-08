@@ -1,11 +1,12 @@
 import { Component } from 'react';
 import styles from './Header.module.scss';
+import { messages } from './messages';
 
 export class Header extends Component {
   public render() {
     return (
       <div className={styles.container}>
-        <h2>Header</h2>
+        <p>{messages.appTitle}</p>
       </div>
     );
   }
