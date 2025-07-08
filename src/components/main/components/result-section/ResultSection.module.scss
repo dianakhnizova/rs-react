@@ -4,18 +4,15 @@
   align-items: flex-end;
   width: 90%;
   padding: 60px;
-  gap: 40px;
+  gap: 20px;
 }
 
 .resultContainer {
   display: grid;
   align-items: center;
   grid-template:
-    'titleName titleDescription titleImage'
-    'divider divider divider'
-    'name description image';
-  grid-template-columns: 2fr 3fr 3fr;
-  grid-template-rows: auto;
+    'titleName titleDescription titleImage' auto
+    / 2fr 3fr 3fr;
   gap: 20px;
   box-shadow: var(--shadow-3);
   width: 100%;
@@ -26,6 +23,23 @@
   grid-area: divider;
   border: 1px solid var(--clr-line);
   height: 1px;
+  width: 100%;
+}
+
+.pokemonsContainer {
+  display: grid;
+  grid-template-columns: 2fr 3fr 3fr;
+  gap: 20px;
+  width: 100%;
+  padding: 20px;
+  box-shadow: var(--shadow-3);
+}
+
+.pokemon {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  gap: 20px;
 }
 
 .titleName {
@@ -36,16 +50,19 @@
   grid-area: titleDescription;
 }
 
-.name {
-  grid-area: name;
-}
-
+.name,
 .description {
-  grid-area: description;
+  display: flex;
+  align-items: center;
 }
 
 .image {
-  grid-area: image;
+  display: flex;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
 }
 
 .button {

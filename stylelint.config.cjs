@@ -1,8 +1,5 @@
 module.exports = {
-  extends: [
-    'stylelint-config-standard-scss', 
-    'stylelint-config-prettier' 
-  ],
+  extends: ['stylelint-config-standard-scss', 'stylelint-config-prettier'],
   plugins: ['stylelint-scss'],
   rules: {
     'color-hex-length': 'short',
@@ -11,11 +8,11 @@ module.exports = {
     'selector-id-pattern': '^[a-z][a-zA-Z0-9]*$',
     'selector-pseudo-class-no-unknown': [
       true,
-      { ignorePseudoClasses: ['global'] }
+      { ignorePseudoClasses: ['global'] },
     ],
 
     'at-rule-no-unknown': null,
-    'scss/at-rule-no-unknown': true
+    'scss/at-rule-no-unknown': true,
   },
-  ignoreFiles: ['**/node_modules/**', '**/dist/**']
+  ignoreFiles: ['**/node_modules/**', '**/dist/**'],
 };

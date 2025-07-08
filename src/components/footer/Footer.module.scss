@@ -4,4 +4,7 @@
   justify-content: center;
   padding: 1rem;
   box-shadow: var(--shadow-2);
+  position: sticky;
+  bottom: 0;
+  background-color: var(--clr-bg-1);
 }

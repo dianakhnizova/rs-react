@@ -3,4 +3,7 @@ export const messages = {
   titleDescription: 'Description',
   titleImage: 'Image',
   errorButton: 'Error',
+  titleNotDescription: 'Notmdescription',
+  emptyList: 'Not datas for you',
+  notImgTitle: 'Not image',
 };
