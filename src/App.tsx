@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import { HomePage } from './pages/home-page/HomePage';
 import { Header } from './components/header/Header';
+import { Main } from './pages/main/Main';
 import { Footer } from './components/footer/Footer';
 import styles from './App.module.scss';
 
@@ -9,7 +9,7 @@ export class App extends Component {
     return (
       <div className={styles.root}>
         <Header />
-        <HomePage />
+        <Main />
         <Footer />
       </div>
     );

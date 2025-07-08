@@ -1,11 +1,11 @@
 import { Component } from 'react';
-import styles from './HomePage.module.scss';
+import styles from './Main.module.scss';
 
-export class HomePage extends Component {
+export class Main extends Component {
   public render() {
     return (
       <div className={styles.container}>
-        <h2>Home Page</h2>
+        <h2>Main</h2>
       </div>
     );
   }
