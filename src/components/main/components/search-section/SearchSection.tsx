@@ -3,23 +3,18 @@ import styles from './SearchSection.module.scss';
 import { messages } from './messages';
 
 interface Props {
+  searchInput: string;
   onSearch: (value: string) => void;
 }
 
 export class SearchSection extends Component<Props> {
-  public state = {
-    searchInput: '',
-  };
-
   public handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    this.setState({ searchInput: value });
-
     this.props.onSearch(value);
   };
 
-  public handleSearchQuery = () => {
-    this.props.onSearch(this.state.searchInput);
+  public handleSearchClick = () => {
+    this.props.onSearch(this.props.searchInput);
   };
 
   public render() {
@@ -28,11 +23,11 @@ export class SearchSection extends Component<Props> {
         <input
           onChange={this.handleInputChange}
           type="text"
-          value={this.state.searchInput}
+          value={this.props.searchInput}
           placeholder={messages.inputPlaceholder}
           className={styles.input}
         />
-        <button onClick={this.handleSearchQuery} className={styles.button}>
+        <button onClick={this.handleSearchClick} className={styles.button}>
           {messages.searchButton}
         </button>
       </div>

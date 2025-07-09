@@ -3,29 +3,29 @@ import styles from './PokemonsList.module.scss';
 import { fetchPokemonData } from '@/api/fetchPokemonData';
 import { messages } from './messages';
 import { PokemonsCards } from '../pokemons-cards/PokemonsCards';
-import { Spinner } from '@/components/spinner/Spinner';
-import { Popup } from '@/components/popup/Popup';
 
 interface Props {
   searchTerm: string;
+  setLoading: (value: boolean) => void;
 }
 
 export class PokemonsList extends Component<Props> {
   public state = {
     pokemons: [],
-    isLoading: false,
   };
 
   public async loadPokemons() {
-    this.setState({ isLoading: true });
+    console.log('Загрузка покемонов по запросу:', this.props.searchTerm);
+
+    this.props.setLoading(true);
 
     try {
       const pokemons = await fetchPokemonData(this.props.searchTerm);
       this.setState({ pokemons });
-    } catch (error) {
-      console.error('Ошибка загрузки покемонов', error);
+    } catch {
+      console.log('error');
     } finally {
-      this.setState({ isLoading: false });
+      this.props.setLoading(false);
     }
   }
 
@@ -39,19 +39,11 @@ export class PokemonsList extends Component<Props> {
     }
   }
 
-  public onClose = () => {
-    this.setState({ isLoading: false });
-  };
-
   public render() {
-    const { pokemons, isLoading } = this.state;
+    const { pokemons } = this.state;
 
     return (
       <>
-        <Popup isLoading={isLoading} onClose={this.onClose}>
-          <Spinner isLoading={isLoading} />
-        </Popup>
-
         {pokemons.length === 0 ? (
           <p className={styles.title}>{messages.emptyList}</p>
         ) : (

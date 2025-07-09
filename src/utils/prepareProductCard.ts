@@ -8,9 +8,11 @@ export const prepareProductCard = async (
   await new Promise(res => setTimeout(res, 2000));
 
   const pokemons = await pokemonService.getPokemonsList();
-  const searchedPokemons = pokemons.filter((pokemon: { name: string }) =>
-    pokemon.name.toLowerCase().includes(searchTerm.toLowerCase().trim())
-  );
+  const searchedPokemons = searchTerm
+    ? pokemons.filter((pokemon: { name: string }) =>
+        pokemon.name.toLowerCase().includes(searchTerm.toLowerCase().trim())
+      )
+    : pokemons;
 
   const promises = searchedPokemons.map(
     async (pokemon: { name: string; url: string }) => {

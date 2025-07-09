@@ -6,6 +6,7 @@ import { PokemonsList } from './components/pokemons-list/PokemonsList';
 
 interface Props {
   searchTerm: string;
+  setLoading: (value: boolean) => void;
 }
 
 export class ProductsSection extends Component<Props> {
@@ -14,7 +15,10 @@ export class ProductsSection extends Component<Props> {
       <div className={styles.container}>
         <Title />
         <div className={styles.gridDivider} />
-        <PokemonsList searchTerm={this.props.searchTerm} />
+        <PokemonsList
+          setLoading={this.props.setLoading}
+          searchTerm={this.props.searchTerm}
+        />
         <button className={styles.button}>{messages.errorButton}</button>
       </div>
     );
