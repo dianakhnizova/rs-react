@@ -3,6 +3,8 @@ import type { PokemonData } from '@/sources/types';
 import { messages } from '@/sources/messages';
 
 export const prepareProductCard = async (): Promise<PokemonData[]> => {
+  await new Promise(res => setTimeout(res, 2000));
+
   const pokemons = await pokemonServices.getPokemonsList();
 
   const promises = pokemons.map(

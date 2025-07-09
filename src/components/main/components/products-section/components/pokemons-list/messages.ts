@@ -1,3 +1,3 @@
 export const messages = {
-  emptyList: 'Not datas for you',
+  emptyList: 'No pokemons for you',
 };

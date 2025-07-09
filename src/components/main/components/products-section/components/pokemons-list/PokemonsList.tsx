@@ -3,33 +3,53 @@ import styles from './PokemonsList.module.scss';
 import { fetchPokemonData } from '@/api/fetchPokemonData';
 import { messages } from './messages';
 import { PokemonsCards } from '../pokemons-cards/PokemonsCards';
+import { Spinner } from '@/components/spinner/Spinner';
+import { Popup } from '@/components/popup/Popup';
 
 export class PokemonsList extends Component {
   public state = {
     pokemons: [],
+    isLoading: false,
   };
 
   public async loadPokemons() {
+    this.setState({ isLoading: true });
+
     try {
       const pokemons = await fetchPokemonData();
       this.setState({ pokemons });
     } catch (error) {
       console.error('Ошибка загрузки покемонов', error);
+    } finally {
+      this.setState({ isLoading: false });
     }
   }
+
+  public onClose = () => {
+    this.setState({ isLoading: false });
+  };
 
   public componentDidMount(): void {
     void this.loadPokemons();
   }
 
   public render() {
-    const { pokemons } = this.state;
+    const { pokemons, isLoading } = this.state;
 
     return (
-      <ul className={styles.pokemonsContainer}>
-        {pokemons.length === 0 && <p>{messages.emptyList}</p>}
-        <PokemonsCards pokemons={pokemons} />
-      </ul>
+      <>
+        <Popup isLoading={isLoading} onClose={this.onClose}>
+          <Spinner isLoading={isLoading} />
+        </Popup>
+
+        {pokemons.length === 0 ? (
+          <p className={styles.title}>{messages.emptyList}</p>
+        ) : (
+          <ul className={styles.pokemonsContainer}>
+            <PokemonsCards pokemons={pokemons} />
+          </ul>
+        )}
+      </>
     );
   }
 }

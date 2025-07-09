@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.image {
+  width: 40%;
+}
+
+.loadingTitle {
+  font-size: 14px;
+  font-weight: 200;
+}
