@@ -1,7 +1,7 @@
 import { BASE_URL, POKEMON_URL } from '@/sources/constants';
 import { baseApi } from '../axios';
 
-export const pokemonServices = {
+export const pokemonService = {
   getPokemonsList: async () => {
     const responsePokemonsList = await baseApi.get(BASE_URL);
     const pokemonList = responsePokemonsList.data.results;

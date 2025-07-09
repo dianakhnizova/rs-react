@@ -1,4 +1,4 @@
 export const messages = {
-  inputPlaceholder: 'Type',
+  inputPlaceholder: 'Search',
   searchButton: 'Search',
 };

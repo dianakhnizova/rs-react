@@ -1,17 +1,22 @@
-import { pokemonServices } from '@/api/services/pokemonServices';
+import { pokemonService } from '@/api/services/pokemonService';
 import type { PokemonData } from '@/sources/types';
 import { messages } from '@/sources/messages';
 
-export const prepareProductCard = async (): Promise<PokemonData[]> => {
+export const prepareProductCard = async (
+  searchTerm: string
+): Promise<PokemonData[]> => {
   await new Promise(res => setTimeout(res, 2000));
 
-  const pokemons = await pokemonServices.getPokemonsList();
+  const pokemons = await pokemonService.getPokemonsList();
+  const searchedPokemons = pokemons.filter((pokemon: { name: string }) =>
+    pokemon.name.toLowerCase().includes(searchTerm.toLowerCase().trim())
+  );
 
-  const promises = pokemons.map(
+  const promises = searchedPokemons.map(
     async (pokemon: { name: string; url: string }) => {
       try {
         const { pokemonUrl, pokemonImage } =
-          await pokemonServices.getPokemon(pokemon);
+          await pokemonService.getPokemon(pokemon);
 
         const id = pokemonUrl.id;
         const name =

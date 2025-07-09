@@ -6,7 +6,11 @@ import { PokemonsCards } from '../pokemons-cards/PokemonsCards';
 import { Spinner } from '@/components/spinner/Spinner';
 import { Popup } from '@/components/popup/Popup';
 
-export class PokemonsList extends Component {
+interface Props {
+  searchTerm: string;
+}
+
+export class PokemonsList extends Component<Props> {
   public state = {
     pokemons: [],
     isLoading: false,
@@ -16,7 +20,7 @@ export class PokemonsList extends Component {
     this.setState({ isLoading: true });
 
     try {
-      const pokemons = await fetchPokemonData();
+      const pokemons = await fetchPokemonData(this.props.searchTerm);
       this.setState({ pokemons });
     } catch (error) {
       console.error('Ошибка загрузки покемонов', error);
@@ -25,13 +29,19 @@ export class PokemonsList extends Component {
     }
   }
 
-  public onClose = () => {
-    this.setState({ isLoading: false });
-  };
-
   public componentDidMount(): void {
     void this.loadPokemons();
   }
+
+  public componentDidUpdate(prevProps: Props): void {
+    if (prevProps.searchTerm !== this.props.searchTerm) {
+      void this.loadPokemons();
+    }
+  }
+
+  public onClose = () => {
+    this.setState({ isLoading: false });
+  };
 
   public render() {
     const { pokemons, isLoading } = this.state;
