@@ -3,6 +3,7 @@ import styles from './PokemonsList.module.scss';
 import { fetchPokemonData } from '@/api/fetchPokemonData';
 import { messages } from './messages';
 import { PokemonsCards } from '../pokemons-cards/PokemonsCards';
+import type { PokemonData } from '@/sources/types';
 
 interface Props {
   searchTerm: string;
@@ -15,8 +16,6 @@ export class PokemonsList extends Component<Props> {
   };
 
   public async loadPokemons() {
-    console.log('Загрузка покемонов по запросу:', this.props.searchTerm);
-
     this.props.setLoading(true);
 
     try {
@@ -48,7 +47,14 @@ export class PokemonsList extends Component<Props> {
           <p className={styles.title}>{messages.emptyList}</p>
         ) : (
           <ul className={styles.pokemonsContainer}>
-            <PokemonsCards pokemons={pokemons} />
+            {pokemons.map((pokemon: PokemonData) => (
+              <PokemonsCards
+                key={pokemon.id}
+                name={pokemon.name}
+                description={pokemon.description}
+                image={pokemon.image}
+              />
+            ))}
           </ul>
         )}
       </>

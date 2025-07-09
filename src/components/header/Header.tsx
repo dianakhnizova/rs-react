@@ -6,7 +6,7 @@ export class Header extends Component {
   public render() {
     return (
       <header className={styles.container}>
-        <h3>{messages.appTitle}</h3>
+        <h1 className={styles.title}>{messages.appTitle}</h1>
       </header>
     );
   }

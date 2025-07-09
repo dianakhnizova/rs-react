@@ -6,7 +6,7 @@ export class Footer extends Component {
   public render() {
     return (
       <footer className={styles.container}>
-        <h3>{messages.bottomTitle}</h3>
+        <p>{messages.bottomTitle}</p>
       </footer>
     );
   }
