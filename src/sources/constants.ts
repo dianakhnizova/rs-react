@@ -1,4 +1,4 @@
-const BASE_URL = 'https://pokeapi.co/api/v2/pokemon-species';
-const POKEMON_URL = 'https://pokeapi.co/api/v2/pokemon';
+const BOOKS_API_KEY = 'AIzaSyAPtAQ26aRgcWR2jK2adRfGoT6zqsYPqdc';
+const BOOKS_API_URL = 'https://www.googleapis.com/books/v1/volumes';
 
-export { BASE_URL, POKEMON_URL };
+export { BOOKS_API_KEY, BOOKS_API_URL };

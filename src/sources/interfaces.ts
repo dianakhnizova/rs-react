@@ -1,17 +1,14 @@
-import type { FlavorTextEntries } from './types';
-
-export interface IPokemonResponse {
-  id: number;
-  name: string;
-  sprites: {
-    front_default: string;
+export interface IBookItemResponse {
+  id: string;
+  volumeInfo: {
+    title: string;
+    description?: string;
+    imageLinks?: {
+      thumbnail?: string;
+    };
   };
 }
 
-export interface IPokemonDescriptionResponse {
-  flavor_text_entries: FlavorTextEntries[];
-}
-
-export interface IPokemonListResponse {
-  results: { name: string; url: string }[];
+export interface IBooksListResponse {
+  items: IBookItemResponse[];
 }

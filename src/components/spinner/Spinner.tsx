@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import styles from './Spinner.module.scss';
 import { messages } from './messages';
-import SpinnerImage from '@/assets/pokemon.png';
+import BookImage from '@/assets/book.png';
 
 interface Props {
   isLoading: boolean;
@@ -19,7 +19,7 @@ export class Spinner extends Component<Props> {
     return (
       <div className={styles.container}>
         <img
-          src={SpinnerImage}
+          src={BookImage}
           alt={messages.titleSpinner}
           className={styles.image}
         />

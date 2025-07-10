@@ -1,3 +1,3 @@
 export const messages = {
-  appTitle: 'Class Components',
+  appTitle: 'Your Library',
 };

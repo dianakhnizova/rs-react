@@ -8,6 +8,7 @@ interface Props {
 }
 
 export class SearchSection extends Component<Props> {
+  public state = {};
   public handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     this.props.onSearch(value);

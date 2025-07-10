@@ -1,8 +1,9 @@
-.pokemon {
+.book {
   display: grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
   gap: 20px;
+  width: 100%;
 }
 
 .titleName {
@@ -14,16 +15,25 @@
 }
 
 .name,
-.description {
-  display: flex;
-  align-items: center;
-}
-
+.description,
 .image {
   display: flex;
+  width: 100%;
 
   img {
     width: 100px;
-    height: 100px;
+    height: 140px;
+  }
+}
+
+@media (max-width: 800px) {
+  .image {
+    display: flex;
+    width: 100%;
+
+    img {
+      width: 50px;
+      height: 90px;
+    }
   }
 }

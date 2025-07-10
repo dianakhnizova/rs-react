@@ -1,4 +1,9 @@
-import { BASE_URL } from '@/sources/constants';
+import { BOOKS_API_URL } from '@/sources/constants';
 import axios from 'axios';
 
-export const baseApi = axios.create({ baseURL: BASE_URL });
+export const booksApi = axios.create({
+  baseURL: BOOKS_API_URL,
+  headers: {
+    'Accept-Language': 'en',
+  },
+});
