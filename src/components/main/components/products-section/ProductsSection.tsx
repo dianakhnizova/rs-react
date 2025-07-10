@@ -1,6 +1,5 @@
 import { Component } from 'react';
 import styles from './ProductsSection.module.scss';
-import { messages } from './messages';
 import { Title } from './components/title/Title';
 import { BooksList } from './components/books-list/BooksList';
 
@@ -19,7 +18,6 @@ export class ProductsSection extends Component<Props> {
           setLoading={this.props.setLoading}
           searchTerm={this.props.searchTerm}
         />
-        <button className={styles.button}>{messages.errorButton}</button>
       </div>
     );
   }

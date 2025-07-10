@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--shadow-2);
+  gap: 40px;
+  width: 50%;
+  padding: 40px;
+}
+
+.titleMain {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--clr-error-1);
+}
+
+.titleError {
+  font-size: 16px;
+  font-weight: 200;
+  color: var(--clr-error-1);
+}

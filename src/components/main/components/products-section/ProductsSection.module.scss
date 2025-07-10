@@ -13,16 +13,3 @@
   height: 1px;
   width: 100%;
 }
-
-.button {
-  background-color: var(--clr-line);
-  color: var(--clr-bg-1);
-  cursor: pointer;
-  box-shadow: var(--shadow-1);
-  transition: all 0.2s ease;
-  font-family: var(--ff-base);
-  border: 1px solid transparent;
-  border-radius: 5px;
-  padding: 3px 40px;
-  align-items: center;
-}

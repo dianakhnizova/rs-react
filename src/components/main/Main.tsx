@@ -4,11 +4,13 @@ import { SearchSection } from './components/search-section/SearchSection';
 import { ProductsSection } from './components/products-section/ProductsSection';
 import { Popup } from '../popup/Popup';
 import { Spinner } from '../spinner/Spinner';
+import { messages } from './messages';
 
 export class Main extends Component {
   public state = {
     searchTerm: localStorage.getItem('searchTerm') || '',
     isLoading: false,
+    simulateError: false,
   };
 
   public handleSearchQuery = (searchTerm: string) => {
@@ -24,7 +26,15 @@ export class Main extends Component {
     this.setState({ isLoading: false });
   };
 
+  public errorClick = () => {
+    this.setState({ simulateError: true });
+  };
+
   public render() {
+    if (this.state.simulateError) {
+      throw new Error('Test render error');
+    }
+
     return (
       <section className={styles.container}>
         <Popup isLoading={this.state.isLoading} onClose={this.onClose}>
@@ -39,6 +49,10 @@ export class Main extends Component {
           setLoading={this.setLoading}
           searchTerm={this.state.searchTerm}
         />
+
+        <button onClick={this.errorClick} className={styles.button}>
+          {messages.errorButton}
+        </button>
       </section>
     );
   }
