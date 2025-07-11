@@ -1,17 +1,24 @@
 import { Component } from 'react';
 import styles from './BooksList.module.scss';
-import { messages } from './messages';
+import { messages } from '@/sources/messages';
 import { BookCard } from '../books-cards/BookCard';
 import type { BookData } from '@/sources/types';
 import { fetchBooksData } from '@/api/fetchBooksData';
 
+interface State {
+  books: BookData[];
+}
+
 interface Props {
   searchTerm: string;
   setLoading: (value: boolean) => void;
+  onClose: () => void;
+  isLoading: boolean;
+  setError: (message: string) => void;
 }
 
 export class BooksList extends Component<Props> {
-  public state = {
+  public state: State = {
     books: [],
   };
 
@@ -21,8 +28,10 @@ export class BooksList extends Component<Props> {
     try {
       const books = await fetchBooksData(this.props.searchTerm);
       this.setState({ books });
-    } catch {
-      console.log('error');
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : messages.errorMessage;
+      this.props.setError(message);
     } finally {
       this.props.setLoading(false);
     }

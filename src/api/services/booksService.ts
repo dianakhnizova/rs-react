@@ -4,8 +4,10 @@ import type {
 } from '@/sources/interfaces';
 import type { BookData } from '@/sources/types';
 import type { AxiosResponse } from 'axios';
+import { AxiosError } from 'axios';
 import { booksApi } from '../axios';
 import { BOOKS_API_KEY } from '@/sources/constants';
+import { messages } from '@/sources/messages';
 
 export const bookService = {
   getBookById: async (bookId: string): Promise<BookData> => {
@@ -21,14 +23,12 @@ export const bookService = {
         description: book.volumeInfo.description || '',
         image: book.volumeInfo.imageLinks?.thumbnail || '',
       };
-    } catch {
-      console.log('error');
-      return {
-        id: bookId,
-        title: '',
-        description: '',
-        image: '',
-      };
+    } catch (error: unknown) {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data?.error?.message || error.message
+          : messages.errorMessage;
+      throw new Error(message);
     }
   },
 
@@ -57,9 +57,12 @@ export const bookService = {
         }));
 
       return booksList;
-    } catch {
-      console.log('error');
-      return [];
+    } catch (error: unknown) {
+      const message =
+        error instanceof AxiosError
+          ? error.response?.data?.error?.message || error.message
+          : messages.errorMessage;
+      throw new Error(message);
     }
   },
 };

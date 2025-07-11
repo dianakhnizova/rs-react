@@ -1,3 +1,4 @@
+import { messages } from '@/sources/messages';
 import { bookService } from './services/booksService';
 import { prepareBooksList } from '@/utils/prepareBooksList';
 
@@ -7,8 +8,9 @@ export const fetchBooksData = async (searchTerm: string) => {
     const booksList = prepareBooksList(books);
 
     return booksList;
-  } catch {
-    console.log('error');
-    return [];
+  } catch (error: unknown) {
+    const message =
+      error instanceof Error ? error.message : messages.errorMessage;
+    throw new Error(message);
   }
 };

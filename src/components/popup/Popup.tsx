@@ -2,9 +2,10 @@ import type { ReactNode } from 'react';
 import { Component } from 'react';
 import styles from './Popup.module.scss';
 import { messages } from './messages';
+import { Button } from '../button/button';
 
 interface Props {
-  isLoading: boolean;
+  isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
 }
@@ -15,19 +16,17 @@ export class Popup extends Component<Props> {
   }
 
   public render() {
-    const { isLoading, onClose, children } = this.props;
+    const { isOpen, onClose, children } = this.props;
 
     return (
       <>
-        {isLoading && (
+        {isOpen && (
           <>
             <div className={styles.overlay} onClick={onClose} />
 
             <div className={styles.container}>
               {children}
-              <button onClick={onClose} className={styles.button}>
-                {messages.closeButton}
-              </button>
+              <Button onClick={onClose}>{messages.closeButton}</Button>
             </div>
           </>
         )}

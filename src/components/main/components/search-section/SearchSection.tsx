@@ -1,21 +1,35 @@
 import React, { Component } from 'react';
 import styles from './SearchSection.module.scss';
 import { messages } from './messages';
+import { Button } from '@/components/button/button';
 
 interface Props {
-  searchInput: string;
   onSearch: (value: string) => void;
 }
 
+interface State {
+  searchInput: string;
+}
+
 export class SearchSection extends Component<Props> {
-  public state = {};
+  public state: State = {
+    searchInput: localStorage.getItem('searchInput') || '',
+  };
+
   public handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    this.props.onSearch(value);
+    this.setState({ searchInput: value });
   };
 
   public handleSearchClick = () => {
-    this.props.onSearch(this.props.searchInput);
+    localStorage.setItem('searchInput', this.state.searchInput);
+    this.props.onSearch(this.state.searchInput);
+  };
+
+  public handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      this.handleSearchClick();
+    }
   };
 
   public render() {
@@ -23,14 +37,16 @@ export class SearchSection extends Component<Props> {
       <div className={styles.container}>
         <input
           onChange={this.handleInputChange}
+          onKeyDown={this.handleKeyDown}
           type="text"
-          value={this.props.searchInput}
+          value={this.state.searchInput}
           placeholder={messages.inputPlaceholder}
           className={styles.input}
         />
-        <button onClick={this.handleSearchClick} className={styles.button}>
+
+        <Button onClick={this.handleSearchClick} className={styles.button}>
           {messages.searchButton}
-        </button>
+        </Button>
       </div>
     );
   }
