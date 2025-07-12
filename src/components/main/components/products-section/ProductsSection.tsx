@@ -8,7 +8,7 @@ interface Props {
   setLoading: (value: boolean) => void;
   onClose: () => void;
   isLoading: boolean;
-  setError: (maessge: string) => void;
+  setError: (message: string) => void;
 }
 
 export class ProductsSection extends Component<Props> {
@@ -17,13 +17,7 @@ export class ProductsSection extends Component<Props> {
       <div className={styles.container}>
         <ProductsHeader />
         <div className={styles.gridDivider} />
-        <BooksList
-          setLoading={this.props.setLoading}
-          searchTerm={this.props.searchTerm}
-          isLoading={this.props.isLoading}
-          onClose={this.props.onClose}
-          setError={this.props.setError}
-        />
+        <BooksList {...this.props} />
       </div>
     );
   }

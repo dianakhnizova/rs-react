@@ -2,6 +2,8 @@
   display: flex;
   gap: 40px;
   margin-top: 20px;
+  width: 90%;
+  padding: 0 200px;
 }
 
 .input {
@@ -10,4 +12,16 @@
   color: var(--clr-line);
   padding: 10px 40px;
   width: 90%;
+}
+
+@media (max-width: 800px) {
+  .input {
+    width: 100%;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
 }

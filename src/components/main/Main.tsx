@@ -5,7 +5,7 @@ import { ProductsSection } from './components/products-section/ProductsSection';
 import { Popup } from '../popup/Popup';
 import { Spinner } from '../spinner/Spinner';
 import { messages } from './messages';
-import { Button } from '../button/button';
+import { Button } from '../button/Button';
 
 interface State {
   searchTerm: string;

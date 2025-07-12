@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styles from './SearchSection.module.scss';
 import { messages } from './messages';
-import { Button } from '@/components/button/button';
+import { Button } from '@/components/button/Button';
 
 interface Props {
   onSearch: (value: string) => void;
@@ -26,18 +26,11 @@ export class SearchSection extends Component<Props> {
     this.props.onSearch(this.state.searchInput);
   };
 
-  public handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      this.handleSearchClick();
-    }
-  };
-
   public render() {
     return (
-      <div className={styles.container}>
+      <form className={styles.container}>
         <input
           onChange={this.handleInputChange}
-          onKeyDown={this.handleKeyDown}
           type="text"
           value={this.state.searchInput}
           placeholder={messages.inputPlaceholder}
@@ -47,7 +40,7 @@ export class SearchSection extends Component<Props> {
         <Button onClick={this.handleSearchClick} className={styles.button}>
           {messages.searchButton}
         </Button>
-      </div>
+      </form>
     );
   }
 }

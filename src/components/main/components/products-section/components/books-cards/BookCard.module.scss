@@ -18,10 +18,8 @@
 .description,
 .image {
   display: flex;
-  width: 100%;
 
   img {
-    width: 100px;
     height: 140px;
   }
 }
@@ -32,8 +30,14 @@
     width: 100%;
 
     img {
-      width: 50px;
-      height: 90px;
+      width: 40px;
+      height: 80px;
     }
+  }
+
+  .name,
+  .description,
+  .image {
+    font-size: 10px;
   }
 }

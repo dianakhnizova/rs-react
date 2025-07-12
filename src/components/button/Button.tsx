@@ -2,21 +2,14 @@ import { Component } from 'react';
 import styles from './Button.module.scss';
 import ClassNames from 'classnames';
 
-interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  onClick: () => void;
-  className?: string;
-}
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export class Button extends Component<Props> {
   public render() {
-    const { onClick, className, ...rest } = this.props;
+    const { className, ...rest } = this.props;
 
     return (
-      <button
-        onClick={onClick}
-        className={ClassNames(styles.button, className)}
-        {...rest}
-      />
+      <button className={ClassNames(styles.button, className)} {...rest} />
     );
   }
 }

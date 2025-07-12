@@ -12,3 +12,9 @@
 .error {
   color: var(--clr-error-1);
 }
+
+@media (max-width: 800px) {
+  .container {
+    padding: 10px;
+  }
+}

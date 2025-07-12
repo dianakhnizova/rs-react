@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { Component } from 'react';
 import styles from './Popup.module.scss';
 import { messages } from './messages';
-import { Button } from '../button/button';
+import { Button } from '../button/Button';
 
 interface Props {
   isOpen: boolean;
