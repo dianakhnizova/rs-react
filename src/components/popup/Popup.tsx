@@ -11,10 +11,6 @@ interface Props {
 }
 
 export class Popup extends Component<Props> {
-  constructor(props: Props) {
-    super(props);
-  }
-
   public render() {
     const { isOpen, onClose, children } = this.props;
 

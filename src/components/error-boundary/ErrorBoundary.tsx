@@ -2,7 +2,7 @@ import type { ErrorInfo, ReactNode } from 'react';
 import { Component } from 'react';
 import styles from './ErrorBoundary.module.css';
 import { messages } from './messages';
-import { Button } from '../button/Button';
+import { Popup } from '../popup/Popup';
 
 interface Props {
   children: ReactNode;
@@ -38,14 +38,12 @@ export class ErrorBoundary extends Component<Props> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className={styles.container}>
+        <Popup isOpen={this.state.hasError} onClose={this.handleReset}>
           <h2 className={styles.titleMain}>{messages.titleBoundaryError}</h2>
           <p className={styles.titleError}>
             {this.state.errorMessage || messages.reloadTitle}
           </p>
-
-          <Button onClick={this.handleReset}>{messages.closeButton}</Button>
-        </div>
+        </Popup>
       );
     }
     return this.props.children;
