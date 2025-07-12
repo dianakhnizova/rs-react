@@ -1,0 +1,43 @@
+.book {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  gap: 20px;
+  width: 100%;
+}
+
+.titleName {
+  grid-area: titleName;
+}
+
+.titleDescription {
+  grid-area: titleDescription;
+}
+
+.name,
+.description,
+.image {
+  display: flex;
+
+  img {
+    height: 140px;
+  }
+}
+
+@media (max-width: 800px) {
+  .image {
+    display: flex;
+    width: 100%;
+
+    img {
+      width: 40px;
+      height: 80px;
+    }
+  }
+
+  .name,
+  .description,
+  .image {
+    font-size: 10px;
+  }
+}
