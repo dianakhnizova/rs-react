@@ -3,6 +3,9 @@ import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
+import react from 'eslint-plugin-react';
+import reactCompiler from 'eslint-plugin-react-compiler';
+
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import prettierPlugin from 'eslint-plugin-prettier';
@@ -46,9 +49,16 @@ export default tseslint
         },
       },
       plugins: {
+        react: react,
         'react-hooks': reactHooks,
         'react-refresh': reactRefresh,
+        'react-compiler': reactCompiler,
         prettier: prettierPlugin,
+      },
+      settings: {
+        react: {
+          version: 'detect',
+        },
       },
       rules: {
         ...reactHooks.configs.recommended.rules,
@@ -56,17 +66,9 @@ export default tseslint
           'warn',
           { allowConstantExport: true },
         ],
-        '@typescript-eslint/consistent-type-assertions': [
-          'error',
-          { assertionStyle: 'never' },
-        ],
-        '@typescript-eslint/consistent-type-imports': 'error',
-        '@typescript-eslint/explicit-member-accessibility': [
-          'error',
-          { accessibility: 'explicit', overrides: { constructors: 'off' } },
-        ],
-        '@typescript-eslint/member-ordering': 'error',
-        'class-methods-use-this': 'off',
+        'react-compiler/react-compiler': 'error',
+        ...react.configs.recommended.rules,
+        ...react.configs['jsx-runtime'].rules,
         'unicorn/max-func-body-length': 'off',
         'unicorn/no-empty-file': 'off',
         'unicorn/prefer-query-selector': 'off',
