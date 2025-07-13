@@ -18,11 +18,14 @@ export class Spinner extends Component<Props> {
 
     return (
       <div className={styles.container}>
-        <img
-          src={BookImage}
-          alt={messages.titleSpinner}
-          className={styles.image}
-        />
+        <div className={styles.imgContainer}>
+          <img
+            src={BookImage}
+            alt={messages.titleSpinner}
+            className={styles.image}
+          />
+        </div>
+
         <h2 className={styles.loadingTitle}>{messages.titleLoading}</h2>
       </div>
     );
