@@ -11,7 +11,7 @@ interface State {
   searchTerm: string;
   isLoading: boolean;
   isSimulateError: boolean;
-  errorMessage: string | null;
+  errorMessage: string;
 }
 
 export class Main extends Component {
@@ -23,7 +23,11 @@ export class Main extends Component {
   };
 
   public handleSearchQuery = (searchTerm: string) => {
-    this.setState({ searchTerm, errorMessage: null, isSimulateError: false });
+    this.setState({
+      searchTerm,
+      errorMessage: undefined,
+      isSimulateError: false,
+    });
     localStorage.setItem('searchInput', searchTerm);
   };
 
@@ -34,7 +38,7 @@ export class Main extends Component {
   public onClose = () => {
     this.setState({
       isLoading: false,
-      errorMessage: null,
+      errorMessage: '',
       isSimulateError: false,
     });
   };

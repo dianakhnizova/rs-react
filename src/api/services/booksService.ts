@@ -8,31 +8,40 @@ import { AxiosError } from 'axios';
 import { booksApi } from '../axios';
 import { BOOKS_API_KEY } from '@/sources/constants';
 import { messages } from '@/sources/messages';
+import { isApiErrorResponse } from '@/utils/isApiErrorResponse';
 
 export const bookService = {
-  getBookById: async (bookId: string): Promise<BookData> => {
+  getBookById: async (bookId: string): Promise<BookData | undefined> => {
     try {
       const response: AxiosResponse<IBookItemResponse> = await booksApi.get(
         `${bookId}?key=${BOOKS_API_KEY}`
       );
-      const book = response.data;
 
-      return {
-        id: book.id,
-        title: book.volumeInfo.title,
-        description: book.volumeInfo.description || '',
-        image: book.volumeInfo.imageLinks?.thumbnail || '',
-      };
+      if (response.data) {
+        const book = response.data;
+
+        return {
+          id: book.id,
+          title: book.volumeInfo.title,
+          description: book.volumeInfo.description || '',
+          image: book.volumeInfo.imageLinks?.thumbnail || '',
+        };
+      }
     } catch (error: unknown) {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data?.error?.message || error.message
-          : messages.errorMessage;
-      throw new Error(message);
+      if (error instanceof AxiosError && error.response?.data) {
+        const data: unknown = error.response.data;
+        const message = isApiErrorResponse(data)
+          ? data.error.message
+          : error.message || messages.errorMessage;
+
+        throw new Error(message);
+      }
+
+      throw new Error(messages.errorMessage);
     }
   },
 
-  getBooksList: async (query: string): Promise<BookData[]> => {
+  getBooksList: async (query: string): Promise<BookData[] | undefined> => {
     const trimmedQuery = query.trim();
 
     try {
@@ -41,7 +50,11 @@ export const bookService = {
       const response: AxiosResponse<IBooksListResponse> = await booksApi.get(
         `?q=${encodeURIComponent(searchQuery)}&maxResults=20&langRestrict=en&key=${BOOKS_API_KEY}`
       );
-      const booksResult: IBookItemResponse[] = response.data.items || [];
+      const booksResult: IBookItemResponse[] = Array.isArray(
+        response.data.items
+      )
+        ? response.data.items
+        : [];
 
       const booksList: BookData[] = booksResult
         .filter(book =>
@@ -58,11 +71,16 @@ export const bookService = {
 
       return booksList;
     } catch (error: unknown) {
-      const message =
-        error instanceof AxiosError
-          ? error.response?.data?.error?.message || error.message
-          : messages.errorMessage;
-      throw new Error(message);
+      if (error instanceof AxiosError && error.response?.data) {
+        const data: unknown = error.response.data;
+        const message = isApiErrorResponse(data)
+          ? data.error.message
+          : error.message || messages.errorMessage;
+
+        throw new Error(message);
+      }
+
+      throw new Error(messages.errorMessage);
     }
   },
 };

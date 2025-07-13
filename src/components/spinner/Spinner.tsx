@@ -14,7 +14,7 @@ export class Spinner extends Component<Props> {
 
   public render() {
     const { isLoading } = this.props;
-    if (!isLoading) return null;
+    if (!isLoading) return;
 
     return (
       <div className={styles.container}>

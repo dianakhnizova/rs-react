@@ -12,3 +12,9 @@ export interface IBookItemResponse {
 export interface IBooksListResponse {
   items: IBookItemResponse[];
 }
+
+export interface IApiErrorResponse {
+  error: {
+    message: string;
+  };
+}
