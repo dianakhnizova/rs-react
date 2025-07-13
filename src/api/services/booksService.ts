@@ -23,7 +23,9 @@ export const bookService = {
         id: book.id,
         title: book.volumeInfo.title,
         description: book.volumeInfo.description || '',
-        image: book.volumeInfo.imageLinks?.thumbnail || '',
+        image:
+          book.volumeInfo.imageLinks?.thumbnail?.replace(/^http:/, 'https:') ||
+          '',
       };
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response?.data) {
@@ -64,7 +66,11 @@ export const bookService = {
           id: book.id,
           title: book.volumeInfo.title,
           description: book.volumeInfo.description || '',
-          image: book.volumeInfo.imageLinks?.thumbnail || '',
+          image:
+            book.volumeInfo.imageLinks?.thumbnail?.replace(
+              /^http:/,
+              'https:'
+            ) || '',
         }));
 
       return booksList;
