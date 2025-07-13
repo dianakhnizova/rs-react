@@ -26,9 +26,14 @@ export class SearchSection extends Component<Props> {
     this.props.onSearch(this.state.searchInput);
   };
 
+  public handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    this.handleSearchClick();
+  };
+
   public render() {
     return (
-      <form className={styles.container}>
+      <form onSubmit={this.handleSubmit} className={styles.container}>
         <input
           onChange={this.handleInputChange}
           type="text"
@@ -37,9 +42,7 @@ export class SearchSection extends Component<Props> {
           className={styles.input}
         />
 
-        <Button onClick={this.handleSearchClick} className={styles.button}>
-          {messages.searchButton}
-        </Button>
+        <Button className={styles.button}>{messages.searchButton}</Button>
       </form>
     );
   }
