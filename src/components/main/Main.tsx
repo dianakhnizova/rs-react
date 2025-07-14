@@ -28,7 +28,7 @@ export class Main extends Component {
       errorMessage: undefined,
       isSimulateError: false,
     });
-    localStorage.setItem('searchInput', searchTerm);
+    localStorage.setItem('searchInput', searchTerm.trim());
   };
 
   public setLoading = (isLoading: boolean) => {

@@ -22,7 +22,7 @@ export class SearchSection extends Component<Props> {
   };
 
   public handleSearchClick = () => {
-    localStorage.setItem('searchInput', this.state.searchInput);
+    localStorage.setItem('searchInput', this.state.searchInput.trim());
     this.props.onSearch(this.state.searchInput);
   };
 
