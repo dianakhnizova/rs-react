@@ -99,3 +99,18 @@ describe('SearchSection — обрезка пробелов', () => {
     expect(onSearchMock).toHaveBeenCalledWith('frontend dev');
   });
 });
+
+it('Triggers search callback with correct parameters', async () => {
+  localStorage.clear();
+
+  const onSearchMock = vi.fn();
+  render(<SearchSection onSearch={onSearchMock} />);
+
+  const input = screen.getByPlaceholderText(/search/i);
+  const button = screen.getByRole('button', { name: /search/i });
+
+  await userEvent.type(input, 'React Testing');
+  await userEvent.click(button);
+
+  expect(onSearchMock).toHaveBeenCalledWith('React Testing');
+});
