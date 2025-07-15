@@ -68,3 +68,30 @@ describe('BooksList - Empty State', () => {
     });
   });
 });
+
+describe('BooksList - Data Display', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('Correctly displays item names and descriptions', async () => {
+    mockedFetchBooksData.mockResolvedValue(mockedBooks);
+
+    render(
+      <BooksList
+        searchTerm="test"
+        setLoading={() => {}}
+        onClose={() => {}}
+        isLoading={false}
+        setError={() => {}}
+      />
+    );
+
+    for (const book of mockedBooks) {
+      await waitFor(() => {
+        expect(screen.getByText(book.title)).toBeInTheDocument();
+        expect(screen.getByText(book.description)).toBeInTheDocument();
+      });
+    }
+  });
+});
