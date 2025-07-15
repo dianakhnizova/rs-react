@@ -11,36 +11,6 @@ import { messages } from '@/sources/messages';
 import { isApiErrorResponse } from '@/utils/isApiErrorResponse';
 
 export const bookService = {
-  getBookById: async (bookId: string): Promise<BookData> => {
-    try {
-      const response: AxiosResponse<IBookItemResponse> = await booksApi.get(
-        `${bookId}?key=${BOOKS_API_KEY}`
-      );
-
-      const book = response.data;
-
-      return {
-        id: book.id,
-        title: book.volumeInfo.title,
-        description: book.volumeInfo.description || '',
-        image:
-          book.volumeInfo.imageLinks?.thumbnail?.replace(/^http:/, 'https:') ||
-          '',
-      };
-    } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response?.data) {
-        const data: unknown = error.response.data;
-        const message = isApiErrorResponse(data)
-          ? data.error.message
-          : error.message || messages.errorMessage;
-
-        throw new Error(message);
-      }
-
-      throw new Error(messages.errorMessage);
-    }
-  },
-
   getBooksList: async (query: string): Promise<BookData[]> => {
     const trimmedQuery = query.trim();
 

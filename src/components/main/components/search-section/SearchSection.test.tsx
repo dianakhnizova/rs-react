@@ -78,3 +78,24 @@ describe('SearchSection — saved в localStorage', () => {
     expect(localStorage.getItem('searchInput')).toBe(TEST_VALUE);
   });
 });
+
+describe('SearchSection — обрезка пробелов', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('Trims whitespace from search input before saving', async () => {
+    const onSearchMock = vi.fn();
+    render(<SearchSection onSearch={onSearchMock} />);
+
+    const input = screen.getByPlaceholderText(/search/i);
+    const button = screen.getByRole('button', { name: /search/i });
+
+    await userEvent.clear(input);
+    await userEvent.type(input, '   frontend dev  ');
+    await userEvent.click(button);
+
+    expect(localStorage.getItem('searchInput')).toBe('frontend dev');
+    expect(onSearchMock).toHaveBeenCalledWith('frontend dev');
+  });
+});
