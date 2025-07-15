@@ -28,3 +28,16 @@ describe('SearchSection — localStorage', () => {
     expect(input).toHaveValue(MOCKED_VALUE);
   });
 });
+
+describe('SearchSection — localStorage fallback', () => {
+  beforeEach(() => {
+    localStorage.removeItem('searchInput');
+  });
+
+  it('Shows empty input when no saved term exists', () => {
+    render(<SearchSection onSearch={vi.fn()} />);
+
+    const input = screen.getByPlaceholderText(/search/i);
+    expect(input).toHaveValue('');
+  });
+});
