@@ -13,3 +13,18 @@ describe('SearchSection - rendering', () => {
     expect(button).toBeInTheDocument();
   });
 });
+
+describe('SearchSection — localStorage', () => {
+  const MOCKED_VALUE = 'react testing';
+
+  beforeEach(() => {
+    localStorage.setItem('searchInput', MOCKED_VALUE);
+  });
+
+  it('Displays previously saved search term from localStorage on mount', () => {
+    render(<SearchSection onSearch={vi.fn()} />);
+
+    const input = screen.getByPlaceholderText(/search/i);
+    expect(input).toHaveValue(MOCKED_VALUE);
+  });
+});
