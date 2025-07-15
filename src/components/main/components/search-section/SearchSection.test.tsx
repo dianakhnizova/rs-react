@@ -124,3 +124,19 @@ it('Retrieves saved search term on component mount', () => {
   const input = screen.getByPlaceholderText(/search/i);
   expect(input).toHaveValue('saved term');
 });
+
+it('Overwrites existing localStorage value when new search is performed', async () => {
+  localStorage.setItem('searchInput', 'old value');
+
+  const onSearchMock = vi.fn();
+  render(<SearchSection onSearch={onSearchMock} />);
+
+  const input = screen.getByPlaceholderText(/search/i);
+  const button = screen.getByRole('button', { name: /search/i });
+
+  await userEvent.clear(input);
+  await userEvent.type(input, 'new search term');
+  await userEvent.click(button);
+
+  expect(localStorage.getItem('searchInput')).toBe('new search term');
+});
