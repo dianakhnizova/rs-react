@@ -41,3 +41,22 @@ describe('BookCard', () => {
     expect(img).toHaveAttribute('src', placeholder);
   });
 });
+
+describe('BookCard - Data Display', () => {
+  it('Displays item name and description correctly', () => {
+    render(
+      <ul>
+        <BookCard
+          name="test book"
+          description="testing description"
+          image="test.jpg"
+        />
+      </ul>
+    );
+
+    expect(screen.getByText('test book')).toBeInTheDocument();
+    expect(screen.getByText('testing description')).toBeInTheDocument();
+    expect(screen.getByRole('img')).toHaveAttribute('src', 'test.jpg');
+    expect(screen.getByRole('img')).toHaveAttribute('alt', 'test book');
+  });
+});
