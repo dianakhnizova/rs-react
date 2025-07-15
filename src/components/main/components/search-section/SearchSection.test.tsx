@@ -114,3 +114,13 @@ it('Triggers search callback with correct parameters', async () => {
 
   expect(onSearchMock).toHaveBeenCalledWith('React Testing');
 });
+
+it('Retrieves saved search term on component mount', () => {
+  localStorage.setItem('searchInput', 'saved term');
+
+  const onSearchMock = vi.fn();
+  render(<SearchSection onSearch={onSearchMock} />);
+
+  const input = screen.getByPlaceholderText(/search/i);
+  expect(input).toHaveValue('saved term');
+});
