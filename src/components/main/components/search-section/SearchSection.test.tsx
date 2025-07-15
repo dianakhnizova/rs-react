@@ -58,3 +58,23 @@ describe('SearchSection — user input', () => {
     expect(input).toHaveValue('frontend');
   });
 });
+
+describe('SearchSection — saved в localStorage', () => {
+  const TEST_VALUE = 'unit test';
+
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('Saves search term to localStorage when search button is clicked', async () => {
+    render(<SearchSection onSearch={vi.fn()} />);
+    const input = screen.getByPlaceholderText(/search/i);
+    const button = screen.getByRole('button', { name: /search/i });
+
+    await userEvent.clear(input);
+    await userEvent.type(input, TEST_VALUE);
+    await userEvent.click(button);
+
+    expect(localStorage.getItem('searchInput')).toBe(TEST_VALUE);
+  });
+});
