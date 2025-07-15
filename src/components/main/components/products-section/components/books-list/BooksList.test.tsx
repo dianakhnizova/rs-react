@@ -6,6 +6,10 @@ import type { BookData } from '@/sources/types';
 
 vi.mock('@/api/fetchBooksData');
 
+const mockedFetchBooksData = fetchBooksData as unknown as ReturnType<
+  typeof vi.fn
+>;
+
 const mockedBooks: BookData[] = [
   {
     id: '1',
@@ -27,7 +31,7 @@ describe('BooksList - Rendering', () => {
   });
 
   it('Renders correct number of items when data is provided', async () => {
-    (fetchBooksData as jest.Mock).mockResolvedValue(mockedBooks);
+    mockedFetchBooksData.mockResolvedValue(mockedBooks);
 
     render(
       <BooksList
@@ -41,6 +45,26 @@ describe('BooksList - Rendering', () => {
 
     await waitFor(() => {
       expect(screen.getAllByRole('listitem')).toHaveLength(mockedBooks.length);
+    });
+  });
+});
+
+describe('BooksList - Empty State', () => {
+  it('Displays "no results" message when data array is empty', async () => {
+    mockedFetchBooksData.mockResolvedValue([]);
+
+    render(
+      <BooksList
+        searchTerm="React"
+        setLoading={() => {}}
+        onClose={() => {}}
+        isLoading={false}
+        setError={() => {}}
+      />
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText(/not books for you/i)).toBeInTheDocument();
     });
   });
 });
