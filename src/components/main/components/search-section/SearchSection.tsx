@@ -13,7 +13,7 @@ interface State {
 
 export class SearchSection extends Component<Props> {
   public state: State = {
-    searchInput: localStorage.getItem('searchInput') || '',
+    searchInput: (localStorage.getItem('searchInput') || '').trim(),
   };
 
   public handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +23,7 @@ export class SearchSection extends Component<Props> {
 
   public handleSearchClick = () => {
     localStorage.setItem('searchInput', this.state.searchInput.trim());
-    this.props.onSearch(this.state.searchInput);
+    this.props.onSearch(this.state.searchInput.trim());
   };
 
   public handleSubmit = (event: React.FormEvent) => {
