@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.imgContainer {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  width: 80%;
+}
+
+.loadingTitle {
+  font-size: 14px;
+  font-weight: 200;
+}

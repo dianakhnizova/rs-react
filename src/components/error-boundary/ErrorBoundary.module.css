@@ -1,0 +1,11 @@
+.titleMain {
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--clr-error-1);
+}
+
+.titleError {
+  font-size: 16px;
+  font-weight: 200;
+  color: var(--clr-error-1);
+}
