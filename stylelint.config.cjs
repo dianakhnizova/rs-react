@@ -14,5 +14,5 @@ module.exports = {
     'at-rule-no-unknown': null,
     'scss/at-rule-no-unknown': true,
   },
-  ignoreFiles: ['**/node_modules/**', '**/dist/**'],
+  ignoreFiles: ['**/node_modules/**', '**/dist/**', '**/coverage/**/*.css'],
 };
