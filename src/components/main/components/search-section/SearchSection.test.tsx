@@ -1,6 +1,7 @@
 import { SearchSection } from './SearchSection';
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 describe('SearchSection - rendering', () => {
   it('Renders search input and search button', () => {
@@ -39,5 +40,21 @@ describe('SearchSection — localStorage fallback', () => {
 
     const input = screen.getByPlaceholderText(/search/i);
     expect(input).toHaveValue('');
+  });
+});
+
+describe('SearchSection — user input', () => {
+  beforeEach(() => {
+    localStorage.removeItem('searchInput');
+  });
+
+  it('Updates input value when user types', async () => {
+    render(<SearchSection onSearch={vi.fn()} />);
+    const input = screen.getByPlaceholderText(/search/i);
+
+    await userEvent.clear(input);
+    await userEvent.type(input, 'frontend');
+
+    expect(input).toHaveValue('frontend');
   });
 });
