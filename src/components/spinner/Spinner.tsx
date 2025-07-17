@@ -23,6 +23,7 @@ export class Spinner extends Component<Props> {
             src={BookImage}
             alt={messages.titleSpinner}
             className={styles.image}
+            data-testid="spinner-img"
           />
         </div>
 
