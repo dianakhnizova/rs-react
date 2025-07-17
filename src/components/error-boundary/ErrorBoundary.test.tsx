@@ -27,4 +27,14 @@ describe('ErrorBoundary', () => {
     expect(screen.getByText(/an error has occurred/i)).toBeInTheDocument();
     expect(screen.getByText(/test crash/i)).toBeInTheDocument();
   });
+
+  it('Logs error to console', () => {
+    render(
+      <ErrorBoundary>
+        <ProblemChild />
+      </ErrorBoundary>
+    );
+
+    expect(consoleErrorMock).toHaveBeenCalled();
+  });
 });
