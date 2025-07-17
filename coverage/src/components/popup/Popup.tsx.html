@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/20</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/20</span>
+                <span class='fraction'>20/20</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -96,10 +96,10 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -107,31 +107,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { ReactNode } from 'react';
-<span class="cstat-no" title="statement not covered" >import { Component } from 'react';</span>
-<span class="cstat-no" title="statement not covered" >import styles from './Popup.module.scss';</span>
-<span class="cstat-no" title="statement not covered" >import { messages } from './messages';</span>
-<span class="cstat-no" title="statement not covered" >import { Button } from '../button/Button';</span>
+import { Component } from 'react';
+import styles from './Popup.module.scss';
+import { messages } from './messages';
+import { Button } from '../button/Button';
 &nbsp;
 interface Props {
   isOpen: boolean;
@@ -139,26 +139,26 @@ interface Props {
   children: ReactNode;
 }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export class Popup extends Component&lt;Props&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  public render() {</span>
-<span class="cstat-no" title="statement not covered" >    const { isOpen, onClose, children } = this.props;</span>
+export class Popup extends Component&lt;Props&gt; {
+  public render() {
+    const { isOpen, onClose, children } = this.props;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return (</span>
-<span class="cstat-no" title="statement not covered" >      &lt;&gt;</span>
-<span class="cstat-no" title="statement not covered" >        {isOpen &amp;&amp; (</span>
-<span class="cstat-no" title="statement not covered" >          &lt;&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;div className={styles.overlay} onClick={onClose} /&gt;</span>
+    return (
+      &lt;&gt;
+        {isOpen &amp;&amp; (
+          &lt;&gt;
+            &lt;div className={styles.overlay} onClick={onClose} /&gt;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >            &lt;div className={styles.container}&gt;</span>
-<span class="cstat-no" title="statement not covered" >              {children}</span>
-<span class="cstat-no" title="statement not covered" >              &lt;Button onClick={onClose}&gt;{messages.closeButton}&lt;/Button&gt;</span>
-<span class="cstat-no" title="statement not covered" >            &lt;/div&gt;</span>
-<span class="cstat-no" title="statement not covered" >          &lt;/&gt;</span>
+            &lt;div className={styles.container}&gt;
+              {children}
+              &lt;Button onClick={onClose}&gt;{messages.closeButton}&lt;/Button&gt;
+            &lt;/div&gt;
+          &lt;/&gt;
         )}
-<span class="cstat-no" title="statement not covered" >      &lt;/&gt;</span>
+      &lt;/&gt;
     );
-<span class="cstat-no" title="statement not covered" >  }</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+  }
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -166,7 +166,7 @@ interface Props {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-17T07:24:12.483Z
+                at 2025-07-17T08:01:57.766Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
