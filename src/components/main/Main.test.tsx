@@ -239,3 +239,21 @@ describe('Main component - Spinner visibility logic', () => {
     expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
   });
 });
+
+describe('Main - onClose method', () => {
+  it('resets state when onClose is called', () => {
+    const component = new Main({});
+
+    component.setState({
+      isLoading: true,
+      errorMessage: 'Some error',
+      isSimulateError: true,
+    });
+
+    component.onClose();
+
+    expect(component.state.isLoading).toBe(false);
+    expect(component.state.errorMessage).toBe('');
+    expect(component.state.isSimulateError).toBe(false);
+  });
+});
