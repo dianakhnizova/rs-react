@@ -119,3 +119,17 @@ describe('Main component - extended', () => {
     }).toThrow('Test render error');
   });
 });
+
+describe('Main component - Manages search term state correctly', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('updates search term state and localStorage when search is triggered', () => {
+    render(<Main />);
+
+    fireEvent.click(screen.getByTestId('search-section'));
+
+    expect(localStorage.getItem('searchInput')).toBe('test');
+  });
+});
