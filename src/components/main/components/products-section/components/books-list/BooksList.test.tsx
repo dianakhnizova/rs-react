@@ -6,9 +6,7 @@ import type { BookData } from '@/sources/types';
 
 vi.mock('@/api/fetchBooksData');
 
-const mockedFetchBooksData = fetchBooksData as unknown as ReturnType<
-  typeof vi.fn
->;
+const mockedFetchBooksData = vi.mocked(fetchBooksData);
 
 const mockedBooks: BookData[] = [
   {
