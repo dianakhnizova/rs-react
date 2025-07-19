@@ -60,3 +60,16 @@ describe('BookCard - Data Display', () => {
     expect(screen.getByRole('img')).toHaveAttribute('alt', 'test book');
   });
 });
+
+it('Displays placeholder image and fallback text when all fields are empty', () => {
+  render(
+    <ul>
+      <BookCard name="" description="" image="" />
+    </ul>
+  );
+
+  expect(screen.getByText(messages.titleNotDescription)).toBeInTheDocument();
+
+  const img = screen.getByAltText('');
+  expect(img).toHaveAttribute('src', placeholder);
+});
