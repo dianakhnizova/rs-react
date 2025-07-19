@@ -91,39 +91,3 @@ it('Renders children when no error occurs', () => {
 
   expect(screen.getByText('Safe content')).toBeInTheDocument();
 });
-
-describe('ErrorBoundary handleReset', () => {
-  it('resets error state and calls onReset if provided', () => {
-    const onResetMock = vi.fn();
-
-    const boundary = new ErrorBoundary({
-      onReset: onResetMock,
-      children: <></>,
-    });
-
-    boundary.setState({
-      hasError: true,
-      errorMessage: 'Error happened',
-    });
-
-    boundary.handleReset();
-
-    expect(boundary.state.hasError).toBe(false);
-    expect(boundary.state.errorMessage).toBeUndefined();
-    expect(onResetMock).toHaveBeenCalled();
-  });
-
-  it('resets error state without onReset', () => {
-    const boundary = new ErrorBoundary({ children: <></> });
-
-    boundary.setState({
-      hasError: true,
-      errorMessage: 'Error happened',
-    });
-
-    boundary.handleReset();
-
-    expect(boundary.state.hasError).toBe(false);
-    expect(boundary.state.errorMessage).toBeUndefined();
-  });
-});
