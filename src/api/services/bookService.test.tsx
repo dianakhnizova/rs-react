@@ -41,3 +41,13 @@ describe('bookService.getBooksList', () => {
     ]);
   });
 });
+
+it('returns an empty array when response.items is not an array', async () => {
+  (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
+    data: { items: undefined },
+  });
+
+  const result = await bookService.getBooksList('test');
+
+  expect(result).toEqual([]);
+});
