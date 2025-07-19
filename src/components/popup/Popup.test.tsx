@@ -36,7 +36,7 @@ describe('Popup component', () => {
       </Popup>
     );
 
-    const overlay = screen.getByTestId('popup-overlay');
+    const overlay = screen.getByTestId('popup');
     await userEvent.click(overlay);
     expect(onCloseMock).toHaveBeenCalled();
   });

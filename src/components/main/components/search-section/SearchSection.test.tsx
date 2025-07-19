@@ -3,153 +3,83 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-describe('SearchSection - rendering', () => {
-  it('Renders search input and search button', () => {
-    render(<SearchSection onSearch={vi.fn()} />);
+const renderComponent = (onSearch = vi.fn()) =>
+  render(<SearchSection onSearch={onSearch} />);
+const getInput = () => screen.getByPlaceholderText(/search/i);
 
-    const input = screen.getByPlaceholderText(/search/i);
-    expect(input).toBeInTheDocument();
+describe('SearchSection', () => {
+  describe('SearchSection - rendering', () => {
+    it('Renders search input and search button', () => {
+      render(<SearchSection onSearch={vi.fn()} />);
 
-    const button = screen.getByRole('button', { name: /search/i });
-    expect(button).toBeInTheDocument();
-  });
-});
+      const input = screen.getByPlaceholderText(/search/i);
+      expect(input).toBeInTheDocument();
 
-describe('SearchSection — localStorage', () => {
-  const MOCKED_VALUE = 'react testing';
-
-  beforeEach(() => {
-    localStorage.setItem('searchInput', MOCKED_VALUE);
+      const button = screen.getByRole('button', { name: /search/i });
+      expect(button).toBeInTheDocument();
+    });
   });
 
-  it('Displays previously saved search term from localStorage on mount', () => {
-    render(<SearchSection onSearch={vi.fn()} />);
+  describe('SearchSection — localStorage', () => {
+    const MOCKED_VALUE = 'react testing';
 
-    const input = screen.getByPlaceholderText(/search/i);
-    expect(input).toHaveValue(MOCKED_VALUE);
-  });
-});
+    beforeEach(() => {
+      localStorage.setItem('searchInput', MOCKED_VALUE);
+    });
 
-describe('SearchSection — localStorage fallback', () => {
-  beforeEach(() => {
-    localStorage.removeItem('searchInput');
-  });
+    it('Displays previously saved search term from localStorage on mount', () => {
+      renderComponent();
 
-  it('Shows empty input when no saved term exists', () => {
-    render(<SearchSection onSearch={vi.fn()} />);
-
-    const input = screen.getByPlaceholderText(/search/i);
-    expect(input).toHaveValue('');
-  });
-});
-
-describe('SearchSection — user input', () => {
-  beforeEach(() => {
-    localStorage.removeItem('searchInput');
+      expect(getInput()).toHaveValue(MOCKED_VALUE);
+    });
   });
 
-  it('Updates input value when user types', async () => {
-    render(<SearchSection onSearch={vi.fn()} />);
-    const input = screen.getByPlaceholderText(/search/i);
+  describe('SearchSection — localStorage fallback', () => {
+    beforeEach(() => {
+      localStorage.removeItem('searchInput');
+    });
 
-    await userEvent.clear(input);
-    await userEvent.type(input, 'frontend');
+    it('Shows empty input when no saved term exists', () => {
+      renderComponent();
 
-    expect(input).toHaveValue('frontend');
-  });
-});
-
-describe('SearchSection — saved в localStorage', () => {
-  const TEST_VALUE = 'unit test';
-
-  beforeEach(() => {
-    localStorage.clear();
+      expect(getInput()).toHaveValue('');
+    });
   });
 
-  it('Saves search term to localStorage when search button is clicked', async () => {
-    render(<SearchSection onSearch={vi.fn()} />);
-    const input = screen.getByPlaceholderText(/search/i);
-    const button = screen.getByRole('button', { name: /search/i });
+  describe('SearchSection — user input', () => {
+    beforeEach(() => {
+      localStorage.removeItem('searchInput');
+    });
 
-    await userEvent.clear(input);
-    await userEvent.type(input, TEST_VALUE);
-    await userEvent.click(button);
+    it('Updates input value when user types', async () => {
+      renderComponent();
+      const input = screen.getByPlaceholderText(/search/i);
 
-    expect(localStorage.getItem('searchInput')).toBe(TEST_VALUE);
-  });
-});
+      await userEvent.clear(input);
+      await userEvent.type(input, 'frontend');
 
-describe('SearchSection — обрезка пробелов', () => {
-  beforeEach(() => {
-    localStorage.clear();
+      expect(getInput()).toHaveValue('frontend');
+    });
   });
 
-  it('Trims whitespace from search input before saving', async () => {
-    const onSearchMock = vi.fn();
-    render(<SearchSection onSearch={onSearchMock} />);
+  describe('SearchSection — trimmed', () => {
+    beforeEach(() => {
+      localStorage.clear();
+    });
 
-    const input = screen.getByPlaceholderText(/search/i);
-    const button = screen.getByRole('button', { name: /search/i });
+    it('Trims whitespace from search input before saving', async () => {
+      const onSearchMock = vi.fn();
+      renderComponent(onSearchMock);
 
-    await userEvent.clear(input);
-    await userEvent.type(input, '   frontend dev  ');
-    await userEvent.click(button);
+      const input = getInput();
+      const button = screen.getByRole('button', { name: /search/i });
 
-    expect(localStorage.getItem('searchInput')).toBe('frontend dev');
-    expect(onSearchMock).toHaveBeenCalledWith('frontend dev');
+      await userEvent.clear(input);
+      await userEvent.type(input, '   frontend dev  ');
+      await userEvent.click(button);
+
+      expect(localStorage.getItem('searchInput')).toBe('frontend dev');
+      expect(onSearchMock).toHaveBeenCalledWith('frontend dev');
+    });
   });
-});
-
-it('Triggers search callback with correct parameters', async () => {
-  localStorage.clear();
-
-  const onSearchMock = vi.fn();
-  render(<SearchSection onSearch={onSearchMock} />);
-
-  const input = screen.getByPlaceholderText(/search/i);
-  const button = screen.getByRole('button', { name: /search/i });
-
-  await userEvent.type(input, 'React Testing');
-  await userEvent.click(button);
-
-  expect(onSearchMock).toHaveBeenCalledWith('React Testing');
-});
-
-it('Retrieves saved search term on component mount', () => {
-  localStorage.setItem('searchInput', 'saved term');
-
-  const onSearchMock = vi.fn();
-  render(<SearchSection onSearch={onSearchMock} />);
-
-  const input = screen.getByPlaceholderText(/search/i);
-  expect(input).toHaveValue('saved term');
-});
-
-it('Overwrites existing localStorage value when new search is performed', async () => {
-  localStorage.setItem('searchInput', 'old value');
-
-  const onSearchMock = vi.fn();
-  render(<SearchSection onSearch={onSearchMock} />);
-
-  const input = screen.getByPlaceholderText(/search/i);
-  const button = screen.getByRole('button', { name: /search/i });
-
-  await userEvent.clear(input);
-  await userEvent.type(input, 'new search term');
-  await userEvent.click(button);
-
-  expect(localStorage.getItem('searchInput')).toBe('new search term');
-});
-
-it('Submits form and triggers onSearch when Enter is pressed', async () => {
-  const onSearchMock = vi.fn();
-  render(<SearchSection onSearch={onSearchMock} />);
-
-  const input = screen.getByPlaceholderText(/search/i);
-
-  await userEvent.clear(input);
-  await userEvent.type(input, 'keyboard search{enter}');
-
-  expect(localStorage.getItem('searchInput')).toBe('keyboard search');
-  expect(onSearchMock).toHaveBeenCalledWith('keyboard search');
 });

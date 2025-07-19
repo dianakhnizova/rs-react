@@ -14,8 +14,8 @@ vi.mock('@/utils/prepareBooksList', () => ({
   prepareBooksList: vi.fn(),
 }));
 
-describe('fetchBooksData', () => {
-  it('calls bookService and prepares books list', async () => {
+describe('FetchBooksData', () => {
+  it('Calls bookService and prepares books list', async () => {
     const mockBooks = [{ id: '1', title: 'Book' }];
     const prepared = [{ id: '1', title: 'Book (prepared)' }];
 
@@ -31,21 +31,23 @@ describe('fetchBooksData', () => {
     expect(result).toEqual(prepared);
   });
 
-  it('throws a formatted error when bookService fails', async () => {
-    (bookService.getBooksList as ReturnType<typeof vi.fn>).mockRejectedValue(
-      new Error('API error')
-    );
+  describe('Throws an error', () => {
+    it('Throws a formatted error when bookService fails', async () => {
+      (bookService.getBooksList as ReturnType<typeof vi.fn>).mockRejectedValue(
+        new Error('API error')
+      );
 
-    await expect(fetchBooksData('react')).rejects.toThrow('API error');
-  });
+      await expect(fetchBooksData('react')).rejects.toThrow('API error');
+    });
 
-  it('throws default error when thrown error is not instanceof Error', async () => {
-    (bookService.getBooksList as ReturnType<typeof vi.fn>).mockRejectedValue(
-      'Some string error'
-    );
+    it('Throws default error when thrown error is not instanceof Error', async () => {
+      (bookService.getBooksList as ReturnType<typeof vi.fn>).mockRejectedValue(
+        'Some string error'
+      );
 
-    await expect(fetchBooksData('react')).rejects.toThrow(
-      messages.errorMessage
-    );
+      await expect(fetchBooksData('react')).rejects.toThrow(
+        messages.errorMessage
+      );
+    });
   });
 });
