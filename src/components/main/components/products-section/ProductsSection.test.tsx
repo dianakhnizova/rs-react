@@ -34,3 +34,17 @@ describe('ProductsSection', () => {
     expect(screen.getByText('React')).toBeInTheDocument();
   });
 });
+
+it('passes all required props to BooksList', () => {
+  const testProps = {
+    searchTerm: 'TypeScript',
+    setLoading: vi.fn(),
+    onClose: vi.fn(),
+    isLoading: true,
+    setError: vi.fn(),
+  };
+
+  render(<ProductsSection {...testProps} />);
+
+  expect(screen.getByText('TypeScript')).toBeInTheDocument();
+});
