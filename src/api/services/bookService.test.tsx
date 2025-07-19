@@ -91,3 +91,49 @@ it('throws error when API call fails', async () => {
     'Failed to load books.'
   );
 });
+
+it('returns books with empty image when imageLinks is missing', async () => {
+  (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
+    data: {
+      items: [
+        {
+          id: '1',
+          volumeInfo: {
+            title: 'Book without image',
+            description: 'desc',
+          },
+        },
+      ],
+    },
+  });
+
+  const result = await bookService.getBooksList('book');
+
+  expect(result[0].image).toBe('');
+});
+
+it('skips items without volumeInfo', async () => {
+  (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
+    data: {
+      items: [
+        {
+          id: '1',
+          volumeInfo: undefined,
+        },
+        {
+          id: '2',
+          volumeInfo: {
+            title: 'Valid Book',
+            description: 'desc',
+            imageLinks: {},
+          },
+        },
+      ],
+    },
+  });
+
+  const result = await bookService.getBooksList('valid');
+
+  expect(result).toHaveLength(1);
+  expect(result[0].id).toBe('2');
+});

@@ -27,10 +27,12 @@ export const bookService = {
         : [];
 
       const booksList: BookData[] = booksResult
-        .filter(book =>
-          book.volumeInfo.title
-            .toLowerCase()
-            .includes(trimmedQuery.toLowerCase())
+        .filter(
+          book =>
+            book.volumeInfo &&
+            book.volumeInfo.title
+              ?.toLowerCase()
+              .includes(trimmedQuery.toLowerCase())
         )
         .map(book => ({
           id: book.id,
