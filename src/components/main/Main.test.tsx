@@ -195,3 +195,47 @@ describe('ErrorBoundary integration', () => {
     expect(screen.getByText('Test render error')).toBeInTheDocument();
   });
 });
+
+describe('Main component - popup logic', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('Does not render popup if loading and errorMessage are false/empty', () => {
+    render(<Main />);
+    expect(screen.queryByTestId('popup')).not.toBeInTheDocument();
+  });
+
+  it('Closes popup when onClose is called', () => {
+    render(
+      <ErrorBoundary>
+        <Main />
+      </ErrorBoundary>
+    );
+
+    fireEvent.click(screen.getByTestId('trigger-loading'));
+
+    expect(screen.getByTestId('popup')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('error-button'));
+
+    expect(
+      screen.getByText(boundaryMessages.titleBoundaryError)
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('Test render error')).toBeInTheDocument();
+  });
+});
+
+describe('Main component - Spinner visibility logic', () => {
+  it('Hides spinner when loading is false', () => {
+    render(
+      <ErrorBoundary>
+        <Main />
+      </ErrorBoundary>
+    );
+    mockSetLoading(false);
+
+    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
+  });
+});
