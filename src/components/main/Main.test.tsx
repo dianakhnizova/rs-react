@@ -2,6 +2,8 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Main } from './Main';
 import { vi } from 'vitest';
 import type { FC, MouseEventHandler, ReactNode } from 'react';
+import { ErrorBoundary } from '../error-boundary/ErrorBoundary';
+import { messages as boundaryMessages } from '../error-boundary/messages';
 
 let mockSetLoading: (val: boolean) => void;
 let mockSetError: (msg: string) => void;
@@ -173,5 +175,23 @@ describe('Error Button Tests', () => {
       render(<Main />);
       fireEvent.click(screen.getByTestId('error-button'));
     }).toThrow('Test render error');
+  });
+});
+
+describe('ErrorBoundary integration', () => {
+  it('Triggers error boundary fallback UI when Main throws', () => {
+    render(
+      <ErrorBoundary>
+        <Main />
+      </ErrorBoundary>
+    );
+
+    fireEvent.click(screen.getByTestId('error-button'));
+
+    expect(
+      screen.getByText(boundaryMessages.titleBoundaryError)
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('Test render error')).toBeInTheDocument();
   });
 });
