@@ -1,7 +1,10 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Main } from './Main';
 import { vi } from 'vitest';
 import type { FC, MouseEventHandler, ReactNode } from 'react';
+
+let mockSetLoading: (val: boolean) => void;
+let mockSetError: (msg: string) => void;
 
 vi.mock('./components/search-section/SearchSection', () => ({
   SearchSection: (({ onSearch }: { onSearch: (term: string) => void }) => (
@@ -18,16 +21,24 @@ vi.mock('./components/products-section/ProductsSection', () => ({
   }: {
     setLoading: (val: boolean) => void;
     setError: (msg: string) => void;
-  }) => (
-    <div data-testid="products-section">
-      ProductsSection
-      <button data-testid="trigger-loading" onClick={() => setLoading(true)} />
-      <button
-        data-testid="trigger-error"
-        onClick={() => setError('Something went wrong')}
-      />
-    </div>
-  )) as FC<{
+  }) => {
+    mockSetLoading = setLoading;
+    mockSetError = setError;
+
+    return (
+      <div data-testid="products-section">
+        ProductsSection
+        <button
+          data-testid="trigger-loading"
+          onClick={() => setLoading(true)}
+        />
+        <button
+          data-testid="trigger-error"
+          onClick={() => setError('Something went wrong')}
+        />
+      </div>
+    );
+  }) as FC<{
     setLoading: (val: boolean) => void;
     setError: (msg: string) => void;
   }>,
@@ -131,5 +142,21 @@ describe('Main component - Manages search term state correctly', () => {
     fireEvent.click(screen.getByTestId('search-section'));
 
     expect(localStorage.getItem('searchInput')).toBe('test');
+  });
+});
+
+describe('Main component - Updates component state based on API responses', () => {
+  it('removes loading and clears error after successful API response', async () => {
+    render(<Main />);
+
+    mockSetLoading(false);
+    mockSetError('');
+
+    await waitFor(() =>
+      expect(screen.getByTestId('products-section')).toBeInTheDocument()
+    );
+
+    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
+    expect(screen.queryByText(/something went wrong/i)).not.toBeInTheDocument();
   });
 });
