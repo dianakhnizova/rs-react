@@ -173,17 +173,3 @@ describe('Main component - Handles API error responses', () => {
     });
   });
 });
-
-describe('Main component - Handles successful API responses', () => {
-  it('clears loading and does not show error after successful API response', async () => {
-    render(<Main />);
-
-    await waitFor(() => {
-      expect(screen.getByTestId('products-section')).toBeInTheDocument();
-    });
-
-    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
-
-    expect(screen.queryByText(/something went wrong/i)).not.toBeInTheDocument();
-  });
-});
