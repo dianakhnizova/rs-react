@@ -64,3 +64,20 @@ describe('ErrorBoundary - Catches and handles JavaScript errors in child compone
     expect(consoleErrorMock).toHaveBeenCalled();
   });
 });
+
+describe('ErrorBoundary - Logs error to console', () => {
+  it('Logs error to console when child throws', () => {
+    const consoleErrorMock = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    render(
+      <ErrorBoundary>
+        <ProblemChild />
+      </ErrorBoundary>
+    );
+
+    expect(consoleErrorMock).toHaveBeenCalled();
+    consoleErrorMock.mockRestore();
+  });
+});
