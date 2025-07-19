@@ -61,6 +61,7 @@ export class Main extends Component {
         <Popup
           isOpen={this.state.isLoading || !!this.state.errorMessage}
           onClose={this.onClose}
+          data-testid="popup"
         >
           {this.state.errorMessage ? (
             <p className={styles.error}>{this.state.errorMessage}</p>

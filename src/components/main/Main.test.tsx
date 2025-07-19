@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Main } from './Main';
 import { vi } from 'vitest';
 import type { FC, MouseEventHandler, ReactNode } from 'react';
@@ -12,19 +12,40 @@ vi.mock('./components/search-section/SearchSection', () => ({
 }));
 
 vi.mock('./components/products-section/ProductsSection', () => ({
-  ProductsSection: (() => (
-    <div data-testid="products-section">ProductsSection</div>
-  )) as FC,
+  ProductsSection: (({
+    setLoading,
+    setError,
+  }: {
+    setLoading: (val: boolean) => void;
+    setError: (msg: string) => void;
+  }) => (
+    <div data-testid="products-section">
+      ProductsSection
+      <button data-testid="trigger-loading" onClick={() => setLoading(true)} />
+      <button
+        data-testid="trigger-error"
+        onClick={() => setError('Something went wrong')}
+      />
+    </div>
+  )) as FC<{
+    setLoading: (val: boolean) => void;
+    setError: (msg: string) => void;
+  }>,
 }));
 
 vi.mock('../popup/Popup', () => ({
-  Popup: (({ children }: { children: ReactNode }) => (
-    <div data-testid="popup">{children}</div>
-  )) as FC<{ children: ReactNode }>,
+  Popup: (({ children, isOpen }: { children: ReactNode; isOpen: boolean }) =>
+    isOpen ? <div data-testid="popup">{children}</div> : undefined) as FC<{
+    children: ReactNode;
+    isOpen: boolean;
+  }>,
 }));
 
 vi.mock('../spinner/Spinner', () => ({
-  Spinner: (() => <div data-testid="spinner">Spinner</div>) as FC,
+  Spinner: (({ isLoading }: { isLoading: boolean }) =>
+    isLoading ? <div data-testid="spinner">Spinner</div> : undefined) as FC<{
+    isLoading: boolean;
+  }>,
 }));
 
 vi.mock('../button/Button', () => ({
@@ -60,5 +81,41 @@ describe('Main component', () => {
 
     expect(screen.getByTestId('products-section')).toBeInTheDocument();
     expect(localStorage.getItem('searchInput')).toBe('react-books');
+  });
+});
+
+describe('Main component - extended', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
+  it('Calls onSearch and updates localStorage', () => {
+    render(<Main />);
+    fireEvent.click(screen.getByTestId('search-section'));
+
+    expect(localStorage.getItem('searchInput')).toBe('test');
+  });
+
+  it('Displays popup when loading is true', () => {
+    render(<Main />);
+    fireEvent.click(screen.getByTestId('trigger-loading'));
+
+    expect(screen.getByTestId('popup')).toBeInTheDocument();
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
+  });
+
+  it('Shows error message when setError is called', () => {
+    render(<Main />);
+    fireEvent.click(screen.getByTestId('trigger-error'));
+
+    expect(screen.getByTestId('popup')).toBeInTheDocument();
+    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
+  });
+
+  it('Throws error when simulate error button is clicked', () => {
+    expect(() => {
+      render(<Main />);
+      fireEvent.click(screen.getByTestId('error-button'));
+    }).toThrow('Test render error');
   });
 });
