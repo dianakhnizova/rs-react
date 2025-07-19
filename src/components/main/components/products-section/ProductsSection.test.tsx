@@ -1,25 +1,43 @@
 import { render, screen } from '@testing-library/react';
 import { ProductsSection } from './ProductsSection';
 import { vi } from 'vitest';
+import { Props } from './components/books-list/BooksList';
+
+const setLoading = vi.fn();
+const setError = vi.fn();
+const onClose = vi.fn();
+
+let callHandlers = false;
 
 vi.mock('./components/products-header/ProductsHeader', () => ({
   ProductsHeader: () => <div data-testid="products-header" />,
 }));
 
 vi.mock('./components/books-list/BooksList', () => ({
-  BooksList: ({ searchTerm }: { searchTerm: string }) => (
-    <div data-testid="books-list">{searchTerm}</div>
-  ),
+  BooksList: (props: Props) => {
+    if (callHandlers) {
+      props.setLoading(true);
+      props.setError('error');
+      props.onClose();
+    }
+
+    return <div data-testid="books-list">{props.searchTerm}</div>;
+  },
 }));
 
 describe('ProductsSection', () => {
   const mockProps = {
     searchTerm: 'React',
-    setLoading: vi.fn(),
-    onClose: vi.fn(),
+    setLoading,
+    onClose,
     isLoading: false,
-    setError: vi.fn(),
+    setError,
   };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+    callHandlers = false;
+  });
 
   it('renders ProductsHeader and BooksList', () => {
     render(<ProductsSection {...mockProps} />);
@@ -30,21 +48,37 @@ describe('ProductsSection', () => {
 
   it('passes searchTerm to BooksList', () => {
     render(<ProductsSection {...mockProps} />);
-
     expect(screen.getByText('React')).toBeInTheDocument();
   });
-});
 
-it('passes all required props to BooksList', () => {
-  const testProps = {
-    searchTerm: 'TypeScript',
-    setLoading: vi.fn(),
-    onClose: vi.fn(),
-    isLoading: true,
-    setError: vi.fn(),
-  };
+  it('passes all required props to BooksList', () => {
+    const testProps = {
+      searchTerm: 'TypeScript',
+      setLoading,
+      onClose,
+      isLoading: true,
+      setError,
+    };
 
-  render(<ProductsSection {...testProps} />);
+    render(<ProductsSection {...testProps} />);
+    expect(screen.getByText('TypeScript')).toBeInTheDocument();
+  });
 
-  expect(screen.getByText('TypeScript')).toBeInTheDocument();
+  it('calls handler props from BooksList', () => {
+    callHandlers = true;
+
+    render(
+      <ProductsSection
+        searchTerm="test"
+        setLoading={setLoading}
+        onClose={onClose}
+        isLoading={false}
+        setError={setError}
+      />
+    );
+
+    expect(setLoading).toHaveBeenCalledWith(true);
+    expect(setError).toHaveBeenCalledWith('error');
+    expect(onClose).toHaveBeenCalled();
+  });
 });

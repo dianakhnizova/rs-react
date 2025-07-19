@@ -9,7 +9,7 @@ interface State {
   books: BookData[];
 }
 
-interface Props {
+export interface Props {
   searchTerm: string;
   setLoading: (value: boolean) => void;
   onClose: () => void;
