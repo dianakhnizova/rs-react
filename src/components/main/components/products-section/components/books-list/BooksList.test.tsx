@@ -113,3 +113,28 @@ describe('BooksList - API call', () => {
     });
   });
 });
+
+describe('BooksList component - Calls API with correct parameters', () => {
+  it('calls fetchBooksData with the correct search term', async () => {
+    const mockSearchTerm = 'react';
+    const mockSetLoading = vi.fn();
+    const mockSetError = vi.fn();
+    const mockOnClose = vi.fn();
+
+    mockedFetchBooksData.mockResolvedValue([]);
+
+    render(
+      <BooksList
+        searchTerm={mockSearchTerm}
+        setLoading={mockSetLoading}
+        setError={mockSetError}
+        onClose={mockOnClose}
+        isLoading={false}
+      />
+    );
+
+    await waitFor(() => {
+      expect(fetchBooksData).toHaveBeenCalledWith(mockSearchTerm);
+    });
+  });
+});
