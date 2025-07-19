@@ -122,13 +122,6 @@ describe('Main component - extended', () => {
     expect(screen.getByTestId('popup')).toBeInTheDocument();
     expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
-
-  it('Throws error when simulate error button is clicked', () => {
-    expect(() => {
-      render(<Main />);
-      fireEvent.click(screen.getByTestId('error-button'));
-    }).toThrow('Test render error');
-  });
 });
 
 describe('Main component - Manages search term state correctly', () => {
@@ -171,5 +164,14 @@ describe('Main component - Handles API error responses', () => {
       expect(screen.getByTestId('popup')).toBeInTheDocument();
       expect(screen.getByText('API request failed')).toBeInTheDocument();
     });
+  });
+});
+
+describe('Error Button Tests', () => {
+  it('Throws error when test button is clicked', () => {
+    expect(() => {
+      render(<Main />);
+      fireEvent.click(screen.getByTestId('error-button'));
+    }).toThrow('Test render error');
   });
 });
