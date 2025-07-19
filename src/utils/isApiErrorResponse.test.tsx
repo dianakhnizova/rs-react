@@ -12,7 +12,7 @@ describe('isApiErrorResponse', () => {
   });
 
   it('returns false when data is null', () => {
-    expect(isApiErrorResponse()).toBe(false);
+    expect(isApiErrorResponse(null)).toBe(false);
   });
 
   it('returns false when data is not an object', () => {
@@ -34,6 +34,6 @@ describe('isApiErrorResponse', () => {
 
   it('returns false when error.message is not a string', () => {
     expect(isApiErrorResponse({ error: { message: 123 } })).toBe(false);
-    expect(isApiErrorResponse({ error: { message: undefined } })).toBe(false);
+    expect(isApiErrorResponse({ error: { message: null } })).toBe(false);
   });
 });
