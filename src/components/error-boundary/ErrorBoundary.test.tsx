@@ -81,3 +81,13 @@ describe('ErrorBoundary - Logs error to console', () => {
     consoleErrorMock.mockRestore();
   });
 });
+
+it('Renders children when no error occurs', () => {
+  render(
+    <ErrorBoundary>
+      <div>Safe content</div>
+    </ErrorBoundary>
+  );
+
+  expect(screen.getByText('Safe content')).toBeInTheDocument();
+});
