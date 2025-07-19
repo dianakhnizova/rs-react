@@ -93,3 +93,23 @@ describe('BooksList - Data Display', () => {
     }
   });
 });
+
+describe('BooksList - API call', () => {
+  it('Calls fetchBooksData with correct searchTerm', async () => {
+    mockedFetchBooksData.mockResolvedValue([]);
+
+    render(
+      <BooksList
+        searchTerm="JavaScript"
+        setLoading={() => {}}
+        onClose={() => {}}
+        isLoading={false}
+        setError={() => {}}
+      />
+    );
+
+    await waitFor(() => {
+      expect(mockedFetchBooksData).toHaveBeenCalledWith('JavaScript');
+    });
+  });
+});
