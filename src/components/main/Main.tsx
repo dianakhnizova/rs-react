@@ -57,10 +57,11 @@ export class Main extends Component {
     }
 
     return (
-      <section className={styles.container}>
+      <main className={styles.container}>
         <Popup
           isOpen={this.state.isLoading || !!this.state.errorMessage}
           onClose={this.onClose}
+          data-testid="popup"
         >
           {this.state.errorMessage ? (
             <p className={styles.error}>{this.state.errorMessage}</p>
@@ -82,7 +83,7 @@ export class Main extends Component {
         <Button onClick={this.errorClick} className={styles.button}>
           {messages.errorButton}
         </Button>
-      </section>
+      </main>
     );
   }
 }

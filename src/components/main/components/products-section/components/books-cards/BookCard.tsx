@@ -15,7 +15,7 @@ export class BookCard extends Component<Props> {
 
     return (
       <>
-        <div className={styles.book}>
+        <li className={styles.book}>
           <div className={styles.name}>
             <p>{name}</p>
           </div>
@@ -29,7 +29,7 @@ export class BookCard extends Component<Props> {
               className={styles.img}
             />
           </div>
-        </div>
+        </li>
       </>
     );
   }
