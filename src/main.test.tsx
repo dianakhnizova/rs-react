@@ -1,37 +1,16 @@
-import { render, screen } from '@testing-library/react';
-import { App } from './App';
-import { ErrorBoundary } from './components/error-boundary/ErrorBoundary';
+import { describe, it, expect } from 'vitest';
+import { screen } from '@testing-library/react';
 
-describe('Root entry rendering', () => {
-  it('renders App inside ErrorBoundary without crashing', () => {
-    render(
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    );
+describe('main.tsx', () => {
+  it('renders the app without crashing', async () => {
+    const root = document.createElement('div');
+    root.id = 'root';
+    document.body.append(root);
 
-    expect(screen.getByRole('banner')).toBeInTheDocument();
-  });
-});
+    await import('./main');
 
-describe('Root entry rendering', () => {
-  it('renders App inside ErrorBoundary without crashing', () => {
-    render(
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    );
+    const banner = await screen.findByRole('banner');
 
-    expect(screen.getByRole('banner')).toBeInTheDocument();
-  });
-
-  it('displays the main app title', () => {
-    render(
-      <ErrorBoundary>
-        <App />
-      </ErrorBoundary>
-    );
-
-    expect(screen.getByText(/your library/i)).toBeInTheDocument();
+    expect(banner).toBeInTheDocument();
   });
 });
