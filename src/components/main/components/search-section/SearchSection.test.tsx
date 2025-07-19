@@ -140,3 +140,16 @@ it('Overwrites existing localStorage value when new search is performed', async 
 
   expect(localStorage.getItem('searchInput')).toBe('new search term');
 });
+
+it('Submits form and triggers onSearch when Enter is pressed', async () => {
+  const onSearchMock = vi.fn();
+  render(<SearchSection onSearch={onSearchMock} />);
+
+  const input = screen.getByPlaceholderText(/search/i);
+
+  await userEvent.clear(input);
+  await userEvent.type(input, 'keyboard search{enter}');
+
+  expect(localStorage.getItem('searchInput')).toBe('keyboard search');
+  expect(onSearchMock).toHaveBeenCalledWith('keyboard search');
+});
