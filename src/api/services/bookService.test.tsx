@@ -81,3 +81,13 @@ it('filters books by title containing the search term', async () => {
   expect(result.length).toBe(1);
   expect(result[0].title).toBe('React for Beginners');
 });
+
+it('throws error when API call fails', async () => {
+  (booksApi.get as ReturnType<typeof vi.fn>).mockRejectedValue(
+    new Error('Internal Server Error')
+  );
+
+  await expect(bookService.getBooksList('test')).rejects.toThrow(
+    'Failed to load books.'
+  );
+});
