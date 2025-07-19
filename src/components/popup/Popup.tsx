@@ -18,7 +18,11 @@ export class Popup extends Component<Props> {
       <>
         {isOpen && (
           <>
-            <div className={styles.overlay} onClick={onClose} />
+            <div
+              className={styles.overlay}
+              onClick={onClose}
+              data-testid="popup-overlay"
+            />
 
             <div className={styles.container}>
               {children}
