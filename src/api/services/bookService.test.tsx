@@ -51,3 +51,33 @@ it('returns an empty array when response.items is not an array', async () => {
 
   expect(result).toEqual([]);
 });
+
+it('filters books by title containing the search term', async () => {
+  (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
+    data: {
+      items: [
+        {
+          id: '1',
+          volumeInfo: {
+            title: 'React for Beginners',
+            description: 'desc',
+            imageLinks: {},
+          },
+        },
+        {
+          id: '2',
+          volumeInfo: {
+            title: 'Cooking Recipes',
+            description: 'desc',
+            imageLinks: {},
+          },
+        },
+      ],
+    },
+  });
+
+  const result = await bookService.getBooksList('react');
+
+  expect(result.length).toBe(1);
+  expect(result[0].title).toBe('React for Beginners');
+});
