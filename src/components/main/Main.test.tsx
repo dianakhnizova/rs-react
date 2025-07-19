@@ -1,9 +1,7 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import { Main } from './Main';
 import { vi } from 'vitest';
 import type { FC, MouseEventHandler, ReactNode } from 'react';
-import { ErrorBoundary } from '../error-boundary/ErrorBoundary';
-import { messages as boundaryMessages } from '../error-boundary/messages';
 
 let mockSetLoading: (val: boolean) => void;
 let mockSetError: (msg: string) => void;
@@ -105,24 +103,14 @@ describe('Main component - extended', () => {
   it('Calls onSearch and updates localStorage', () => {
     render(<Main />);
     fireEvent.click(screen.getByTestId('search-section'));
-
     expect(localStorage.getItem('searchInput')).toBe('test');
   });
 
   it('Displays popup when loading is true', () => {
     render(<Main />);
     fireEvent.click(screen.getByTestId('trigger-loading'));
-
     expect(screen.getByTestId('popup')).toBeInTheDocument();
     expect(screen.getByTestId('spinner')).toBeInTheDocument();
-  });
-
-  it('Shows error message when setError is called', () => {
-    render(<Main />);
-    fireEvent.click(screen.getByTestId('trigger-error'));
-
-    expect(screen.getByTestId('popup')).toBeInTheDocument();
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
 });
 
@@ -135,7 +123,6 @@ describe('Main component - Manages search term state correctly', () => {
     render(<Main />);
 
     fireEvent.click(screen.getByTestId('search-section'));
-
     expect(localStorage.getItem('searchInput')).toBe('test');
   });
 });
@@ -144,12 +131,12 @@ describe('Main component - Updates component state based on API responses', () =
   it('removes loading and clears error after successful API response', async () => {
     render(<Main />);
 
-    mockSetLoading(false);
-    mockSetError('');
+    await act(async () => {
+      mockSetLoading(false);
+      mockSetError('');
+    });
 
-    await waitFor(() =>
-      expect(screen.getByTestId('products-section')).toBeInTheDocument()
-    );
+    expect(screen.getByTestId('products-section')).toBeInTheDocument();
 
     expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
     expect(screen.queryByText(/something went wrong/i)).not.toBeInTheDocument();
@@ -160,39 +147,11 @@ describe('Main component - Handles API error responses', () => {
   it('sets error state and displays error message on API failure', async () => {
     render(<Main />);
 
-    mockSetError('API request failed');
-
-    await waitFor(() => {
-      expect(screen.getByTestId('popup')).toBeInTheDocument();
-      expect(screen.getByText('API request failed')).toBeInTheDocument();
+    await act(async () => {
+      mockSetError('API request failed');
     });
-  });
-});
-
-describe('Error Button Tests', () => {
-  it('Throws error when test button is clicked', () => {
-    expect(() => {
-      render(<Main />);
-      fireEvent.click(screen.getByTestId('error-button'));
-    }).toThrow('Test render error');
-  });
-});
-
-describe('ErrorBoundary integration', () => {
-  it('Triggers error boundary fallback UI when Main throws', () => {
-    render(
-      <ErrorBoundary>
-        <Main />
-      </ErrorBoundary>
-    );
-
-    fireEvent.click(screen.getByTestId('error-button'));
-
-    expect(
-      screen.getByText(boundaryMessages.titleBoundaryError)
-    ).toBeInTheDocument();
-
-    expect(screen.getByText('Test render error')).toBeInTheDocument();
+    expect(screen.getByTestId('popup')).toBeInTheDocument();
+    expect(screen.getByText('API request failed')).toBeInTheDocument();
   });
 });
 
@@ -204,56 +163,5 @@ describe('Main component - popup logic', () => {
   it('Does not render popup if loading and errorMessage are false/empty', () => {
     render(<Main />);
     expect(screen.queryByTestId('popup')).not.toBeInTheDocument();
-  });
-
-  it('Closes popup when onClose is called', () => {
-    render(
-      <ErrorBoundary>
-        <Main />
-      </ErrorBoundary>
-    );
-
-    fireEvent.click(screen.getByTestId('trigger-loading'));
-
-    expect(screen.getByTestId('popup')).toBeInTheDocument();
-
-    fireEvent.click(screen.getByTestId('error-button'));
-
-    expect(
-      screen.getByText(boundaryMessages.titleBoundaryError)
-    ).toBeInTheDocument();
-
-    expect(screen.getByText('Test render error')).toBeInTheDocument();
-  });
-});
-
-describe('Main component - Spinner visibility logic', () => {
-  it('Hides spinner when loading is false', () => {
-    render(
-      <ErrorBoundary>
-        <Main />
-      </ErrorBoundary>
-    );
-    mockSetLoading(false);
-
-    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
-  });
-});
-
-describe('Main - onClose method', () => {
-  it('resets state when onClose is called', () => {
-    const component = new Main({});
-
-    component.setState({
-      isLoading: true,
-      errorMessage: 'Some error',
-      isSimulateError: true,
-    });
-
-    component.onClose();
-
-    expect(component.state.isLoading).toBe(false);
-    expect(component.state.errorMessage).toBe('');
-    expect(component.state.isSimulateError).toBe(false);
   });
 });

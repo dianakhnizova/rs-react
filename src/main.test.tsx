@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { screen } from '@testing-library/react';
+import { screen, act } from '@testing-library/react';
 
 describe('main.tsx', () => {
   it('renders the app without crashing', async () => {
@@ -7,10 +7,11 @@ describe('main.tsx', () => {
     root.id = 'root';
     document.body.append(root);
 
-    await import('./main');
+    await act(async () => {
+      await import('./main');
+    });
 
     const banner = await screen.findByRole('banner');
-
     expect(banner).toBeInTheDocument();
   });
 });

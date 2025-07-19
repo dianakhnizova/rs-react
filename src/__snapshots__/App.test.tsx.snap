@@ -1,0 +1,109 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`App component > matches snapshot 1`] = `
+<div>
+  <header
+    class="_container_6f96bd"
+  >
+    <h1
+      class="_title_6f96bd"
+    >
+      Your Library
+    </h1>
+  </header>
+  <main
+    class="_container_81d5d0"
+  >
+    <div
+      class="_overlay_734bb7"
+      data-testid="popup-overlay"
+    />
+    <div
+      class="_container_734bb7"
+    >
+      <div
+        class="_container_9a8cdc"
+      >
+        <div
+          class="_imgContainer_9a8cdc"
+        >
+          <img
+            alt="Spinner"
+            class="_image_9a8cdc"
+            data-testid="spinner-img"
+            src="/src/assets/book.png"
+          />
+        </div>
+        <h2
+          class="_loadingTitle_9a8cdc"
+        >
+          Loading...
+        </h2>
+      </div>
+      <button
+        class="_button_89f329"
+      >
+        Close
+      </button>
+    </div>
+    <form
+      class="_container_eefda4"
+    >
+      <input
+        class="_input_eefda4"
+        placeholder="Search"
+        type="text"
+        value=""
+      />
+      <button
+        class="_button_89f329 _button_eefda4"
+      >
+        Search
+      </button>
+    </form>
+    <div
+      class="_container_3f70f2"
+    >
+      <div
+        class="_productsHeaderContainer_01c874"
+      >
+        <p
+          class="_titleName_01c874"
+        >
+          Name
+        </p>
+        <p
+          class="_titleDescription_01c874"
+        >
+          Description
+        </p>
+        <p
+          class="_titleImage_01c874"
+        >
+          Image
+        </p>
+      </div>
+      <div
+        class="_gridDivider_3f70f2"
+      />
+      <p
+        class="_title_d3cc1b"
+      >
+        Not books for you
+      </p>
+    </div>
+    <button
+      class="_button_89f329 _button_81d5d0"
+    >
+      Error
+    </button>
+  </main>
+  <footer
+    class="_container_50967c"
+  >
+    <p>
+      © Diana Khnizova, Inc. All rights reserved.
+    </p>
+  </footer>
+</div>
+`;
