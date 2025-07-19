@@ -160,3 +160,16 @@ describe('Main component - Updates component state based on API responses', () =
     expect(screen.queryByText(/something went wrong/i)).not.toBeInTheDocument();
   });
 });
+
+describe('Main component - Handles API error responses', () => {
+  it('sets error state and displays error message on API failure', async () => {
+    render(<Main />);
+
+    mockSetError('API request failed');
+
+    await waitFor(() => {
+      expect(screen.getByTestId('popup')).toBeInTheDocument();
+      expect(screen.getByText('API request failed')).toBeInTheDocument();
+    });
+  });
+});
