@@ -138,3 +138,38 @@ describe('BooksList component - Calls API with correct parameters', () => {
     });
   });
 });
+
+describe('BooksList - Full Render Flow', () => {
+  it('calls handlers and displays fetched books correctly', async () => {
+    const mockSearchTerm = 'testing';
+    const mockSetLoading = vi.fn();
+    const mockSetError = vi.fn();
+    const mockOnClose = vi.fn();
+
+    mockedFetchBooksData.mockResolvedValue(mockedBooks);
+
+    render(
+      <BooksList
+        searchTerm={mockSearchTerm}
+        setLoading={mockSetLoading}
+        setError={mockSetError}
+        onClose={mockOnClose}
+        isLoading={false}
+      />
+    );
+
+    expect(mockSetLoading).toHaveBeenCalledWith(true);
+
+    await waitFor(() => {
+      expect(mockedFetchBooksData).toHaveBeenCalledWith(mockSearchTerm);
+      for (const book of mockedBooks) {
+        expect(screen.getByText(book.title)).toBeInTheDocument();
+        expect(screen.getByText(book.description)).toBeInTheDocument();
+      }
+    });
+
+    expect(mockSetLoading).toHaveBeenLastCalledWith(false);
+
+    expect(mockSetError).not.toHaveBeenCalled();
+  });
+});
