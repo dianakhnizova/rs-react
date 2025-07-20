@@ -17,12 +17,13 @@ export class Spinner extends Component<Props> {
     if (!isLoading) return;
 
     return (
-      <div className={styles.container}>
+      <div className={styles.container} data-testid="spinner">
         <div className={styles.imgContainer}>
           <img
             src={BookImage}
             alt={messages.titleSpinner}
             className={styles.image}
+            data-testid="spinner-img"
           />
         </div>
 
