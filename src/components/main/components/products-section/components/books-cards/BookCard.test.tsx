@@ -19,13 +19,21 @@ describe('BookCard', () => {
   });
 
   it('Displays fallback description if missing', () => {
-    render(<BookCard name="No Desc Book" description="" image="test.jpg" />);
+    render(
+      <BookCard
+        name="No Description for Book"
+        description=""
+        image="test.jpg"
+      />
+    );
 
     expect(screen.getByText(messages.titleNotDescription)).toBeInTheDocument();
   });
 
   it('Displays placeholder image if image is missing', () => {
-    render(<BookCard name="No Image Book" description="desc" image="" />);
+    render(
+      <BookCard name="No Image for Book" description="description" image="" />
+    );
 
     const img = screen.getByRole('img');
     expect(img).toHaveAttribute('src', placeholder);

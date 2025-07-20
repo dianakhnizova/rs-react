@@ -22,6 +22,7 @@ describe('FetchBooksData', () => {
     (bookService.getBooksList as ReturnType<typeof vi.fn>).mockResolvedValue(
       mockBooks
     );
+
     (prepareBooksList as ReturnType<typeof vi.fn>).mockReturnValue(prepared);
 
     const result = await fetchBooksData('react');

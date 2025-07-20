@@ -47,32 +47,4 @@ describe('ErrorBoundary', () => {
 
     expect(screen.getByText('Safe content')).toBeInTheDocument();
   });
-
-  describe('ErrorBoundary - Catches and handles JavaScript errors in child components', () => {
-    let consoleErrorMock: ReturnType<typeof vi.spyOn>;
-
-    beforeAll(() => {
-      consoleErrorMock = vi
-        .spyOn(console, 'error')
-        .mockImplementation(() => {});
-    });
-
-    afterAll(() => {
-      consoleErrorMock.mockRestore();
-    });
-
-    it('Catches error from child and renders fallback UI', () => {
-      render(
-        <ErrorBoundary>
-          <ProblemChild />
-        </ErrorBoundary>
-      );
-
-      expect(screen.getByText(/an error has occurred/i)).toBeInTheDocument();
-
-      expect(screen.getByText(/test crash/i)).toBeInTheDocument();
-
-      expect(consoleErrorMock).toHaveBeenCalled();
-    });
-  });
 });

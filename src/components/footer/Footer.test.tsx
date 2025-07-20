@@ -3,7 +3,7 @@ import { Footer } from './Footer';
 import { messages } from './messages';
 
 describe('Footer component', () => {
-  it('Renders the footer with correct text', () => {
+  it('Renders the footer with correct title', () => {
     render(<Footer />);
 
     const footer = screen.getByRole('contentinfo');

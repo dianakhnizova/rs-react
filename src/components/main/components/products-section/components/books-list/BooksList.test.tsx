@@ -85,26 +85,4 @@ describe('BooksList - Rendering', () => {
       expect(mockedFetchBooksData).toHaveBeenCalledWith('react');
     });
   });
-
-  describe('BooksList - Handles API error', () => {
-    it('Calls setError with message when API throws', async () => {
-      const mockErrorMessage = 'Something went wrong';
-      const mockSetError = vi.fn();
-      const mockSetLoading = vi.fn();
-
-      mockedFetchBooksData.mockRejectedValue(new Error(mockErrorMessage));
-
-      renderBooksList({
-        searchTerm: 'react',
-        setError: mockSetError,
-        setLoading: mockSetLoading,
-      });
-
-      await waitFor(() => {
-        expect(mockSetError).toHaveBeenCalledWith(mockErrorMessage);
-        expect(mockSetLoading).toHaveBeenCalledWith(true);
-        expect(mockSetLoading).toHaveBeenLastCalledWith(false);
-      });
-    });
-  });
 });

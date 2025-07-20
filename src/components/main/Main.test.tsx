@@ -4,7 +4,7 @@ import { messages as mainMessages } from './messages';
 import { messages as searchMessages } from './components/search-section/messages';
 
 describe('Main component', () => {
-  describe('Main component - search and loading interactions', () => {
+  describe('Search and loading interactions', () => {
     beforeEach(() => {
       localStorage.clear();
     });
@@ -15,7 +15,8 @@ describe('Main component', () => {
       const input = screen.getByPlaceholderText(
         searchMessages.inputPlaceholder
       );
-      fireEvent.change(input, { target: { value: 'test' } });
+
+      fireEvent.change(input, { target: { value: 'react' } });
 
       const button = screen.getByRole('button', {
         name: searchMessages.searchButton,
@@ -23,7 +24,7 @@ describe('Main component', () => {
 
       fireEvent.click(button);
 
-      expect(localStorage.getItem('searchInput')).toBe('test');
+      expect(localStorage.getItem('searchInput')).toBe('react');
     });
 
     it('Displays popup when loading is true', () => {
@@ -32,7 +33,7 @@ describe('Main component', () => {
       const input = screen.getByPlaceholderText(
         searchMessages.inputPlaceholder
       );
-      fireEvent.change(input, { target: { value: 'test' } });
+      fireEvent.change(input, { target: { value: 'react' } });
 
       const button = screen.getByRole('button', {
         name: searchMessages.searchButton,
@@ -52,6 +53,7 @@ describe('Main component', () => {
       const errorButton = screen.getByRole('button', {
         name: mainMessages.errorButton,
       });
+
       expect(errorButton).toBeInTheDocument();
 
       try {
