@@ -1,7 +1,6 @@
 import { RSSCHOOL_URL } from '@/sources/constants';
 import styles from './AboutPage.module.scss';
 import { AboutMeDataList } from './components/about-me-list/aboutMeList';
-import { NavLink } from 'react-router-dom';
 import { messages } from './messages';
 
 export const AboutPage = () => {
@@ -18,7 +17,7 @@ export const AboutPage = () => {
         })}
       </div>
 
-      <NavLink to={RSSCHOOL_URL}>{messages.linkTitle}</NavLink>
+      <a href={RSSCHOOL_URL}>{messages.linkTitle}</a>
     </div>
   );
 };
