@@ -1,13 +1,6 @@
-import { Header } from './components/header/Header';
-import { Main } from './components/main/Main';
-import { Footer } from './components/footer/Footer';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './router/router';
 
 export const App = () => {
-  return (
-    <>
-      <Header />
-      <Main />
-      <Footer />
-    </>
-  );
+  return <RouterProvider router={router} />;
 };

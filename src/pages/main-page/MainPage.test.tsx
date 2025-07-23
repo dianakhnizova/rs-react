@@ -1,6 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Main } from './Main';
+import { MainPage } from './MainPage';
 import { messages as searchMessages } from './components/search-section/messages';
+import { MemoryRouter } from 'react-router-dom';
+
+const renderWithRouter = (ui: React.ReactElement) => {
+  return render(<MemoryRouter>{ui}</MemoryRouter>);
+};
 
 describe('Main component', () => {
   describe('Search and loading interactions', () => {
@@ -9,7 +14,7 @@ describe('Main component', () => {
     });
 
     it('Calls onSearch and updates localStorage', () => {
-      render(<Main />);
+      renderWithRouter(<MainPage />);
 
       const input = screen.getByPlaceholderText(
         searchMessages.inputPlaceholder
@@ -27,7 +32,7 @@ describe('Main component', () => {
     });
 
     it('Displays popup when loading is true', () => {
-      render(<Main />);
+      renderWithRouter(<MainPage />);
 
       const input = screen.getByPlaceholderText(
         searchMessages.inputPlaceholder
@@ -51,7 +56,7 @@ describe('Main component', () => {
     });
 
     it('Trims whitespace from search input before saving', () => {
-      render(<Main />);
+      renderWithRouter(<MainPage />);
 
       const input = screen.getByPlaceholderText(
         searchMessages.inputPlaceholder

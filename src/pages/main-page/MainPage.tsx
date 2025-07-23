@@ -1,19 +1,24 @@
 import { useState } from 'react';
-import styles from './Main.module.scss';
+import styles from './MainPage.module.scss';
 import { SearchSection } from './components/search-section/SearchSection';
 import { ProductsSection } from './components/products-section/ProductsSection';
-import { Popup } from '../popup/Popup';
-import { Spinner } from '../spinner/Spinner';
+import { Popup } from '@/components/popup/Popup';
+import { Spinner } from '@/components/spinner/Spinner';
 import { LocalStorage } from '@/sources/enums';
 import { BooksList } from './components/products-section/components/books-list/BooksList';
-import { AboutPage } from '@/pages/about-page/AboutPage';
+import { Button } from '@/components/button/Button';
+import { messages } from './messages';
+import { useNavigate } from 'react-router-dom';
+import { PagePath } from '@/router/enums';
 
-export const Main = () => {
+export const MainPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>(
     (localStorage.getItem(LocalStorage.SEARCH_KEY) || '').trim()
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const navigate = useNavigate();
 
   const handleSearchQuery = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -25,8 +30,12 @@ export const Main = () => {
     setErrorMessage('');
   };
 
+  const navigateToAboutPage = () => {
+    void navigate(PagePath.aboutPage);
+  };
+
   return (
-    <main className={styles.container}>
+    <main data-testid="main-page" className={styles.container}>
       <Popup
         isOpen={isLoading || !!errorMessage}
         onClose={onClose}
@@ -51,7 +60,10 @@ export const Main = () => {
           setError={setErrorMessage}
         />
       </ProductsSection>
-      <AboutPage />
+
+      <Button onClick={navigateToAboutPage}>
+        {messages.toAboutPageButton}
+      </Button>
     </main>
   );
 };

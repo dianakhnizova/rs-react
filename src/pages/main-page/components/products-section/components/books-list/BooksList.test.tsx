@@ -3,7 +3,7 @@ import { BooksList } from './BooksList';
 import { vi } from 'vitest';
 import { fetchBooksData } from '@/api/fetchBooksData';
 import type { BookData } from '@/sources/types';
-import { messages as bookListMessages } from '../books-list/messages';
+import { messages as bookListMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
 
 vi.mock('@/api/fetchBooksData');
