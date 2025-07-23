@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import styles from './Main.module.scss';
 import { SearchSection } from './components/search-section/SearchSection';
 import { ProductsSection } from './components/products-section/ProductsSection';
@@ -7,83 +7,62 @@ import { Spinner } from '../spinner/Spinner';
 import { messages } from './messages';
 import { Button } from '../button/Button';
 
-interface State {
-  searchTerm: string;
-  isLoading: boolean;
-  isSimulateError: boolean;
-  errorMessage: string;
-}
+export const Main = () => {
+  const [searchTerm, setSearchTerm] = useState<string>(
+    localStorage.getItem('searchInput') || ''
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSimulateError, setIsSimulateError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-export class Main extends Component {
-  public state: State = {
-    searchTerm: localStorage.getItem('searchInput') || '',
-    isLoading: false,
-    isSimulateError: false,
-    errorMessage: '',
-  };
-
-  public handleSearchQuery = (searchTerm: string) => {
-    this.setState({
-      searchTerm,
-      errorMessage: undefined,
-      isSimulateError: false,
-    });
+  const handleSearchQuery = (searchTerm: string) => {
+    setSearchTerm(searchTerm);
+    setErrorMessage('');
+    setIsSimulateError(false);
     localStorage.setItem('searchInput', searchTerm.trim());
   };
 
-  public setLoading = (isLoading: boolean) => {
-    this.setState({ isLoading });
+  const onClose = () => {
+    setIsLoading(false);
+    setErrorMessage('');
+    setIsSimulateError(false);
   };
 
-  public onClose = () => {
-    this.setState({
-      isLoading: false,
-      errorMessage: '',
-      isSimulateError: false,
-    });
+  const errorClick = () => {
+    setIsSimulateError(true);
   };
 
-  public errorClick = () => {
-    this.setState({ isSimulateError: true });
-  };
-
-  public setError = (message: string) => {
-    this.setState({ errorMessage: message, isLoading: false });
-  };
-
-  public render() {
-    if (this.state.isSimulateError) {
-      throw new Error('Test render error');
-    }
-
-    return (
-      <main className={styles.container}>
-        <Popup
-          isOpen={this.state.isLoading || !!this.state.errorMessage}
-          onClose={this.onClose}
-          data-testid="popup"
-        >
-          {this.state.errorMessage ? (
-            <p className={styles.error}>{this.state.errorMessage}</p>
-          ) : (
-            <Spinner isLoading={this.state.isLoading} />
-          )}
-        </Popup>
-
-        <SearchSection onSearch={this.handleSearchQuery} />
-
-        <ProductsSection
-          setLoading={this.setLoading}
-          searchTerm={this.state.searchTerm}
-          onClose={this.onClose}
-          isLoading={this.state.isLoading}
-          setError={this.setError}
-        />
-
-        <Button onClick={this.errorClick} className={styles.button}>
-          {messages.errorButton}
-        </Button>
-      </main>
-    );
+  if (isSimulateError) {
+    throw new Error('Test render error');
   }
-}
+
+  return (
+    <main className={styles.container}>
+      <Popup
+        isOpen={isLoading || !!errorMessage}
+        onClose={onClose}
+        data-testid="popup"
+      >
+        {errorMessage ? (
+          <p className={styles.error}>{errorMessage}</p>
+        ) : (
+          <Spinner isLoading={isLoading} />
+        )}
+      </Popup>
+
+      <SearchSection onSearch={handleSearchQuery} />
+
+      <ProductsSection
+        setLoading={setIsLoading}
+        searchTerm={searchTerm}
+        onClose={onClose}
+        isLoading={isLoading}
+        setError={setErrorMessage}
+      />
+
+      <Button onClick={errorClick} className={styles.button}>
+        {messages.errorButton}
+      </Button>
+    </main>
+  );
+};

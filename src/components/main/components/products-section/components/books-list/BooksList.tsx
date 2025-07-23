@@ -19,7 +19,6 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
   useEffect(() => {
     const loadBooks = async () => {
       setLoading(true);
-
       try {
         const books: BookData[] = await fetchBooksData(searchTerm);
         setBooks(books);
@@ -32,7 +31,7 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
       }
     };
     void loadBooks();
-  }, [searchTerm, setLoading, setError]);
+  }, [searchTerm]);
 
   return (
     <>
