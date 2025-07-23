@@ -4,3 +4,8 @@ export type BookData = {
   description: string;
   image: string;
 };
+
+export type MyData = {
+  label: string;
+  data: string;
+};
