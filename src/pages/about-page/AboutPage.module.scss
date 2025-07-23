@@ -2,3 +2,9 @@
   display: flex;
   align-items: center;
 }
+
+.infoContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

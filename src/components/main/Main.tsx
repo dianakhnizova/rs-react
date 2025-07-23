@@ -6,6 +6,7 @@ import { Popup } from '../popup/Popup';
 import { Spinner } from '../spinner/Spinner';
 import { LocalStorage } from '@/sources/enums';
 import { BooksList } from './components/products-section/components/books-list/BooksList';
+import { AboutPage } from '@/pages/about-page/AboutPage';
 
 export const Main = () => {
   const [searchTerm, setSearchTerm] = useState<string>(
@@ -50,6 +51,7 @@ export const Main = () => {
           setError={setErrorMessage}
         />
       </ProductsSection>
+      <AboutPage />
     </main>
   );
 };
