@@ -19,19 +19,23 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
   useEffect(() => {
     const loadBooks = async () => {
       setLoading(true);
+
       try {
         const books: BookData[] = await fetchBooksData(searchTerm);
+
         setBooks(books);
       } catch (error: unknown) {
         const message =
           error instanceof Error ? error.message : messages.errorMessage;
+
         setError(message);
       } finally {
         setLoading(false);
       }
     };
+
     void loadBooks();
-  }, [searchTerm]);
+  }, [searchTerm, setError, setLoading]);
 
   return (
     <>

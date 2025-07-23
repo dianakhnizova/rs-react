@@ -5,12 +5,11 @@ import { Button } from '@/components/button/Button';
 
 interface Props {
   onSearch: (value: string) => void;
+  searchTerm: string;
 }
 
-export const SearchSection = ({ onSearch }: Props) => {
-  const [searchInput, setSearchInput] = useState<string>(
-    (localStorage.getItem('searchInput') || '').trim()
-  );
+export const SearchSection = ({ onSearch, searchTerm }: Props) => {
+  const [searchInput, setSearchInput] = useState(searchTerm);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -18,8 +17,7 @@ export const SearchSection = ({ onSearch }: Props) => {
   };
 
   const handleSearchClick = () => {
-    localStorage.setItem('searchInput', searchInput.trim());
-    onSearch(searchInput.trim());
+    onSearch(searchInput);
   };
 
   const handleSubmit = (event: React.FormEvent) => {

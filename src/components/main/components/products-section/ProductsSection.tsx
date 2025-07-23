@@ -1,33 +1,16 @@
 import styles from './ProductsSection.module.scss';
 import { ProductsHeader } from './components/products-header/ProductsHeader';
-import { BooksList } from './components/books-list/BooksList';
 
 interface Props {
-  searchTerm: string;
-  setLoading: (value: boolean) => void;
-  onClose: () => void;
-  isLoading: boolean;
-  setError: (message: string) => void;
+  children: React.ReactNode;
 }
 
-export const ProductsSection = ({
-  searchTerm,
-  setLoading,
-  onClose,
-  isLoading,
-  setError,
-}: Props) => {
+export const ProductsSection = ({ children }: Props) => {
   return (
     <div className={styles.container}>
       <ProductsHeader />
       <div className={styles.gridDivider} />
-      <BooksList
-        searchTerm={searchTerm}
-        setLoading={setLoading}
-        onClose={onClose}
-        isLoading={isLoading}
-        setError={setError}
-      />
+      {children}
     </div>
   );
 };

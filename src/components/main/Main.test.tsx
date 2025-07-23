@@ -1,6 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Main } from './Main';
-import { messages as mainMessages } from './messages';
 import { messages as searchMessages } from './components/search-section/messages';
 
 describe('Main component', () => {
@@ -46,22 +45,25 @@ describe('Main component', () => {
     });
   });
 
-  describe('Test Error button', () => {
-    it('Simulate error button triggers render error', () => {
+  describe('Search input behavior', () => {
+    beforeEach(() => {
+      localStorage.clear();
+    });
+
+    it('Trims whitespace from search input before saving', () => {
       render(<Main />);
 
-      const errorButton = screen.getByRole('button', {
-        name: mainMessages.errorButton,
+      const input = screen.getByPlaceholderText(
+        searchMessages.inputPlaceholder
+      );
+      fireEvent.change(input, { target: { value: '   react   ' } });
+
+      const button = screen.getByRole('button', {
+        name: searchMessages.searchButton,
       });
+      fireEvent.click(button);
 
-      expect(errorButton).toBeInTheDocument();
-
-      try {
-        fireEvent.click(errorButton);
-      } catch (event) {
-        expect(event).toBeInstanceOf(Error);
-        expect((event as Error).message).toBe('Test render error');
-      }
+      expect(localStorage.getItem('searchInput')).toBe('react');
     });
   });
 });
