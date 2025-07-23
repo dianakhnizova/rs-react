@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styles from './SearchSection.module.scss';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
@@ -7,43 +7,37 @@ interface Props {
   onSearch: (value: string) => void;
 }
 
-interface State {
-  searchInput: string;
-}
+export const SearchSection = ({ onSearch }: Props) => {
+  const [searchInput, setSearchInput] = useState<string>(
+    (localStorage.getItem('searchInput') || '').trim()
+  );
 
-export class SearchSection extends Component<Props> {
-  public state: State = {
-    searchInput: (localStorage.getItem('searchInput') || '').trim(),
-  };
-
-  public handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    this.setState({ searchInput: value });
+    setSearchInput(value);
   };
 
-  public handleSearchClick = () => {
-    localStorage.setItem('searchInput', this.state.searchInput.trim());
-    this.props.onSearch(this.state.searchInput.trim());
+  const handleSearchClick = () => {
+    localStorage.setItem('searchInput', searchInput.trim());
+    onSearch(searchInput.trim());
   };
 
-  public handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    this.handleSearchClick();
+    handleSearchClick();
   };
 
-  public render() {
-    return (
-      <form onSubmit={this.handleSubmit} className={styles.container}>
-        <input
-          onChange={this.handleInputChange}
-          type="text"
-          value={this.state.searchInput}
-          placeholder={messages.inputPlaceholder}
-          className={styles.input}
-        />
+  return (
+    <form onSubmit={handleSubmit} className={styles.container}>
+      <input
+        onChange={handleInputChange}
+        type="text"
+        value={searchInput}
+        placeholder={messages.inputPlaceholder}
+        className={styles.input}
+      />
 
-        <Button className={styles.button}>{messages.searchButton}</Button>
-      </form>
-    );
-  }
-}
+      <Button className={styles.button}>{messages.searchButton}</Button>
+    </form>
+  );
+};
