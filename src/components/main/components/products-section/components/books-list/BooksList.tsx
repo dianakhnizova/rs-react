@@ -1,13 +1,9 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './BooksList.module.scss';
 import { messages } from '@/sources/messages';
 import { BookCard } from '../books-cards/BookCard';
 import type { BookData } from '@/sources/types';
 import { fetchBooksData } from '@/api/fetchBooksData';
-
-interface State {
-  books: BookData[];
-}
 
 export interface Props {
   searchTerm: string;
@@ -17,56 +13,43 @@ export interface Props {
   setError: (message: string) => void;
 }
 
-export class BooksList extends Component<Props> {
-  public state: State = {
-    books: [],
-  };
+export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
+  const [books, setBooks] = useState<BookData[]>([]);
 
-  public async loadBooks() {
-    this.props.setLoading(true);
+  useEffect(() => {
+    const loadBooks = async () => {
+      setLoading(true);
 
-    try {
-      const books = await fetchBooksData(this.props.searchTerm);
-      this.setState({ books });
-    } catch (error: unknown) {
-      const message =
-        error instanceof Error ? error.message : messages.errorMessage;
-      this.props.setError(message);
-    } finally {
-      this.props.setLoading(false);
-    }
-  }
+      try {
+        const books: BookData[] = await fetchBooksData(searchTerm);
+        setBooks(books);
+      } catch (error: unknown) {
+        const message =
+          error instanceof Error ? error.message : messages.errorMessage;
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    void loadBooks();
+  }, [searchTerm, setLoading, setError]);
 
-  public componentDidMount(): void {
-    void this.loadBooks();
-  }
-
-  public componentDidUpdate(prevProps: Props): void {
-    if (prevProps.searchTerm !== this.props.searchTerm) {
-      void this.loadBooks();
-    }
-  }
-
-  public render() {
-    const { books } = this.state;
-
-    return (
-      <>
-        {books.length === 0 ? (
-          <p className={styles.title}>{messages.emptyList}</p>
-        ) : (
-          <ul className={styles.booksContainer}>
-            {books.map((book: BookData) => (
-              <BookCard
-                key={book.id}
-                name={book.title}
-                description={book.description}
-                image={book.image}
-              />
-            ))}
-          </ul>
-        )}
-      </>
-    );
-  }
-}
+  return (
+    <>
+      {books.length === 0 ? (
+        <p className={styles.title}>{messages.emptyList}</p>
+      ) : (
+        <ul className={styles.booksContainer}>
+          {books.map((book: BookData) => (
+            <BookCard
+              key={book.id}
+              name={book.title}
+              description={book.description}
+              image={book.image}
+            />
+          ))}
+        </ul>
+      )}
+    </>
+  );
+};

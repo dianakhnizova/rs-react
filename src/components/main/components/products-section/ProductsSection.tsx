@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import styles from './ProductsSection.module.scss';
 import { ProductsHeader } from './components/products-header/ProductsHeader';
 import { BooksList } from './components/books-list/BooksList';
@@ -11,14 +10,24 @@ interface Props {
   setError: (message: string) => void;
 }
 
-export class ProductsSection extends Component<Props> {
-  public render() {
-    return (
-      <div className={styles.container}>
-        <ProductsHeader />
-        <div className={styles.gridDivider} />
-        <BooksList {...this.props} />
-      </div>
-    );
-  }
-}
+export const ProductsSection = ({
+  searchTerm,
+  setLoading,
+  onClose,
+  isLoading,
+  setError,
+}: Props) => {
+  return (
+    <div className={styles.container}>
+      <ProductsHeader />
+      <div className={styles.gridDivider} />
+      <BooksList
+        searchTerm={searchTerm}
+        setLoading={setLoading}
+        onClose={onClose}
+        isLoading={isLoading}
+        setError={setError}
+      />
+    </div>
+  );
+};
