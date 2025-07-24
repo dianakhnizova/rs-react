@@ -31,7 +31,7 @@ export const Pagination = ({
         {messages.prevButton}
       </Button>
 
-      <p className={styles.pageNumberContainer}>
+      <p data-testid="page-number" className={styles.pageNumberContainer}>
         {messages.pageTitle}
         {currentPage}
       </p>
