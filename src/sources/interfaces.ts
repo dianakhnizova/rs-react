@@ -10,6 +10,7 @@ export interface IBookItemResponse {
 }
 
 export interface IBooksListResponse {
+  totalItems: number;
   items: IBookItemResponse[];
 }
 

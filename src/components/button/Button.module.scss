@@ -10,3 +10,8 @@
   padding: 3px 40px;
   align-items: center;
 }
+
+button[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

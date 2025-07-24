@@ -11,15 +11,21 @@ import { messages } from '@/sources/messages';
 import { isApiErrorResponse } from '@/utils/isApiErrorResponse';
 
 export const bookService = {
-  getBooksList: async (query: string): Promise<BookData[]> => {
+  getBooksList: async (
+    query: string,
+    page: number,
+    pageItemsResults: number
+  ): Promise<{ books: BookData[]; totalItems: number }> => {
     const trimmedQuery = query.trim();
+    const startIndex = (page - 1) * pageItemsResults;
 
     try {
       const searchQuery = trimmedQuery ? `intitle:${query.trim()}` : 'book';
 
       const response: AxiosResponse<IBooksListResponse> = await booksApi.get(
-        `?q=${encodeURIComponent(searchQuery)}&maxResults=20&langRestrict=en&key=${BOOKS_API_KEY}`
+        `?q=${encodeURIComponent(searchQuery)}&startIndex=${startIndex}&maxResults=${pageItemsResults}&langRestrict=en&key=${BOOKS_API_KEY}`
       );
+
       const booksResult: IBookItemResponse[] = Array.isArray(
         response.data.items
       )
@@ -27,13 +33,7 @@ export const bookService = {
         : [];
 
       const booksList: BookData[] = booksResult
-        .filter(
-          book =>
-            book.volumeInfo &&
-            book.volumeInfo.title
-              ?.toLowerCase()
-              .includes(trimmedQuery.toLowerCase())
-        )
+        .filter(book => book.volumeInfo)
         .map(book => ({
           id: book.id,
           title: book.volumeInfo.title,
@@ -45,18 +45,18 @@ export const bookService = {
             ) || '',
         }));
 
-      return booksList;
+      const totalItems = response.data.totalItems || 0;
+
+      return { books: booksList, totalItems };
     } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response?.data) {
-        const data: unknown = error.response.data;
-        const message = isApiErrorResponse(data)
-          ? data.error.message
-          : error.message || messages.errorMessage;
+      const message =
+        error instanceof AxiosError && error.response?.data
+          ? isApiErrorResponse(error.response.data)
+            ? error.response.data.error.message
+            : error.message || messages.errorMessage
+          : messages.errorMessage;
 
-        throw new Error(message);
-      }
-
-      throw new Error(messages.errorMessage);
+      throw new Error(message);
     }
   },
 };

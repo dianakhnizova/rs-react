@@ -4,6 +4,8 @@ import { messages } from '@/sources/messages';
 import { BookCard } from '../books-cards/BookCard';
 import type { BookData } from '@/sources/types';
 import { fetchBooksData } from '@/api/fetchBooksData';
+import { Pagination } from '@/components/pagination/Pagination';
+import { useSearchParams } from 'react-router-dom';
 
 export interface Props {
   searchTerm: string;
@@ -15,15 +17,31 @@ export interface Props {
 
 export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
   const [books, setBooks] = useState<BookData[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [totalItems, setTotalItems] = useState(0);
+
+  const pageItemsResults = 5;
+  const totalPages = Math.ceil(totalItems / pageItemsResults);
+  const pageFromURL = Number.parseInt(searchParams.get('page') || '1', 10);
+  const currentPage = Math.max(1, pageFromURL);
+
+  const handlePagination = (page: number) => {
+    setSearchParams({ page: page.toString() });
+  };
 
   useEffect(() => {
     const loadBooks = async () => {
       setLoading(true);
 
       try {
-        const books: BookData[] = await fetchBooksData(searchTerm);
+        const { booksList, totalItems } = await fetchBooksData(
+          searchTerm,
+          currentPage,
+          pageItemsResults
+        );
 
-        setBooks(books);
+        setBooks(booksList);
+        setTotalItems(totalItems);
       } catch (error: unknown) {
         const message =
           error instanceof Error ? error.message : messages.errorMessage;
@@ -35,7 +53,11 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
     };
 
     void loadBooks();
-  }, [searchTerm, setError, setLoading]);
+  }, [searchTerm, setError, setLoading, currentPage]);
+
+  useEffect(() => {
+    setSearchParams({ page: '1' });
+  }, [searchTerm]);
 
   return (
     <>
@@ -53,6 +75,12 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
           ))}
         </ul>
       )}
+
+      <Pagination
+        currentPage={currentPage}
+        onPageChange={handlePagination}
+        totalPages={totalPages}
+      />
     </>
   );
 };

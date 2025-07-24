@@ -10,44 +10,21 @@ vi.mock('../axios', () => ({
 
 describe('BooksService', () => {
   describe('getBooksList', () => {
-    it('Returns an empty array when response.items is not an array', async () => {
+    const defaultPage = 1;
+    const defaultPageItems = 10;
+
+    it('Returns an empty books and totalItems = 0 when response.items is not an array', async () => {
       (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
-        data: { items: undefined },
+        data: { items: undefined, totalItems: 0 },
       });
 
-      const result = await bookService.getBooksList('test');
+      const result = await bookService.getBooksList(
+        'test',
+        defaultPage,
+        defaultPageItems
+      );
 
-      expect(result).toEqual([]);
-    });
-
-    it('Filters books by title containing the search term', async () => {
-      (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
-        data: {
-          items: [
-            {
-              id: '1',
-              volumeInfo: {
-                title: 'React for Beginners',
-                description: 'Description',
-                imageLinks: {},
-              },
-            },
-            {
-              id: '2',
-              volumeInfo: {
-                title: 'Cooking Recipes',
-                description: 'Description',
-                imageLinks: {},
-              },
-            },
-          ],
-        },
-      });
-
-      const result = await bookService.getBooksList('react');
-
-      expect(result.length).toBe(1);
-      expect(result[0].title).toBe('React for Beginners');
+      expect(result).toEqual({ books: [], totalItems: 0 });
     });
 
     it('Throws error when API call fails', async () => {
@@ -55,9 +32,9 @@ describe('BooksService', () => {
         new Error('Internal Server Error')
       );
 
-      await expect(bookService.getBooksList('test')).rejects.toThrow(
-        'Failed to load books.'
-      );
+      await expect(
+        bookService.getBooksList('test', defaultPage, defaultPageItems)
+      ).rejects.toThrow('Failed to load books.');
     });
 
     it('Handles missing volumeInfo and imageLinks gracefully', async () => {
@@ -86,25 +63,33 @@ describe('BooksService', () => {
               },
             },
           ],
+          totalItems: 1,
         },
       });
 
-      const result = await bookService.getBooksList('book');
+      const result = await bookService.getBooksList(
+        'book',
+        defaultPage,
+        defaultPageItems
+      );
 
-      expect(result).toEqual([
-        {
-          id: '2',
-          title: 'Book with image',
-          description: 'Description',
-          image: 'https://image.jpg',
-        },
-        {
-          id: '3',
-          title: 'Book without image',
-          description: 'Description',
-          image: '',
-        },
-      ]);
+      expect(result).toEqual({
+        books: [
+          {
+            id: '2',
+            title: 'Book with image',
+            description: 'Description',
+            image: 'https://image.jpg',
+          },
+          {
+            id: '3',
+            title: 'Book without image',
+            description: 'Description',
+            image: '',
+          },
+        ],
+        totalItems: 1,
+      });
     });
   });
 });

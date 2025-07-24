@@ -5,6 +5,7 @@ import { fetchBooksData } from '@/api/fetchBooksData';
 import type { BookData } from '@/sources/types';
 import { messages as bookListMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('@/api/fetchBooksData');
 
@@ -36,7 +37,11 @@ const renderBooksList = (
     isLoading: false,
   };
 
-  return render(<BooksList {...defaultProps} {...overrides} />);
+  return render(
+    <MemoryRouter>
+      <BooksList {...defaultProps} {...overrides} />
+    </MemoryRouter>
+  );
 };
 
 describe('BookList', () => {
@@ -46,7 +51,10 @@ describe('BookList', () => {
     });
 
     it('Renders correct number of items when data is provided', async () => {
-      mockedFetchBooksData.mockResolvedValue(mockedBooks);
+      mockedFetchBooksData.mockResolvedValue({
+        booksList: mockedBooks,
+        totalItems: 20,
+      });
 
       renderBooksList({ searchTerm: 'react' });
 
@@ -58,7 +66,10 @@ describe('BookList', () => {
     });
 
     it('Renders "Not books for you" when fetch returns empty array', async () => {
-      mockedFetchBooksData.mockResolvedValue([]);
+      mockedFetchBooksData.mockResolvedValue({
+        booksList: [],
+        totalItems: 0,
+      });
 
       renderBooksList({ searchTerm: 'react' });
 
@@ -70,7 +81,10 @@ describe('BookList', () => {
     });
 
     it('Correctly displays item names and descriptions', async () => {
-      mockedFetchBooksData.mockResolvedValue(mockedBooks);
+      mockedFetchBooksData.mockResolvedValue({
+        booksList: mockedBooks,
+        totalItems: 20,
+      });
 
       renderBooksList({ searchTerm: 'react' });
 
@@ -82,13 +96,16 @@ describe('BookList', () => {
       }
     });
 
-    it('Calls fetchBooksData with correct searchTerm', async () => {
-      mockedFetchBooksData.mockResolvedValue([]);
+    it('Calls fetchBooksData with correct args', async () => {
+      mockedFetchBooksData.mockResolvedValue({
+        booksList: [],
+        totalItems: 0,
+      });
 
       renderBooksList({ searchTerm: 'react' });
 
       await waitFor(() => {
-        expect(mockedFetchBooksData).toHaveBeenCalledWith('react');
+        expect(mockedFetchBooksData).toHaveBeenCalledWith('react', 1, 5);
       });
     });
   });
