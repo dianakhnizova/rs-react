@@ -14,7 +14,7 @@
   grid-area: titleDescription;
 }
 
-.name,
+.title,
 .description,
 .image {
   display: flex;
@@ -35,7 +35,7 @@
     }
   }
 
-  .name,
+  .title,
   .description,
   .image {
     font-size: 10px;

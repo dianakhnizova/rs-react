@@ -8,7 +8,7 @@ import { LocalStorage } from '@/sources/enums';
 import { BooksList } from './components/products-section/components/books-list/BooksList';
 import { Button } from '@/components/button/Button';
 import { messages } from './messages';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { PagePath } from '@/router/enums';
 
 export const MainPage = () => {
@@ -18,7 +18,11 @@ export const MainPage = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
+  const { id } = useParams();
+
   const navigate = useNavigate();
+
+  const isDetailPage = !!id;
 
   const handleSearchQuery = (searchTerm: string) => {
     setSearchTerm(searchTerm);
@@ -51,15 +55,23 @@ export const MainPage = () => {
 
       <SearchSection onSearch={handleSearchQuery} searchTerm={searchTerm} />
 
-      <ProductsSection>
-        <BooksList
-          setLoading={setIsLoading}
-          searchTerm={searchTerm}
-          onClose={onClose}
-          isLoading={isLoading}
-          setError={setErrorMessage}
-        />
-      </ProductsSection>
+      <div className={styles.content}>
+        <ProductsSection>
+          <BooksList
+            setLoading={setIsLoading}
+            searchTerm={searchTerm}
+            onClose={onClose}
+            isLoading={isLoading}
+            setError={setErrorMessage}
+          />
+        </ProductsSection>
+
+        {isDetailPage && (
+          <div className={styles.productDetailsContainer}>
+            <Outlet />
+          </div>
+        )}
+      </div>
 
       <Button onClick={navigateToAboutPage}>
         {messages.toAboutPageButton}

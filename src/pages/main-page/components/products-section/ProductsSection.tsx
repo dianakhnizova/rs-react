@@ -1,5 +1,6 @@
 import styles from './ProductsSection.module.scss';
-import { ProductsHeader } from './components/products-header/ProductsHeader';
+import { ProductsHeader } from '../../../../components/products-header/ProductsHeader';
+import { titleList } from '@/components/products-header/productsTitleList';
 
 interface Props {
   children: React.ReactNode;
@@ -8,8 +9,14 @@ interface Props {
 export const ProductsSection = ({ children }: Props) => {
   return (
     <div className={styles.container}>
-      <ProductsHeader />
+      <ProductsHeader
+        title={titleList.title}
+        description={titleList.description}
+        image={titleList.image}
+      />
+
       <div className={styles.gridDivider} />
+
       {children}
     </div>
   );

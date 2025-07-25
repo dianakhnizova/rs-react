@@ -4,6 +4,7 @@ import { AboutPage } from '@/pages/about-page/AboutPage';
 import { Root } from './root/root';
 import { MainPage } from '@/pages/main-page/MainPage';
 import { NotFoundPage } from '@/pages/not-found-page/NotFoundPage';
+import { BookDetailPage } from '@/pages/book-detail-page/BookDetailPage';
 
 export const routes = [
   {
@@ -12,7 +13,17 @@ export const routes = [
     children: [
       { index: true, Component: MainPage },
       { path: PagePath.aboutPage, Component: AboutPage },
-      { path: PagePath.aboutPage, Component: NotFoundPage },
+      { path: PagePath.notFound, Component: NotFoundPage },
+      {
+        path: PagePath.mainPage,
+        Component: MainPage,
+        children: [
+          {
+            path: PagePath.bookDetailPage,
+            Component: BookDetailPage,
+          },
+        ],
+      },
     ],
   },
   {

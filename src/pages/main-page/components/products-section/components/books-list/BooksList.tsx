@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './BooksList.module.scss';
 import { messages } from '@/sources/messages';
-import { BookCard } from '../books-cards/BookCard';
+import { BookCard } from '../../../../../../components/books-cards/BookCard';
 import type { BookData } from '@/sources/types';
 import { fetchBooksData } from '@/api/fetchBooksData';
 import { Pagination } from '@/components/pagination/Pagination';
@@ -57,7 +57,7 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
 
   useEffect(() => {
     setSearchParams({ page: '1' });
-  }, [searchTerm]);
+  }, [searchTerm, setSearchParams]);
 
   return (
     <>
@@ -66,12 +66,7 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
       ) : (
         <ul className={styles.booksContainer}>
           {books.map((book: BookData) => (
-            <BookCard
-              key={book.id}
-              name={book.title}
-              description={book.description}
-              image={book.image}
-            />
+            <BookCard key={book.id} id={book.id} title={book.title} />
           ))}
         </ul>
       )}

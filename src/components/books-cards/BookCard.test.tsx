@@ -7,7 +7,8 @@ describe('BookCard', () => {
   it('Displays full data correctly', () => {
     render(
       <BookCard
-        name="Test Book"
+        id="123"
+        title="Test Book"
         description="Test Description"
         image="test.jpg"
       />
@@ -21,7 +22,8 @@ describe('BookCard', () => {
   it('Displays fallback description if missing', () => {
     render(
       <BookCard
-        name="No Description for Book"
+        id="1234"
+        title="No Description for Book"
         description=""
         image="test.jpg"
       />
@@ -32,7 +34,12 @@ describe('BookCard', () => {
 
   it('Displays placeholder image if image is missing', () => {
     render(
-      <BookCard name="No Image for Book" description="description" image="" />
+      <BookCard
+        id="12345"
+        title="No Image for Book"
+        description="description"
+        image=""
+      />
     );
 
     const img = screen.getByRole('img');

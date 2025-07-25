@@ -37,17 +37,38 @@ export const bookService = {
         .map(book => ({
           id: book.id,
           title: book.volumeInfo.title,
-          description: book.volumeInfo.description || '',
-          image:
-            book.volumeInfo.imageLinks?.thumbnail?.replace(
-              /^http:/,
-              'https:'
-            ) || '',
         }));
 
       const totalItems = response.data.totalItems || 0;
 
       return { books: booksList, totalItems };
+    } catch (error: unknown) {
+      const message =
+        error instanceof AxiosError && error.response?.data
+          ? isApiErrorResponse(error.response.data)
+            ? error.response.data.error.message
+            : error.message || messages.errorMessage
+          : messages.errorMessage;
+
+      throw new Error(message);
+    }
+  },
+
+  getBookById: async (id: string): Promise<BookData> => {
+    try {
+      const response: AxiosResponse<IBookItemResponse> = await booksApi.get(
+        `/${id}?key=${BOOKS_API_KEY}`
+      );
+
+      const book = response.data;
+
+      return {
+        id: book.id,
+        description: book.volumeInfo.description || '',
+        image:
+          book.volumeInfo.imageLinks?.thumbnail?.replace(/^http:/, 'https:') ||
+          '',
+      };
     } catch (error: unknown) {
       const message =
         error instanceof AxiosError && error.response?.data
