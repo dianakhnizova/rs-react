@@ -37,6 +37,12 @@ export const bookService = {
         .map(book => ({
           id: book.id,
           title: book.volumeInfo.title,
+          description: book.volumeInfo.description || '',
+          image:
+            book.volumeInfo.imageLinks?.thumbnail?.replace(
+              /^http:/,
+              'https:'
+            ) || '',
         }));
 
       const totalItems = response.data.totalItems || 0;
@@ -64,6 +70,7 @@ export const bookService = {
 
       return {
         id: book.id,
+        title: book.volumeInfo.title,
         description: book.volumeInfo.description || '',
         image:
           book.volumeInfo.imageLinks?.thumbnail?.replace(/^http:/, 'https:') ||
