@@ -8,6 +8,9 @@
   padding: 20px;
 
   &.clickable {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
     cursor: pointer;
     box-shadow: var(--shadow-3);
 

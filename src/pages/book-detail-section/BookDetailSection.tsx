@@ -1,12 +1,11 @@
 import { ProductsHeader } from '@/components/products-header/ProductsHeader';
 import styles from './BookDetailSection.module.scss';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { BooksDetails } from './components/BooksDetails';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
 import { PagePath } from '@/router/enums';
 import { titleList } from '@/components/products-header/productsTitleList';
-import { useSearchParams } from 'react-router-dom';
 
 export const BookDetailSection = () => {
   const { id } = useParams<{ id: string }>();

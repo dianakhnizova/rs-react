@@ -19,14 +19,9 @@ export const routes = [
             path: PagePath.bookDetailSection,
             Component: BookDetailSection,
           },
-          {
-            path: PagePath.notFound,
-            Component: NotFoundPage,
-          },
         ],
       },
       { path: PagePath.aboutPage, Component: AboutPage },
-      { path: PagePath.notFound, Component: NotFoundPage },
     ],
   },
   {
