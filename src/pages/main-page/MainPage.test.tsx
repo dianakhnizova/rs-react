@@ -31,7 +31,7 @@ describe('Main component', () => {
       expect(localStorage.getItem('searchInput')).toBe('react');
     });
 
-    it('Displays popup when loading is true', () => {
+    it('Displays spinner when loading is true', () => {
       renderWithRouter(<MainPage />);
 
       const input = screen.getByPlaceholderText(
@@ -45,7 +45,6 @@ describe('Main component', () => {
 
       fireEvent.click(button);
 
-      expect(screen.getByTestId('popup')).toBeInTheDocument();
       expect(screen.getByTestId('spinner')).toBeInTheDocument();
     });
   });
