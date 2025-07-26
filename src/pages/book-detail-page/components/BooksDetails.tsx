@@ -2,7 +2,7 @@ import { BookCard } from '@/components/books-cards/BookCard';
 import styles from './BooksDetails.module.scss';
 import { BookData } from '@/sources/types';
 import { useState, useEffect } from 'react';
-import { fetchBookById } from '@/api/fetchBookById';
+import { bookService } from '@/api/services/booksService';
 import { messages } from './messages';
 
 interface Props {
@@ -14,7 +14,7 @@ export const BooksDetails = ({ bookId }: Props) => {
 
   useEffect(() => {
     const loadBook = async () => {
-      const detailBooks = await fetchBookById(bookId);
+      const detailBooks = await bookService.getBookById(bookId);
       setBook(detailBooks);
     };
 
