@@ -1,27 +1,16 @@
 import { NavLink } from 'react-router-dom';
 import styles from './BookCard.module.scss';
-import { messages } from './messages';
 import BookPlaceholder from '@/assets/img-placeholder.jpg';
+import { BookDetail } from '@/sources/interfaces';
 
 interface Props {
   id: string;
   title?: string;
-  description?: string;
   image?: string;
-  author?: string;
-  pageCount?: number | string;
-  printType?: string;
+  details?: BookDetail[];
 }
 
-export const BookCard = ({
-  id,
-  title,
-  description,
-  image,
-  author,
-  pageCount,
-  printType,
-}: Props) => {
+export const BookCard = ({ id, title, image, details }: Props) => {
   return (
     <li className={styles.book}>
       {title && (
@@ -29,14 +18,6 @@ export const BookCard = ({
           <NavLink className={styles.titleName} to={id}>
             {title}
           </NavLink>
-        </div>
-      )}
-
-      {description && (
-        <div className={styles.description}>
-          <p>
-            {description?.trim() ? description : messages.titleNotDescription}
-          </p>
         </div>
       )}
 
@@ -50,23 +31,16 @@ export const BookCard = ({
         </div>
       )}
 
-      {author && (
-        <div className={styles.author}>
-          <p>{author || messages.titleNotAuthor}</p>
-        </div>
-      )}
+      {details &&
+        details.map(({ value, className }, index) => {
+          if (!value) return null;
 
-      {pageCount && (
-        <div className={styles.pageCount}>
-          <p>{pageCount || messages.titleNotPageCount}</p>
-        </div>
-      )}
-
-      {printType && (
-        <div className={styles.printType}>
-          <p>{printType || messages.titleNotPrintType}</p>
-        </div>
-      )}
+          return (
+            <div key={index} className={styles[className]}>
+              <p>{value}</p>
+            </div>
+          );
+        })}
     </li>
   );
 };

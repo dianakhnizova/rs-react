@@ -3,6 +3,7 @@ import styles from './BooksDetails.module.scss';
 import { BookData } from '@/sources/types';
 import { useState, useEffect } from 'react';
 import { fetchBookById } from '@/api/fetchBookById';
+import { messages } from './messages';
 
 interface Props {
   bookId: string;
@@ -26,10 +27,24 @@ export const BooksDetails = ({ bookId }: Props) => {
         <BookCard
           key={book.id}
           id={book.id}
-          description={book.description}
-          author={book.authors}
-          pageCount={book.pageCount}
-          printType={book.printType}
+          details={[
+            {
+              value: book.description || messages.titleNotDescription,
+              className: styles.description,
+            },
+            {
+              value: book.authors || messages.titleNotAuthor,
+              className: styles.authors,
+            },
+            {
+              value: book.pageCount || messages.titleNotPageCount,
+              className: styles.pageCount,
+            },
+            {
+              value: book.printType || messages.titleNotPrintType,
+              className: styles.printType,
+            },
+          ]}
         />
       )}
     </div>

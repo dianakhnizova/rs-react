@@ -22,3 +22,8 @@ export interface IApiErrorResponse {
     message: string;
   };
 }
+
+export interface BookDetail {
+  value: string | number;
+  className: string;
+}
