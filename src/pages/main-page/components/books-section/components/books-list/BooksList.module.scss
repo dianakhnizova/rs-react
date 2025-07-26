@@ -1,7 +1,8 @@
 .booksContainer {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  gap: 40px;
   width: 100%;
   padding: 20px;
   box-shadow: var(--shadow-3);

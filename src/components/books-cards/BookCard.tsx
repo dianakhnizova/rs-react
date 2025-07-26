@@ -1,6 +1,7 @@
 import styles from './BookCard.module.scss';
 import BookPlaceholder from '@/assets/img-placeholder.jpg';
 import { BookDetail } from '@/sources/interfaces';
+import classNames from 'classnames';
 
 interface Props {
   title?: string;
@@ -11,7 +12,10 @@ interface Props {
 
 export const BookCard = ({ title, image, details, onClick }: Props) => {
   return (
-    <li onClick={onClick} className={styles.book}>
+    <li
+      onClick={onClick}
+      className={classNames(styles.book, { [styles.clickable]: !!onClick })}
+    >
       {title && (
         <div className={styles.title}>
           <p className={styles.titleName}>{title}</p>

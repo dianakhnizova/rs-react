@@ -1,6 +1,16 @@
-const BOOKS_API_KEY = 'AIzaSyAPtAQ26aRgcWR2jK2adRfGoT6zqsYPqdc';
-const BOOKS_API_URL = 'https://www.googleapis.com/books/v1/volumes';
+const OPEN_LIBRARY_SEARCH_URL = 'https://openlibrary.org/search.json';
+const OPEN_LIBRARY_WORK_URL = 'https://openlibrary.org/works';
+const OPEN_LIBRARY_COVER_URL = 'https://covers.openlibrary.org/b/id';
+const getAuthorUrl = (key: string) => `https://openlibrary.org${key}.json`;
+
 const RSSCHOOL_URL = 'https://rs.school/courses/reactjs';
 const ITEMS_PER_PAGE = 5;
 
-export { BOOKS_API_KEY, BOOKS_API_URL, RSSCHOOL_URL, ITEMS_PER_PAGE };
+export {
+  OPEN_LIBRARY_SEARCH_URL,
+  OPEN_LIBRARY_WORK_URL,
+  OPEN_LIBRARY_COVER_URL,
+  getAuthorUrl,
+  RSSCHOOL_URL,
+  ITEMS_PER_PAGE,
+};

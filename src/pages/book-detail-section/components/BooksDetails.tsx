@@ -1,9 +1,9 @@
 import { BookCard } from '@/components/books-cards/BookCard';
-import styles from './BooksDetails.module.scss';
 import { BookData } from '@/sources/types';
 import { useState, useEffect } from 'react';
 import { bookService } from '@/api/services/booksService';
 import { messages } from './messages';
+import styles from './BooksDetails.module.scss';
 
 interface Props {
   bookId: string;
@@ -22,26 +22,26 @@ export const BooksDetails = ({ bookId }: Props) => {
   }, [bookId]);
 
   return (
-    <div className={styles.detailContainer}>
+    <div className={styles.container}>
       {book && (
         <BookCard
           key={book.id}
           details={[
             {
               value: book.description || messages.titleNotDescription,
-              className: styles.description,
+              className: 'description',
             },
             {
               value: book.authors || messages.titleNotAuthor,
-              className: styles.authors,
+              className: 'authors',
             },
             {
-              value: book.pageCount || messages.titleNotPageCount,
-              className: styles.pageCount,
+              value: book.year || messages.titleNotPageCount,
+              className: 'year',
             },
             {
               value: book.printType || messages.titleNotPrintType,
-              className: styles.printType,
+              className: 'printType',
             },
           ]}
         />

@@ -1,10 +1,10 @@
 export type BookData = {
   id: string;
-  title?: string;
+  title: string;
   description?: string;
   image?: string;
   authors?: string;
-  pageCount?: number | string;
+  year?: string;
   printType?: string;
 };
 

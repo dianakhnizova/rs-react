@@ -3,6 +3,6 @@ export type HeaderTitle = {
   description?: string;
   image?: string;
   authors?: string;
-  pageCount?: string;
+  year?: string;
   printType?: string;
 };

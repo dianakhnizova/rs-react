@@ -47,7 +47,7 @@ export const MainPage = () => {
 
   const navigateToBookDetail = (bookId: string) => {
     void navigate(
-      `${PagePath.bookDetailPage.replace(':id', bookId)}?page=${currentPage}`
+      `${PagePath.bookDetailSection.replace(':id', bookId)}?page=${currentPage}`
     );
   };
 
@@ -102,11 +102,7 @@ export const MainPage = () => {
           />
         </BooksSection>
 
-        {isDetailPage && (
-          <div className={styles.productDetailsContainer}>
-            <Outlet />
-          </div>
-        )}
+        {isDetailPage && <Outlet />}
       </div>
 
       <Button onClick={navigateToAboutPage}>

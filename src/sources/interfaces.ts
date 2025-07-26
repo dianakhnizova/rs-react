@@ -1,20 +1,27 @@
-export interface IBookItemResponse {
-  id: string;
-  volumeInfo: {
-    title: string;
-    description?: string;
-    imageLinks?: {
-      thumbnail?: string;
-    };
-    authors?: string;
-    pageCount?: number | string;
-    printType?: string;
+export interface IBookSearchResult {
+  key: string;
+  title: string;
+  first_sentence?: string | string[];
+  cover_i?: number;
+}
+
+export interface IAuthorRef {
+  author: {
+    key: string;
   };
 }
 
+export interface IBookItemResponse {
+  key: string;
+  title: string;
+  description?: string | { value: string };
+  first_publish_date?: string;
+  authors?: IAuthorRef[];
+}
+
 export interface IBooksListResponse {
-  totalItems: number;
-  items?: IBookItemResponse[];
+  numFound: number;
+  docs: IBookSearchResult[];
 }
 
 export interface IApiErrorResponse {

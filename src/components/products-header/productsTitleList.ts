@@ -6,6 +6,6 @@ export const titleList: HeaderTitle = {
   description: productsHeaderMessages.titleDescription,
   image: productsHeaderMessages.titleImage,
   authors: productsHeaderMessages.titleAuthors,
-  pageCount: productsHeaderMessages.titlePageCount,
+  year: productsHeaderMessages.titleYear,
   printType: productsHeaderMessages.titlePrintType,
 };

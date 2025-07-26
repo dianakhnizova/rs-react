@@ -1,9 +1,26 @@
 .book {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   gap: 80px;
-  width: 100%;
-  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  padding: 20px;
+
+  &.clickable {
+    cursor: pointer;
+    box-shadow: var(--shadow-3);
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .titleName {
@@ -11,18 +28,21 @@
   color: var(--clr-line);
 }
 
+.description {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: center;
+}
+
 .image {
   display: flex;
-  justify-content: flex-end;
 
   img {
     height: 140px;
   }
-}
-
-.title,
-.description {
-  display: flex;
 }
 
 @media (max-width: 800px) {

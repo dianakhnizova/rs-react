@@ -3,6 +3,6 @@ export const messages = {
   titleDescription: 'Description',
   titleImage: 'Image',
   titleAuthors: 'Author',
-  titlePageCount: 'Page count',
+  titleYear: 'Year',
   titlePrintType: 'Print Type',
 };

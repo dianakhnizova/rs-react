@@ -5,7 +5,7 @@ interface Props {
   description?: string;
   image?: string;
   authors?: string;
-  pageCount?: number | string;
+  year?: number | string;
   printType?: string;
 }
 
@@ -13,7 +13,7 @@ export const ProductsHeader = ({
   title,
   description,
   image,
-  pageCount,
+  year,
   authors,
   printType,
 }: Props) => {
@@ -23,7 +23,7 @@ export const ProductsHeader = ({
       {description && <p className={styles.title}>{description}</p>}
       {image && <p className={styles.title}>{image}</p>}
       {authors && <p className={styles.title}>{authors}</p>}
-      {pageCount && <p className={styles.title}>{pageCount}</p>}
+      {year && <p className={styles.title}>{year}</p>}
       {printType && <p className={styles.title}>{printType}</p>}
     </div>
   );

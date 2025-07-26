@@ -1,5 +1,5 @@
 import { ProductsHeader } from '@/components/products-header/ProductsHeader';
-import styles from './BookDetailPage.module.scss';
+import styles from './BookDetailSection.module.scss';
 import { useParams, useNavigate } from 'react-router-dom';
 import { BooksDetails } from './components/BooksDetails';
 import { messages } from './messages';
@@ -8,7 +8,7 @@ import { PagePath } from '@/router/enums';
 import { titleList } from '@/components/products-header/productsTitleList';
 import { useSearchParams } from 'react-router-dom';
 
-export const BookDetailPage = () => {
+export const BookDetailSection = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -27,7 +27,7 @@ export const BookDetailPage = () => {
       <ProductsHeader
         description={titleList.description}
         authors={titleList.authors}
-        pageCount={titleList.pageCount}
+        year={titleList.year}
         printType={titleList.printType}
       />
 
