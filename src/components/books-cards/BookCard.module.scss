@@ -1,27 +1,31 @@
 .book {
-  display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / -1;
-  gap: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
   width: 100%;
-}
-
-.titleName {
-  grid-area: titleName;
 }
 
 .titleDescription {
   grid-area: titleDescription;
 }
 
-.title,
-.description,
+.titleName {
+  text-decoration: none;
+  color: var(--clr-line);
+}
+
 .image {
   display: flex;
+  justify-content: flex-end;
 
   img {
     height: 140px;
   }
+}
+
+.title,
+.description {
+  display: flex;
 }
 
 @media (max-width: 800px) {

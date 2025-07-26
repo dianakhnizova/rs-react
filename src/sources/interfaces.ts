@@ -6,6 +6,9 @@ export interface IBookItemResponse {
     imageLinks?: {
       thumbnail?: string;
     };
+    authors?: string;
+    pageCount?: number | string;
+    printType?: string;
   };
 }
 

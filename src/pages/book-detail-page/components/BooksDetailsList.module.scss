@@ -1,6 +1,6 @@
 .detailContainer {
-  display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
+  display: flex;
+  justify-content: space-between;
   gap: 20px;
   width: 100%;
   padding: 20px;

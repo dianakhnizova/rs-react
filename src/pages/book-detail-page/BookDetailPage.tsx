@@ -23,7 +23,9 @@ export const BookDetailPage = () => {
     <div className={styles.container}>
       <ProductsHeader
         description={titleList.description}
-        image={titleList.image}
+        authors={titleList.authors}
+        pageCount={titleList.pageCount}
+        printType={titleList.printType}
       />
 
       <div className={styles.gridDivider} />

@@ -56,7 +56,12 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
   }, [searchTerm, setError, setLoading, currentPage]);
 
   useEffect(() => {
-    setSearchParams({ page: '1' });
+    if (searchTerm) {
+      setSearchParams(prev => {
+        const page = prev.get('page');
+        return page === '1' ? prev : { page: '1' };
+      });
+    }
   }, [searchTerm, setSearchParams]);
 
   return (
@@ -66,7 +71,12 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
       ) : (
         <ul className={styles.booksContainer}>
           {books.map((book: BookData) => (
-            <BookCard key={book.id} id={book.id} title={book.title} />
+            <BookCard
+              key={book.id}
+              id={book.id}
+              title={book.title}
+              image={book.image}
+            />
           ))}
         </ul>
       )}

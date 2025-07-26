@@ -70,11 +70,10 @@ export const bookService = {
 
       return {
         id: book.id,
-        title: book.volumeInfo.title,
         description: book.volumeInfo.description || '',
-        image:
-          book.volumeInfo.imageLinks?.thumbnail?.replace(/^http:/, 'https:') ||
-          '',
+        authors: book.volumeInfo.authors || '',
+        pageCount: book.volumeInfo.pageCount,
+        printType: book.volumeInfo.printType || '',
       };
     } catch (error: unknown) {
       const message =

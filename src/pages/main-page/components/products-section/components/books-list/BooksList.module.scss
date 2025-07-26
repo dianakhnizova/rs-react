@@ -1,6 +1,6 @@
 .booksContainer {
-  display: grid;
-  grid-template-columns: 1fr 4fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 20px;
   width: 100%;
   padding: 20px;

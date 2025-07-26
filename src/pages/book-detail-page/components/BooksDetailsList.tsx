@@ -27,7 +27,9 @@ export const BooksDetails = ({ bookId }: Props) => {
           key={book.id}
           id={book.id}
           description={book.description}
-          image={book.image}
+          author={book.authors}
+          pageCount={book.pageCount}
+          printType={book.printType}
         />
       )}
     </ul>

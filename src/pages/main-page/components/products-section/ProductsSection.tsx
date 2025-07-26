@@ -9,11 +9,7 @@ interface Props {
 export const ProductsSection = ({ children }: Props) => {
   return (
     <div className={styles.container}>
-      <ProductsHeader
-        title={titleList.title}
-        description={titleList.description}
-        image={titleList.image}
-      />
+      <ProductsHeader title={titleList.title} image={titleList.image} />
 
       <div className={styles.gridDivider} />
 
