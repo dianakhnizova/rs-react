@@ -40,17 +40,10 @@ export const MainPage = () => {
 
   return (
     <main data-testid="main-page" className={styles.container}>
-      <Popup
-        isOpen={isLoading || !!errorMessage}
-        onClose={onClose}
-        data-testid="popup"
-        isLoading={isLoading}
-      >
-        {errorMessage ? (
-          <p className={styles.error}>{errorMessage}</p>
-        ) : (
-          <Spinner isLoading={isLoading} />
-        )}
+      <Spinner isLoading={isLoading} />
+
+      <Popup isOpen={!!errorMessage} onClose={onClose} data-testid="popup">
+        <p className={styles.error}>{errorMessage}</p>
       </Popup>
 
       <SearchSection onSearch={handleSearchQuery} searchTerm={searchTerm} />

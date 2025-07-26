@@ -10,17 +10,21 @@ export const Spinner = ({ isLoading }: Props) => {
   if (!isLoading) return;
 
   return (
-    <div className={styles.container} data-testid="spinner">
-      <div className={styles.imgContainer}>
-        <img
-          src={BookImage}
-          alt={messages.titleSpinner}
-          className={styles.image}
-          data-testid="spinner-img"
-        />
-      </div>
+    <>
+      <div className={styles.overlay} />
 
-      <h2 className={styles.loadingTitle}>{messages.titleLoading}</h2>
-    </div>
+      <div className={styles.container} data-testid="spinner">
+        <div className={styles.imgContainer}>
+          <img
+            src={BookImage}
+            alt={messages.titleSpinner}
+            className={styles.image}
+            data-testid="spinner-img"
+          />
+        </div>
+
+        <h2 className={styles.loadingTitle}>{messages.titleLoading}</h2>
+      </div>
+    </>
   );
 };

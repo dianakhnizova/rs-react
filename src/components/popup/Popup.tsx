@@ -7,10 +7,9 @@ interface Props {
   isOpen: boolean;
   onClose?: () => void;
   children: ReactNode;
-  isLoading: boolean;
 }
 
-export const Popup = ({ isOpen, onClose, children, isLoading }: Props) => {
+export const Popup = ({ isOpen, onClose, children }: Props) => {
   if (!isOpen) return null;
 
   return (
@@ -19,9 +18,7 @@ export const Popup = ({ isOpen, onClose, children, isLoading }: Props) => {
 
       <div className={styles.container}>
         {children}
-        {!isLoading && onClose && (
-          <Button onClick={onClose}>{messages.closeButton}</Button>
-        )}
+        {onClose && <Button onClick={onClose}>{messages.closeButton}</Button>}
       </div>
     </>
   );
