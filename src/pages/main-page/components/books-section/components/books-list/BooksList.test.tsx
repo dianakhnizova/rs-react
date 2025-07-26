@@ -6,6 +6,8 @@ import type { BookData } from '@/sources/types';
 import { messages as bookListMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
 import { MemoryRouter } from 'react-router-dom';
+import { URLSearchParams } from 'url';
+import type { URLSearchParamsInit } from 'react-router-dom';
 
 vi.mock('@/api/fetchBooksData');
 
@@ -35,6 +37,8 @@ const renderBooksList = (
     setError: vi.fn(),
     onClose: vi.fn(),
     isLoading: false,
+    searchParams: new URLSearchParams('page=1'),
+    setSearchParams: vi.fn() as (next: URLSearchParamsInit) => void,
   };
 
   return render(
