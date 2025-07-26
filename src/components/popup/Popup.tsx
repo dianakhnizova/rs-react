@@ -5,30 +5,24 @@ import { Button } from '../button/Button';
 
 interface Props {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children: ReactNode;
   isLoading: boolean;
 }
 
 export const Popup = ({ isOpen, onClose, children, isLoading }: Props) => {
+  if (!isOpen) return null;
+
   return (
     <>
-      {isOpen && (
-        <>
-          <div
-            className={styles.overlay}
-            onClick={onClose}
-            data-testid="popup"
-          />
+      <div className={styles.overlay} onClick={onClose} data-testid="popup" />
 
-          <div className={styles.container}>
-            {children}
-            {!isLoading && (
-              <Button onClick={onClose}>{messages.closeButton}</Button>
-            )}
-          </div>
-        </>
-      )}
+      <div className={styles.container}>
+        {children}
+        {!isLoading && onClose && (
+          <Button onClick={onClose}>{messages.closeButton}</Button>
+        )}
+      </div>
     </>
   );
 };

@@ -14,7 +14,7 @@ export interface IBookItemResponse {
 
 export interface IBooksListResponse {
   totalItems: number;
-  items: IBookItemResponse[];
+  items?: IBookItemResponse[];
 }
 
 export interface IApiErrorResponse {

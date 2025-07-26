@@ -6,6 +6,7 @@ import type { BookData } from '@/sources/types';
 import { fetchBooksData } from '@/api/fetchBooksData';
 import { Pagination } from '@/components/pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
+import { ITEMS_PER_PAGE } from '@/sources/constants';
 
 export interface Props {
   searchTerm: string;
@@ -20,9 +21,8 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [totalItems, setTotalItems] = useState(0);
 
-  const pageItemsResults = 5;
-  const totalPages = Math.ceil(totalItems / pageItemsResults);
-  const pageFromURL = Number.parseInt(searchParams.get('page') || '1', 10);
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const pageFromURL = Number(searchParams.get('page') || '1') || 1;
   const currentPage = Math.max(1, pageFromURL);
 
   const handlePagination = (page: number) => {
@@ -37,7 +37,7 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
         const { booksList, totalItems } = await fetchBooksData(
           searchTerm,
           currentPage,
-          pageItemsResults
+          ITEMS_PER_PAGE
         );
 
         setBooks(booksList);

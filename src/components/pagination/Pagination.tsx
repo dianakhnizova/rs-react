@@ -14,15 +14,11 @@ export const Pagination = ({
   totalPages,
 }: Props) => {
   const handlePrevButton = () => {
-    if (currentPage > 1) {
-      onPageChange(currentPage - 1);
-    }
+    onPageChange(currentPage - 1);
   };
 
   const handleNextButton = () => {
-    if (currentPage < totalPages) {
-      onPageChange(currentPage + 1);
-    }
+    onPageChange(currentPage + 1);
   };
 
   return (

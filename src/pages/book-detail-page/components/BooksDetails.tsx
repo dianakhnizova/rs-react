@@ -1,5 +1,5 @@
 import { BookCard } from '@/components/books-cards/BookCard';
-import styles from './BooksDetailsList.module.scss';
+import styles from './BooksDetails.module.scss';
 import { BookData } from '@/sources/types';
 import { useState, useEffect } from 'react';
 import { fetchBookById } from '@/api/fetchBookById';
@@ -21,7 +21,7 @@ export const BooksDetails = ({ bookId }: Props) => {
   }, [bookId]);
 
   return (
-    <ul className={styles.detailContainer}>
+    <div className={styles.detailContainer}>
       {book && (
         <BookCard
           key={book.id}
@@ -32,6 +32,6 @@ export const BooksDetails = ({ bookId }: Props) => {
           printType={book.printType}
         />
       )}
-    </ul>
+    </div>
   );
 };

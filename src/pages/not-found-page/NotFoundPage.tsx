@@ -13,7 +13,7 @@ export const NotFoundPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <div className={styles.imageContainer}>
         <img
           src={NotFoundIcon}
@@ -23,6 +23,6 @@ export const NotFoundPage = () => {
       </div>
 
       <Button onClick={navigateToMain}>{messages.navigateMainButton}</Button>
-    </div>
+    </section>
   );
 };

@@ -14,7 +14,7 @@ export const AboutPage = () => {
   };
 
   return (
-    <div data-testid="about-page" className={styles.container}>
+    <section data-testid="about-page" className={styles.container}>
       <div className={styles.infoContainer}>
         {AboutMeDataList.map((data, index) => {
           return (
@@ -36,6 +36,6 @@ export const AboutPage = () => {
       </a>
 
       <Button onClick={navigateToMainPage}>{messages.backButton}</Button>
-    </div>
+    </section>
   );
 };

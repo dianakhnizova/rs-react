@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { ProductsSection } from './ProductsSection';
+import { ProductsSection } from './BooksSection';
 
 describe('ProductsSection', () => {
   it('Renders children inside ProductsSection', () => {

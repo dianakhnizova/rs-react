@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styles from './MainPage.module.scss';
 import { SearchSection } from './components/search-section/SearchSection';
-import { ProductsSection } from './components/products-section/ProductsSection';
+import { BooksSection } from './components/books-section/BooksSection';
 import { Popup } from '@/components/popup/Popup';
 import { Spinner } from '@/components/spinner/Spinner';
 import { LocalStorage } from '@/sources/enums';
-import { BooksList } from './components/products-section/components/books-list/BooksList';
+import { BooksList } from './components/books-section/components/books-list/BooksList';
 import { Button } from '@/components/button/Button';
 import { messages } from './messages';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
@@ -56,7 +56,7 @@ export const MainPage = () => {
       <SearchSection onSearch={handleSearchQuery} searchTerm={searchTerm} />
 
       <div className={styles.content}>
-        <ProductsSection>
+        <BooksSection>
           <BooksList
             setLoading={setIsLoading}
             searchTerm={searchTerm}
@@ -64,7 +64,7 @@ export const MainPage = () => {
             isLoading={isLoading}
             setError={setErrorMessage}
           />
-        </ProductsSection>
+        </BooksSection>
 
         {isDetailPage && (
           <div className={styles.productDetailsContainer}>

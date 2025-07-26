@@ -1,7 +1,7 @@
 import { ProductsHeader } from '@/components/products-header/ProductsHeader';
 import styles from './BookDetailPage.module.scss';
 import { useParams, useNavigate } from 'react-router-dom';
-import { BooksDetails } from './components/BooksDetailsList';
+import { BooksDetails } from './components/BooksDetails';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
 import { PagePath } from '@/router/enums';
@@ -20,7 +20,7 @@ export const BookDetailPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <ProductsHeader
         description={titleList.description}
         authors={titleList.authors}
@@ -33,6 +33,6 @@ export const BookDetailPage = () => {
       <BooksDetails bookId={id} />
 
       <Button onClick={handleCloseButton}>{messages.closeButton}</Button>
-    </div>
+    </section>
   );
 };
