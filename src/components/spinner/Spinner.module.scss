@@ -2,6 +2,24 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  position: absolute;
+  box-shadow: var(--shadow-3);
+  border-radius: 10px;
+  background-color: var(--clr-bg-1);
+  z-index: 1000;
+  margin-top: 100px;
+  padding: 40px;
+  width: 30%;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--clr-overlay);
+  z-index: 900;
 }
 
 .imgContainer {

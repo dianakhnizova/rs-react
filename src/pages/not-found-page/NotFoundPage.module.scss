@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px;
+}
+
+.imageContainer {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  box-shadow: var(--shadow-2);
+  padding: 40px;
+}
+
+.image {
+  width: 100%;
+}

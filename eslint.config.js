@@ -27,7 +27,7 @@ export default tseslint
         'coverage/',
         'tests',
         'vite.config.ts',
-          '**/*.test.tsx',
+        '**/*.test.tsx',
       ],
     },
     {

@@ -1,0 +1,67 @@
+.book {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  padding: 20px;
+
+  &.clickable {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    cursor: pointer;
+    box-shadow: var(--shadow-3);
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleName {
+  text-decoration: none;
+  color: var(--clr-line);
+}
+
+.description {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.image {
+  display: flex;
+
+  img {
+    height: 140px;
+  }
+}
+
+@media (max-width: 800px) {
+  .image {
+    display: flex;
+    width: 100%;
+
+    img {
+      width: 40px;
+      height: 80px;
+    }
+  }
+
+  .title,
+  .description,
+  .image {
+    font-size: 10px;
+  }
+}

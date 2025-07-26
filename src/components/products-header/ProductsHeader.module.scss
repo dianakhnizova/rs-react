@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+  box-shadow: var(--shadow-3);
+  width: 100%;
+  padding: 40px;
+}
+
+@media (max-width: 800px) {
+  .productsHeaderContainer {
+    font-size: 10px;
+  }
+}
