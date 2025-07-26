@@ -7,7 +7,6 @@ describe('BookCard', () => {
     render(
       <MemoryRouter>
         <BookCard
-          id="123"
           title="Test Book"
           image="test.jpg"
           details={[
@@ -19,9 +18,6 @@ describe('BookCard', () => {
         />
       </MemoryRouter>
     );
-
-    const link = screen.getByRole('link', { name: /test book/i });
-    expect(link).toHaveAttribute('href', '/123');
 
     const image = screen.getByRole('img');
     expect(image).toHaveAttribute('src', 'test.jpg');
