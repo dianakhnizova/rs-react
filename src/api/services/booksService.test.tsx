@@ -1,12 +1,9 @@
 import { bookService } from './booksService';
-import { booksApi } from '../axios';
 import { vi } from 'vitest';
+import axios from 'axios';
 
-vi.mock('../axios', () => ({
-  booksApi: {
-    get: vi.fn(),
-  },
-}));
+vi.mock('axios');
+const mockedAxios = axios as unknown as { get: ReturnType<typeof vi.fn> };
 
 describe('BooksService', () => {
   describe('getBooksList', () => {
@@ -14,8 +11,11 @@ describe('BooksService', () => {
     const defaultPageItems = 10;
 
     it('Returns an empty books and totalItems = 0 when response.items is not an array', async () => {
-      (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
-        data: { items: undefined, totalItems: 0 },
+      mockedAxios.get.mockResolvedValue({
+        data: {
+          docs: undefined,
+          numFound: 0,
+        },
       });
 
       const result = await bookService.getBooksList(
@@ -28,32 +28,20 @@ describe('BooksService', () => {
     });
 
     it('Handles missing volumeInfo and imageLinks gracefully', async () => {
-      (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
+      mockedAxios.get.mockResolvedValue({
         data: {
-          items: [
+          docs: [
             {
-              id: '1',
-              volumeInfo: undefined,
+              key: '/works/OL123W',
+              title: 'Book with image',
+              cover_i: 12345,
             },
             {
-              id: '2',
-              volumeInfo: {
-                title: 'Book with image',
-                description: 'Description',
-                imageLinks: {
-                  thumbnail: 'http://image.jpg',
-                },
-              },
-            },
-            {
-              id: '3',
-              volumeInfo: {
-                title: 'Book without image',
-                description: 'Description',
-              },
+              key: '/works/OL456W',
+              title: 'Book without image',
             },
           ],
-          totalItems: 1,
+          numFound: 2,
         },
       });
 
@@ -66,19 +54,17 @@ describe('BooksService', () => {
       expect(result).toEqual({
         books: [
           {
-            id: '2',
+            id: 'OL123W',
             title: 'Book with image',
-            description: 'Description',
-            image: 'https://image.jpg',
+            image: 'https://covers.openlibrary.org/b/id/12345-M.jpg',
           },
           {
-            id: '3',
+            id: 'OL456W',
             title: 'Book without image',
-            description: 'Description',
             image: '',
           },
         ],
-        totalItems: 1,
+        totalItems: 2,
       });
     });
   });
