@@ -11,19 +11,22 @@ export const routes = [
     path: PagePath.root,
     Component: Root,
     children: [
-      { index: true, Component: MainPage },
-      { path: PagePath.aboutPage, Component: AboutPage },
-      { path: PagePath.notFound, Component: NotFoundPage },
       {
-        path: PagePath.mainPage,
+        path: PagePath.root,
         Component: MainPage,
         children: [
           {
             path: PagePath.bookDetailPage,
             Component: BookDetailPage,
           },
+          {
+            path: PagePath.notFound,
+            Component: NotFoundPage,
+          },
         ],
       },
+      { path: PagePath.aboutPage, Component: AboutPage },
+      { path: PagePath.notFound, Component: NotFoundPage },
     ],
   },
   {

@@ -26,7 +26,6 @@ export const BooksDetails = ({ bookId }: Props) => {
       {book && (
         <BookCard
           key={book.id}
-          id={book.id}
           details={[
             {
               value: book.description || messages.titleNotDescription,
