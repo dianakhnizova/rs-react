@@ -1,6 +1,7 @@
 import { prepareBooksList } from './prepareBooksList';
 import { messages } from '@/sources/messages';
 import type { BookData } from '@/sources/types';
+import ImgPlaceholder from '@/assets/img-placeholder.jpg';
 
 describe('prepareBooksList', () => {
   it('returns books with titles uppercased', () => {
@@ -21,10 +22,12 @@ describe('prepareBooksList', () => {
       {
         id: '1',
         title: 'TITLE TEST 1',
+        image: ImgPlaceholder,
       },
       {
         id: '2',
         title: 'TITLE TEST 2',
+        image: ImgPlaceholder,
       },
     ]);
   });

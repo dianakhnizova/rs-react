@@ -34,7 +34,9 @@ export const BookCard = ({
 
       {description && (
         <div className={styles.description}>
-          <p>{description || messages.titleNotDescription}</p>
+          <p>
+            {description?.trim() ? description : messages.titleNotDescription}
+          </p>
         </div>
       )}
 

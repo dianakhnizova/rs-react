@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import { ProductsSection } from './BooksSection';
+import { BooksSection } from './BooksSection';
 
 describe('ProductsSection', () => {
   it('Renders children inside ProductsSection', () => {
     render(
-      <ProductsSection>
+      <BooksSection>
         <div data-testid="mock-child">Hello from child</div>
-      </ProductsSection>
+      </BooksSection>
     );
 
     expect(screen.getByTestId('mock-child')).toBeInTheDocument();

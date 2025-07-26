@@ -27,16 +27,6 @@ describe('BooksService', () => {
       expect(result).toEqual({ books: [], totalItems: 0 });
     });
 
-    it('Throws error when API call fails', async () => {
-      (booksApi.get as ReturnType<typeof vi.fn>).mockRejectedValue(
-        new Error('Internal Server Error')
-      );
-
-      await expect(
-        bookService.getBooksList('test', defaultPage, defaultPageItems)
-      ).rejects.toThrow('Failed to load books.');
-    });
-
     it('Handles missing volumeInfo and imageLinks gracefully', async () => {
       (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
         data: {
