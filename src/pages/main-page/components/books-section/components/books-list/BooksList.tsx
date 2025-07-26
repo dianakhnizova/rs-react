@@ -5,20 +5,27 @@ import { BookCard } from '../../../../../../components/books-cards/BookCard';
 import type { BookData } from '@/sources/types';
 import { fetchBooksData } from '@/api/fetchBooksData';
 import { Pagination } from '@/components/pagination/Pagination';
-import { useSearchParams } from 'react-router-dom';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
+import { URLSearchParamsInit } from 'react-router-dom';
 
 export interface Props {
   searchTerm: string;
+  searchParams: URLSearchParams;
+  setSearchParams: (next: URLSearchParamsInit) => void;
   setLoading: (value: boolean) => void;
   onClose: () => void;
   isLoading: boolean;
   setError: (message: string) => void;
 }
 
-export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
+export const BooksList = ({
+  searchTerm,
+  searchParams,
+  setSearchParams,
+  setLoading,
+  setError,
+}: Props) => {
   const [books, setBooks] = useState<BookData[]>([]);
-  const [searchParams, setSearchParams] = useSearchParams();
   const [totalItems, setTotalItems] = useState(0);
 
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
@@ -54,15 +61,6 @@ export const BooksList = ({ searchTerm, setLoading, setError }: Props) => {
 
     void loadBooks();
   }, [searchTerm, setError, setLoading, currentPage]);
-
-  useEffect(() => {
-    if (searchTerm) {
-      setSearchParams(prev => {
-        const page = prev.get('page');
-        return page === '1' ? prev : { page: '1' };
-      });
-    }
-  }, [searchTerm, setSearchParams]);
 
   return (
     <>

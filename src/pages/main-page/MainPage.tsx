@@ -10,6 +10,7 @@ import { Button } from '@/components/button/Button';
 import { messages } from './messages';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { PagePath } from '@/router/enums';
+import { useSearchParams } from 'react-router-dom';
 
 export const MainPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>(
@@ -17,6 +18,7 @@ export const MainPage = () => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { id } = useParams();
 
@@ -28,6 +30,7 @@ export const MainPage = () => {
     setSearchTerm(searchTerm);
     setErrorMessage('');
     localStorage.setItem(LocalStorage.SEARCH_KEY, searchTerm.trim());
+    setSearchParams({ page: '1' });
   };
 
   const onClose = () => {
@@ -56,6 +59,8 @@ export const MainPage = () => {
             onClose={onClose}
             isLoading={isLoading}
             setError={setErrorMessage}
+            searchParams={searchParams}
+            setSearchParams={setSearchParams}
           />
         </BooksSection>
 

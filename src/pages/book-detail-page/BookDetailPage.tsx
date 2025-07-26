@@ -12,7 +12,7 @@ export const BookDetailPage = () => {
   const navigate = useNavigate();
 
   if (!id) {
-    return <p className={styles.error}>{messages.notFounIdTitle}</p>;
+    return <p className={styles.error}>{messages.notFoundIdTitle}</p>;
   }
 
   const handleCloseButton = () => {
