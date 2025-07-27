@@ -65,13 +65,15 @@ export const BookDetailSection = () => {
         <p className={styles.error}>{errorMessage}</p>
       </Popup>
 
-      {!bookDetails && (
+      {!bookDetails && !isBookLoading && (
         <p className={styles.error}>
           {bookDetailsPageMessages.notFoundIdTitle}
         </p>
       )}
 
-      {isBookLoading && <Spinner isLoading={isBookLoading} />}
+      {isBookLoading && (
+        <Spinner isLoading={isBookLoading} data-testid="spinner" />
+      )}
 
       {bookDetails && <BooksDetails bookDetail={bookDetails} />}
 
