@@ -71,28 +71,70 @@ describe('BooksService', () => {
 
   describe('getBookById', () => {
     const baseBookResponse = {
-      key: '/works/OL123W',
+      key: '/works/344ffsf',
       title: 'Test Book',
       covers: [12345],
       description: {
-        value: 'A complex description',
+        value: 'Test description',
       },
-      authors: [{ author: { key: '/authors/OL456A' } }],
+      authors: [{ author: { key: '/authors/344ffsf' } }],
       first_publish_date: '2000',
     };
 
-    it('returns full book data with stringified author names', async () => {
+    it('Returns full book data with stringified author names', async () => {
       mockedAxios.get
         .mockResolvedValueOnce({ data: baseBookResponse })
         .mockResolvedValueOnce({ data: { name: 'John Doe' } });
 
-      const result = await bookService.getBookById('OL123W');
+      const result = await bookService.getBookById('O344ffsf');
 
       expect(result).toEqual({
-        id: 'OL123W',
+        id: '344ffsf',
         title: 'Test Book',
         image: 'https://covers.openlibrary.org/b/id/12345-M.jpg',
-        description: 'A complex description',
+        description: 'Test description',
+        authors: 'John Doe',
+        year: '2000',
+        printType: 'book',
+      });
+    });
+
+    it('Handles failed author request gracefully', async () => {
+      mockedAxios.get
+        .mockResolvedValueOnce({ data: baseBookResponse })
+        .mockRejectedValueOnce(new Error('Author not found'));
+      const result = await bookService.getBookById('344ffsf');
+
+      expect(result.authors).toBe('');
+    });
+
+    it('Handles description as string', async () => {
+      mockedAxios.get
+        .mockResolvedValueOnce({
+          data: {
+            ...baseBookResponse,
+            description: 'Test description',
+          },
+        })
+        .mockResolvedValueOnce({ data: { name: 'Diana Khnizova' } });
+
+      const result = await bookService.getBookById('eerere45');
+
+      expect(result.description).toBe('Test description');
+    });
+
+    it('Returns full book data with stringified author names', async () => {
+      mockedAxios.get
+        .mockResolvedValueOnce({ data: baseBookResponse })
+        .mockResolvedValueOnce({ data: { name: 'John Doe' } });
+
+      const result = await bookService.getBookById('344ffsf');
+
+      expect(result).toEqual({
+        id: '344ffsf',
+        title: 'Test Book',
+        image: 'https://covers.openlibrary.org/b/id/12345-M.jpg',
+        description: 'Test description',
         authors: 'John Doe',
         year: '2000',
         printType: 'book',
