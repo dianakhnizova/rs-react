@@ -1,8 +1,8 @@
 export type BookData = {
   id: string;
   title: string;
+  image: string;
   description?: string;
-  image?: string;
   authors?: string;
   year?: string;
   printType?: string;

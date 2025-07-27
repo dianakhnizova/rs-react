@@ -98,7 +98,7 @@ export const MainPage = () => {
     };
 
     void loadBookDetails();
-  }, [redirectToNotFound]);
+  }, [detailsId, redirectToNotFound]);
 
   const onClose = () => {
     setErrorMessage('');
@@ -106,7 +106,7 @@ export const MainPage = () => {
 
   return (
     <main data-testid="main-page" className={styles.container}>
-      <Spinner isLoading={isLoading || isBookLoading} />
+      <Spinner isLoading={isLoading || isBookLoading} data-testid="spinner" />
 
       <Popup isOpen={!!errorMessage} onClose={onClose} data-testid="popup">
         <p className={styles.error}>{errorMessage}</p>

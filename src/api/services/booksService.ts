@@ -70,6 +70,10 @@ export const bookService = {
     return {
       id: book.key.replace('/works/', ''),
       title: book.title || '',
+      image: book.covers?.[0]
+        ? `https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg`
+        : '',
+
       description:
         typeof book.description === 'object' && book.description !== null
           ? book.description.value

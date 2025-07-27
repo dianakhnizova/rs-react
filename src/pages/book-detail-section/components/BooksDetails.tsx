@@ -13,11 +13,9 @@ export const BooksDetails = ({ bookDetail }: Props) => {
       {bookDetail && (
         <BookCard
           key={bookDetail.id}
+          title={bookDetail.title.toUpperCase() || messages.titleNot}
+          image={bookDetail.image}
           details={[
-            {
-              value: bookDetail.title.toUpperCase() || messages.titleNot,
-              className: 'titleName',
-            },
             {
               value: bookDetail.description || messages.titleNotDescription,
               className: 'description',

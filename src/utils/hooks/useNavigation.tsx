@@ -7,8 +7,9 @@ export const useNavigation = () => {
   const { page: pageParam, detailsId } = useParams();
 
   const isValidPage =
-    pageParam && !Number.isNaN(Number(pageParam)) && Number(pageParam) >= 1;
-  const currentPage = isValidPage ? Math.max(1, Number(pageParam)) : 1;
+    !pageParam ||
+    (pageParam && !Number.isNaN(Number(pageParam)) && Number(pageParam) >= 1);
+  const currentPage = pageParam ? Math.max(1, Number(pageParam)) : 1;
 
   const redirectToNotFound = useCallback(() => {
     void navigate(PagePath.notFound, { replace: true });
