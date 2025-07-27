@@ -68,4 +68,35 @@ describe('BooksService', () => {
       });
     });
   });
+
+  describe('getBookById', () => {
+    const baseBookResponse = {
+      key: '/works/OL123W',
+      title: 'Test Book',
+      covers: [12345],
+      description: {
+        value: 'A complex description',
+      },
+      authors: [{ author: { key: '/authors/OL456A' } }],
+      first_publish_date: '2000',
+    };
+
+    it('returns full book data with stringified author names', async () => {
+      mockedAxios.get
+        .mockResolvedValueOnce({ data: baseBookResponse })
+        .mockResolvedValueOnce({ data: { name: 'John Doe' } });
+
+      const result = await bookService.getBookById('OL123W');
+
+      expect(result).toEqual({
+        id: 'OL123W',
+        title: 'Test Book',
+        image: 'https://covers.openlibrary.org/b/id/12345-M.jpg',
+        description: 'A complex description',
+        authors: 'John Doe',
+        year: '2000',
+        printType: 'book',
+      });
+    });
+  });
 });
