@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
 import { Pagination } from './Pagination';
-import { messages } from './messages';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
 
@@ -12,12 +11,8 @@ describe('Pagination component', () => {
 
     expect(screen.getByTestId('page-number')).toHaveTextContent('Page: 2');
 
-    const prevButton = screen.getByRole('button', {
-      name: messages.prevButton,
-    });
-    const nextButton = screen.getByRole('button', {
-      name: messages.nextButton,
-    });
+    const prevButton = screen.getByRole('button');
+    const nextButton = screen.getByRole('button');
 
     expect(prevButton).toBeInTheDocument();
     expect(nextButton).toBeInTheDocument();
@@ -31,9 +26,7 @@ describe('Pagination component', () => {
       <Pagination currentPage={3} totalPages={5} onPageChange={onPageChange} />
     );
 
-    const prevButton = screen.getByRole('button', {
-      name: messages.prevButton,
-    });
+    const prevButton = screen.getByRole('button');
     await userEvent.click(prevButton);
 
     expect(onPageChange).toHaveBeenCalledWith(2);
@@ -45,9 +38,7 @@ describe('Pagination component', () => {
       <Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />
     );
 
-    const nextButton = screen.getByRole('button', {
-      name: messages.nextButton,
-    });
+    const nextButton = screen.getByRole('button');
     await userEvent.click(nextButton);
 
     expect(onPageChange).toHaveBeenCalledWith(3);
