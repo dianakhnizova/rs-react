@@ -9,9 +9,9 @@ import { BooksList } from './components/books-section/components/books-list/Book
 import { Button } from '@/components/button/Button';
 import { messages as mainMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { PagePath } from '@/router/enums';
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { BookData } from '@/sources/types';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { fetchBooksData } from '@/api/fetchBooksData';
@@ -24,21 +24,20 @@ export const MainPage = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const { id } = useParams();
-  const pageFromURL = Number(searchParams.get('page') || '1') || 1;
-  const currentPage = Math.max(1, pageFromURL);
+  const { page: pageParam, detailsId } = useParams();
   const navigate = useNavigate();
 
-  const isDetailPage = !!id;
+  const currentPage = Math.max(1, Number(pageParam || '1'));
 
   const handleSearchQuery = (searchTerm: string) => {
     setSearchTerm(searchTerm);
     setBooks([]);
     setErrorMessage('');
     localStorage.setItem(LocalStorage.SEARCH_KEY, searchTerm.trim());
-    setSearchParams({ page: '1' });
+
+    const newUrl = detailsId ? `/1/${detailsId}` : '/1';
+    void navigate(newUrl);
   };
 
   const onClose = () => {
@@ -46,9 +45,7 @@ export const MainPage = () => {
   };
 
   const navigateToBookDetail = (bookId: string) => {
-    void navigate(
-      `${PagePath.bookDetailSection.replace(':id', bookId)}?page=${currentPage}`
-    );
+    void navigate(`/${currentPage}/${bookId}`);
   };
 
   const navigateToAboutPage = () => {
@@ -97,12 +94,11 @@ export const MainPage = () => {
             books={books}
             totalItems={totalItems}
             currentPage={currentPage}
-            setSearchParams={setSearchParams}
             onBookClick={navigateToBookDetail}
           />
         </BooksSection>
 
-        {isDetailPage && <Outlet />}
+        <Outlet />
       </div>
 
       <Button onClick={navigateToAboutPage}>

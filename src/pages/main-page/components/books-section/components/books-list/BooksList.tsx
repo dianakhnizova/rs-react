@@ -4,13 +4,12 @@ import { BookCard } from '../../../../../../components/books-cards/BookCard';
 import type { BookData } from '@/sources/types';
 import { Pagination } from '@/components/pagination/Pagination';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
-import { URLSearchParamsInit } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export interface Props {
   books: BookData[];
   totalItems: number;
   currentPage: number;
-  setSearchParams: (next: URLSearchParamsInit) => void;
   onBookClick: (bookId: string) => void;
 }
 
@@ -18,13 +17,15 @@ export const BooksList = ({
   books,
   totalItems,
   currentPage,
-  setSearchParams,
   onBookClick,
 }: Props) => {
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const { detailsId } = useParams();
+  const navigate = useNavigate();
 
   const handlePagination = (page: number) => {
-    setSearchParams({ page: page.toString() });
+    const newUrl = detailsId ? `/${page}/${detailsId}` : `/${page}`;
+    void navigate(newUrl);
   };
 
   return (

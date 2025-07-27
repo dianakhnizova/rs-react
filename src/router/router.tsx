@@ -12,11 +12,15 @@ export const routes = [
     Component: Root,
     children: [
       {
-        path: PagePath.root,
+        index: true,
+        Component: MainPage,
+      },
+      {
+        path: ':page',
         Component: MainPage,
         children: [
           {
-            path: PagePath.bookDetailSection,
+            path: ':detailsId',
             Component: BookDetailSection,
           },
         ],

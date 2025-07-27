@@ -5,25 +5,25 @@ import { bookService } from '@/api/services/booksService';
 import { messages } from './messages';
 import styles from './BooksDetails.module.scss';
 import { PagePath } from '@/router/enums';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-interface Props {
-  bookId: string;
-}
-
-export const BooksDetails = ({ bookId }: Props) => {
+export const BooksDetails = () => {
   const [book, setBook] = useState<BookData | null>(null);
-  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
 
+  const { detailsId } = useParams();
+
   useEffect(() => {
     const loadBook = async () => {
-      const detailBook = await bookService.getBookById(bookId);
+      if (!detailsId) {
+        return;
+      }
+
+      const detailBook = await bookService.getBookById(detailsId);
 
       if (!detailBook) {
         void navigate(PagePath.notFound);
-        setError(true);
         return;
       }
 
@@ -31,11 +31,7 @@ export const BooksDetails = ({ bookId }: Props) => {
     };
 
     void loadBook();
-  }, [bookId, navigate]);
-
-  if (error) {
-    return <p className={styles.error}>{messages.titleNotBook}</p>;
-  }
+  }, [detailsId, navigate]);
 
   return (
     <div className={styles.container}>
