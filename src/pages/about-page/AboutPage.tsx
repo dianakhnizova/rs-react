@@ -4,13 +4,12 @@ import { AboutMeDataList } from './components/about-me-list/aboutMeList';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
 import { useNavigate } from 'react-router-dom';
-import { PagePath } from '@/router/enums';
 
 export const AboutPage = () => {
   const navigate = useNavigate();
 
-  const navigateToMainPage = () => {
-    void navigate(PagePath.root);
+  const navigateToBack = () => {
+    void navigate(-1);
   };
 
   return (
@@ -35,7 +34,7 @@ export const AboutPage = () => {
         {messages.linkTitle}
       </a>
 
-      <Button onClick={navigateToMainPage}>{messages.backButton}</Button>
+      <Button onClick={navigateToBack}>{messages.backButton}</Button>
     </section>
   );
 };

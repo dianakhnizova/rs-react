@@ -1,36 +1,28 @@
-import { ProductsHeader } from '@/components/products-header/ProductsHeader';
 import styles from './BookDetailSection.module.scss';
-import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
+import { useOutletContext } from 'react-router-dom';
 import { BooksDetails } from './components/BooksDetails';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
-import { titleList } from '@/components/products-header/productsTitleList';
 import { BookData } from '@/sources/types';
+import { useNavigation } from '@/utils/hooks/useNavigation';
 
 export const BookDetailSection = () => {
-  const { bookDetails } = useOutletContext<{ bookDetails: BookData | null }>();
-  const { page = '1' } = useParams();
-  const navigate = useNavigate();
+  const context = useOutletContext<
+    { bookDetails: BookData | null } | undefined
+  >();
+  const { bookDetails } = context || { bookDetails: null };
+  const { currentPage, navigateToPage } = useNavigation();
 
   if (!bookDetails) {
     return <p className={styles.error}>{messages.notFoundIdTitle}</p>;
   }
 
   const handleCloseButton = () => {
-    void navigate(`/${page}`);
+    navigateToPage(currentPage);
   };
 
   return (
     <section className={styles.container}>
-      <ProductsHeader
-        description={titleList.description}
-        authors={titleList.authors}
-        year={titleList.year}
-        printType={titleList.printType}
-      />
-
-      <div className={styles.gridDivider} />
-
       <BooksDetails bookDetail={bookDetails} />
 
       <Button onClick={handleCloseButton}>{messages.closeButton}</Button>
