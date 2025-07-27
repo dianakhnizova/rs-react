@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { messages } from './messages';
+import { messages as detailPageMessages } from './messages';
 import { vi, type Mock } from 'vitest';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { BookDetailSection } from './BookDetailSection';
@@ -25,6 +25,8 @@ describe('BookDetailSection', () => {
       </MemoryRouter>
     );
 
-    expect(screen.getByText(messages.notFoundIdTitle)).toBeInTheDocument();
+    expect(
+      screen.getByText(detailPageMessages.notFoundIdTitle)
+    ).toBeInTheDocument();
   });
 });

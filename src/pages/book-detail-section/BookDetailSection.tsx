@@ -30,11 +30,6 @@ export const BookDetailSection = () => {
       try {
         const detailBook = await bookService.getBookById(detailsId);
 
-        if (!detailBook) {
-          redirectToNotFound();
-          return;
-        }
-
         setBookDetails(detailBook);
       } catch (error: unknown) {
         const message =
@@ -55,13 +50,13 @@ export const BookDetailSection = () => {
 
   return (
     <section className={styles.container}>
+      <Spinner isLoading={isBookLoading} data-testid="spinner" />
+
       {!bookDetails && !isBookLoading && (
         <p className={styles.error}>
           {bookDetailsPageMessages.notFoundIdTitle}
         </p>
       )}
-
-      <Spinner isLoading={isBookLoading} data-testid="spinner" />
 
       {bookDetails && <BooksDetails bookDetail={bookDetails} />}
 
