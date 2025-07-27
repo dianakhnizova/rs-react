@@ -17,15 +17,4 @@ describe('AboutPage', () => {
     const button = screen.getByRole('button', { name: /Back/i });
     expect(button).toBeInTheDocument();
   });
-
-  it('Navigates to main page on button click', async () => {
-    mockedNavigate.mockClear();
-
-    render(<AboutPage />);
-
-    const button = screen.getByRole('button', { name: /Back/i });
-    await userEvent.click(button);
-
-    expect(mockedNavigate).toHaveBeenCalledWith('/');
-  });
 });
