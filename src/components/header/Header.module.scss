@@ -1,16 +1,22 @@
 .container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 2000;
-  padding: 1rem;
-  box-shadow: var(--shadow-2);
+  padding: 1rem 4rem;
+  box-shadow: var(--shadow-1);
   background-color: var(--clr-bg-1);
   width: 100%;
 }
 
 .title {
-  font-size: 20px;
+  text-decoration: none;
+  color: var(--clr-line);
+
+  &:hover {
+    transform: scale(1.03);
+    color: var(--clr-hover);
+  }
 }

@@ -1,110 +1,126 @@
 import { bookService } from './booksService';
-import { booksApi } from '../axios';
 import { vi } from 'vitest';
+import axios from 'axios';
 
-vi.mock('../axios', () => ({
-  booksApi: {
-    get: vi.fn(),
-  },
-}));
+vi.mock('axios');
+const mockedAxios = axios as unknown as { get: ReturnType<typeof vi.fn> };
 
 describe('BooksService', () => {
   describe('getBooksList', () => {
-    it('Returns an empty array when response.items is not an array', async () => {
-      (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
-        data: { items: undefined },
-      });
+    const defaultPage = 1;
+    const defaultPageItems = 10;
 
-      const result = await bookService.getBooksList('test');
-
-      expect(result).toEqual([]);
-    });
-
-    it('Filters books by title containing the search term', async () => {
-      (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
+    it('Returns an empty books and totalItems = 0 when response.items is not an array', async () => {
+      mockedAxios.get.mockResolvedValue({
         data: {
-          items: [
-            {
-              id: '1',
-              volumeInfo: {
-                title: 'React for Beginners',
-                description: 'Description',
-                imageLinks: {},
-              },
-            },
-            {
-              id: '2',
-              volumeInfo: {
-                title: 'Cooking Recipes',
-                description: 'Description',
-                imageLinks: {},
-              },
-            },
-          ],
+          docs: undefined,
+          numFound: 0,
         },
       });
 
-      const result = await bookService.getBooksList('react');
-
-      expect(result.length).toBe(1);
-      expect(result[0].title).toBe('React for Beginners');
-    });
-
-    it('Throws error when API call fails', async () => {
-      (booksApi.get as ReturnType<typeof vi.fn>).mockRejectedValue(
-        new Error('Internal Server Error')
+      const result = await bookService.getBooksList(
+        'test',
+        defaultPage,
+        defaultPageItems
       );
 
-      await expect(bookService.getBooksList('test')).rejects.toThrow(
-        'Failed to load books.'
-      );
+      expect(result).toEqual({ books: [], totalItems: 0 });
     });
 
     it('Handles missing volumeInfo and imageLinks gracefully', async () => {
-      (booksApi.get as ReturnType<typeof vi.fn>).mockResolvedValue({
+      mockedAxios.get.mockResolvedValue({
         data: {
-          items: [
+          docs: [
             {
-              id: '1',
-              volumeInfo: undefined,
+              key: '/works/OL123W',
+              title: 'Book with image',
+              cover_i: 12345,
             },
             {
-              id: '2',
-              volumeInfo: {
-                title: 'Book with image',
-                description: 'Description',
-                imageLinks: {
-                  thumbnail: 'http://image.jpg',
-                },
-              },
-            },
-            {
-              id: '3',
-              volumeInfo: {
-                title: 'Book without image',
-                description: 'Description',
-              },
+              key: '/works/OL456W',
+              title: 'Book without image',
             },
           ],
+          numFound: 2,
         },
       });
 
-      const result = await bookService.getBooksList('book');
+      const result = await bookService.getBooksList(
+        'book',
+        defaultPage,
+        defaultPageItems
+      );
 
-      expect(result).toEqual([
-        {
-          id: '2',
-          title: 'Book with image',
-          description: 'Description',
-          image: 'https://image.jpg',
-        },
-        {
-          id: '3',
-          title: 'Book without image',
-          description: 'Description',
-          image: '',
-        },
-      ]);
+      expect(result).toEqual({
+        books: [
+          {
+            id: 'OL123W',
+            title: 'Book with image',
+            image: 'https://covers.openlibrary.org/b/id/12345-M.jpg',
+          },
+          {
+            id: 'OL456W',
+            title: 'Book without image',
+            image: '',
+          },
+        ],
+        totalItems: 2,
+      });
+    });
+  });
+
+  describe('getBookById', () => {
+    const baseBookResponse = {
+      key: '/works/344ffsf',
+      title: 'Test Book',
+      covers: [12345],
+      description: {
+        value: 'Test description',
+      },
+      authors: [{ author: { key: '/authors/344ffsf' } }],
+      first_publish_date: '2000',
+    };
+
+    it('Returns full book data with stringified author names', async () => {
+      mockedAxios.get
+        .mockResolvedValueOnce({ data: baseBookResponse })
+        .mockResolvedValueOnce({ data: { name: 'John Doe' } });
+
+      const result = await bookService.getBookById('O344ffsf');
+
+      expect(result).toEqual({
+        id: '344ffsf',
+        title: 'Test Book',
+        image: 'https://covers.openlibrary.org/b/id/12345-M.jpg',
+        description: 'Test description',
+        authors: 'John Doe',
+        year: '2000',
+        printType: 'book',
+      });
+    });
+
+    it('Handles failed author request gracefully', async () => {
+      mockedAxios.get
+        .mockResolvedValueOnce({ data: baseBookResponse })
+        .mockRejectedValueOnce(new Error('Author not found'));
+      const result = await bookService.getBookById('344ffsf');
+
+      expect(result.authors).toBe('');
+    });
+
+    it('Handles description as string', async () => {
+      mockedAxios.get
+        .mockResolvedValueOnce({
+          data: {
+            ...baseBookResponse,
+            description: 'Test description',
+          },
+        })
+        .mockResolvedValueOnce({ data: { name: 'Diana Khnizova' } });
+
+      const result = await bookService.getBookById('eerere45');
+
+      expect(result.description).toBe('Test description');
     });
   });
 });

@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+.arrowPrevButton {
+  background: transparent;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  background-image: url('../../assets//arrow-prev.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+
+  &.arrowNextButton {
+    background-image: url('../../assets//arrow-next.svg');
+
+    &:hover:not(:disabled) {
+      background-image: url('../../assets/arrow-next-hover.svg');
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    background-image: url('../../assets/arrow-prev-hover.svg');
+  }
+}

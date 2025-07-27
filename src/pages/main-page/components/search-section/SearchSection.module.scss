@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  gap: 40px;
+  margin-top: 20px;
+  width: 90%;
+  padding: 0 200px;
+}
+
+.input {
+  box-shadow: var(--shadow-3);
+  background: transparent;
+  color: var(--clr-line);
+  padding: 10px 40px;
+  width: 90%;
+}
+
+@media (max-width: 950px) {
+  .input {
+    width: 100%;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+  }
+}

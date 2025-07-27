@@ -1,62 +1,86 @@
+import {
+  getAuthorUrl,
+  OPEN_LIBRARY_SEARCH_URL,
+  OPEN_LIBRARY_WORK_URL,
+} from '@/sources/constants';
 import type {
   IBookItemResponse,
   IBooksListResponse,
 } from '@/sources/interfaces';
 import type { BookData } from '@/sources/types';
 import type { AxiosResponse } from 'axios';
-import { AxiosError } from 'axios';
-import { booksApi } from '../axios';
-import { BOOKS_API_KEY } from '@/sources/constants';
-import { messages } from '@/sources/messages';
-import { isApiErrorResponse } from '@/utils/isApiErrorResponse';
+import axios from 'axios';
 
 export const bookService = {
-  getBooksList: async (query: string): Promise<BookData[]> => {
-    const trimmedQuery = query.trim();
+  getBooksList: async (
+    query: string,
+    page: number,
+    pageItemsResults: number
+  ): Promise<{ books: BookData[]; totalItems: number }> => {
+    const trimmedQuery = query.trim() || 'fiction';
 
-    try {
-      const searchQuery = trimmedQuery ? `intitle:${query.trim()}` : 'book';
-
-      const response: AxiosResponse<IBooksListResponse> = await booksApi.get(
-        `?q=${encodeURIComponent(searchQuery)}&maxResults=20&langRestrict=en&key=${BOOKS_API_KEY}`
-      );
-      const booksResult: IBookItemResponse[] = Array.isArray(
-        response.data.items
-      )
-        ? response.data.items
-        : [];
-
-      const booksList: BookData[] = booksResult
-        .filter(
-          book =>
-            book.volumeInfo &&
-            book.volumeInfo.title
-              ?.toLowerCase()
-              .includes(trimmedQuery.toLowerCase())
-        )
-        .map(book => ({
-          id: book.id,
-          title: book.volumeInfo.title,
-          description: book.volumeInfo.description || '',
-          image:
-            book.volumeInfo.imageLinks?.thumbnail?.replace(
-              /^http:/,
-              'https:'
-            ) || '',
-        }));
-
-      return booksList;
-    } catch (error: unknown) {
-      if (error instanceof AxiosError && error.response?.data) {
-        const data: unknown = error.response.data;
-        const message = isApiErrorResponse(data)
-          ? data.error.message
-          : error.message || messages.errorMessage;
-
-        throw new Error(message);
+    const response: AxiosResponse<IBooksListResponse> = await axios.get(
+      OPEN_LIBRARY_SEARCH_URL,
+      {
+        params: {
+          title: trimmedQuery,
+          page,
+          limit: pageItemsResults,
+        },
       }
+    );
 
-      throw new Error(messages.errorMessage);
-    }
+    const booksResult = response.data.docs || [];
+
+    const booksList: BookData[] = booksResult.map(book => ({
+      id: book.key.replace('/works/', ''),
+      title: book.title,
+      image: book.cover_i
+        ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
+        : '',
+    }));
+
+    const totalItems = response.data.numFound || 0;
+
+    return { books: booksList, totalItems };
+  },
+
+  getBookById: async (id: string): Promise<BookData> => {
+    const response: AxiosResponse<IBookItemResponse> = await axios.get(
+      `${OPEN_LIBRARY_WORK_URL}/${id}.json`
+    );
+
+    const book = response.data;
+    const authorRefs = book.authors ?? [];
+    const authorKeys = authorRefs.map(({ author }) => author.key);
+
+    const authorNames = await Promise.all(
+      authorKeys.map(async (key: string) => {
+        try {
+          const response: AxiosResponse<{ name: string }> = await axios.get(
+            getAuthorUrl(key)
+          );
+          return response.data.name || '';
+        } catch {
+          return '';
+        }
+      })
+    );
+
+    return {
+      id: book.key.replace('/works/', ''),
+      title: book.title || '',
+      image: book.covers?.[0]
+        ? `https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg`
+        : '',
+
+      description:
+        typeof book.description === 'object' && book.description !== null
+          ? book.description.value
+          : book.description || '',
+      authors: authorNames.filter(Boolean).join(', '),
+      year: book.first_publish_date || '',
+      printType: 'book',
+    };
   },
 };

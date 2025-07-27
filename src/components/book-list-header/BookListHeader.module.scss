@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+  box-shadow: var(--shadow-4);
+  width: 100%;
+  padding: 20px 60px;
+  background-color: var(--clr-bg-2);
+}
+
+@media (max-width: 800px) {
+  .productsHeaderContainer {
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,26 @@
+.container {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.error {
+  color: var(--clr-error-1);
+}
+
+@media (max-width: 800px) {
+  .container {
+    padding: 10px;
+  }
+}

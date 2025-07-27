@@ -1,13 +1,16 @@
-import { Component } from 'react';
+import { NavLinks } from './components/NavLinks';
+import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
 import { messages } from './messages';
+import { PagePath } from '@/router/enums';
 
-export class Header extends Component {
-  public render() {
-    return (
-      <header className={styles.container}>
-        <h1 className={styles.title}>{messages.appTitle}</h1>
-      </header>
-    );
-  }
-}
+export const Header = () => {
+  return (
+    <header className={styles.container}>
+      <NavLink to={PagePath.root} className={styles.title}>
+        {messages.appTitle}
+      </NavLink>
+      <NavLinks />
+    </header>
+  );
+};

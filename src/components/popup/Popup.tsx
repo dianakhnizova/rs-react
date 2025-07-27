@@ -1,36 +1,25 @@
 import type { ReactNode } from 'react';
-import { Component } from 'react';
 import styles from './Popup.module.scss';
 import { messages } from './messages';
 import { Button } from '../button/Button';
 
 interface Props {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children: ReactNode;
 }
 
-export class Popup extends Component<Props> {
-  public render() {
-    const { isOpen, onClose, children } = this.props;
+export const Popup = ({ isOpen, onClose, children }: Props) => {
+  if (!isOpen) return null;
 
-    return (
-      <>
-        {isOpen && (
-          <>
-            <div
-              className={styles.overlay}
-              onClick={onClose}
-              data-testid="popup"
-            />
+  return (
+    <>
+      <div className={styles.overlay} onClick={onClose} data-testid="popup" />
 
-            <div className={styles.container}>
-              {children}
-              <Button onClick={onClose}>{messages.closeButton}</Button>
-            </div>
-          </>
-        )}
-      </>
-    );
-  }
-}
+      <div className={styles.container}>
+        {children}
+        {onClose && <Button onClick={onClose}>{messages.closeButton}</Button>}
+      </div>
+    </>
+  );
+};
