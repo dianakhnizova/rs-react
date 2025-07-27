@@ -15,15 +15,21 @@ import { BookData } from '@/sources/types';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { fetchBooksData } from '@/api/fetchBooksData';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
+import { bookService } from '@/api/services/booksService';
 
 export const MainPage = () => {
   const { searchTerm, handleSearchQuery } = useSearchQuery();
   const [books, setBooks] = useState<BookData[]>([]);
+  const [bookDetails, setBookDetails] = useState<BookData | null>(null);
+
   const [totalItems, setTotalItems] = useState(0);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isBookLoading, setIsBookLoading] = useState<boolean>(false);
+
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const { page: pageParam } = useParams();
+  const { page: pageParam, detailsId } = useParams();
   const navigate = useNavigate();
 
   const isValidPage =
@@ -74,9 +80,40 @@ export const MainPage = () => {
     void loadBooks();
   }, [searchTerm, currentPage, isValidPage, pageParam]);
 
+  useEffect(() => {
+    const loadBookDetails = async () => {
+      if (!detailsId) {
+        setBookDetails(null);
+        return;
+      }
+      setIsBookLoading(true);
+      try {
+        const detailBook = await bookService.getBookById(detailsId);
+
+        if (!detailBook) {
+          void navigate(PagePath.notFound);
+          return;
+        }
+
+        setBookDetails(detailBook);
+      } catch (error: unknown) {
+        const message =
+          error instanceof Error ? error.message : sourceMessages.errorMessage;
+
+        setErrorMessage(message);
+
+        void navigate(PagePath.notFound, { replace: true });
+      } finally {
+        setIsBookLoading(false);
+      }
+    };
+
+    void loadBookDetails();
+  }, [detailsId, navigate, isValidPage]);
+
   return (
     <main data-testid="main-page" className={styles.container}>
-      <Spinner isLoading={isLoading} />
+      <Spinner isLoading={isLoading || isBookLoading} />
 
       <Popup isOpen={!!errorMessage} onClose={onClose} data-testid="popup">
         <p className={styles.error}>{errorMessage}</p>
@@ -94,7 +131,7 @@ export const MainPage = () => {
           />
         </BooksSection>
 
-        <Outlet />
+        <Outlet context={{ bookDetails }} />
       </div>
 
       <Button onClick={navigateToAboutPage}>

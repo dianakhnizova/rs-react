@@ -1,16 +1,18 @@
 import { ProductsHeader } from '@/components/products-header/ProductsHeader';
 import styles from './BookDetailSection.module.scss';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import { BooksDetails } from './components/BooksDetails';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
 import { titleList } from '@/components/products-header/productsTitleList';
+import { BookData } from '@/sources/types';
 
 export const BookDetailSection = () => {
-  const { detailsId, page = '1' } = useParams();
+  const { bookDetails } = useOutletContext<{ bookDetails: BookData | null }>();
+  const { page = '1' } = useParams();
   const navigate = useNavigate();
 
-  if (!detailsId) {
+  if (!bookDetails) {
     return <p className={styles.error}>{messages.notFoundIdTitle}</p>;
   }
 
@@ -29,7 +31,7 @@ export const BookDetailSection = () => {
 
       <div className={styles.gridDivider} />
 
-      <BooksDetails />
+      <BooksDetails bookDetail={bookDetails} />
 
       <Button onClick={handleCloseButton}>{messages.closeButton}</Button>
     </section>
