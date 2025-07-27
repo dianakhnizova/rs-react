@@ -8,51 +8,40 @@ import { BooksList } from './components/books-section/components/books-list/Book
 import { Button } from '@/components/button/Button';
 import { messages as mainMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
-import { Outlet, useNavigate } from 'react-router-dom';
-import { PagePath } from '@/router/enums';
-import { useParams } from 'react-router-dom';
+import { Outlet, useParams } from 'react-router-dom';
 import { BookData } from '@/sources/types';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { fetchBooksData } from '@/api/fetchBooksData';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 import { bookService } from '@/api/services/booksService';
+import { useNavigation } from '@/utils/hooks/useNavigation';
 
 export const MainPage = () => {
   const { searchTerm, handleSearchQuery } = useSearchQuery();
+  const {
+    isValidPage,
+    currentPage,
+    redirectToNotFound,
+    navigateToBookDetail,
+    navigateToAboutPage,
+  } = useNavigation();
+
   const [books, setBooks] = useState<BookData[]>([]);
   const [bookDetails, setBookDetails] = useState<BookData | null>(null);
-
-  const [totalItems, setTotalItems] = useState(0);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isBookLoading, setIsBookLoading] = useState<boolean>(false);
 
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [totalItems, setTotalItems] = useState(0);
 
-  const { page: pageParam, detailsId } = useParams();
-  const navigate = useNavigate();
-
-  const isValidPage =
-    pageParam && !Number.isNaN(Number(pageParam)) && Number(pageParam) >= 1;
-  const currentPage = isValidPage ? Math.max(1, Number(pageParam)) : 1;
+  const { detailsId } = useParams();
 
   useEffect(() => {
-    if (pageParam && !isValidPage) {
-      void navigate(PagePath.notFound, { replace: true });
+    if (!isValidPage) {
+      redirectToNotFound();
     }
-  }, [pageParam, navigate]);
-
-  const onClose = () => {
-    setErrorMessage('');
-  };
-
-  const navigateToBookDetail = (bookId: string) => {
-    void navigate(`/${currentPage}/${bookId}`);
-  };
-
-  const navigateToAboutPage = () => {
-    void navigate(PagePath.aboutPage);
-  };
+  }, [isValidPage, redirectToNotFound]);
 
   useEffect(() => {
     const loadBooks = async () => {
@@ -78,7 +67,7 @@ export const MainPage = () => {
     };
 
     void loadBooks();
-  }, [searchTerm, currentPage, isValidPage, pageParam]);
+  }, [searchTerm, currentPage, isValidPage]);
 
   useEffect(() => {
     const loadBookDetails = async () => {
@@ -91,7 +80,7 @@ export const MainPage = () => {
         const detailBook = await bookService.getBookById(detailsId);
 
         if (!detailBook) {
-          void navigate(PagePath.notFound);
+          redirectToNotFound();
           return;
         }
 
@@ -102,14 +91,18 @@ export const MainPage = () => {
 
         setErrorMessage(message);
 
-        void navigate(PagePath.notFound, { replace: true });
+        redirectToNotFound();
       } finally {
         setIsBookLoading(false);
       }
     };
 
     void loadBookDetails();
-  }, [detailsId, navigate, isValidPage]);
+  }, [redirectToNotFound]);
+
+  const onClose = () => {
+    setErrorMessage('');
+  };
 
   return (
     <main data-testid="main-page" className={styles.container}>
