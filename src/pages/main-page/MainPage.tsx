@@ -8,12 +8,11 @@ import { BooksList } from './components/books-section/components/books-list/Book
 import { Button } from '@/components/button/Button';
 import { messages as mainMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
-import { Outlet, useParams } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { BookData } from '@/sources/types';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { fetchBooksData } from '@/api/fetchBooksData';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
-import { bookService } from '@/api/services/booksService';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 
 export const MainPage = () => {
@@ -27,15 +26,9 @@ export const MainPage = () => {
   } = useNavigationToPath();
 
   const [books, setBooks] = useState<BookData[]>([]);
-  const [bookDetails, setBookDetails] = useState<BookData | null>(null);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isBookLoading, setIsBookLoading] = useState<boolean>(false);
-
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [totalItems, setTotalItems] = useState(0);
-
-  const { detailsId } = useParams();
 
   useEffect(() => {
     if (!isValidPage) {
@@ -69,44 +62,13 @@ export const MainPage = () => {
     void loadBooks();
   }, [searchTerm, currentPage, isValidPage]);
 
-  useEffect(() => {
-    const loadBookDetails = async () => {
-      if (!detailsId) {
-        setBookDetails(null);
-        return;
-      }
-      setIsBookLoading(true);
-      try {
-        const detailBook = await bookService.getBookById(detailsId);
-
-        if (!detailBook) {
-          redirectToNotFound();
-          return;
-        }
-
-        setBookDetails(detailBook);
-      } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : sourceMessages.errorMessage;
-
-        setErrorMessage(message);
-
-        redirectToNotFound();
-      } finally {
-        setIsBookLoading(false);
-      }
-    };
-
-    void loadBookDetails();
-  }, [detailsId, redirectToNotFound]);
-
   const onClose = () => {
     setErrorMessage('');
   };
 
   return (
     <main data-testid="main-page" className={styles.container}>
-      <Spinner isLoading={isLoading || isBookLoading} data-testid="spinner" />
+      <Spinner isLoading={isLoading} data-testid="spinner" />
 
       <Popup isOpen={!!errorMessage} onClose={onClose} data-testid="popup">
         <p className={styles.error}>{errorMessage}</p>
@@ -124,7 +86,7 @@ export const MainPage = () => {
           />
         </BooksSection>
 
-        <Outlet context={{ bookDetails }} />
+        <Outlet />
       </div>
 
       <Button onClick={navigateToAboutPage}>
