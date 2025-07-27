@@ -59,4 +59,37 @@ describe('BookDetailSection', () => {
       screen.getByRole('button', { name: messages.closeButton })
     ).toBeInTheDocument();
   });
+
+  it('Displays all book detail fields correctly', () => {
+    const mockBook = {
+      id: 'OL123W',
+      title: 'Test Book',
+      image: 'https://covers.openlibrary.org/b/id/12345-M.jpg',
+      authors: 'Author One',
+      year: '2024',
+      description: 'Test description.',
+      printType: 'book',
+    };
+
+    (useOutletContext as Mock).mockReturnValue({ bookDetails: mockBook });
+
+    render(
+      <MemoryRouter initialEntries={['/1/OL123W']}>
+        <Routes>
+          <Route path="/:page/:id" element={<BookDetailSection />} />
+        </Routes>
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText(mockBook.title.toUpperCase())).toBeInTheDocument();
+    expect(screen.getByText(mockBook.authors)).toBeInTheDocument();
+    expect(screen.getByText(mockBook.year)).toBeInTheDocument();
+    expect(screen.getByText(mockBook.description)).toBeInTheDocument();
+    expect(screen.getByText(mockBook.printType)).toBeInTheDocument();
+
+    const image = screen.getByRole('img', {
+      name: mockBook.title.toUpperCase(),
+    });
+    expect(image).toHaveAttribute('src', mockBook.image);
+  });
 });
