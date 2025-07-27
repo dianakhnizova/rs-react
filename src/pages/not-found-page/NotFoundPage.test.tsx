@@ -1,7 +1,6 @@
 import { NotFoundPage } from './NotFoundPage';
 import { render, screen } from '@testing-library/react';
-import { vi, type Mock } from 'vitest';
-import { useNavigate } from 'react-router-dom';
+import { mockedNavigate } from '@/utils/moks/useNavigateMock';
 import { messages } from './messages';
 import userEvent from '@testing-library/user-event';
 
@@ -19,8 +18,7 @@ describe('NotFoundPage', () => {
   });
 
   it('Navigates to main page on button click', async () => {
-    const mockNavigate = vi.fn();
-    (useNavigate as unknown as Mock).mockReturnValue(mockNavigate);
+    mockedNavigate.mockClear();
 
     render(<NotFoundPage />);
 
@@ -29,6 +27,6 @@ describe('NotFoundPage', () => {
     });
     await userEvent.click(button);
 
-    expect(mockNavigate).toHaveBeenCalledWith('/');
+    expect(mockedNavigate).toHaveBeenCalledWith('/');
   });
 });

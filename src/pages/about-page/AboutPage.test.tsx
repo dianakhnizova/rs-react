@@ -1,11 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { AboutPage } from './AboutPage';
-import { describe, it, vi, type Mock } from 'vitest';
+import { describe, it } from 'vitest';
 import userEvent from '@testing-library/user-event';
-import { useNavigate } from 'react-router-dom';
+import { mockedNavigate } from '@/utils/moks/useNavigateMock';
 
 describe('AboutPage', () => {
-  it('renders AboutPage content correctly', () => {
+  it('Renders AboutPage content correctly', () => {
     render(<AboutPage />);
 
     expect(screen.getByTestId('about-page')).toBeInTheDocument();
@@ -18,15 +18,14 @@ describe('AboutPage', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('navigates to main page on button click', async () => {
-    const mockNavigate = vi.fn();
-    (useNavigate as unknown as Mock).mockReturnValue(mockNavigate);
+  it('Navigates to main page on button click', async () => {
+    mockedNavigate.mockClear();
 
     render(<AboutPage />);
 
     const button = screen.getByRole('button', { name: /Back/i });
     await userEvent.click(button);
 
-    expect(mockNavigate).toHaveBeenCalledWith('/');
+    expect(mockedNavigate).toHaveBeenCalledWith('/');
   });
 });
