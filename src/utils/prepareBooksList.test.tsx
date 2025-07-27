@@ -9,10 +9,12 @@ describe('prepareBooksList', () => {
       {
         id: '1',
         title: 'TITLE TEST 1',
+        image: ImgPlaceholder,
       },
       {
         id: '2',
         title: 'TITLE TEST 2',
+        image: ImgPlaceholder,
       },
     ];
 
@@ -37,6 +39,7 @@ describe('prepareBooksList', () => {
       {
         id: '3',
         title: '',
+        image: ImgPlaceholder,
       },
     ];
 
@@ -50,6 +53,7 @@ describe('prepareBooksList', () => {
       {
         id: '4',
         title: 'title test 5',
+        image: ImgPlaceholder,
       },
     ];
 
