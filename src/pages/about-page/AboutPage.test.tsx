@@ -1,8 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { AboutPage } from './AboutPage';
 import { describe, it } from 'vitest';
-import userEvent from '@testing-library/user-event';
-import { mockedNavigate } from '@/utils/moks/useNavigateMock';
 
 describe('AboutPage', () => {
   it('Renders AboutPage content correctly', () => {
