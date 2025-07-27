@@ -11,10 +11,6 @@ vi.mock('@/api/services/booksService', () => ({
   },
 }));
 
-beforeEach(() => {
-  vi.clearAllMocks();
-});
-
 describe('BookDetailSection', () => {
   it('Renders error message if bookDetails is null', () => {
     (bookService.getBookById as Mock).mockImplementation(() => {
@@ -22,7 +18,7 @@ describe('BookDetailSection', () => {
     });
 
     render(
-      <MemoryRouter initialEntries={['/1/123']}>
+      <MemoryRouter initialEntries={['/1/sghassajs2']}>
         <Routes>
           <Route path="/:page/:detailsId" element={<BookDetailSection />} />
         </Routes>

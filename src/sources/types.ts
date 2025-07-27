@@ -3,7 +3,7 @@ export type BookData = {
   title: string;
   image: string;
   description?: string;
-  authors?: string[];
+  authors?: string;
   year?: string;
   printType?: string;
 };

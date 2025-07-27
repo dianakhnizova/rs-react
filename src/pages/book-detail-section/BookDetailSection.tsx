@@ -9,14 +9,12 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { bookService } from '@/api/services/booksService';
 import { Spinner } from '@/components/spinner/Spinner';
-import { Popup } from '@/components/popup/Popup';
 
 export const BookDetailSection = () => {
   const { currentPage, navigateToList, redirectToNotFound } =
     useNavigationToPath();
   const [bookDetails, setBookDetails] = useState<BookData | null>(null);
   const [isBookLoading, setIsBookLoading] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const { detailsId } = useParams();
 
@@ -42,7 +40,7 @@ export const BookDetailSection = () => {
         const message =
           error instanceof Error ? error.message : sourceMessages.errorMessage;
 
-        setErrorMessage(message);
+        console.log(message);
       } finally {
         setIsBookLoading(false);
       }
@@ -55,25 +53,15 @@ export const BookDetailSection = () => {
     navigateToList(currentPage);
   };
 
-  const onClose = () => {
-    setErrorMessage('');
-  };
-
   return (
     <section className={styles.container}>
-      <Popup isOpen={!!errorMessage} onClose={onClose} data-testid="popup">
-        <p className={styles.error}>{errorMessage}</p>
-      </Popup>
-
       {!bookDetails && !isBookLoading && (
         <p className={styles.error}>
           {bookDetailsPageMessages.notFoundIdTitle}
         </p>
       )}
 
-      {isBookLoading && (
-        <Spinner isLoading={isBookLoading} data-testid="spinner" />
-      )}
+      <Spinner isLoading={isBookLoading} data-testid="spinner" />
 
       {bookDetails && <BooksDetails bookDetail={bookDetails} />}
 
