@@ -7,6 +7,11 @@
   }
 }
 
+.titleName {
+  font-size: 18px;
+  color: var(--clr-hover);
+}
+
 .book {
   display: flex;
   flex-direction: column;
@@ -32,6 +37,14 @@
     img {
       height: 140px;
     }
+
+    .titleName {
+      color: var(--clr-line);
+
+      &:hover {
+        color: var(--clr-hover);
+      }
+    }
   }
 }
 
@@ -39,10 +52,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.titleName {
-  font-size: 18px;
 }
 
 .description {
