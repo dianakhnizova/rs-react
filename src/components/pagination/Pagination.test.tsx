@@ -11,8 +11,9 @@ describe('Pagination component', () => {
 
     expect(screen.getByTestId('page-number')).toHaveTextContent('Page: 2');
 
-    const prevButton = screen.getByRole('button');
-    const nextButton = screen.getByRole('button');
+    const buttons = screen.getAllByRole('button');
+    const prevButton = buttons[0];
+    const nextButton = buttons[1];
 
     expect(prevButton).toBeInTheDocument();
     expect(nextButton).toBeInTheDocument();
@@ -26,7 +27,8 @@ describe('Pagination component', () => {
       <Pagination currentPage={3} totalPages={5} onPageChange={onPageChange} />
     );
 
-    const prevButton = screen.getByRole('button');
+    const buttons = screen.getAllByRole('button');
+    const prevButton = buttons[0];
     await userEvent.click(prevButton);
 
     expect(onPageChange).toHaveBeenCalledWith(2);
@@ -38,7 +40,8 @@ describe('Pagination component', () => {
       <Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />
     );
 
-    const nextButton = screen.getByRole('button');
+    const buttons = screen.getAllByRole('button');
+    const nextButton = buttons[1];
     await userEvent.click(nextButton);
 
     expect(onPageChange).toHaveBeenCalledWith(3);
