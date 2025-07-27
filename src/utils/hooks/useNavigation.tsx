@@ -39,6 +39,13 @@ export const useNavigation = () => {
     [navigate, detailsId]
   );
 
+  const navigateToList = useCallback(
+    (page: number) => {
+      void navigate(`/${page}`);
+    },
+    [navigate]
+  );
+
   return {
     currentPage,
     isValidPage,
@@ -47,5 +54,6 @@ export const useNavigation = () => {
     navigateToAboutPage,
     navigateOnSearch,
     navigateToPage,
+    navigateToList,
   };
 };

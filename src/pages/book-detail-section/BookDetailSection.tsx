@@ -11,14 +11,14 @@ export const BookDetailSection = () => {
     { bookDetails: BookData | null } | undefined
   >();
   const { bookDetails } = context || { bookDetails: null };
-  const { currentPage, navigateToPage } = useNavigation();
+  const { currentPage, navigateToList } = useNavigation();
 
   if (!bookDetails) {
     return <p className={styles.error}>{messages.notFoundIdTitle}</p>;
   }
 
   const handleCloseButton = () => {
-    navigateToPage(currentPage);
+    navigateToList(currentPage);
   };
 
   return (
