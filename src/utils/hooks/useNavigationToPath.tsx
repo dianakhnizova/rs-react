@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { PagePath } from '@/router/enums';
 import { useCallback } from 'react';
 
-export const useNavigation = () => {
+export const useNavigationToPath = () => {
   const navigate = useNavigate();
   const { page: pageParam, detailsId } = useParams();
 

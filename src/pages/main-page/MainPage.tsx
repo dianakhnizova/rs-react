@@ -14,7 +14,7 @@ import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { fetchBooksData } from '@/api/fetchBooksData';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 import { bookService } from '@/api/services/booksService';
-import { useNavigation } from '@/utils/hooks/useNavigation';
+import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 
 export const MainPage = () => {
   const { searchTerm, handleSearchQuery } = useSearchQuery();
@@ -24,7 +24,7 @@ export const MainPage = () => {
     redirectToNotFound,
     navigateToBookDetail,
     navigateToAboutPage,
-  } = useNavigation();
+  } = useNavigationToPath();
 
   const [books, setBooks] = useState<BookData[]>([]);
   const [bookDetails, setBookDetails] = useState<BookData | null>(null);

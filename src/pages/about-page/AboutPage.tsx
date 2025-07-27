@@ -1,6 +1,6 @@
-import { RSSCHOOL_URL } from '@/sources/constants';
+import { RS_SCHOOL_URL } from '@/sources/constants';
 import styles from './AboutPage.module.scss';
-import { AboutMeDataList } from './components/about-me-list/aboutMeList';
+import { aboutMeDataList } from './utils/aboutMeList';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
 import { useNavigate } from 'react-router-dom';
@@ -14,19 +14,19 @@ export const AboutPage = () => {
 
   return (
     <section data-testid="about-page" className={styles.container}>
-      <div className={styles.infoContainer}>
-        {AboutMeDataList.map((data, index) => {
+      <ul className={styles.infoContainer}>
+        {aboutMeDataList.map((data, index) => {
           return (
-            <div key={index} className={styles.dataContainer}>
+            <li key={index} className={styles.dataContainer}>
               <p className={styles.label}>{data.label}</p>
               <p className={styles.data}>{data.data}</p>
-            </div>
+            </li>
           );
         })}
-      </div>
+      </ul>
 
       <a
-        href={RSSCHOOL_URL}
+        href={RS_SCHOOL_URL}
         target="_blank"
         rel="noopener noreferrer"
         className={styles.link}

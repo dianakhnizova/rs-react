@@ -3,7 +3,7 @@ const OPEN_LIBRARY_WORK_URL = 'https://openlibrary.org/works';
 const OPEN_LIBRARY_COVER_URL = 'https://covers.openlibrary.org/b/id';
 const getAuthorUrl = (key: string) => `https://openlibrary.org${key}.json`;
 
-const RSSCHOOL_URL = 'https://rs.school/courses/reactjs';
+const RS_SCHOOL_URL = 'https://rs.school/courses/reactjs';
 const ITEMS_PER_PAGE = 5;
 
 export {
@@ -11,6 +11,6 @@ export {
   OPEN_LIBRARY_WORK_URL,
   OPEN_LIBRARY_COVER_URL,
   getAuthorUrl,
-  RSSCHOOL_URL,
+  RS_SCHOOL_URL,
   ITEMS_PER_PAGE,
 };

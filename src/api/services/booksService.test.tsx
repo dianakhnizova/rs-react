@@ -67,6 +67,18 @@ describe('BooksService', () => {
         totalItems: 2,
       });
     });
+
+    it('Uses "fiction" when query is empty or whitespace', async () => {
+      mockedAxios.get.mockResolvedValue({
+        data: { docs: [], numFound: 0 },
+      });
+
+      await bookService.getBooksList('   ', 1, 10);
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(expect.any(String), {
+        params: expect.objectContaining({ title: 'fiction' }),
+      });
+    });
   });
 
   describe('getBookById', () => {
@@ -139,6 +151,20 @@ describe('BooksService', () => {
         year: '2000',
         printType: 'book',
       });
+    });
+
+    it('Handles missing description gracefully', async () => {
+      mockedAxios.get
+        .mockResolvedValueOnce({
+          data: {
+            ...baseBookResponse,
+            description: undefined,
+          },
+        })
+        .mockResolvedValueOnce({ data: { name: 'Authorless' } });
+
+      const result = await bookService.getBookById('noDescId');
+      expect(result.description).toBe('');
     });
   });
 });

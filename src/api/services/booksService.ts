@@ -52,15 +52,15 @@ export const bookService = {
 
     const book = response.data;
     const authorRefs = book.authors ?? [];
-    const authorKeys = authorRefs.map(a => a.author.key);
+    const authorKeys = authorRefs.map(({ author }) => author.key);
 
     const authorNames = await Promise.all(
       authorKeys.map(async (key: string) => {
         try {
-          const responce: AxiosResponse<{ name: string }> = await axios.get(
+          const response: AxiosResponse<{ name: string }> = await axios.get(
             getAuthorUrl(key)
           );
-          return responce.data.name || '';
+          return response.data.name || '';
         } catch {
           return '';
         }

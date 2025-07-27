@@ -11,7 +11,7 @@ export const messages = {
     labelEnglish: 'English: ',
   },
 
-  datas: {
+  data: {
     dataName: 'Diana Khnizova',
     dataAge: '31',
     dataLocation: 'Kazakhstan, Almaty',
