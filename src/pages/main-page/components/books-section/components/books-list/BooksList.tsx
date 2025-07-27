@@ -45,11 +45,13 @@ export const BooksList = ({
         </ul>
       )}
 
-      <Pagination
-        currentPage={currentPage}
-        onPageChange={handlePagination}
-        totalPages={totalPages}
-      />
+      {books.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          onPageChange={handlePagination}
+          totalPages={totalPages}
+        />
+      )}
     </>
   );
 };

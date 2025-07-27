@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { Button } from '../button/Button';
 import { messages } from './messages';
 import styles from './Pagination.module.scss';
@@ -23,18 +24,22 @@ export const Pagination = ({
 
   return (
     <div className={styles.container}>
-      <Button onClick={handlePrevButton} disabled={currentPage === 1}>
-        {messages.prevButton}
-      </Button>
+      <Button
+        onClick={handlePrevButton}
+        disabled={currentPage === 1}
+        className={styles.arrowPrevButton}
+      />
 
       <p data-testid="page-number" className={styles.pageNumberContainer}>
         {messages.pageTitle}
         {currentPage}
       </p>
 
-      <Button onClick={handleNextButton} disabled={currentPage >= totalPages}>
-        {messages.nextButton}
-      </Button>
+      <Button
+        onClick={handleNextButton}
+        disabled={currentPage >= totalPages}
+        className={classNames(styles.arrowPrevButton, styles.arrowNextButton)}
+      />
     </div>
   );
 };
