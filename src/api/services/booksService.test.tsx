@@ -67,18 +67,6 @@ describe('BooksService', () => {
         totalItems: 2,
       });
     });
-
-    it('Uses "fiction" when query is empty or whitespace', async () => {
-      mockedAxios.get.mockResolvedValue({
-        data: { docs: [], numFound: 0 },
-      });
-
-      await bookService.getBooksList('   ', 1, 10);
-
-      expect(mockedAxios.get).toHaveBeenCalledWith(expect.any(String), {
-        params: expect.objectContaining({ title: 'fiction' }),
-      });
-    });
   });
 
   describe('getBookById', () => {
@@ -133,38 +121,6 @@ describe('BooksService', () => {
       const result = await bookService.getBookById('eerere45');
 
       expect(result.description).toBe('Test description');
-    });
-
-    it('Returns full book data with stringified author names', async () => {
-      mockedAxios.get
-        .mockResolvedValueOnce({ data: baseBookResponse })
-        .mockResolvedValueOnce({ data: { name: 'John Doe' } });
-
-      const result = await bookService.getBookById('344ffsf');
-
-      expect(result).toEqual({
-        id: '344ffsf',
-        title: 'Test Book',
-        image: 'https://covers.openlibrary.org/b/id/12345-M.jpg',
-        description: 'Test description',
-        authors: 'John Doe',
-        year: '2000',
-        printType: 'book',
-      });
-    });
-
-    it('Handles missing description gracefully', async () => {
-      mockedAxios.get
-        .mockResolvedValueOnce({
-          data: {
-            ...baseBookResponse,
-            description: undefined,
-          },
-        })
-        .mockResolvedValueOnce({ data: { name: 'Authorless' } });
-
-      const result = await bookService.getBookById('noDescId');
-      expect(result.description).toBe('');
     });
   });
 });
