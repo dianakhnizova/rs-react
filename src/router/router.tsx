@@ -16,11 +16,11 @@ export const routes = [
         Component: MainPage,
       },
       {
-        path: ':page',
+        path: PagePath.pagination,
         Component: MainPage,
         children: [
           {
-            path: ':detailsId',
+            path: PagePath.detailsSection,
             Component: BookDetailSection,
           },
         ],
