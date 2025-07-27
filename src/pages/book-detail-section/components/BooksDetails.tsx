@@ -40,6 +40,10 @@ export const BooksDetails = () => {
           key={book.id}
           details={[
             {
+              value: book.title.toUpperCase() || messages.titleNot,
+              className: 'titleName',
+            },
+            {
               value: book.description || messages.titleNotDescription,
               className: 'description',
             },

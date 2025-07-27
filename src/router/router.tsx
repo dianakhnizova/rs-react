@@ -26,6 +26,10 @@ export const routes = [
         ],
       },
       { path: PagePath.aboutPage, Component: AboutPage },
+      {
+        path: PagePath.notFound,
+        Component: NotFoundPage,
+      },
     ],
   },
   {

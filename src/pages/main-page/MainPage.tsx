@@ -4,7 +4,6 @@ import { SearchSection } from './components/search-section/SearchSection';
 import { BooksSection } from './components/books-section/BooksSection';
 import { Popup } from '@/components/popup/Popup';
 import { Spinner } from '@/components/spinner/Spinner';
-import { LocalStorage } from '@/sources/enums';
 import { BooksList } from './components/books-section/components/books-list/BooksList';
 import { Button } from '@/components/button/Button';
 import { messages as mainMessages } from './messages';
@@ -15,30 +14,27 @@ import { useParams } from 'react-router-dom';
 import { BookData } from '@/sources/types';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { fetchBooksData } from '@/api/fetchBooksData';
+import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 
 export const MainPage = () => {
-  const [searchTerm, setSearchTerm] = useState<string>(
-    (localStorage.getItem(LocalStorage.SEARCH_KEY) || '').trim()
-  );
+  const { searchTerm, handleSearchQuery } = useSearchQuery();
   const [books, setBooks] = useState<BookData[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const { page: pageParam, detailsId } = useParams();
+  const { page: pageParam } = useParams();
   const navigate = useNavigate();
 
-  const currentPage = Math.max(1, Number(pageParam || '1'));
+  const isValidPage =
+    pageParam && !Number.isNaN(Number(pageParam)) && Number(pageParam) >= 1;
+  const currentPage = isValidPage ? Math.max(1, Number(pageParam)) : 1;
 
-  const handleSearchQuery = (searchTerm: string) => {
-    setSearchTerm(searchTerm);
-    setBooks([]);
-    setErrorMessage('');
-    localStorage.setItem(LocalStorage.SEARCH_KEY, searchTerm.trim());
-
-    const newUrl = detailsId ? `/1/${detailsId}` : '/1';
-    void navigate(newUrl);
-  };
+  useEffect(() => {
+    if (pageParam && !isValidPage) {
+      void navigate(PagePath.notFound, { replace: true });
+    }
+  }, [pageParam, navigate]);
 
   const onClose = () => {
     setErrorMessage('');
@@ -76,7 +72,7 @@ export const MainPage = () => {
     };
 
     void loadBooks();
-  }, [searchTerm, currentPage]);
+  }, [searchTerm, currentPage, isValidPage, pageParam]);
 
   return (
     <main data-testid="main-page" className={styles.container}>
