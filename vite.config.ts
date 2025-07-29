@@ -2,7 +2,6 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import svgr from 'vite-plugin-svgr';
-import { OPEN_LIBRARY_URL } from './src/sources/constants';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
@@ -11,9 +10,19 @@ export default defineConfig({
     open: false,
     proxy: {
       '/api/books': {
-        target: OPEN_LIBRARY_URL,
+        target: 'https://openlibrary.org',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api\/books/, '/search.json'),
+      },
+      '/api/works': {
+        target: 'https://openlibrary.org',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\/works/, '/works'),
+      },
+      '/api/authors': {
+        target: 'https://openlibrary.org',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\/authors/, '/authors'),
       },
     },
   },

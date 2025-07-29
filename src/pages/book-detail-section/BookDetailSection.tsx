@@ -1,48 +1,22 @@
 import styles from './BookDetailSection.module.scss';
 import { BooksDetails } from './components/BooksDetails';
 import { messages as bookDetailsPageMessages } from './messages';
-import { messages as sourceMessages } from '@/sources/messages';
 import { Button } from '@/components/button/Button';
-import { IBookData } from '@/sources/interfaces';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { bookService } from '@/api/services/booksService';
 import { Spinner } from '@/components/spinner/Spinner';
-
+import { useGetBookByIdQuery } from '@/api/book.api';
 export const BookDetailSection = () => {
-  const { currentPage, navigateToList, redirectToNotFound } =
-    useNavigationToPath();
-  const [bookDetails, setBookDetails] = useState<IBookData | null>(null);
-  const [isBookLoading, setIsBookLoading] = useState<boolean>(false);
-
   const { detailsId } = useParams();
 
-  useEffect(() => {
-    const loadBookDetails = async () => {
-      if (!detailsId) {
-        setBookDetails(null);
-        return;
-      }
-
-      setIsBookLoading(true);
-
-      try {
-        const detailBook = await bookService.getBookById(detailsId);
-
-        setBookDetails(detailBook);
-      } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : sourceMessages.errorMessage;
-
-        console.log(message);
-      } finally {
-        setIsBookLoading(false);
-      }
-    };
-
-    void loadBookDetails();
-  }, [detailsId, redirectToNotFound]);
+  const { currentPage, navigateToList } = useNavigationToPath();
+  const {
+    data: bookDetails,
+    isLoading,
+    isError,
+  } = useGetBookByIdQuery(detailsId!, {
+    skip: !detailsId,
+  });
 
   const handleCloseButton = () => {
     navigateToList(currentPage);
@@ -50,9 +24,9 @@ export const BookDetailSection = () => {
 
   return (
     <section className={styles.container}>
-      <Spinner isLoading={isBookLoading} data-testid="spinner" />
+      <Spinner isLoading={isLoading} data-testid="spinner" />
 
-      {!bookDetails && !isBookLoading && (
+      {(isError || !bookDetails) && !isLoading && (
         <p className={styles.error}>
           {bookDetailsPageMessages.notFoundIdTitle}
         </p>

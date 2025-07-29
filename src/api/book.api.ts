@@ -1,16 +1,22 @@
-import { IBookData, IBooksListResponse } from '@/sources/interfaces';
+import { OPEN_LIBRARY_COVER_URL } from '@/sources/constants';
+import {
+  IAuthorResponse,
+  IBookData,
+  IBookItemResponse,
+  IBooksListResponse,
+} from '@/sources/interfaces';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const bookApi = createApi({
   reducerPath: 'bookApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api/books' }),
+  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   endpoints: builder => ({
     getBooksList: builder.query<
       { books: IBookData[]; totalItems: number },
       { query: string; page: number; limit: number }
     >({
       query: ({ query, page, limit }) => ({
-        url: '/',
+        url: '/books',
         params: {
           title: query.trim() || 'fiction',
           page,
@@ -30,7 +36,43 @@ export const bookApi = createApi({
         return { books: booksList, totalItems: response.numFound ?? 0 };
       },
     }),
+
+    getBookById: builder.query<IBookData, string>({
+      async queryFn(id, _queryApi, _extraOptions, baseQuery) {
+        const bookRes = await baseQuery(`/works/${id}.json`);
+        if (bookRes.error) return { error: bookRes.error };
+
+        const book = bookRes.data as IBookItemResponse;
+        const authorKeys = book.authors?.map(a => a.author.key) || [];
+
+        const authorNames: string[] = [];
+        for (const key of authorKeys) {
+          const res = await baseQuery(`/authors${key}.json`);
+          if (res.data) {
+            const author = res.data as IAuthorResponse;
+            authorNames.push(author.name);
+          }
+        }
+
+        const bookData: IBookData = {
+          id: book.key.replace('/works/', ''),
+          title: book.title || '',
+          image: book.covers?.[0]
+            ? `${OPEN_LIBRARY_COVER_URL}/${book.covers[0]}-M.jpg`
+            : '',
+          description:
+            typeof book.description === 'object'
+              ? book.description?.value
+              : book.description || '',
+          authors: authorNames.filter(Boolean).join(', '),
+          year: book.first_publish_date || '',
+          printType: 'book',
+        };
+
+        return { data: bookData };
+      },
+    }),
   }),
 });
 
-export const { useGetBooksListQuery } = bookApi;
+export const { useGetBooksListQuery, useGetBookByIdQuery } = bookApi;

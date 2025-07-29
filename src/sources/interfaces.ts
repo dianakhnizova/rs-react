@@ -21,6 +21,10 @@ export interface IAuthorRef {
   };
 }
 
+export interface IAuthorResponse {
+  name: string;
+}
+
 export interface IBookItemResponse {
   key: string;
   title: string;
