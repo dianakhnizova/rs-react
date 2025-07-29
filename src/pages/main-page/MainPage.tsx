@@ -7,7 +7,6 @@ import { Spinner } from '@/components/spinner/Spinner';
 import { BooksList } from './components/books-section/components/books-list/BooksList';
 import { Button } from '@/components/button/Button';
 import { messages as mainMessages } from './messages';
-import { messages as sourceMessages } from '@/sources/messages';
 import { Outlet } from 'react-router-dom';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
@@ -40,11 +39,8 @@ export const MainPage = () => {
   }, [isValidPage, redirectToNotFound]);
 
   useEffect(() => {
-    if (isError) {
-      const message =
-        error instanceof Error ? error.message : sourceMessages.errorMessage;
-
-      setErrorMessage(message);
+    if (isError && error && 'message' in error) {
+      setErrorMessage(error.message ?? '');
     }
   }, [isError, error]);
 

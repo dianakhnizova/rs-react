@@ -6,15 +6,16 @@ import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useParams } from 'react-router-dom';
 import { Spinner } from '@/components/spinner/Spinner';
 import { useGetBookByIdQuery } from '@/api/book.api';
+
 export const BookDetailSection = () => {
+  const { currentPage, navigateToList } = useNavigationToPath();
   const { detailsId } = useParams();
 
-  const { currentPage, navigateToList } = useNavigationToPath();
   const {
     data: bookDetails,
     isLoading,
     isError,
-  } = useGetBookByIdQuery(detailsId!, {
+  } = useGetBookByIdQuery(detailsId || '', {
     skip: !detailsId,
   });
 

@@ -1,20 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import { messages as detailPageMessages } from './messages';
-import { vi, type Mock } from 'vitest';
+import { vi } from 'vitest';
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { BookDetailSection } from './BookDetailSection';
-import { bookService } from '@/api/services/booksService';
+import { useGetBookByIdQuery } from '@/api/book.api';
 
-vi.mock('@/api/services/booksService', () => ({
-  bookService: {
-    getBookById: vi.fn(),
-  },
+vi.mock('@/api/book.api', () => ({
+  useGetBookByIdQuery: vi.fn(),
 }));
 
 describe('BookDetailSection', () => {
   it('Renders error message if bookDetails is null', () => {
-    (bookService.getBookById as Mock).mockImplementation(() => {
-      return Promise.resolve(null);
+    (useGetBookByIdQuery as ReturnType<typeof vi.fn>).mockReturnValue({
+      data: undefined,
+      isLoading: false,
+      isError: true,
     });
 
     render(

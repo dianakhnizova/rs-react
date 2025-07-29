@@ -1,7 +1,7 @@
 import { bookApi } from '@/api/book.api';
 import { configureStore } from '@reduxjs/toolkit';
 
-export const bookStore = configureStore({
+export const store = configureStore({
   reducer: {
     [bookApi.reducerPath]: bookApi.reducer,
   },
@@ -10,5 +10,5 @@ export const bookStore = configureStore({
     getDefaultMiddleware().concat(bookApi.middleware),
 });
 
-export type TypeRootState = ReturnType<typeof bookStore.getState>;
-export type AppDispatch = typeof bookStore.dispatch;
+export type TypeRootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
