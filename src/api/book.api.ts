@@ -39,17 +39,17 @@ export const bookApi = createApi({
 
     getBookById: builder.query<IBookData, string>({
       async queryFn(id, _queryApi, _extraOptions, baseQuery) {
-        const bookRes = await baseQuery(`/works/${id}.json`);
-        if (bookRes.error) return { error: bookRes.error };
+        const bookResponse = await baseQuery(`/works/${id}.json`);
+        if (bookResponse.error) return { error: bookResponse.error };
 
-        const book = bookRes.data as IBookItemResponse;
+        const book = bookResponse.data as IBookItemResponse;
         const authorKeys = book.authors?.map(a => a.author.key) || [];
 
         const authorNames: string[] = [];
         for (const key of authorKeys) {
-          const res = await baseQuery(`/authors${key}.json`);
-          if (res.data) {
-            const author = res.data as IAuthorResponse;
+          const response = await baseQuery(`/authors${key}.json`);
+          if (response.data) {
+            const author = response.data as IAuthorResponse;
             authorNames.push(author.name);
           }
         }

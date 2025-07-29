@@ -34,9 +34,11 @@ export const BookDetailSection = () => {
 
       {bookDetails && <BooksDetails bookDetail={bookDetails} />}
 
-      <Button onClick={handleCloseButton}>
-        {bookDetailsPageMessages.closeButton}
-      </Button>
+      {!isLoading && (
+        <Button onClick={handleCloseButton}>
+          {bookDetailsPageMessages.closeButton}
+        </Button>
+      )}
     </section>
   );
 };
