@@ -1,10 +1,10 @@
 import { BookCard } from '@/components/books-cards/BookCard';
-import { BookData } from '@/sources/types';
+import { IBookData } from '@/sources/interfaces';
 import { messages } from './messages';
 import styles from './BooksDetails.module.scss';
 
 export interface Props {
-  bookDetail: BookData;
+  bookDetail: IBookData;
 }
 
 export const BooksDetails = ({ bookDetail }: Props) => {

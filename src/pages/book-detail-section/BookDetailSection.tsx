@@ -3,7 +3,7 @@ import { BooksDetails } from './components/BooksDetails';
 import { messages as bookDetailsPageMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
 import { Button } from '@/components/button/Button';
-import { BookData } from '@/sources/types';
+import { IBookData } from '@/sources/interfaces';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -13,7 +13,7 @@ import { Spinner } from '@/components/spinner/Spinner';
 export const BookDetailSection = () => {
   const { currentPage, navigateToList, redirectToNotFound } =
     useNavigationToPath();
-  const [bookDetails, setBookDetails] = useState<BookData | null>(null);
+  const [bookDetails, setBookDetails] = useState<IBookData | null>(null);
   const [isBookLoading, setIsBookLoading] = useState<boolean>(false);
 
   const { detailsId } = useParams();

@@ -9,11 +9,11 @@ import { Button } from '@/components/button/Button';
 import { messages as mainMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
 import { Outlet } from 'react-router-dom';
-import { BookData } from '@/sources/types';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
-import { fetchBooksData } from '@/api/fetchBooksData';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
+import { useGetBooksListQuery } from '@/api/book.api';
+import { prepareBooksList } from '@/utils/prepareBooksList';
 
 export const MainPage = () => {
   const { searchTerm, handleSearchQuery } = useSearchQuery();
@@ -25,10 +25,13 @@ export const MainPage = () => {
     navigateToAboutPage,
   } = useNavigationToPath();
 
-  const [books, setBooks] = useState<BookData[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const [totalItems, setTotalItems] = useState(0);
+
+  const { data, isLoading, isError, error } = useGetBooksListQuery({
+    query: searchTerm,
+    page: currentPage,
+    limit: ITEMS_PER_PAGE,
+  });
 
   useEffect(() => {
     if (!isValidPage) {
@@ -37,34 +40,20 @@ export const MainPage = () => {
   }, [isValidPage, redirectToNotFound]);
 
   useEffect(() => {
-    const loadBooks = async () => {
-      setIsLoading(true);
+    if (isError) {
+      const message =
+        error instanceof Error ? error.message : sourceMessages.errorMessage;
 
-      try {
-        const { booksList, totalItems } = await fetchBooksData(
-          searchTerm,
-          currentPage,
-          ITEMS_PER_PAGE
-        );
-
-        setBooks(booksList);
-        setTotalItems(totalItems);
-      } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : sourceMessages.errorMessage;
-
-        setErrorMessage(message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    void loadBooks();
-  }, [searchTerm, currentPage, isValidPage]);
+      setErrorMessage(message);
+    }
+  }, [isError, error]);
 
   const onClose = () => {
     setErrorMessage('');
   };
+
+  const books = data ? prepareBooksList(data.books) : [];
+  const totalItems = data?.totalItems ?? 0;
 
   return (
     <main data-testid="main-page" className={styles.container}>

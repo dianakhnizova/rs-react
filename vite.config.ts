@@ -2,12 +2,20 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import svgr from 'vite-plugin-svgr';
+import { OPEN_LIBRARY_URL } from './src/sources/constants';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), svgr()],
   server: {
     port: 3000,
     open: false,
+    proxy: {
+      '/api/books': {
+        target: OPEN_LIBRARY_URL,
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\/books/, '/search.json'),
+      },
+    },
   },
   resolve: {
     alias: {

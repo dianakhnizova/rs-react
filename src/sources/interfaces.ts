@@ -1,3 +1,13 @@
+export interface IBookData {
+  id: string;
+  title: string;
+  image: string;
+  description?: string;
+  authors?: string;
+  year?: string;
+  printType?: string;
+}
+
 export interface IBookSearchResult {
   key: string;
   title: string;
