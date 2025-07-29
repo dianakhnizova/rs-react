@@ -1,7 +1,7 @@
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router/router';
 import { Provider } from 'react-redux';
-import { bookStore } from './store/BookStore';
+import { bookStore } from './store/bookStore';
 
 export const App = () => {
   return (
