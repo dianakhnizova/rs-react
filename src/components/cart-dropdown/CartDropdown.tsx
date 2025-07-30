@@ -4,6 +4,7 @@ import { Button } from '../button/Button';
 import { useTypedSelector } from '@/utils/hooks/useTypedSelector';
 import { BookCard } from '../books-cards/BookCard';
 import { useActions } from '@/utils/hooks/useActions';
+import { downloadBooksCsv } from '@/utils/downloadBooksCsv';
 
 export const CartDropdown = () => {
   const cart = useTypedSelector(state => state.cart);
@@ -12,6 +13,10 @@ export const CartDropdown = () => {
 
   const handleUnselectAllButton = () => {
     clearCart();
+  };
+
+  const handleDownloadButton = () => {
+    downloadBooksCsv(cart);
   };
 
   return (
@@ -32,7 +37,10 @@ export const CartDropdown = () => {
         <Button onClick={handleUnselectAllButton}>
           {messages.titleUnselectAllButton}
         </Button>
-        <Button>{messages.titleDownloadButton}</Button>
+
+        <Button onClick={handleDownloadButton}>
+          {messages.titleDownloadButton}
+        </Button>
       </div>
     </div>
   );

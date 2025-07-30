@@ -47,7 +47,6 @@ export const MainPage = () => {
     setErrorMessage('');
   };
 
-  console.log(data);
   const books = data ? data.books : [];
   const totalItems = data?.totalItems ?? 0;
 

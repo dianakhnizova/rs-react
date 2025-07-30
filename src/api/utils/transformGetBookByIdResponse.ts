@@ -11,12 +11,14 @@ export const transformGetBookByIdResponse = (
     image: book.covers?.[0]
       ? `${OPEN_LIBRARY_COVER_URL}/${book.covers[0]}-M.jpg`
       : '',
-    description:
-      typeof book.description === 'object'
-        ? book.description?.value
-        : book.description || '',
-    authors: authorNames.filter(Boolean).join(', '),
-    year: book.first_publish_date || '',
-    printType: 'book',
+
+    bookDetails: {
+      description:
+        typeof book.description === 'object'
+          ? book.description?.value
+          : book.description || '',
+      authors: authorNames.filter(Boolean).join(', '),
+      year: book.first_publish_date || '',
+    },
   };
 };

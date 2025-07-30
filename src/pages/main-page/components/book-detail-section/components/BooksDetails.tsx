@@ -16,22 +16,18 @@ export const BooksDetails = ({ bookDetail }: Props) => {
           book={bookDetail}
           details={[
             {
-              value: bookDetail.description || messages.titleNotDescription,
+              value:
+                bookDetail.bookDetails.description.trim() ||
+                messages.titleNotDescription,
               className: styles.description,
             },
             {
-              value: bookDetail.authors || messages.titleNotAuthor,
+              value: bookDetail.bookDetails.authors || messages.titleNotAuthor,
               className: styles.authors,
             },
             {
-              value: bookDetail.year || messages.titleNotPageCount,
+              value: bookDetail.bookDetails.year || messages.titleNotPageCount,
               className: styles.year,
-            },
-            {
-              value:
-                bookDetail.printType?.toUpperCase() ||
-                messages.titleNotPrintType,
-              className: styles.printType,
             },
           ]}
         />

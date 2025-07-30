@@ -24,7 +24,7 @@ export const BookCard: FC<Props> = ({
   isSelected,
   isCart,
 }: Props) => {
-  const { title, image, id } = book;
+  const { title, image, id, bookDetails } = book;
 
   const { addItem, removeItem } = useActions();
   const cart = useTypedSelector(state => state.cart);
@@ -64,10 +64,10 @@ export const BookCard: FC<Props> = ({
         </div>
       </div>
 
-      {details &&
+      {bookDetails &&
+        details &&
         details.map(({ value, className }, index) => {
           if (!value) return null;
-
           return (
             <div key={index} className={className}>
               <p>{value}</p>
