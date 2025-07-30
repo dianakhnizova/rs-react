@@ -5,14 +5,17 @@ import { useTypedSelector } from '@/utils/hooks/useTypedSelector';
 import { BookCard } from '../books-cards/BookCard';
 import { useActions } from '@/utils/hooks/useActions';
 import { downloadBooksCsv } from '@/utils/downloadBooksCsv';
+import classNames from 'classnames';
 
 export const CartDropdown = () => {
   const cart = useTypedSelector(state => state.cart);
   const { isCart } = useTypedSelector(state => state.isCart);
-  const { clearCart } = useActions();
+  const { isSelectItem } = useTypedSelector(state => state.selectItem);
+  const { clearCart, setIsSelectItem } = useActions();
 
   const handleUnselectAllButton = () => {
     clearCart();
+    setIsSelectItem(false);
   };
 
   const handleDownloadButton = () => {
@@ -20,18 +23,29 @@ export const CartDropdown = () => {
   };
 
   return (
-    <div className={styles.container}>
-      {cart.length > 0 ? (
-        <div className={styles.itemContainer}>
-          {cart.map(book => (
-            <BookCard key={book.id} book={book} isCart={isCart} />
-          ))}
-        </div>
-      ) : (
-        <div>
+    <div
+      className={classNames(styles.container, {
+        [styles.dropDown]: isSelectItem,
+      })}
+    >
+      <div className={styles.content}>
+        {cart.length > 0 ? (
+          <>
+            <p>
+              {cart.length}
+              {messages.titleItemsPerCart}
+            </p>
+
+            <div className={styles.itemContainer}>
+              {cart.map(book => (
+                <BookCard key={book.id} book={book} isCart={isCart} />
+              ))}
+            </div>
+          </>
+        ) : (
           <p>{messages.titleEmpty}</p>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className={styles.buttonContainer}>
         <Button onClick={handleUnselectAllButton}>

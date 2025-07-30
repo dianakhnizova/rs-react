@@ -12,6 +12,7 @@ import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useGetBooksListQuery } from '@/api/book.api';
+import { CartDropdown } from '@/components/cart-dropdown/CartDropdown';
 
 export const MainPage = () => {
   const { searchTerm, handleSearchQuery } = useSearchQuery();
@@ -76,6 +77,8 @@ export const MainPage = () => {
       <Button onClick={navigateToAboutPage}>
         {mainMessages.toAboutPageButton}
       </Button>
+
+      <CartDropdown />
     </main>
   );
 };

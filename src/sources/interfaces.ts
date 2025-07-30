@@ -60,4 +60,5 @@ export interface BookDetail {
 export interface ValueState {
   isSelected?: boolean;
   isCart?: boolean;
+  isSelectItem?: boolean;
 }

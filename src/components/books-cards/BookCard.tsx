@@ -25,8 +25,7 @@ export const BookCard: FC<Props> = ({
   isCart,
 }: Props) => {
   const { title, image, id, bookDetails } = book;
-
-  const { addItem, removeItem } = useActions();
+  const { addItem, removeItem, setIsSelectItem } = useActions();
   const cart = useTypedSelector(state => state.cart);
 
   const isExistsInCart = cart.some(bookSelected => bookSelected.id === id);
@@ -34,13 +33,24 @@ export const BookCard: FC<Props> = ({
   const toggleCheckbox = () => {
     if (!isExistsInCart) {
       addItem(book);
+      setIsSelectItem(true);
     } else {
       removeItem({ id: book.id });
+
+      if (cart.length === 1) {
+        setIsSelectItem(false);
+      }
     }
   };
 
   const handleRemoveItem = () => {
-    if (isExistsInCart) removeItem({ id: book.id });
+    if (isExistsInCart) {
+      removeItem({ id: book.id });
+
+      if (cart.length === 1) {
+        setIsSelectItem(false);
+      }
+    }
   };
 
   return (
@@ -48,6 +58,7 @@ export const BookCard: FC<Props> = ({
       onClick={onClick}
       className={classNames(styles.book, {
         [styles.clickable]: !!onClick,
+        [styles.bookInCart]: isCart,
       })}
     >
       <div className={styles.container}>
