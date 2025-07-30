@@ -69,7 +69,7 @@ export const BookCard: FC<Props> = ({
           if (!value) return null;
 
           return (
-            <div key={index} className={styles[className]}>
+            <div key={index} className={className}>
               <p>{value}</p>
             </div>
           );

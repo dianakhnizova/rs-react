@@ -52,21 +52,8 @@
   width: 100%;
 }
 
-.bookSelected {
-  display: flex;
-  flex-direction: column;
-}
-
 .title {
   display: flex;
-}
-
-.description {
-  word-break: break-word;
-  overflow-wrap: break-word;
-  width: 100%;
-  font-size: 16px;
-  line-height: 1.4;
 }
 
 .removeButton {
@@ -90,14 +77,13 @@
     display: flex;
     width: 100%;
 
-    .img {
+    img {
       width: 40px;
       height: 80px;
     }
   }
 
   .title,
-  .description,
   .image {
     font-size: 10px;
   }
