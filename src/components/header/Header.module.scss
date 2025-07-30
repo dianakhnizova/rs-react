@@ -10,13 +10,3 @@
   background-color: var(--clr-bg-1);
   width: 100%;
 }
-
-.title {
-  text-decoration: none;
-  color: var(--clr-line);
-
-  &:hover {
-    transform: scale(1.03);
-    color: var(--clr-hover);
-  }
-}

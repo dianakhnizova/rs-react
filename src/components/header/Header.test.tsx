@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Header } from './Header';
-import { messages } from './messages';
+import { messages } from './components/logo/messages';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Header component', () => {

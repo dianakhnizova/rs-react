@@ -12,7 +12,6 @@ import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useGetBooksListQuery } from '@/api/book.api';
-import { prepareBooksList } from '@/utils/prepareBooksList';
 
 export const MainPage = () => {
   const { searchTerm, handleSearchQuery } = useSearchQuery();
@@ -48,7 +47,8 @@ export const MainPage = () => {
     setErrorMessage('');
   };
 
-  const books = data ? prepareBooksList(data.books) : [];
+  console.log(data);
+  const books = data ? data.books : [];
   const totalItems = data?.totalItems ?? 0;
 
   return (

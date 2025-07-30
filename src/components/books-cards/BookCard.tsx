@@ -7,6 +7,7 @@ import { Checkbox } from '../checkbox/Checkbox';
 import { useActions } from '@/utils/hooks/useActions';
 import { useTypedSelector } from '@/utils/hooks/useTypedSelector';
 import { Button } from '../button/Button';
+import { FC } from 'react';
 
 interface Props {
   book: IBookData;
@@ -16,7 +17,7 @@ interface Props {
   isCart?: boolean;
 }
 
-export const BookCard = ({
+export const BookCard: FC<Props> = ({
   book,
   details,
   onClick,
