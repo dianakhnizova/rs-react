@@ -13,8 +13,7 @@ export const BooksDetails = ({ bookDetail }: Props) => {
       {bookDetail && (
         <BookCard
           key={bookDetail.id}
-          title={bookDetail.title.toUpperCase() || messages.titleNot}
-          image={bookDetail.image}
+          book={bookDetail}
           details={[
             {
               value: bookDetail.description || messages.titleNotDescription,

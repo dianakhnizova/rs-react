@@ -49,3 +49,8 @@ export interface BookDetail {
   value: string | number;
   className: string;
 }
+
+export interface ValueState {
+  isSelected?: boolean;
+  isCart?: boolean;
+}

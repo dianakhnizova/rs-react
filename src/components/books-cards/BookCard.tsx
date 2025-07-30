@@ -1,31 +1,66 @@
 import styles from './BookCard.module.scss';
 import BookPlaceholder from '@/assets/img-placeholder.jpg';
-import { BookDetail } from '@/sources/interfaces';
+import { BookDetail, IBookData } from '@/sources/interfaces';
 import classNames from 'classnames';
+import { messages } from './messages';
+import { Checkbox } from '../checkbox/Checkbox';
+import { useActions } from '@/utils/hooks/useActions';
+import { useTypedSelector } from '@/utils/hooks/useTypedSelector';
+import { Button } from '../button/Button';
 
 interface Props {
-  title: string;
-  image: string;
+  book: IBookData;
   details?: BookDetail[];
   onClick?: () => void;
+  isSelected?: boolean;
+  isCart?: boolean;
 }
 
-export const BookCard = ({ title, image, details, onClick }: Props) => {
+export const BookCard = ({
+  book,
+  details,
+  onClick,
+  isSelected,
+  isCart,
+}: Props) => {
+  const { title, image, id } = book;
+
+  const { addItem, removeItem } = useActions();
+  const cart = useTypedSelector(state => state.cart);
+
+  const isExistsInCart = cart.some(bookSelected => bookSelected.id === id);
+
+  const toggleCheckbox = () => {
+    if (!isExistsInCart) {
+      addItem(book);
+    } else {
+      removeItem({ id: book.id });
+    }
+  };
+
+  const handleRemoveItem = () => {
+    if (isExistsInCart) removeItem({ id: book.id });
+  };
+
   return (
     <li
       onClick={onClick}
-      className={classNames(styles.book, { [styles.clickable]: !!onClick })}
+      className={classNames(styles.book, {
+        [styles.clickable]: !!onClick,
+      })}
     >
-      <div className={styles.title}>
-        <p className={styles.titleName}>{title}</p>
-      </div>
+      <div className={styles.container}>
+        <div className={styles.title}>
+          <p className={styles.titleName}>{title}</p>
+        </div>
 
-      <div className={styles.image}>
-        <img
-          src={image || BookPlaceholder}
-          alt={title}
-          className={styles.img}
-        />
+        <div className={styles.image}>
+          <img
+            src={image || BookPlaceholder}
+            alt={title}
+            className={styles.img}
+          />
+        </div>
       </div>
 
       {details &&
@@ -38,6 +73,23 @@ export const BookCard = ({ title, image, details, onClick }: Props) => {
             </div>
           );
         })}
+
+      {isSelected && (
+        <Checkbox
+          label={
+            !isExistsInCart ? messages.titleSelect : messages.titleSelected
+          }
+          checked={isExistsInCart}
+          onChange={toggleCheckbox}
+        />
+      )}
+
+      {isCart && (
+        <Button
+          onClick={handleRemoveItem}
+          className={styles.removeButton}
+        ></Button>
+      )}
     </li>
   );
 };

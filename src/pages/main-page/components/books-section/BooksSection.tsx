@@ -1,5 +1,6 @@
 import styles from './BooksSection.module.scss';
 import { BookListHeader } from '../../../../components/book-list-header/BookListHeader';
+import { CartDropdown } from '@/components/cart-dropdown/CartDropdown';
 
 interface Props {
   children: React.ReactNode;
@@ -13,6 +14,8 @@ export const BooksSection = ({ children }: Props) => {
       <div className={styles.gridDivider} />
 
       {children}
+
+      <CartDropdown />
     </div>
   );
 };
