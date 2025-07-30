@@ -3,10 +3,16 @@ import { messages } from './messages';
 import { Button } from '../button/Button';
 import { useTypedSelector } from '@/utils/hooks/useTypedSelector';
 import { BookCard } from '../books-cards/BookCard';
+import { useActions } from '@/utils/hooks/useActions';
 
 export const CartDropdown = () => {
   const cart = useTypedSelector(state => state.cart);
   const { isCart } = useTypedSelector(state => state.isCart);
+  const { clearCart } = useActions();
+
+  const handleUnselectAllButton = () => {
+    clearCart();
+  };
 
   return (
     <div className={styles.container}>
@@ -23,7 +29,9 @@ export const CartDropdown = () => {
       )}
 
       <div className={styles.buttonContainer}>
-        <Button>{messages.titleUnselectAllButton}</Button>
+        <Button onClick={handleUnselectAllButton}>
+          {messages.titleUnselectAllButton}
+        </Button>
         <Button>{messages.titleDownloadButton}</Button>
       </div>
     </div>
