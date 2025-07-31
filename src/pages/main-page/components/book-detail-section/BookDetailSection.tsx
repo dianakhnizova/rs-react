@@ -13,7 +13,7 @@ export const BookDetailSection = () => {
 
   const {
     data: bookDetails,
-    isLoading,
+    isFetching,
     isError,
   } = useGetBookByIdQuery(detailsId || '', {
     skip: !detailsId,
@@ -25,9 +25,9 @@ export const BookDetailSection = () => {
 
   return (
     <section className={styles.container}>
-      <Spinner isLoading={isLoading} data-testid="spinner" />
+      <Spinner isLoading={isFetching} data-testid="spinner" />
 
-      {(isError || !bookDetails) && !isLoading && (
+      {(isError || !bookDetails) && !isFetching && (
         <p className={styles.error}>
           {bookDetailsPageMessages.notFoundIdTitle}
         </p>
@@ -35,7 +35,7 @@ export const BookDetailSection = () => {
 
       {bookDetails && <BooksDetails bookDetail={bookDetails} />}
 
-      {!isLoading && (
+      {!isFetching && (
         <Button onClick={handleCloseButton}>
           {bookDetailsPageMessages.closeButton}
         </Button>

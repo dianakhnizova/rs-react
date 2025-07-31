@@ -6,12 +6,14 @@ import { Pagination } from '@/components/pagination/Pagination';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTypedSelector } from '@/utils/hooks/useTypedSelector';
+import { Spinner } from '@/components/spinner/Spinner';
 
 export interface Props {
   books: IBookData[];
   totalItems: number;
   currentPage: number;
   onBookClick: (bookId: string) => void;
+  isFetching: boolean;
 }
 
 export const BooksList = ({
@@ -19,6 +21,7 @@ export const BooksList = ({
   totalItems,
   currentPage,
   onBookClick,
+  isFetching,
 }: Props) => {
   const { isSelected } = useTypedSelector(state => state.selection);
 
@@ -33,6 +36,8 @@ export const BooksList = ({
 
   return (
     <>
+      <Spinner isLoading={isFetching} data-testid="spinner" />
+
       {books.length === 0 ? (
         <p className={styles.title}>{messages.emptyList}</p>
       ) : (

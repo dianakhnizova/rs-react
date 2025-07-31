@@ -4,7 +4,7 @@ const OPEN_LIBRARY_COVER_URL = 'https://covers.openlibrary.org/b/id';
 const getAuthorUrl = (key: string) => `https://openlibrary.org${key}.json`;
 
 const RS_SCHOOL_URL = 'https://rs.school/courses/reactjs';
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 4;
 
 export {
   OPEN_LIBRARY_URL,

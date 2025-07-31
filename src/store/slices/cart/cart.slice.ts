@@ -1,25 +1,28 @@
 import { IBookData } from '@/sources/interfaces';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: IBookData[] = [];
+interface CartState {
+  cart: IBookData[];
+}
+
+const initialState: CartState = {
+  cart: [],
+};
 
 export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
     addItem: (state, action: PayloadAction<IBookData>) => {
-      state.push(action.payload);
+      state.cart.push(action.payload);
     },
 
     removeItem: (state, action: PayloadAction<{ id: string }>) => {
-      const index = state.findIndex(book => book.id === action.payload.id);
-      if (index !== -1) {
-        state.splice(index, 1);
-      }
+      state.cart = state.cart.filter(book => book.id !== action.payload.id);
     },
 
-    clearCart: () => {
-      return [];
+    clearCart: state => {
+      state.cart = [];
     },
   },
 });

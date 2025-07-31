@@ -4,27 +4,16 @@ import classNames from 'classnames';
 
 type Props = {
   label?: string;
-  className?: string;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-export const Checkbox = ({ label, className, onChange, ...rest }: Props) => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.stopPropagation();
-    onChange?.(event);
-  };
-
+export const Checkbox = ({ label, ...rest }: Props) => {
   return (
     <div
       onClick={event => event.stopPropagation()}
-      className={classNames(styles.wrapper, styles.checkboxWrapper, className)}
+      className={classNames(styles.wrapper, styles.checkboxWrapper)}
     >
       <label className={styles.checkboxLabel}>
-        <input
-          type="checkbox"
-          onChange={handleChange}
-          className={styles.checkbox}
-          {...rest}
-        />
+        <input type="checkbox" className={styles.checkbox} {...rest} />
         {label}
       </label>
     </div>

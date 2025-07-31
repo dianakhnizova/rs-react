@@ -3,17 +3,18 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { transformGetBookListResponse } from './utils/transformGetBookListResponse';
 import { fetchAuthorNames } from './utils/fetchAuthorNames';
 import { transformGetBookByIdResponse } from './utils/transformGetBookByIdResponse';
-import { messages as sourceMessages } from '@/sources/messages';
+import { BooksListResponse } from '@/sources/types';
+import { ITEMS_PER_PAGE } from '@/sources/constants';
 
 export const bookApi = createApi({
   reducerPath: 'bookApi',
   baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
   endpoints: builder => ({
     getBooksList: builder.query<
-      { books: IBookData[]; totalItems: number },
-      { query: string; page: number; limit: number }
+      BooksListResponse,
+      { query: string; page: number; limit?: number }
     >({
-      query: ({ query, page, limit }) => ({
+      query: ({ query, page, limit = ITEMS_PER_PAGE }) => ({
         url: '/books',
         params: {
           title: query.trim() || 'fiction',
@@ -23,14 +24,6 @@ export const bookApi = createApi({
       }),
 
       transformResponse: transformGetBookListResponse,
-      transformErrorResponse: response => {
-        if ('status' in response && response.status === 'FETCH_ERROR') {
-          return { message: sourceMessages.errorMessage };
-        }
-
-        const data = response.data as { message?: string };
-        return { message: data?.message ?? sourceMessages.errorMessage };
-      },
     }),
 
     getBookById: builder.query<IBookData, string>({
@@ -40,8 +33,7 @@ export const bookApi = createApi({
         if (bookResponse.error) return { error: bookResponse.error };
 
         const book = bookResponse.data as IBookItemResponse;
-        const authorKeys =
-          book.authors?.map(a => a.author.key.replace('/authors/', '')) || [];
+        const authorKeys = book.authors?.map(({ author }) => author.key) || [];
 
         const authorNames = await fetchAuthorNames(authorKeys, baseQuery, api);
 

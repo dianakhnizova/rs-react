@@ -8,7 +8,7 @@ import { downloadBooksCsv } from '@/utils/downloadBooksCsv';
 import classNames from 'classnames';
 
 export const CartDropdown = () => {
-  const cart = useTypedSelector(state => state.cart);
+  const cart = useTypedSelector(state => state.cart.cart);
   const { isCart } = useTypedSelector(state => state.isCart);
   const { isSelectItem } = useTypedSelector(state => state.selectItem);
   const { clearCart, setIsSelectItem } = useActions();

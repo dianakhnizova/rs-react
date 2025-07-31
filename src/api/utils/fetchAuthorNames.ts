@@ -13,7 +13,7 @@ export const fetchAuthorNames = async (
 ): Promise<string[]> => {
   const names = await Promise.all(
     authorKeys.map(async key => {
-      const response = await baseQuery(`/authors/${key}.json`, api, {});
+      const response = await baseQuery(`${key}.json`, api, {});
       if (response.data) {
         const author = response.data as IAuthorResponse;
         return author.name;

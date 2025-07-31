@@ -24,9 +24,9 @@ export const BookCard: FC<Props> = ({
   isSelected,
   isCart,
 }: Props) => {
-  const { title, image, id, bookDetails } = book;
+  const { title, image, id } = book;
   const { addItem, removeItem, setIsSelectItem } = useActions();
-  const cart = useTypedSelector(state => state.cart);
+  const cart = useTypedSelector(state => state.cart.cart);
 
   const isExistsInCart = cart.some(bookSelected => bookSelected.id === id);
 
@@ -35,7 +35,7 @@ export const BookCard: FC<Props> = ({
       addItem(book);
       setIsSelectItem(true);
     } else {
-      removeItem({ id: book.id });
+      removeItem({ id });
 
       if (cart.length === 1) {
         setIsSelectItem(false);
@@ -45,7 +45,7 @@ export const BookCard: FC<Props> = ({
 
   const handleRemoveItem = () => {
     if (isExistsInCart) {
-      removeItem({ id: book.id });
+      removeItem({ id });
 
       if (cart.length === 1) {
         setIsSelectItem(false);
@@ -75,8 +75,7 @@ export const BookCard: FC<Props> = ({
         </div>
       </div>
 
-      {bookDetails &&
-        details &&
+      {details &&
         details.map(({ value, className }, index) => {
           if (!value) return null;
           return (
