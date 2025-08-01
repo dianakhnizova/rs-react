@@ -4,7 +4,7 @@ import { transformGetBookListResponse } from './utils/transformGetBookListRespon
 import { fetchAuthorNames } from './utils/fetchAuthorNames';
 import { transformGetBookByIdResponse } from './utils/transformGetBookByIdResponse';
 import { BooksListResponse } from '@/sources/types';
-import { ITEMS_PER_PAGE } from '@/sources/constants';
+import { buildBooksListQuery } from './utils/buildBooksListQuery';
 
 export const bookApi = createApi({
   reducerPath: 'bookApi',
@@ -14,15 +14,7 @@ export const bookApi = createApi({
       BooksListResponse,
       { query: string; page: number; limit?: number }
     >({
-      query: ({ query, page, limit = ITEMS_PER_PAGE }) => ({
-        url: '/books',
-        params: {
-          title: query.trim() || 'fiction',
-          page,
-          limit,
-        },
-      }),
-
+      query: buildBooksListQuery,
       transformResponse: transformGetBookListResponse,
     }),
 
