@@ -1,10 +1,10 @@
 import { ToggleTheme } from '@/components/toggle-theme/ToggleTheme';
-import styles from './NavLeftMenu.module.scss';
+import styles from './OptionsMenu.module.scss';
 import { messages } from './messages';
 import { PagePath } from '@/router/enums';
 import { NavLink } from 'react-router-dom';
 
-export const NavLeftMenu = () => {
+export const OptionsMenu = () => {
   return (
     <div className={styles.container}>
       <ToggleTheme />

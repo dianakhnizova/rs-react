@@ -1,13 +1,13 @@
 import styles from './Header.module.scss';
-import { NavLeftMenu } from './components/nav-left-menu/NavLeftMenu';
-import { NavRightMenu } from './components/nav-right-menu/NavRightMenu';
+import { NavMenu } from './components/nav-menu/NavMenu';
+import { OptionsMenu } from './components/options-menu/OptionsMenu';
 
 export const Header = () => {
   return (
     <header className={styles.container}>
-      <NavLeftMenu />
+      <OptionsMenu />
 
-      <NavRightMenu />
+      <NavMenu />
     </header>
   );
 };

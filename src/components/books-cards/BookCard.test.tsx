@@ -2,22 +2,44 @@ import { render, screen } from '@testing-library/react';
 import { BookCard } from './BookCard';
 import { MemoryRouter } from 'react-router-dom';
 import BookPlaceholder from '@/assets/img-placeholder.jpg';
+import { IBookData } from '@/sources/interfaces';
+import { ThemeProvider } from '@/utils/ThemeContext';
+import { Provider } from 'react-redux';
+import { store } from '@/store/store';
+
+const mockBook: IBookData = {
+  id: '1',
+  title: 'Test Book',
+  image: 'test.jpg',
+  bookDetails: {
+    description: 'Test description',
+    authors: 'Test Author',
+    year: '2020',
+    pages: '100',
+  },
+};
+
+const renderWithProviders = (ui: React.ReactNode) =>
+  render(
+    <MemoryRouter>
+      <Provider store={store}>
+        <ThemeProvider>{ui}</ThemeProvider>
+      </Provider>
+    </MemoryRouter>
+  );
 
 describe('BookCard', () => {
   it('Displays full data correctly', () => {
-    render(
-      <MemoryRouter>
-        <BookCard
-          title="Test Book"
-          image="test.jpg"
-          details={[
-            { value: 'Test Description', className: 'desc' },
-            { value: 'Test Author', className: 'author' },
-            { value: 100, className: 'pageCount' },
-            { value: 'Book', className: 'printType' },
-          ]}
-        />
-      </MemoryRouter>
+    renderWithProviders(
+      <BookCard
+        book={mockBook}
+        details={[
+          { value: 'Test Description', className: 'desc' },
+          { value: 'Test Author', className: 'author' },
+          { value: 100, className: 'pageCount' },
+          { value: 'Book', className: 'printType' },
+        ]}
+      />
     );
 
     const image = screen.getByRole('img');
@@ -33,36 +55,30 @@ describe('BookCard', () => {
   });
 
   it('Falls back to placeholder image if no image is provided', () => {
-    render(
-      <MemoryRouter>
-        <BookCard title="No Image Book" image={BookPlaceholder} details={[]} />
-      </MemoryRouter>
-    );
+    const bookWithoutImage = { ...mockBook, image: '' };
+
+    renderWithProviders(<BookCard book={bookWithoutImage} details={[]} />);
 
     const image = screen.getByRole('img');
     expect(image).toHaveAttribute('src', BookPlaceholder);
-    expect(image).toHaveAttribute('alt', 'No Image Book');
+    expect(image).toHaveAttribute('alt', 'Test Book');
   });
 
   it('Skips rendering details with falsy values', () => {
-    render(
-      <MemoryRouter>
-        <BookCard
-          title="Partial Book"
-          image="some.jpg"
-          details={[
-            { value: 'Visible Detail', className: 'desc' },
-            { value: '', className: 'author' },
-            { value: '', className: 'pageCount' },
-            { value: '', className: 'printType' },
-            { value: 0, className: 'year' },
-          ]}
-        />
-      </MemoryRouter>
+    renderWithProviders(
+      <BookCard
+        book={mockBook}
+        details={[
+          { value: 'Visible Detail', className: 'desc' },
+          { value: '', className: 'author' },
+          { value: '', className: 'pageCount' },
+          { value: '', className: 'printType' },
+          { value: 0, className: 'year' },
+        ]}
+      />
     );
 
     expect(screen.getByText(/Visible Detail/i)).toBeInTheDocument();
-
     expect(screen.queryByText(/author/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/pageCount/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/printType/i)).not.toBeInTheDocument();

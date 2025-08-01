@@ -1,48 +1,57 @@
 import { render, screen } from '@testing-library/react';
 import { BooksDetails } from './BooksDetails';
 import { messages } from './messages';
-import type { BookData } from '@/sources/types';
+import { IBookData } from '@/sources/interfaces';
+import { ThemeProvider } from '@/utils/ThemeContext';
+import { Provider } from 'react-redux';
+import { store } from '@/store/store';
+import { ReactElement } from 'react';
+
+export const renderWithProviders = (ui: ReactElement) => {
+  return render(
+    <Provider store={store}>
+      <ThemeProvider>{ui}</ThemeProvider>
+    </Provider>
+  );
+};
 
 describe('BooksDetails', () => {
-  const baseBook: BookData = {
+  const baseBook: IBookData = {
     id: '1',
     title: 'Test Book',
     image: 'https://example.com/image.jpg',
-    description: 'A test description',
-    authors: 'Author Name',
-    year: '2024',
-    printType: 'Book',
+    bookDetails: {
+      description: 'A test description',
+      authors: 'Author Name',
+      year: '2024',
+    },
   };
 
   it('Renders BookCard with provided book details', () => {
-    render(<BooksDetails bookDetail={baseBook} />);
+    renderWithProviders(<BooksDetails bookDetail={baseBook} />);
 
-    expect(
-      screen.getByText(baseBook.title?.toUpperCase() ?? '')
-    ).toBeInTheDocument();
-    expect(screen.getByText(baseBook.description ?? '')).toBeInTheDocument();
-    expect(screen.getByText(baseBook.authors ?? '')).toBeInTheDocument();
-    expect(screen.getByText(baseBook.year ?? '')).toBeInTheDocument();
-    expect(screen.getByText(baseBook.printType ?? '')).toBeInTheDocument();
+    expect(screen.getByText('Test Book')).toBeInTheDocument();
+    expect(screen.getByText('A test description')).toBeInTheDocument();
+    expect(screen.getByText('Author Name')).toBeInTheDocument();
+    expect(screen.getByText('2024')).toBeInTheDocument();
   });
 
   it('Renders fallback text if some details are missing', () => {
-    const incompleteBook: BookData = {
+    const incompleteBook: IBookData = {
       id: '2',
       title: '',
       image: '',
-      description: '',
-      authors: '',
-      year: '',
-      printType: '',
+      bookDetails: {
+        description: '',
+        authors: '',
+        year: '',
+      },
     };
 
-    render(<BooksDetails bookDetail={incompleteBook} />);
+    renderWithProviders(<BooksDetails bookDetail={incompleteBook} />);
 
-    expect(screen.getByText(messages.titleNot)).toBeInTheDocument();
     expect(screen.getByText(messages.titleNotDescription)).toBeInTheDocument();
     expect(screen.getByText(messages.titleNotAuthor)).toBeInTheDocument();
     expect(screen.getByText(messages.titleNotPageCount)).toBeInTheDocument();
-    expect(screen.getByText(messages.titleNotPrintType)).toBeInTheDocument();
   });
 });

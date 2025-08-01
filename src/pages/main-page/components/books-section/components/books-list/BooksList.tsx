@@ -7,7 +7,6 @@ import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Spinner } from '@/components/spinner/Spinner';
 import { FC } from 'react';
-import { isSelectedCard } from '@/utils/bookCardUtils';
 
 export interface Props {
   books: IBookData[];
@@ -24,8 +23,6 @@ export const BooksList: FC<Props> = ({
   onBookClick,
   isFetching,
 }: Props) => {
-  const showCheckbox = isSelectedCard(true);
-
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   const { detailsId } = useParams();
   const navigate = useNavigate();
@@ -48,7 +45,7 @@ export const BooksList: FC<Props> = ({
               key={book.id}
               book={book}
               onClick={() => onBookClick(book.id)}
-              isSelected={showCheckbox}
+              isSelected={true}
             />
           ))}
         </ul>

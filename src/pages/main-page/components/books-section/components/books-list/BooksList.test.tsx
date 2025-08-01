@@ -1,22 +1,33 @@
 import { render, screen } from '@testing-library/react';
 import { BooksList } from './BooksList';
 import { vi } from 'vitest';
-import type { BookData } from '@/sources/types';
 import { messages as bookListMessages } from './messages';
 import { MemoryRouter } from 'react-router-dom';
+import { IBookData } from '@/sources/interfaces';
+import { Provider } from 'react-redux';
+import { store } from '@/store/store';
+import { ThemeProvider } from '@/utils/ThemeContext';
 
-const mockedBooks: BookData[] = [
+const mockedBooks: IBookData[] = [
   {
     id: '1',
     title: 'Book One',
-    description: 'Description One',
     image: 'image1.jpg',
+    bookDetails: {
+      description: 'A test description1',
+      authors: 'Author Name1',
+      year: '2024',
+    },
   },
   {
     id: '2',
     title: 'Book Two',
-    description: 'Description Two',
     image: 'image2.jpg',
+    bookDetails: {
+      description: 'A test description2',
+      authors: 'Author Name2',
+      year: '2025',
+    },
   },
 ];
 
@@ -27,15 +38,19 @@ const renderBooksList = (
     books: mockedBooks,
     totalItems: 20,
     currentPage: 1,
-    setSearchParams: vi.fn(),
+    isFetching: false,
     onBookClick: vi.fn(),
     ...overrides,
   };
 
   return render(
-    <MemoryRouter>
-      <BooksList {...defaultProps} {...overrides} />
-    </MemoryRouter>
+    <Provider store={store}>
+      <ThemeProvider>
+        <MemoryRouter>
+          <BooksList {...defaultProps} {...overrides} />
+        </MemoryRouter>
+      </ThemeProvider>
+    </Provider>
   );
 };
 

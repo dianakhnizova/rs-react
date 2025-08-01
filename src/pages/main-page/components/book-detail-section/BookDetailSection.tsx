@@ -6,6 +6,7 @@ import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useParams } from 'react-router-dom';
 import { Spinner } from '@/components/spinner/Spinner';
 import { useGetBookByIdQuery } from '@/api/book.api';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 export const BookDetailSection = () => {
   const { currentPage, navigateToList } = useNavigationToPath();
@@ -15,9 +16,7 @@ export const BookDetailSection = () => {
     data: bookDetails,
     isFetching,
     isError,
-  } = useGetBookByIdQuery(detailsId || '', {
-    skip: !detailsId,
-  });
+  } = useGetBookByIdQuery(detailsId ?? skipToken);
 
   const handleCloseButton = () => {
     navigateToList(currentPage);

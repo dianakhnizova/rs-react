@@ -3,21 +3,18 @@ import { IBookData } from '@/sources/interfaces';
 import { messages } from './messages';
 import styles from './BooksDetails.module.scss';
 import { FC } from 'react';
-import { isDetailsCard } from '@/utils/bookCardUtils';
 
 export interface Props {
   bookDetail: IBookData;
 }
 
 export const BooksDetails: FC<Props> = ({ bookDetail }: Props) => {
-  const showDetailsStyles = isDetailsCard(true);
-
   return (
     <div className={styles.container}>
       <BookCard
         key={bookDetail.id}
         book={bookDetail}
-        isDetailes={showDetailsStyles}
+        isDetails={true}
         details={[
           {
             value:

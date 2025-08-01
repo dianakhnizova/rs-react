@@ -2,10 +2,15 @@ import { render, screen } from '@testing-library/react';
 import { Pagination } from './Pagination';
 import { vi } from 'vitest';
 import userEvent from '@testing-library/user-event';
+import { ThemeProvider } from '@/utils/ThemeContext';
+
+const renderWithTheme = (ui: React.ReactElement) => {
+  return render(<ThemeProvider>{ui}</ThemeProvider>);
+};
 
 describe('Pagination component', () => {
   it('renders correctly with given props', () => {
-    render(
+    renderWithTheme(
       <Pagination currentPage={2} totalPages={5} onPageChange={vi.fn()} />
     );
 
@@ -23,20 +28,20 @@ describe('Pagination component', () => {
 
   it('calls onPageChange with currentPage - 1 when Prev button is clicked', async () => {
     const onPageChange = vi.fn();
-    render(
-      <Pagination currentPage={3} totalPages={5} onPageChange={onPageChange} />
+    renderWithTheme(
+      <Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />
     );
 
     const buttons = screen.getAllByRole('button');
     const prevButton = buttons[0];
     await userEvent.click(prevButton);
 
-    expect(onPageChange).toHaveBeenCalledWith(2);
+    expect(onPageChange).toHaveBeenCalledWith(1);
   });
 
   it('calls onPageChange with currentPage + 1 when Next button is clicked', async () => {
     const onPageChange = vi.fn();
-    render(
+    renderWithTheme(
       <Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />
     );
 

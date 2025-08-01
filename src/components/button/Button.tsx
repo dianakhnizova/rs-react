@@ -11,15 +11,9 @@ export const Button: React.FC<Props> = ({
   className,
   ...rest
 }: Props) => {
-  const primaryClass = styles.primary;
-  const secondaryClass = styles.secondary;
-
-  const buttonClass =
-    variant === ButtonVariant.PRIMARY ? primaryClass : secondaryClass;
-
   return (
     <button
-      className={ClassNames(styles.button, buttonClass, className)}
+      className={ClassNames(styles.button, styles[variant], className)}
       {...rest}
     />
   );

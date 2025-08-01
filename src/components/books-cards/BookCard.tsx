@@ -18,7 +18,7 @@ interface Props {
   details?: BookDetail[];
   onClick?: () => void;
   isSelected?: boolean;
-  isDetailes?: boolean;
+  isDetails?: boolean;
   isFlyout?: boolean;
 }
 
@@ -27,7 +27,7 @@ export const BookCard: FC<Props> = ({
   details,
   onClick,
   isSelected,
-  isDetailes,
+  isDetails,
   isFlyout,
 }: Props) => {
   const { title, image, id } = book;
@@ -51,7 +51,7 @@ export const BookCard: FC<Props> = ({
     <li
       onClick={onClick}
       className={classNames(styles.book, {
-        [styles.bookInDetails]: isDetailes,
+        [styles.bookInDetails]: isDetails,
         [styles.bookInFlyout]: isFlyout,
       })}
     >
