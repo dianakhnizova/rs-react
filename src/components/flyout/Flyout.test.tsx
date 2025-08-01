@@ -7,7 +7,11 @@ import { IBookData } from '@/sources/interfaces';
 import { ThemeProvider } from '@/utils/ThemeContext';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
-import * as downloadUtils from '@/utils/downloadBooksCsv';
+import { downloadBooksCsv } from '@/utils/downloadBooksCsv';
+
+vi.mock('@/utils/downloadBooksCsv', () => ({
+  downloadBooksCsv: vi.fn(),
+}));
 
 const createTestStore = (preloadedState = {}) =>
   configureStore({
@@ -163,9 +167,7 @@ describe('Flyout', () => {
     expect(screen.getByText(/items are selected/i)).toBeInTheDocument();
   });
 
-  it('calls downloadBooksCsv with cart items when Download button is clicked', () => {
-    const mockDownload = vi.spyOn(downloadUtils, 'downloadBooksCsv');
-
+  it('Calls downloadBooksCsv with cart items when Download button is clicked', () => {
     const mockCartItem: IBookData = {
       id: '1',
       title: 'Test Book',
@@ -194,7 +196,7 @@ describe('Flyout', () => {
     const downloadButton = screen.getByRole('button', { name: /download/i });
     downloadButton.click();
 
-    expect(mockDownload).toHaveBeenCalledTimes(1);
-    expect(mockDownload).toHaveBeenCalledWith([mockCartItem]);
+    expect(downloadBooksCsv).toHaveBeenCalledTimes(1);
+    expect(downloadBooksCsv).toHaveBeenCalledWith([mockCartItem]);
   });
 });
