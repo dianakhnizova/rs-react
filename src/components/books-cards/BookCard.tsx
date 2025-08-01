@@ -9,6 +9,9 @@ import { Button } from '../button/Button';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { selectSelectedBook } from '@/store/slices/cart/selectors';
+import { ButtonVariant } from '../button/enum';
+import { useTheme } from '@/utils/ThemeContext';
+import { Theme } from '@/sources/enums';
 
 interface Props {
   book: IBookData;
@@ -30,6 +33,7 @@ export const BookCard: FC<Props> = ({
   const { title, image, id } = book;
   const selectedBook = useSelector(selectSelectedBook(book.id));
   const { addItem, removeItem } = useActions();
+  const { theme } = useTheme();
 
   const toggleCheckbox = () => {
     if (!selectedBook) {
@@ -86,7 +90,10 @@ export const BookCard: FC<Props> = ({
       {isFlyout && (
         <Button
           onClick={handleRemoveItem}
-          className={styles.removeButton}
+          variant={ButtonVariant.SECONDARY}
+          className={classNames(styles.removeButton, {
+            [styles.removeLightButton]: theme === Theme.LIGHT,
+          })}
         ></Button>
       )}
     </li>

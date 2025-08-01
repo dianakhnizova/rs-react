@@ -3,33 +3,36 @@
   align-items: center;
   padding: 4px;
   gap: 20px;
-}
 
-.arrowPrevButton {
-  background: transparent;
-  padding: 0;
-  width: 20px;
-  height: 20px;
-  background-image: url('../../assets//arrow-prev.svg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  cursor: pointer;
+  .arrowPrevButton {
+    background-image: url('../../assets/dark-theme//arrow-prev.svg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-  &.arrowNextButton {
-    background-image: url('../../assets//arrow-next.svg');
+    &.arrowPrevLightButton {
+      background-image: url('../../assets/light-theme//arrow-dark-prev.svg');
+    }
+
+    &.arrowNextButton {
+      background-image: url('../../assets/dark-theme//arrow-next.svg');
+
+      &:hover:not(:disabled) {
+        background-image: url('../../assets/hover/arrow-next-hover.svg');
+      }
+
+      &.arrowNextLightButton {
+        background-image: url('../../assets/light-theme/arrow-dark-next.svg');
+      }
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
 
     &:hover:not(:disabled) {
-      background-image: url('../../assets/arrow-next-hover.svg');
+      background-image: url('../../assets/hover/arrow-prev-hover.svg');
     }
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  &:hover:not(:disabled) {
-    background-image: url('../../assets/arrow-prev-hover.svg');
   }
 }

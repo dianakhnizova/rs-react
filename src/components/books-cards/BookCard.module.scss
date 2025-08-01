@@ -62,28 +62,28 @@
     }
   }
 
+  .removeButton {
+    background-image: url('../../assets/dark-theme/remove-ligth.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &.removeLightButton {
+      background-image: url('../../assets/light-theme/remove-dark.svg');
+    }
+
+    &:hover {
+      background-image: url('../../assets/hover/remove-hover.svg');
+      background-color: var(--clr-bg-2);
+    }
+  }
+
   &:not(.bookInDetails, .bookInFlyout):hover {
     transform: scale(1.03);
 
     .titleName {
       color: var(--clr-hover);
     }
-  }
-}
-
-.removeButton {
-  padding: 0;
-  width: 14px;
-  height: 14px;
-  background: transparent;
-  background-image: url('../../assets/remove.svg');
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  cursor: pointer;
-
-  &:hover {
-    background-image: url('../../assets/remove-hover.svg');
   }
 }
 

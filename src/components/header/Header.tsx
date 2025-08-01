@@ -1,13 +1,13 @@
 import styles from './Header.module.scss';
-import { Logo } from './components/logo/Logo';
-import { NavLinks } from './components/nav-links/NavLinks';
+import { NavLeftMenu } from './components/nav-left-menu/NavLeftMenu';
+import { NavRightMenu } from './components/nav-right-menu/NavRightMenu';
 
 export const Header = () => {
   return (
     <header className={styles.container}>
-      <Logo />
+      <NavLeftMenu />
 
-      <NavLinks />
+      <NavRightMenu />
     </header>
   );
 };

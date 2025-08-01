@@ -1,9 +1,11 @@
-.checkboxLabel {
+.checkboxWrapper {
   display: flex;
-  align-items: center;
-  width: 30%;
   gap: 6px;
-  font-size: 10.5px;
+}
+
+.checkboxLabel {
+  width: 30%;
+  font-size: 9px;
 }
 
 .checkbox {

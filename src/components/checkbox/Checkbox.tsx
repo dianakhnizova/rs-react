@@ -7,12 +7,9 @@ type Props = {
 
 export const Checkbox = ({ label, ...rest }: Props) => {
   return (
-    <label
-      onClick={event => event.stopPropagation()}
-      className={styles.checkboxLabel}
-    >
+    <div className={styles.checkboxWrapper}>
       <input type="checkbox" className={styles.checkbox} {...rest} />
-      {label}
-    </label>
+      {label && <label className={styles.checkboxLabel}>{label}</label>}
+    </div>
   );
 };
