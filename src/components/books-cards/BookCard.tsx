@@ -94,7 +94,7 @@ export const BookCard: FC<Props> = ({
           className={classNames(styles.removeButton, {
             [styles.removeLightButton]: theme === Theme.LIGHT,
           })}
-        ></Button>
+        />
       )}
     </li>
   );
