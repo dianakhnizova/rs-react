@@ -5,8 +5,9 @@ import type { IBookData } from '@/sources/interfaces';
 import { Pagination } from '@/components/pagination/Pagination';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTypedSelector } from '@/utils/hooks/useTypedSelector';
 import { Spinner } from '@/components/spinner/Spinner';
+import { FC } from 'react';
+import { isSelectedCard } from '@/utils/bookCardUtils';
 
 export interface Props {
   books: IBookData[];
@@ -16,14 +17,14 @@ export interface Props {
   isFetching: boolean;
 }
 
-export const BooksList = ({
+export const BooksList: FC<Props> = ({
   books,
   totalItems,
   currentPage,
   onBookClick,
   isFetching,
 }: Props) => {
-  const { isSelected } = useTypedSelector(state => state.selection);
+  const showCheckbox = isSelectedCard(true);
 
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   const { detailsId } = useParams();
@@ -47,7 +48,7 @@ export const BooksList = ({
               key={book.id}
               book={book}
               onClick={() => onBookClick(book.id)}
-              isSelected={isSelected}
+              isSelected={showCheckbox}
             />
           ))}
         </ul>

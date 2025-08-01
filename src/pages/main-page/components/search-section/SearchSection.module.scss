@@ -1,16 +1,17 @@
 .container {
   display: flex;
-  gap: 40px;
-  margin-top: 20px;
-  width: 90%;
-  padding: 0 200px;
+  align-items: center;
+  gap: 20px;
+  width: 40%;
+  padding: 10px;
 }
 
 .input {
   box-shadow: var(--shadow-3);
   background: transparent;
+  font-size: 95%;
   color: var(--clr-line);
-  padding: 10px 40px;
+  padding: 5px 10px;
   width: 90%;
 }
 

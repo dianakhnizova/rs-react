@@ -5,16 +5,18 @@ import classNames from 'classnames';
 import { messages } from './messages';
 import { Checkbox } from '../checkbox/Checkbox';
 import { useActions } from '@/utils/hooks/useActions';
-import { useTypedSelector } from '@/utils/hooks/useTypedSelector';
 import { Button } from '../button/Button';
 import { FC } from 'react';
+import { useSelector } from 'react-redux';
+import { selectSelectedBook } from '@/store/slices/cart/selectors';
 
 interface Props {
   book: IBookData;
   details?: BookDetail[];
   onClick?: () => void;
   isSelected?: boolean;
-  isCart?: boolean;
+  isDetailes?: boolean;
+  isFlyout?: boolean;
 }
 
 export const BookCard: FC<Props> = ({
@@ -22,43 +24,31 @@ export const BookCard: FC<Props> = ({
   details,
   onClick,
   isSelected,
-  isCart,
+  isDetailes,
+  isFlyout,
 }: Props) => {
   const { title, image, id } = book;
-  const { addItem, removeItem, setIsSelectItem } = useActions();
-  const cart = useTypedSelector(state => state.cart.cart);
-
-  const isExistsInCart = cart.some(bookSelected => bookSelected.id === id);
+  const selectedBook = useSelector(selectSelectedBook(book.id));
+  const { addItem, removeItem } = useActions();
 
   const toggleCheckbox = () => {
-    if (!isExistsInCart) {
+    if (!selectedBook) {
       addItem(book);
-      setIsSelectItem(true);
     } else {
       removeItem({ id });
-
-      if (cart.length === 1) {
-        setIsSelectItem(false);
-      }
     }
   };
 
   const handleRemoveItem = () => {
-    if (isExistsInCart) {
-      removeItem({ id });
-
-      if (cart.length === 1) {
-        setIsSelectItem(false);
-      }
-    }
+    removeItem({ id });
   };
 
   return (
     <li
       onClick={onClick}
       className={classNames(styles.book, {
-        [styles.clickable]: !!onClick,
-        [styles.bookInCart]: isCart,
+        [styles.bookInDetails]: isDetailes,
+        [styles.bookInFlyout]: isFlyout,
       })}
     >
       <div className={styles.container}>
@@ -87,15 +77,13 @@ export const BookCard: FC<Props> = ({
 
       {isSelected && (
         <Checkbox
-          label={
-            !isExistsInCart ? messages.titleSelect : messages.titleSelected
-          }
-          checked={isExistsInCart}
+          label={!selectedBook ? messages.titleSelect : messages.titleSelected}
+          checked={selectedBook}
           onChange={toggleCheckbox}
         />
       )}
 
-      {isCart && (
+      {isFlyout && (
         <Button
           onClick={handleRemoveItem}
           className={styles.removeButton}

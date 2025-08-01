@@ -1,21 +1,20 @@
-import styles from './CartDropdown.module.scss';
+import styles from './Flyout.module.scss';
 import { messages } from './messages';
 import { Button } from '../button/Button';
-import { useTypedSelector } from '@/utils/hooks/useTypedSelector';
 import { BookCard } from '../books-cards/BookCard';
 import { useActions } from '@/utils/hooks/useActions';
 import { downloadBooksCsv } from '@/utils/downloadBooksCsv';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
+import { selectCart, selectItemIsInCart } from '@/store/slices/cart/selectors';
 
-export const CartDropdown = () => {
-  const cart = useTypedSelector(state => state.cart.cart);
-  const { isCart } = useTypedSelector(state => state.isCart);
-  const { isSelectItem } = useTypedSelector(state => state.selectItem);
-  const { clearCart, setIsSelectItem } = useActions();
+export const Flyout = () => {
+  const cart = useSelector(selectCart);
+  const { clearCart } = useActions();
+  const itemIsInCart = useSelector(selectItemIsInCart);
 
   const handleUnselectAllButton = () => {
     clearCart();
-    setIsSelectItem(false);
   };
 
   const handleDownloadButton = () => {
@@ -25,11 +24,11 @@ export const CartDropdown = () => {
   return (
     <div
       className={classNames(styles.container, {
-        [styles.dropDown]: isSelectItem,
+        [styles.flyout]: itemIsInCart,
       })}
     >
       <div className={styles.content}>
-        {cart.length > 0 ? (
+        {itemIsInCart ? (
           <>
             <p>
               {cart.length}
@@ -38,7 +37,7 @@ export const CartDropdown = () => {
 
             <div className={styles.itemContainer}>
               {cart.map(book => (
-                <BookCard key={book.id} book={book} isCart={isCart} />
+                <BookCard key={book.id} book={book} isFlyout={itemIsInCart} />
               ))}
             </div>
           </>

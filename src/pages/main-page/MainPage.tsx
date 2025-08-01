@@ -10,7 +10,7 @@ import { Outlet } from 'react-router-dom';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useGetBooksListQuery } from '@/api/book.api';
-import { CartDropdown } from '@/components/cart-dropdown/CartDropdown';
+import { Flyout } from '@/components/flyout/Flyout';
 
 export const MainPage = () => {
   const { searchTerm, handleSearchQuery } = useSearchQuery();
@@ -22,7 +22,7 @@ export const MainPage = () => {
     navigateToAboutPage,
   } = useNavigationToPath();
 
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { data, isFetching, isError, error } = useGetBooksListQuery({
     query: searchTerm,
@@ -74,7 +74,7 @@ export const MainPage = () => {
         {mainMessages.toAboutPageButton}
       </Button>
 
-      <CartDropdown />
+      <Flyout />
     </main>
   );
 };
