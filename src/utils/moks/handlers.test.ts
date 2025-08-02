@@ -30,6 +30,7 @@ describe('MSW handlers', () => {
 
     expect(res.status).toBe(200);
     expect(data.title).toBe('Test Book');
+
     if (typeof data.description === 'object' && data.description !== null) {
       expect(data.description.value).toBe('Test description');
     }
