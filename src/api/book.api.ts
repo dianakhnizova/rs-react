@@ -1,10 +1,9 @@
-import { IBookData, IBookItemResponse } from '@/sources/interfaces';
+import { IBookData } from '@/sources/interfaces';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { transformGetBookListResponse } from './utils/transformGetBookListResponse';
-import { fetchAuthorNames } from './utils/fetchAuthorNames';
-import { transformGetBookByIdResponse } from './utils/transformGetBookByIdResponse';
 import { BooksListResponse } from '@/sources/types';
 import { buildBooksListQuery } from './utils/buildBooksListQuery';
+import { getBookByIdQueryFn } from './utils/getBookByIdQueryFn';
 
 export const bookApi = createApi({
   reducerPath: 'bookApi',
@@ -21,20 +20,7 @@ export const bookApi = createApi({
     }),
 
     getBookById: builder.query<IBookData, string>({
-      async queryFn(id, api, _, baseQuery) {
-        const bookResponse = await baseQuery(`/works/${id}.json`);
-
-        if (bookResponse.error) return { error: bookResponse.error };
-
-        const book = bookResponse.data as IBookItemResponse;
-        const authorKeys = book.authors?.map(({ author }) => author.key) || [];
-
-        const authorNames = await fetchAuthorNames(authorKeys, baseQuery, api);
-
-        const bookData = transformGetBookByIdResponse(book, authorNames);
-
-        return { data: bookData };
-      },
+      queryFn: getBookByIdQueryFn,
     }),
   }),
 });
