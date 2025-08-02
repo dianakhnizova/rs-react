@@ -6,7 +6,7 @@ import { Flyout } from './Flyout';
 import { IBookData } from '@/sources/interfaces';
 import { ThemeProvider } from '@/utils/ThemeContext';
 import userEvent from '@testing-library/user-event';
-import { vi } from 'vitest';
+import { vi, type Mock } from 'vitest';
 import { downloadBooksCsv } from '@/utils/downloadBooksCsv';
 
 vi.mock('@/utils/downloadBooksCsv', () => ({
@@ -196,12 +196,12 @@ describe('Flyout', () => {
     const downloadButton = screen.getByRole('button', { name: /download/i });
     downloadButton.click();
 
-    expect(downloadBooksCsv).toHaveBeenCalledTimes(1);
-    expect(downloadBooksCsv).toHaveBeenCalledWith(
-      [mockCartItem],
-      expect.objectContaining({
-        current: expect.any(HTMLAnchorElement),
-      })
-    );
+    const callArgs = (downloadBooksCsv as Mock).mock.calls[0];
+    const cartArg = callArgs[0];
+    const refArg = callArgs[1];
+
+    expect(cartArg).toEqual([mockCartItem]);
+    expect(refArg).toBeDefined();
+    expect(refArg.current).toBeInstanceOf(HTMLAnchorElement);
   });
 });

@@ -13,7 +13,7 @@ interface Props {
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<Props | undefined>(undefined);
+export const ThemeContext = createContext<Props | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<Theme>(Theme.DARK);
