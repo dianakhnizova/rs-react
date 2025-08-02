@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import svgr from 'vite-plugin-svgr';
@@ -8,6 +8,23 @@ export default defineConfig({
   server: {
     port: 3000,
     open: false,
+    proxy: {
+      '/api/books': {
+        target: 'https://openlibrary.org',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\/books/, '/search.json'),
+      },
+      '/api/works': {
+        target: 'https://openlibrary.org',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\/works/, '/works'),
+      },
+      '/api/authors': {
+        target: 'https://openlibrary.org',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/api\/authors/, '/authors'),
+      },
+    },
   },
   resolve: {
     alias: {

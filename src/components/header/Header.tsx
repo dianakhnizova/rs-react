@@ -1,16 +1,13 @@
-import { NavLinks } from './components/NavLinks';
-import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
-import { messages } from './messages';
-import { PagePath } from '@/router/enums';
+import { NavMenu } from './components/nav-menu/NavMenu';
+import { OptionsMenu } from './components/options-menu/OptionsMenu';
 
 export const Header = () => {
   return (
     <header className={styles.container}>
-      <NavLink to={PagePath.root} className={styles.title}>
-        {messages.appTitle}
-      </NavLink>
-      <NavLinks />
+      <OptionsMenu />
+
+      <NavMenu />
     </header>
   );
 };

@@ -1,82 +1,98 @@
 .image {
   display: flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: var(--shadow-1);
 
   img {
-    height: 210px;
+    height: 50px;
   }
 }
 
 .titleName {
-  font-size: 18px;
-  color: var(--clr-hover);
+  font-size: 9px;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
 }
 
 .book {
   display: flex;
   flex-direction: column;
-  gap: 80px;
-  align-items: center;
-  text-align: center;
-  justify-content: center;
-  width: 80%;
-  padding: 20px;
+  width: 100%;
+  padding: 10px;
   background-color: var(--clr-bg-2);
   box-shadow: var(--shadow-3);
+  cursor: pointer;
 
-  &.clickable {
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    cursor: pointer;
-
-    &:hover {
-      transform: scale(1.03);
-    }
+  &.bookInDetails {
+    cursor: default;
+    gap: 8px;
 
     img {
-      height: 140px;
+      height: 120px;
+    }
+
+    .container {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     .titleName {
-      color: var(--clr-line);
-
-      &:hover {
-        color: var(--clr-hover);
-      }
+      color: var(--clr-hover);
     }
   }
-}
 
-.title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  &.bookInFlyout {
+    cursor: default;
+    width: 25%;
+    gap: 8px;
 
-.description {
-  word-break: break-word;
-  overflow-wrap: break-word;
-  width: 100%;
-  font-size: 16px;
-  line-height: 1.4;
-  text-align: center;
+    img {
+      height: 30px;
+    }
+
+    .titleName {
+      font-size: 8px;
+      color: var(--clr-hover);
+    }
+  }
+
+  .removeButton {
+    background-image: url('../../assets/dark-theme/remove-ligth.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    &.removeLightButton {
+      background-image: url('../../assets/light-theme/remove-dark.svg');
+    }
+
+    &:hover {
+      background-image: url('../../assets/hover/remove-hover.svg');
+      background-color: var(--clr-bg-2);
+    }
+  }
+
+  &:not(.bookInDetails, .bookInFlyout):hover {
+    transform: scale(1.03);
+
+    .titleName {
+      color: var(--clr-hover);
+    }
+  }
 }
 
 @media (max-width: 900px) {
   .image {
-    display: flex;
-    width: 100%;
-
     img {
       width: 40px;
-      height: 80px;
+      height: 60px;
     }
-  }
-
-  .title,
-  .description,
-  .image {
-    font-size: 10px;
   }
 }

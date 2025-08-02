@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title {
+  text-decoration: none;
+  color: var(--clr-line);
+
+  &:hover {
+    transform: scale(1.03);
+    color: var(--clr-hover);
+  }
+}

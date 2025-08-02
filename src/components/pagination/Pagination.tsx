@@ -2,6 +2,9 @@ import classNames from 'classnames';
 import { Button } from '../button/Button';
 import { messages } from './messages';
 import styles from './Pagination.module.scss';
+import { useTheme } from '@/utils/ThemeContext';
+import { Theme } from '@/sources/enums';
+import { ButtonVariant } from '../button/enum';
 
 interface Props {
   currentPage: number;
@@ -14,6 +17,8 @@ export const Pagination = ({
   onPageChange,
   totalPages,
 }: Props) => {
+  const { theme } = useTheme();
+
   const handlePrevButton = () => {
     onPageChange(currentPage - 1);
   };
@@ -27,7 +32,10 @@ export const Pagination = ({
       <Button
         onClick={handlePrevButton}
         disabled={currentPage === 1}
-        className={styles.arrowPrevButton}
+        variant={ButtonVariant.SECONDARY}
+        className={classNames(styles.arrowPrevButton, {
+          [styles.arrowPrevLightButton]: theme === Theme.LIGHT,
+        })}
       />
 
       <p data-testid="page-number" className={styles.pageNumberContainer}>
@@ -38,7 +46,10 @@ export const Pagination = ({
       <Button
         onClick={handleNextButton}
         disabled={currentPage >= totalPages}
-        className={classNames(styles.arrowPrevButton, styles.arrowNextButton)}
+        variant={ButtonVariant.SECONDARY}
+        className={classNames(styles.arrowPrevButton, styles.arrowNextButton, {
+          [styles.arrowNextLightButton]: theme === Theme.LIGHT,
+        })}
       />
     </div>
   );

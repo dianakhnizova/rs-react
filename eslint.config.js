@@ -81,6 +81,7 @@ export default tseslint
         'unicorn/no-lonely-if': 'off',
         'unicorn/no-array-reduce': 'off',
         'unicorn/no-null': 'off',
+        'unicorn/prefer-spread': 'off',
         'prettier/prettier': 'error',
       },
     }

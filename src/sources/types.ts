@@ -1,14 +1,11 @@
-export type BookData = {
-  id: string;
-  title: string;
-  image: string;
-  description?: string;
-  authors?: string;
-  year?: string;
-  printType?: string;
-};
+import { IBookData } from './interfaces';
 
 export type MyData = {
   label: string;
   data: string;
+};
+
+export type BooksListResponse = {
+  books: IBookData[];
+  totalItems: number;
 };
