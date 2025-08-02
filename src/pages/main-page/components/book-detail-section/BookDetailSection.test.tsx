@@ -1,18 +1,29 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { messages as detailPageMessages } from './messages';
 import { vi } from 'vitest';
-import { MemoryRouter, Routes, Route } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { BookDetailSection } from './BookDetailSection';
 import { useGetBookByIdQuery } from '@/api/book.api';
+import { Provider } from 'react-redux';
+import { store } from '@/store/store';
+import { ThemeProvider } from '@/utils/ThemeContext';
 
-vi.mock('@/api/book.api', () => ({
-  useGetBookByIdQuery: vi.fn(),
-}));
+const mockNavigateToList = vi.fn();
+
+vi.mock('@/api/book.api', async () => {
+  const actual =
+    await vi.importActual<typeof import('@/api/book.api')>('@/api/book.api');
+
+  return {
+    ...actual,
+    useGetBookByIdQuery: vi.fn(),
+  };
+});
 
 vi.mock('@/utils/hooks/useNavigationToPath', () => ({
   useNavigationToPath: () => ({
     currentPage: 1,
-    navigateToList: vi.fn(),
+    navigateToList: mockNavigateToList,
   }),
 }));
 
@@ -28,15 +39,55 @@ describe('BookDetailSection', () => {
     });
 
     render(
-      <MemoryRouter initialEntries={['/1/sghassajs2']}>
-        <Routes>
-          <Route path="/:page/:detailsId" element={<BookDetailSection />} />
-        </Routes>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/1/123']}>
+          <ThemeProvider>
+            <BookDetailSection />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(
       screen.getByText(detailPageMessages.notFoundIdTitle)
     ).toBeInTheDocument();
+  });
+
+  it('Calls navigateToList with currentPage when close button is clicked', () => {
+    const mockedUseGetBookByIdQuery =
+      useGetBookByIdQuery as unknown as ReturnType<typeof vi.fn>;
+
+    mockedUseGetBookByIdQuery.mockReturnValue({
+      data: {
+        id: '123',
+        title: 'Test Book',
+        bookDetails: {
+          description: 'Test description',
+          authors: 'Author A',
+          year: '2020',
+          pages: '123',
+        },
+      },
+      isFetching: false,
+      isError: false,
+    });
+
+    render(
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/1/123']}>
+          <ThemeProvider>
+            <BookDetailSection />
+          </ThemeProvider>
+        </MemoryRouter>
+      </Provider>
+    );
+
+    const closeButton = screen.getByRole('button', {
+      name: detailPageMessages.closeButton,
+    });
+
+    fireEvent.click(closeButton);
+
+    expect(mockNavigateToList).toHaveBeenCalledWith(1);
   });
 });

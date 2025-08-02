@@ -6,8 +6,9 @@ import { Flyout } from './Flyout';
 import { IBookData } from '@/sources/interfaces';
 import { ThemeProvider } from '@/utils/ThemeContext';
 import userEvent from '@testing-library/user-event';
-import { vi, type Mock } from 'vitest';
-import { downloadBooksCsv } from '@/utils/downloadBooksCsv';
+import { vi } from 'vitest';
+import { ITEMS_PER_FLYOUT } from '@/sources/constants';
+import * as SliderComponent from '../slider/Slider';
 
 vi.mock('@/utils/downloadBooksCsv', () => ({
   downloadBooksCsv: vi.fn(),
@@ -167,23 +168,28 @@ describe('Flyout', () => {
     expect(screen.getByText(/items are selected/i)).toBeInTheDocument();
   });
 
-  it('Calls downloadBooksCsv with cart items when Download button is clicked', () => {
-    const mockCartItem: IBookData = {
-      id: '1',
-      title: 'Test Book',
-      image: '',
-      bookDetails: {
-        description: 'Description',
-        authors: 'Author',
-        year: '2025',
-      },
-    };
+  it('Renders Slider when cart.length > ITEMS_PER_FLYOUT', () => {
+    const mockCartItems = Array.from(
+      { length: ITEMS_PER_FLYOUT + 1 },
+      (_, i) => ({
+        id: `${i + 1}`,
+        title: `Book ${i + 1}`,
+        image: '',
+        bookDetails: {
+          description: '',
+          authors: `Author ${i + 1}`,
+          year: '2020',
+        },
+      })
+    );
 
     const store = createTestStore({
       cart: {
-        cart: [mockCartItem],
+        cart: mockCartItems,
       },
     });
+
+    const sliderSpy = vi.spyOn(SliderComponent, 'Slider');
 
     render(
       <Provider store={store}>
@@ -193,15 +199,7 @@ describe('Flyout', () => {
       </Provider>
     );
 
-    const downloadButton = screen.getByRole('button', { name: /download/i });
-    downloadButton.click();
-
-    const callArgs = (downloadBooksCsv as Mock).mock.calls[0];
-    const cartArg = callArgs[0];
-    const refArg = callArgs[1];
-
-    expect(cartArg).toEqual([mockCartItem]);
-    expect(refArg).toBeDefined();
-    expect(refArg.current).toBeInstanceOf(HTMLAnchorElement);
+    expect(sliderSpy).toHaveBeenCalled();
+    expect(screen.queryByText(/book 1/i)).toBeInTheDocument();
   });
 });

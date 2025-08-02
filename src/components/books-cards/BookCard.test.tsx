@@ -6,6 +6,13 @@ import { IBookData } from '@/sources/interfaces';
 import { ThemeProvider } from '@/utils/ThemeContext';
 import { Provider } from 'react-redux';
 import { store } from '@/store/store';
+import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
+import * as useActionsModule from '@/utils/hooks/useActions';
+import {
+  ActionCreatorWithoutPayload,
+  ActionCreatorWithPayload,
+} from '@reduxjs/toolkit';
 
 const mockBook: IBookData = {
   id: '1',
@@ -83,5 +90,32 @@ describe('BookCard', () => {
     expect(screen.queryByText(/pageCount/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/printType/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/^0$/)).not.toBeInTheDocument();
+  });
+
+  it('calls removeItem when remove button is clicked in flyout', async () => {
+    const user = userEvent.setup();
+    const addItemMock = vi.fn() as unknown as ActionCreatorWithPayload<
+      IBookData,
+      'cart/addItem'
+    >;
+    const removeItemMock = vi.fn() as unknown as ActionCreatorWithPayload<
+      { id: string },
+      'cart/removeItem'
+    >;
+    const clearCartMock =
+      vi.fn() as unknown as ActionCreatorWithoutPayload<'cart/clearCart'>;
+
+    vi.spyOn(useActionsModule, 'useActions').mockReturnValue({
+      addItem: addItemMock,
+      removeItem: removeItemMock,
+      clearCart: clearCartMock,
+    });
+
+    renderWithProviders(<BookCard book={mockBook} isFlyout />);
+
+    const removeButton = screen.getByRole('button');
+    await user.click(removeButton);
+
+    expect(removeItemMock).toHaveBeenCalledWith({ id: '1' });
   });
 });

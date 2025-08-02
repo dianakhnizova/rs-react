@@ -36,6 +36,7 @@ export const Pagination = ({
         className={classNames(styles.arrowPrevButton, {
           [styles.arrowPrevLightButton]: theme === Theme.LIGHT,
         })}
+        data-testid="pagination-button"
       />
 
       <p data-testid="page-number" className={styles.pageNumberContainer}>
@@ -50,6 +51,7 @@ export const Pagination = ({
         className={classNames(styles.arrowPrevButton, styles.arrowNextButton, {
           [styles.arrowNextLightButton]: theme === Theme.LIGHT,
         })}
+        data-testid="pagination-button"
       />
     </div>
   );

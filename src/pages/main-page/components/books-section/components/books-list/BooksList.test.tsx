@@ -1,12 +1,24 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { BooksList } from './BooksList';
 import { vi } from 'vitest';
 import { messages as bookListMessages } from './messages';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useNavigate, useParams } from 'react-router-dom';
 import { IBookData } from '@/sources/interfaces';
 import { Provider } from 'react-redux';
 import { store } from '@/store/store';
 import { ThemeProvider } from '@/utils/ThemeContext';
+
+vi.mock('react-router-dom', async () => {
+  const actual =
+    await vi.importActual<typeof import('react-router-dom')>(
+      'react-router-dom'
+    );
+  return {
+    ...actual,
+    useNavigate: vi.fn(),
+    useParams: vi.fn(),
+  };
+});
 
 const mockedBooks: IBookData[] = [
   {
@@ -58,6 +70,9 @@ describe('BookList', () => {
   describe('BooksList - Rendering', () => {
     beforeEach(() => {
       vi.clearAllMocks();
+      (useParams as ReturnType<typeof vi.fn>).mockReturnValue({
+        detailsId: undefined,
+      }); // ✅ добавлено
     });
 
     it('Renders correct number of items', () => {
@@ -91,6 +106,43 @@ describe('BookList', () => {
       bookItems[0].click();
 
       expect(onBookClick).toHaveBeenCalledWith(mockedBooks[0].id);
+    });
+  });
+
+  describe('BooksList - Pagination', () => {
+    const mockNavigate = vi.fn();
+
+    beforeEach(() => {
+      vi.clearAllMocks();
+      (useNavigate as ReturnType<typeof vi.fn>).mockReturnValue(mockNavigate);
+    });
+
+    it('Navigates to correct URL without detailsId', () => {
+      (useParams as ReturnType<typeof vi.fn>).mockReturnValue({
+        detailsId: undefined,
+      });
+
+      renderBooksList();
+
+      const paginationButtons = screen.getAllByTestId('pagination-button');
+      const nextButton = paginationButtons[1];
+      fireEvent.click(nextButton);
+
+      expect(mockNavigate).toHaveBeenCalledWith('/2');
+    });
+
+    it('Navigates to correct URL with detailsId', () => {
+      (useParams as ReturnType<typeof vi.fn>).mockReturnValue({
+        detailsId: 'abc123',
+      });
+
+      renderBooksList();
+
+      const paginationButtons = screen.getAllByTestId('pagination-button');
+      const nextButton = paginationButtons[1];
+      fireEvent.click(nextButton);
+
+      expect(mockNavigate).toHaveBeenCalledWith('/2/abc123');
     });
   });
 });
