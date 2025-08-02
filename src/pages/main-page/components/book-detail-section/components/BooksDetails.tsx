@@ -14,7 +14,7 @@ export const BooksDetails: FC<Props> = ({ bookDetail }: Props) => {
       <BookCard
         key={bookDetail.id}
         book={bookDetail}
-        isDetails={true}
+        isDetails
         details={[
           {
             value:

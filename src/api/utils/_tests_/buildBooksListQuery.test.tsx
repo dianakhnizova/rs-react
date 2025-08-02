@@ -10,7 +10,7 @@ describe('buildBooksListQuery', () => {
     });
 
     expect(result).toEqual({
-      url: '/books',
+      url: '/search.json',
       params: {
         title: 'hello',
         page: 2,
@@ -26,7 +26,7 @@ describe('buildBooksListQuery', () => {
     });
 
     expect(result).toEqual({
-      url: '/books',
+      url: '/search.json',
       params: {
         title: 'fiction',
         page: 1,

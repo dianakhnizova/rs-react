@@ -58,20 +58,20 @@ export const Flyout = () => {
               {messages.titleItemsPerCart}
             </p>
 
-            {cart.length > 3 ? (
+            {cart.length > ITEMS_PER_FLYOUT ? (
               <Slider
                 currentSlide={currentSlide}
                 totalSlides={totalSlides}
                 onSlideChange={handleSlideChange}
               >
                 {demonstrationBooks.map(book => (
-                  <BookCard key={book.id} book={book} isFlyout={itemIsInCart} />
+                  <BookCard key={book.id} book={book} isFlyout />
                 ))}
               </Slider>
             ) : (
               <div className={styles.itemContainer}>
                 {cart.map(book => (
-                  <BookCard key={book.id} book={book} isFlyout={itemIsInCart} />
+                  <BookCard key={book.id} book={book} isFlyout />
                 ))}
               </div>
             )}

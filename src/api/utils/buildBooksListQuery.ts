@@ -9,7 +9,7 @@ export const buildBooksListQuery = ({
   page: number;
   limit?: number;
 }) => ({
-  url: '/books',
+  url: '/search.json',
   params: {
     title: query.trim() || 'fiction',
     page,

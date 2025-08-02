@@ -14,7 +14,7 @@ describe('bookApi', () => {
       const result = buildBooksListQuery(params);
 
       expect(result).toEqual({
-        url: '/books',
+        url: '/search.json',
         params: {
           title: 'science',
           page: 3,

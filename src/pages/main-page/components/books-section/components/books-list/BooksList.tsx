@@ -45,7 +45,7 @@ export const BooksList: FC<Props> = ({
               key={book.id}
               book={book}
               onClick={() => onBookClick(book.id)}
-              isSelected={true}
+              isSelected
             />
           ))}
         </ul>
