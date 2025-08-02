@@ -9,9 +9,19 @@ vi.mock('@/api/book.api', () => ({
   useGetBookByIdQuery: vi.fn(),
 }));
 
+vi.mock('@/utils/hooks/useNavigationToPath', () => ({
+  useNavigationToPath: () => ({
+    currentPage: 1,
+    navigateToList: vi.fn(),
+  }),
+}));
+
 describe('BookDetailSection', () => {
   it('Renders error message if bookDetails is null', () => {
-    (useGetBookByIdQuery as ReturnType<typeof vi.fn>).mockReturnValue({
+    const mockedUseGetBookByIdQuery =
+      useGetBookByIdQuery as unknown as ReturnType<typeof vi.fn>;
+
+    mockedUseGetBookByIdQuery.mockReturnValue({
       data: undefined,
       isLoading: false,
       isError: true,

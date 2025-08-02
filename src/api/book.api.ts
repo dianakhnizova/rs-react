@@ -8,7 +8,9 @@ import { buildBooksListQuery } from './utils/buildBooksListQuery';
 
 export const bookApi = createApi({
   reducerPath: 'bookApi',
-  baseQuery: fetchBaseQuery({ baseUrl: '/api' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:3000/api',
+  }),
   endpoints: builder => ({
     getBooksList: builder.query<
       BooksListResponse,
