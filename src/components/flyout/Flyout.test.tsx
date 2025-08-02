@@ -197,6 +197,11 @@ describe('Flyout', () => {
     downloadButton.click();
 
     expect(downloadBooksCsv).toHaveBeenCalledTimes(1);
-    expect(downloadBooksCsv).toHaveBeenCalledWith([mockCartItem]);
+    expect(downloadBooksCsv).toHaveBeenCalledWith(
+      [mockCartItem],
+      expect.objectContaining({
+        current: expect.any(HTMLAnchorElement),
+      })
+    );
   });
 });
