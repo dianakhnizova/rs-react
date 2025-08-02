@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { selectCart, selectItemIsInCart } from '@/store/slices/cart/selectors';
 import { Slider } from '../slider/Slider';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ITEMS_PER_FLYOUT } from '@/sources/constants';
 
 export const Flyout = () => {
@@ -19,6 +19,7 @@ export const Flyout = () => {
   const itemIsInCart = useSelector(selectItemIsInCart);
 
   const totalSlides = Math.ceil(cart.length / ITEMS_PER_FLYOUT);
+  const link = useRef<HTMLAnchorElement>(null);
 
   const handleSlideChange = (page: number) => {
     setCurrentSlide(page);
@@ -34,7 +35,7 @@ export const Flyout = () => {
   };
 
   const handleDownloadButton = () => {
-    downloadBooksCsv(cart);
+    downloadBooksCsv(cart, link);
   };
 
   useEffect(() => {
@@ -89,6 +90,8 @@ export const Flyout = () => {
           {messages.titleDownloadButton}
         </Button>
       </div>
+
+      <a ref={link} style={{ display: 'none' }} />
     </div>
   );
 };

@@ -1,7 +1,12 @@
 import { IBookData } from '@/sources/interfaces';
-import { saveAs } from 'file-saver';
+import { RefObject } from 'react';
 
-export const downloadBooksCsv = (books: IBookData[]) => {
+export const downloadBooksCsv = (
+  books: IBookData[],
+  link: RefObject<HTMLAnchorElement | null>
+) => {
+  if (books.length === 0) return;
+
   const header = ['Title', 'Description', 'Image', 'Author', 'Year', 'Pages'];
 
   const rows = books.map(book => [
@@ -13,9 +18,17 @@ export const downloadBooksCsv = (books: IBookData[]) => {
     `"${book.bookDetails.pages || ''}"`,
   ]);
 
-  const csvContent = [header, ...rows].map(row => row.join(',')).join('\n');
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const csvContent = [header.join(','), ...rows].join('\n');
 
-  const fileName = `${books.length}_items.csv`;
-  saveAs(blob, fileName);
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+
+  const fileName = `${books.length}`;
+
+  if (link.current) {
+    link.current.href = url;
+    link.current.download = `${fileName}_items.csv`;
+    link.current.click();
+    URL.revokeObjectURL(url);
+  }
 };
