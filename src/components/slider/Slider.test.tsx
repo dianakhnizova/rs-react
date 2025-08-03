@@ -12,9 +12,9 @@ const mockBooks: IBookData[] = [
     title: 'Book 1',
     image: 'https://covers.openlibrary.org/b/id/123.jpg',
     bookDetails: {
-      description: 'Description 1',
+      first_sentence: 'Description 1',
       authors: 'Author 1',
-      year: '2020',
+      first_publish_date: '2020',
       pages: '300',
     },
   },
@@ -23,9 +23,9 @@ const mockBooks: IBookData[] = [
     title: 'Book 2',
     image: 'https://covers.openlibrary.org/b/id/456.jpg',
     bookDetails: {
-      description: 'Description 2',
+      first_sentence: 'Description 2',
       authors: 'Author 2',
-      year: '2021',
+      first_publish_date: '2021',
       pages: '250',
     },
   },
@@ -34,9 +34,9 @@ const mockBooks: IBookData[] = [
     title: 'Book 3',
     image: 'https://covers.openlibrary.org/b/id/789.jpg',
     bookDetails: {
-      description: 'Description 3',
+      first_sentence: 'Description 3',
       authors: 'Author 3',
-      year: '2022',
+      first_publish_date: '2022',
     },
   },
   {
@@ -44,9 +44,9 @@ const mockBooks: IBookData[] = [
     title: 'Book 4',
     image: 'https://covers.openlibrary.org/b/id/012.jpg',
     bookDetails: {
-      description: 'Description 4',
+      first_sentence: 'Description 4',
       authors: 'Author 4',
-      year: '2023',
+      first_publish_date: '2023',
       pages: '400',
     },
   },

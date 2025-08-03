@@ -47,9 +47,9 @@ describe('Flyout', () => {
       title: 'Test Book',
       image: '',
       bookDetails: {
-        description: 'Test description',
+        first_sentence: 'Test description',
         authors: 'Diana',
-        year: '2025',
+        first_publish_date: '2025',
       },
     };
 
@@ -85,9 +85,9 @@ describe('Flyout', () => {
       title: 'Test Book',
       image: '',
       bookDetails: {
-        description: 'Test description',
+        first_sentence: 'Test description',
         authors: 'Diana',
-        year: '2025',
+        first_publish_date: '2025',
       },
     };
 
@@ -121,9 +121,9 @@ describe('Flyout', () => {
         title: 'Book One',
         image: '',
         bookDetails: {
-          description: '',
+          first_sentence: '',
           authors: 'Author 1',
-          year: '2020',
+          first_publish_date: '2020',
         },
       },
       {
@@ -131,9 +131,9 @@ describe('Flyout', () => {
         title: 'Book Two',
         image: '',
         bookDetails: {
-          description: '',
+          first_sentence: '',
           authors: 'Author 2',
-          year: '2021',
+          first_publish_date: '2021',
         },
       },
       {
@@ -141,9 +141,9 @@ describe('Flyout', () => {
         title: 'Book Three',
         image: '',
         bookDetails: {
-          description: '',
+          first_sentence: '',
           authors: 'Author 3',
-          year: '2022',
+          first_publish_date: '2022',
         },
       },
     ];
@@ -176,9 +176,9 @@ describe('Flyout', () => {
         title: `Book ${i + 1}`,
         image: '',
         bookDetails: {
-          description: '',
+          first_sentence: '',
           authors: `Author ${i + 1}`,
-          year: '2020',
+          first_publish_date: '2020',
         },
       })
     );

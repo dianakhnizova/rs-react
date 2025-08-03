@@ -50,7 +50,7 @@ describe('getBookByIdQueryFn', () => {
       bookDetails: {
         description: 'desc',
         authors: 'Author 1',
-        year: '2023',
+        first_publish_year: '2023',
       },
     };
 

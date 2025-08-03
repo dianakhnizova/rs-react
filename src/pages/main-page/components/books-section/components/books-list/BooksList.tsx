@@ -1,6 +1,6 @@
 import styles from './BooksList.module.scss';
 import { messages } from '@/sources/messages';
-import { BookCard } from '../../../../../../components/books-cards/BookCard';
+import { BookCard } from '../../../../../../components/book-card/BookCard';
 import type { IBookData } from '@/sources/interfaces';
 import { Pagination } from '@/components/pagination/Pagination';
 import { ITEMS_PER_PAGE } from '@/sources/constants';

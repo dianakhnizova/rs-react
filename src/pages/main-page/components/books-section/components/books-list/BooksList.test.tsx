@@ -26,9 +26,9 @@ const mockedBooks: IBookData[] = [
     title: 'Book One',
     image: 'image1.jpg',
     bookDetails: {
-      description: 'A test description1',
+      first_sentence: 'A test description1',
       authors: 'Author Name1',
-      year: '2024',
+      first_publish_date: '2024',
     },
   },
   {
@@ -36,9 +36,9 @@ const mockedBooks: IBookData[] = [
     title: 'Book Two',
     image: 'image2.jpg',
     bookDetails: {
-      description: 'A test description2',
+      first_sentence: 'A test description2',
       authors: 'Author Name2',
-      year: '2025',
+      first_publish_date: '2025',
     },
   },
 ];

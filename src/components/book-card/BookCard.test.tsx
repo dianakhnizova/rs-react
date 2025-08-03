@@ -22,7 +22,7 @@ const mockBook: IBookData = {
   bookDetails: {
     description: 'Test description',
     authors: 'Test Author',
-    year: '2020',
+    first_publish_date: '2020',
     pages: '100',
   },
 };

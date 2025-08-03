@@ -6,11 +6,10 @@ describe('cartSlice', () => {
     id: '123',
     title: 'Test Book',
     image: 'test.jpg',
-
     bookDetails: {
       authors: 'Diana',
-      description: 'Test Description',
-      year: '2025',
+      first_sentence: 'Test Description',
+      first_publish_date: '2025',
     },
   };
 

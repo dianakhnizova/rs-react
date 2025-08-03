@@ -1,4 +1,4 @@
-import { BookCard } from '@/components/books-cards/BookCard';
+import { BookCard } from '@/components/book-card/BookCard';
 import { IBookData } from '@/sources/interfaces';
 import { messages } from './messages';
 import styles from './BooksDetails.module.scss';

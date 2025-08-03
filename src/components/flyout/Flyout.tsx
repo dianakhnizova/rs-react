@@ -1,7 +1,7 @@
 import styles from './Flyout.module.scss';
 import { messages } from './messages';
 import { Button } from '../button/Button';
-import { BookCard } from '../books-cards/BookCard';
+import { BookCard } from '../book-card/BookCard';
 import { useActions } from '@/utils/hooks/useActions';
 import classNames from 'classnames';
 import { selectCart, selectItemIsInCart } from '@/store/slices/cart/selectors';
