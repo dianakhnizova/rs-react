@@ -12,6 +12,7 @@ describe('Main test', () => {
     });
 
     const banner = await screen.findByRole('banner');
+
     expect(banner).toBeInTheDocument();
   });
 });

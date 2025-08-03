@@ -1,13 +1,25 @@
 .button {
-  background-color: var(--clr-line);
-  color: var(--clr-bg-1);
-  cursor: pointer;
-  box-shadow: var(--shadow-3);
+  color: var(--clr-line-button);
+  box-shadow: var(--shadow-4);
   transition: all 0.2s ease;
   font-family: var(--ff-base);
+  font-size: 75%;
   border: 1px solid transparent;
-  padding: 5px 40px;
+  padding: 4px 30px;
   align-items: center;
+  cursor: pointer;
+
+  &.primary {
+    background-color: var(--clr-bg-button);
+  }
+
+  &.secondary {
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    box-shadow: none;
+  }
 
   &:hover {
     background-color: var(--clr-bg-1);

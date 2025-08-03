@@ -30,6 +30,7 @@ describe('Popup component', () => {
 
   it('Calls onClose when overlay is clicked', async () => {
     const onCloseMock = vi.fn();
+
     render(
       <Popup isOpen={true} onClose={onCloseMock}>
         <p>Close Test</p>
@@ -37,12 +38,15 @@ describe('Popup component', () => {
     );
 
     const overlay = screen.getByTestId('popup');
+
     await userEvent.click(overlay);
+
     expect(onCloseMock).toHaveBeenCalled();
   });
 
   it('Calls onClose when close button is clicked', async () => {
     const onCloseMock = vi.fn();
+
     render(
       <Popup isOpen={true} onClose={onCloseMock}>
         <p>Close Test</p>
@@ -50,7 +54,9 @@ describe('Popup component', () => {
     );
 
     const button = screen.getByRole('button', { name: messages.closeButton });
+
     await userEvent.click(button);
+
     expect(onCloseMock).toHaveBeenCalled();
   });
 });

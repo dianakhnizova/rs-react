@@ -4,7 +4,7 @@ import { AboutPage } from '@/pages/about-page/AboutPage';
 import { Root } from './root/root';
 import { MainPage } from '@/pages/main-page/MainPage';
 import { NotFoundPage } from '@/pages/not-found-page/NotFoundPage';
-import { BookDetailSection } from '@/pages/book-detail-section/BookDetailSection';
+import { BookDetailSection } from '@/pages/main-page/components/book-detail-section/BookDetailSection';
 
 export const routes = [
   {

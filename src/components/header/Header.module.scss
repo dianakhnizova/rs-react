@@ -5,18 +5,8 @@
   position: sticky;
   top: 0;
   z-index: 2000;
-  padding: 1rem 4rem;
+  padding: 0.5rem 4rem;
   box-shadow: var(--shadow-1);
   background-color: var(--clr-bg-1);
   width: 100%;
-}
-
-.title {
-  text-decoration: none;
-  color: var(--clr-line);
-
-  &:hover {
-    transform: scale(1.03);
-    color: var(--clr-hover);
-  }
 }

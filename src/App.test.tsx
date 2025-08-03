@@ -2,6 +2,9 @@ import { render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import { describe, it } from 'vitest';
 import { routes } from './router/router';
+import { ThemeProvider } from './utils/ThemeContext';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 describe('App routing', () => {
   it('renders MainPage on default route', () => {
@@ -9,7 +12,13 @@ describe('App routing', () => {
       initialEntries: ['/'],
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
+    );
 
     expect(screen.getByTestId('main-page')).toBeInTheDocument();
   });
@@ -19,7 +28,11 @@ describe('App routing', () => {
       initialEntries: ['/about'],
     });
 
-    render(<RouterProvider router={router} />);
+    render(
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    );
 
     expect(screen.getByTestId('about-page')).toBeInTheDocument();
   });
