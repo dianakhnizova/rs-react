@@ -88,6 +88,7 @@ describe('Slider', () => {
     );
 
     const [prevButton] = screen.getAllByRole('button');
+
     expect(prevButton).toBeDisabled();
   });
 
@@ -159,9 +160,11 @@ describe('Slider', () => {
 
     const [, nextButton] = screen.getAllByRole('button');
     fireEvent.click(nextButton);
+
     expect(screen.getByText('Book 4')).toBeInTheDocument();
 
     const reducedBooks = mockBooks.slice(0, 3);
+
     rerender(
       <ThemeContext.Provider
         value={{ theme: Theme.LIGHT, toggleTheme: vi.fn() }}

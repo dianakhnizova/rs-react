@@ -1,5 +1,3 @@
-// src/api/book.api.test.ts
-
 import { buildBooksListQuery } from './utils/buildBooksListQuery';
 
 describe('bookApi', () => {

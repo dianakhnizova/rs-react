@@ -72,7 +72,7 @@ describe('BookList', () => {
       vi.clearAllMocks();
       (useParams as ReturnType<typeof vi.fn>).mockReturnValue({
         detailsId: undefined,
-      }); // ✅ добавлено
+      });
     });
 
     it('Renders correct number of items', () => {

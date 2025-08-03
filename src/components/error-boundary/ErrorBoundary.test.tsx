@@ -75,6 +75,7 @@ describe('ErrorBoundary', () => {
     const closeBtn = await screen.findByRole('button', {
       name: popupMessages.closeButton,
     });
+
     await userEvent.click(closeBtn);
 
     await waitFor(() => {

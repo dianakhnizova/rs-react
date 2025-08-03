@@ -11,8 +11,9 @@ import { vi } from 'vitest';
 describe('fetchAuthorNames', () => {
   const mockApi = {} as BaseQueryApi;
 
-  it('should return author names when baseQuery succeeds', async () => {
+  it('Should return author names when baseQuery succeeds', async () => {
     const mockAuthorKeys = ['/authors/A1', '/authors/A2'];
+
     const mockBaseQuery: BaseQueryFn<
       string | FetchArgs,
       unknown,
@@ -48,8 +49,9 @@ describe('fetchAuthorNames', () => {
     expect(result).toEqual(['Author One', 'Author Two']);
   });
 
-  it('should skip entries without data or name', async () => {
+  it('Should skip entries without data or name', async () => {
     const mockAuthorKeys = ['/authors/A1', '/authors/A2'];
+
     const mockBaseQuery: BaseQueryFn<
       string | FetchArgs,
       unknown,
@@ -70,8 +72,9 @@ describe('fetchAuthorNames', () => {
     expect(result).toEqual(['Author Two']);
   });
 
-  it('should return empty array if no valid names', async () => {
+  it('Should return empty array if no valid names', async () => {
     const mockAuthorKeys = ['/authors/A1', '/authors/A2'];
+
     const mockBaseQuery: BaseQueryFn<
       string | FetchArgs,
       unknown,

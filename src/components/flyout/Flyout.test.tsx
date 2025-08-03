@@ -108,6 +108,7 @@ describe('Flyout', () => {
     const unselectButton = screen.getByRole('button', {
       name: /unselect all/i,
     });
+
     expect(unselectButton).toBeInTheDocument();
 
     await user.click(unselectButton);
@@ -164,7 +165,6 @@ describe('Flyout', () => {
     expect(screen.getByText(/book one/i)).toBeInTheDocument();
     expect(screen.getByText(/book two/i)).toBeInTheDocument();
     expect(screen.getByText(/book three/i)).toBeInTheDocument();
-
     expect(screen.getByText(/items are selected/i)).toBeInTheDocument();
   });
 

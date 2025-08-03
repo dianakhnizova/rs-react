@@ -62,9 +62,9 @@ describe('BookCard', () => {
     );
 
     const image = screen.getByRole('img');
+
     expect(image).toHaveAttribute('src', 'test.jpg');
     expect(image).toHaveAttribute('alt', 'Test Book');
-
     expect(
       screen.getByText(text => text.includes('Test Description'))
     ).toBeInTheDocument();
@@ -79,6 +79,7 @@ describe('BookCard', () => {
     renderWithProviders(<BookCard book={bookWithoutImage} details={[]} />);
 
     const image = screen.getByRole('img');
+
     expect(image).toHaveAttribute('src', BookPlaceholder);
     expect(image).toHaveAttribute('alt', 'Test Book');
   });
@@ -104,7 +105,7 @@ describe('BookCard', () => {
     expect(screen.queryByText(/^0$/)).not.toBeInTheDocument();
   });
 
-  it('calls removeItem when remove button is clicked in flyout', async () => {
+  it('Calls removeItem when remove button is clicked in flyout', async () => {
     const user = userEvent.setup();
 
     vi.spyOn(useActionsModule, 'useActions').mockReturnValue({
@@ -116,12 +117,13 @@ describe('BookCard', () => {
     renderWithProviders(<BookCard book={mockBook} isFlyout />);
 
     const removeButton = screen.getByRole('button');
+
     await user.click(removeButton);
 
     expect(removeItemMock).toHaveBeenCalledWith({ id: '1' });
   });
 
-  it('calls addItem when checkbox is checked and book is not in cart', async () => {
+  it('Calls addItem when checkbox is checked and book is not in cart', async () => {
     const user = userEvent.setup();
 
     vi.spyOn(appSelectorModule, 'useAppSelector').mockImplementation(selector =>
@@ -134,13 +136,15 @@ describe('BookCard', () => {
     );
 
     renderWithProviders(<BookCard book={mockBook} isSelected={true} />);
+
     const checkbox = screen.getByRole('checkbox');
+
     await user.click(checkbox);
 
     expect(addItemMock).toHaveBeenCalledWith(mockBook);
   });
 
-  it('calls removeItem when checkbox is unchecked and book is in cart', async () => {
+  it('Calls removeItem when checkbox is unchecked and book is in cart', async () => {
     const user = userEvent.setup();
 
     vi.spyOn(appSelectorModule, 'useAppSelector').mockImplementation(selector =>
@@ -153,7 +157,9 @@ describe('BookCard', () => {
     );
 
     renderWithProviders(<BookCard book={mockBook} isSelected />);
+
     const checkbox = screen.getByRole('checkbox');
+
     await user.click(checkbox);
 
     expect(removeItemMock).toHaveBeenCalledWith({ id: '1' });

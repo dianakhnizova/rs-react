@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
-import { ThemeProvider, useTheme } from './ThemeContext';
 import { Theme } from '@/sources/enums';
 import { messages } from '@/sources/messages';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
+import { ThemeProvider, useTheme } from '../ThemeContext';
 
 const TestComponent = () => {
   const { theme, toggleTheme } = useTheme();
@@ -28,6 +28,7 @@ describe('ThemeContext', () => {
 
   it('Toggles theme from DARK to LIGHT', async () => {
     const user = userEvent.setup();
+
     render(
       <ThemeProvider>
         <TestComponent />
@@ -35,6 +36,7 @@ describe('ThemeContext', () => {
     );
 
     const themeSpan = screen.getByTestId('theme');
+
     expect(themeSpan.textContent).toBe(Theme.DARK);
 
     await user.click(screen.getByText('Toggle'));
@@ -52,6 +54,7 @@ describe('ThemeContext', () => {
     expect(() => render(<BrokenComponent />)).toThrow(
       messages.errorThemeContext
     );
+
     spy.mockRestore();
   });
 });

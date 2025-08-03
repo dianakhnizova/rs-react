@@ -12,14 +12,17 @@ describe('SearchSection', () => {
     render(<SearchSection onSearch={vi.fn()} searchTerm="" />);
 
     const input = screen.getByPlaceholderText(/search/i);
+
     expect(input).toBeInTheDocument();
 
     const button = screen.getByRole('button', { name: /search/i });
+
     expect(button).toBeInTheDocument();
   });
 
   it('Updates input value when user types', async () => {
     renderComponent();
+
     const input = screen.getByPlaceholderText(/search/i);
 
     await userEvent.clear(input);

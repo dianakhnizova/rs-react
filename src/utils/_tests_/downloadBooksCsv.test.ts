@@ -1,4 +1,4 @@
-import { downloadBooksCsv } from './downloadBooksCsv';
+import { downloadBooksCsv } from '../downloadBooksCsv';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { IBookData } from '@/sources/interfaces';
 import { RefObject } from 'react';
@@ -18,6 +18,16 @@ describe('downloadBooksCsv', () => {
 
   const mockUrl = 'blob:http://localhost/fake-url';
 
+  const click = vi.fn();
+
+  const mockLink = {
+    current: {
+      click,
+      href: '',
+      download: '',
+    } as unknown as HTMLAnchorElement,
+  } as RefObject<HTMLAnchorElement | null>;
+
   beforeEach(() => {
     vi.stubGlobal('URL', {
       createObjectURL: vi.fn(() => mockUrl),
@@ -26,39 +36,33 @@ describe('downloadBooksCsv', () => {
   });
 
   it('Should generate CSV and trigger download if link is valid', () => {
-    const click = vi.fn();
-
-    const mockLink = {
-      current: {
-        click,
-        href: '',
-        download: '',
-      } as unknown as HTMLAnchorElement,
-    } as RefObject<HTMLAnchorElement | null>;
+    click.mockReset();
 
     downloadBooksCsv([mockBook], mockLink);
 
     expect(mockLink.current!.href).toBe(mockUrl);
     expect(mockLink.current!.download).toBe('1_items.csv');
     expect(click).toHaveBeenCalled();
-    expect(URL.revokeObjectURL).toHaveBeenCalledWith(mockUrl);
+
+    const revokeSpy = vi.spyOn(URL, 'revokeObjectURL');
+
+    downloadBooksCsv([mockBook], mockLink);
+
+    expect(mockLink.current!.href).toBe(mockUrl);
+    expect(mockLink.current!.download).toBe('1_items.csv');
+    expect(click).toHaveBeenCalled();
+    expect(revokeSpy).toHaveBeenCalledWith(mockUrl);
   });
 
   it('Should not do anything if books list is empty', () => {
-    const click = vi.fn();
-
-    const mockLink = {
-      current: {
-        click,
-        href: '',
-        download: '',
-      } as unknown as HTMLAnchorElement,
-    } as RefObject<HTMLAnchorElement | null>;
+    click.mockReset();
 
     downloadBooksCsv([], mockLink);
 
     expect(click).not.toHaveBeenCalled();
-    expect(URL.createObjectURL).not.toHaveBeenCalled();
+
+    const createSpy = vi.spyOn(URL, 'createObjectURL');
+    expect(createSpy).not.toHaveBeenCalled();
   });
 
   it('Should not crash if link is null', () => {
@@ -70,6 +74,8 @@ describe('downloadBooksCsv', () => {
   });
 
   describe('downloadBooksCsv - content edge cases', () => {
+    click.mockReset();
+
     const mockUrl = 'blob:http://localhost/fake-url';
     let blobSpy: ReturnType<typeof vi.fn>;
 

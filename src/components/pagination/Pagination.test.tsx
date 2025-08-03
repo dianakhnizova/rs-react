@@ -9,7 +9,7 @@ const renderWithTheme = (ui: React.ReactElement) => {
 };
 
 describe('Pagination component', () => {
-  it('renders correctly with given props', () => {
+  it('Renders correctly with given props', () => {
     renderWithTheme(
       <Pagination currentPage={2} totalPages={5} onPageChange={vi.fn()} />
     );
@@ -26,8 +26,9 @@ describe('Pagination component', () => {
     expect(nextButton).toBeEnabled();
   });
 
-  it('calls onPageChange with currentPage - 1 when Prev button is clicked', async () => {
+  it('Calls onPageChange with currentPage - 1 when Prev button is clicked', async () => {
     const onPageChange = vi.fn();
+
     renderWithTheme(
       <Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />
     );
@@ -39,8 +40,9 @@ describe('Pagination component', () => {
     expect(onPageChange).toHaveBeenCalledWith(1);
   });
 
-  it('calls onPageChange with currentPage + 1 when Next button is clicked', async () => {
+  it('Calls onPageChange with currentPage + 1 when Next button is clicked', async () => {
     const onPageChange = vi.fn();
+
     renderWithTheme(
       <Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />
     );

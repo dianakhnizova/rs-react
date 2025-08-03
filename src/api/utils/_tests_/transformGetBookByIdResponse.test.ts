@@ -3,7 +3,7 @@ import { OPEN_LIBRARY_COVER_URL } from '@/sources/constants';
 import type { IBookItemResponse } from '@/sources/interfaces';
 
 describe('transformGetBookByIdResponse', () => {
-  it('should correctly transform book with plain description and cover', () => {
+  it('Should correctly transform book with plain description and cover', () => {
     const mockBook: IBookItemResponse = {
       key: '/works/OL123W',
       title: 'Test Book',
@@ -30,7 +30,7 @@ describe('transformGetBookByIdResponse', () => {
     });
   });
 
-  it('should handle description as object and missing optional fields', () => {
+  it('Should handle description as object and missing optional fields', () => {
     const mockBook: IBookItemResponse = {
       key: '/works/OL456W',
       title: 'Another Book',
@@ -52,7 +52,7 @@ describe('transformGetBookByIdResponse', () => {
     });
   });
 
-  it('should handle missing key and title gracefully', () => {
+  it('Should handle missing key and title gracefully', () => {
     const mockBook = {
       description: 'Fallback book',
       authors: [],

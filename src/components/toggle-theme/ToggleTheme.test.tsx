@@ -1,4 +1,3 @@
-// ToggleTheme.test.tsx
 import { render, screen } from '@testing-library/react';
 import { ToggleTheme } from './ToggleTheme';
 import userEvent from '@testing-library/user-event';
@@ -38,6 +37,7 @@ describe('ToggleTheme', () => {
     renderComponent(Theme.LIGHT);
 
     const button = screen.getByRole('button');
+
     expect(button).toHaveClass(styles.toggleLightButton);
   });
 
@@ -45,6 +45,7 @@ describe('ToggleTheme', () => {
     renderComponent(Theme.DARK);
 
     const button = screen.getByRole('button');
+
     expect(button).not.toHaveClass(styles.toggleLightButton);
   });
 
@@ -52,7 +53,9 @@ describe('ToggleTheme', () => {
     renderComponent(Theme.DARK);
 
     const button = screen.getByRole('button');
+
     await userEvent.click(button);
+
     expect(mockToggleTheme).toHaveBeenCalled();
   });
 });

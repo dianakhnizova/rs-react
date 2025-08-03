@@ -9,11 +9,13 @@ describe('NotFoundPage', () => {
     render(<NotFoundPage />);
 
     const image = screen.getByRole('img', { name: messages.imgTitle });
+
     expect(image).toBeInTheDocument();
 
     const button = screen.getByRole('button', {
       name: messages.navigateMainButton,
     });
+
     expect(button).toBeInTheDocument();
   });
 
@@ -25,6 +27,7 @@ describe('NotFoundPage', () => {
     const button = screen.getByRole('button', {
       name: messages.navigateMainButton,
     });
+
     await userEvent.click(button);
 
     expect(mockedNavigate).toHaveBeenCalledWith('/');
