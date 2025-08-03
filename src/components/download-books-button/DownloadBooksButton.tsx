@@ -2,11 +2,11 @@ import { downloadBooksCsv } from '@/utils/downloadBooksCsv';
 import { useRef } from 'react';
 import { Button } from '../button/Button';
 import { messages } from './messages';
-import { useSelector } from 'react-redux';
 import { selectCart } from '@/store/slices/cart/selectors';
+import { useAppSelector } from '@/utils/hooks/useAppSelector';
 
 export const DownloadBooksButton = () => {
-  const cart = useSelector(selectCart);
+  const cart = useAppSelector(selectCart);
   const link = useRef<HTMLAnchorElement>(null);
 
   const handleDownloadButton = () => {

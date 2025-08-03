@@ -68,4 +68,52 @@ describe('downloadBooksCsv', () => {
 
     expect(() => downloadBooksCsv([mockBook], mockLink)).not.toThrow();
   });
+
+  describe('downloadBooksCsv - content edge cases', () => {
+    const mockUrl = 'blob:http://localhost/fake-url';
+    let blobSpy: ReturnType<typeof vi.fn>;
+
+    beforeEach(() => {
+      blobSpy = vi.fn();
+      vi.stubGlobal('Blob', blobSpy as unknown as typeof Blob);
+      vi.stubGlobal('URL', {
+        createObjectURL: vi.fn(() => mockUrl),
+        revokeObjectURL: vi.fn(),
+      });
+    });
+
+    it('Should properly format empty or undefined fields in CSV', () => {
+      const mockBook: IBookData = {
+        id: '1',
+        title: 'Test Book',
+        image: '',
+        bookDetails: {
+          description: '',
+          authors: '',
+          year: null as unknown as string,
+          pages: undefined,
+        },
+      };
+
+      const click = vi.fn();
+      const mockLink = {
+        current: {
+          click,
+          href: '',
+          download: '',
+        } as unknown as HTMLAnchorElement,
+      } as RefObject<HTMLAnchorElement | null>;
+
+      downloadBooksCsv([mockBook], mockLink);
+
+      const expectedCsv = [
+        'Title,Description,Image,Author,Year,Pages',
+        `"Test Book","","","","",""`,
+      ].join('\n');
+
+      expect(blobSpy).toHaveBeenCalledWith([expectedCsv], {
+        type: 'text/csv;charset=utf-8;',
+      });
+    });
+  });
 });

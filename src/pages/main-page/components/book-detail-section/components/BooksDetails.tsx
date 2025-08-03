@@ -9,6 +9,7 @@ export interface Props {
 }
 
 export const BooksDetails: FC<Props> = ({ bookDetail }: Props) => {
+  console.log(bookDetail);
   return (
     <div className={styles.container}>
       <BookCard

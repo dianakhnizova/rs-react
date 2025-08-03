@@ -7,11 +7,11 @@ import { Checkbox } from '../checkbox/Checkbox';
 import { useActions } from '@/utils/hooks/useActions';
 import { Button } from '../button/Button';
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
 import { selectSelectedBook } from '@/store/slices/cart/selectors';
 import { ButtonVariant } from '../button/enum';
 import { useTheme } from '@/utils/ThemeContext';
 import { Theme } from '@/sources/enums';
+import { useAppSelector } from '@/utils/hooks/useAppSelector';
 
 interface Props {
   book: IBookData;
@@ -31,7 +31,7 @@ export const BookCard: FC<Props> = ({
   isFlyout,
 }: Props) => {
   const { title, image, id } = book;
-  const selectedBook = useSelector(selectSelectedBook(book.id));
+  const selectedBook = useAppSelector(selectSelectedBook(book.id));
   const { addItem, removeItem } = useActions();
   const { theme } = useTheme();
 

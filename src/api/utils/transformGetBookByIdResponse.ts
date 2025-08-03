@@ -7,7 +7,7 @@ export const transformGetBookByIdResponse = (
 ): IBookData => {
   return {
     id: book.key ? book.key.replace('/works/', '') : '',
-    title: book.title.toUpperCase() || '',
+    title: book.title?.toUpperCase() || '',
     image: book.covers?.[0]
       ? `${OPEN_LIBRARY_COVER_URL}/${book.covers[0]}-M.jpg`
       : '',

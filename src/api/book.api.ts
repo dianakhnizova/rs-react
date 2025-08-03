@@ -4,12 +4,12 @@ import { transformGetBookListResponse } from './utils/transformGetBookListRespon
 import { BooksListResponse } from '@/sources/types';
 import { buildBooksListQuery } from './utils/buildBooksListQuery';
 import { getBookByIdQueryFn } from './utils/getBookByIdQueryFn';
-import { OPEN_LIBRARY_URL } from '@/sources/constants';
+import { getBaseUrl } from './utils/getBaseUrl';
 
 export const bookApi = createApi({
   reducerPath: 'bookApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_API_URL || OPEN_LIBRARY_URL,
+    baseUrl: getBaseUrl(),
   }),
   endpoints: builder => ({
     getBooksList: builder.query<

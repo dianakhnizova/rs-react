@@ -15,7 +15,6 @@ export const transformGetBookListResponse = (response: IBooksListResponse) => {
           authors: Array.isArray(book.author_name)
             ? book.author_name.map(String).join(', ')
             : '',
-
           year: book.first_publish_year || '',
           pages: book.edition_count || '',
         },

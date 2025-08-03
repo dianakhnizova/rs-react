@@ -5,7 +5,7 @@ import BookPlaceholder from '@/assets/img-placeholder.jpg';
 import { IBookData } from '@/sources/interfaces';
 import { ThemeProvider } from '@/utils/ThemeContext';
 import { Provider } from 'react-redux';
-import { store } from '@/store/store';
+import { store, TypeRootState } from '@/store/store';
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
 import * as useActionsModule from '@/utils/hooks/useActions';
@@ -13,6 +13,7 @@ import {
   ActionCreatorWithoutPayload,
   ActionCreatorWithPayload,
 } from '@reduxjs/toolkit';
+import * as appSelectorModule from '@/utils/hooks/useAppSelector';
 
 const mockBook: IBookData = {
   id: '1',
@@ -34,6 +35,17 @@ const renderWithProviders = (ui: React.ReactNode) =>
       </Provider>
     </MemoryRouter>
   );
+
+const addItemMock = vi.fn() as unknown as ActionCreatorWithPayload<
+  IBookData,
+  'cart/addItem'
+>;
+const removeItemMock = vi.fn() as unknown as ActionCreatorWithPayload<
+  { id: string },
+  'cart/removeItem'
+>;
+const clearCartMock =
+  vi.fn() as unknown as ActionCreatorWithoutPayload<'cart/clearCart'>;
 
 describe('BookCard', () => {
   it('Displays full data correctly', () => {
@@ -94,16 +106,6 @@ describe('BookCard', () => {
 
   it('calls removeItem when remove button is clicked in flyout', async () => {
     const user = userEvent.setup();
-    const addItemMock = vi.fn() as unknown as ActionCreatorWithPayload<
-      IBookData,
-      'cart/addItem'
-    >;
-    const removeItemMock = vi.fn() as unknown as ActionCreatorWithPayload<
-      { id: string },
-      'cart/removeItem'
-    >;
-    const clearCartMock =
-      vi.fn() as unknown as ActionCreatorWithoutPayload<'cart/clearCart'>;
 
     vi.spyOn(useActionsModule, 'useActions').mockReturnValue({
       addItem: addItemMock,
@@ -115,6 +117,44 @@ describe('BookCard', () => {
 
     const removeButton = screen.getByRole('button');
     await user.click(removeButton);
+
+    expect(removeItemMock).toHaveBeenCalledWith({ id: '1' });
+  });
+
+  it('calls addItem when checkbox is checked and book is not in cart', async () => {
+    const user = userEvent.setup();
+
+    vi.spyOn(appSelectorModule, 'useAppSelector').mockImplementation(selector =>
+      selector({
+        cart: {
+          selected: {},
+          cart: [],
+        },
+      } as unknown as TypeRootState)
+    );
+
+    renderWithProviders(<BookCard book={mockBook} isSelected={true} />);
+    const checkbox = screen.getByRole('checkbox');
+    await user.click(checkbox);
+
+    expect(addItemMock).toHaveBeenCalledWith(mockBook);
+  });
+
+  it('calls removeItem when checkbox is unchecked and book is in cart', async () => {
+    const user = userEvent.setup();
+
+    vi.spyOn(appSelectorModule, 'useAppSelector').mockImplementation(selector =>
+      selector({
+        cart: {
+          selected: { [mockBook.id]: mockBook },
+          cart: [mockBook],
+        },
+      } as unknown as TypeRootState)
+    );
+
+    renderWithProviders(<BookCard book={mockBook} isSelected />);
+    const checkbox = screen.getByRole('checkbox');
+    await user.click(checkbox);
 
     expect(removeItemMock).toHaveBeenCalledWith({ id: '1' });
   });

@@ -51,4 +51,24 @@ describe('transformGetBookByIdResponse', () => {
       },
     });
   });
+
+  it('should handle missing key and title gracefully', () => {
+    const mockBook = {
+      description: 'Fallback book',
+      authors: [],
+    } as unknown as IBookItemResponse;
+
+    const result = transformGetBookByIdResponse(mockBook, []);
+
+    expect(result).toEqual({
+      id: '',
+      title: '',
+      image: '',
+      bookDetails: {
+        description: 'Fallback book',
+        authors: '',
+        year: '',
+      },
+    });
+  });
 });

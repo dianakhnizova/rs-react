@@ -4,16 +4,16 @@ import { Button } from '../button/Button';
 import { BookCard } from '../books-cards/BookCard';
 import { useActions } from '@/utils/hooks/useActions';
 import classNames from 'classnames';
-import { useSelector } from 'react-redux';
 import { selectCart, selectItemIsInCart } from '@/store/slices/cart/selectors';
 import { Slider } from '../slider/Slider';
 import { ITEMS_PER_FLYOUT } from '@/sources/constants';
 import { DownloadBooksButton } from '../download-books-button/DownloadBooksButton';
+import { useAppSelector } from '@/utils/hooks/useAppSelector';
 
 export const Flyout = () => {
-  const cart = useSelector(selectCart);
+  const cart = useAppSelector(selectCart);
   const { clearCart } = useActions();
-  const itemIsInCart = useSelector(selectItemIsInCart);
+  const itemIsInCart = useAppSelector(selectItemIsInCart);
 
   const handleUnselectAllButton = () => {
     clearCart();
