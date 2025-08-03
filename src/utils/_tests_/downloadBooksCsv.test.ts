@@ -62,6 +62,7 @@ describe('downloadBooksCsv', () => {
     expect(click).not.toHaveBeenCalled();
 
     const createSpy = vi.spyOn(URL, 'createObjectURL');
+
     expect(createSpy).not.toHaveBeenCalled();
   });
 
