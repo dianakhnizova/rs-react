@@ -6,9 +6,11 @@ export interface IBookData {
 }
 
 export interface IBookDetails {
-  description: string;
+  description?: string;
+  first_sentence?: string;
   authors: string;
-  year: string;
+  first_publish_date?: string;
+  first_publish_year?: string;
   pages?: string;
 }
 

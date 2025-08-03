@@ -23,7 +23,7 @@ describe('BooksDetails', () => {
     bookDetails: {
       description: 'A test description',
       authors: 'Author Name',
-      year: '2024',
+      first_publish_date: '2024',
     },
   };
 
@@ -44,7 +44,7 @@ describe('BooksDetails', () => {
       bookDetails: {
         description: '',
         authors: '',
-        year: '',
+        first_publish_date: '',
       },
     };
 
@@ -52,6 +52,8 @@ describe('BooksDetails', () => {
 
     expect(screen.getByText(messages.titleNotDescription)).toBeInTheDocument();
     expect(screen.getByText(messages.titleNotAuthor)).toBeInTheDocument();
-    expect(screen.getByText(messages.titleNotPageCount)).toBeInTheDocument();
+    expect(
+      screen.getByText(messages.titleNotPublishedDate)
+    ).toBeInTheDocument();
   });
 });

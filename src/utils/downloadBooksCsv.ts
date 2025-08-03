@@ -7,14 +7,21 @@ export const downloadBooksCsv = (
 ) => {
   if (books.length === 0) return;
 
-  const header = ['Title', 'Description', 'Image', 'Author', 'Year', 'Pages'];
+  const header = [
+    'Title',
+    'First sentence',
+    'Image',
+    'Author',
+    'First publish year',
+    'Pages',
+  ];
 
   const rows = books.map(book => [
     `"${book.title}"`,
     `"${book.bookDetails.description || ''}"`,
     `"${book.image || ''}"`,
     `"${book.bookDetails.authors || ''}"`,
-    `"${book.bookDetails.year || ''}"`,
+    `"${book.bookDetails.first_publish_year || ''}"`,
     `"${book.bookDetails.pages || ''}"`,
   ]);
 

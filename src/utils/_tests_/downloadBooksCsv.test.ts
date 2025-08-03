@@ -11,7 +11,7 @@ describe('downloadBooksCsv', () => {
     bookDetails: {
       description: 'Some description',
       authors: 'Author Name',
-      year: '2023',
+      first_publish_year: '2023',
       pages: '300',
     },
   };
@@ -97,7 +97,7 @@ describe('downloadBooksCsv', () => {
         bookDetails: {
           description: '',
           authors: '',
-          year: null as unknown as string,
+          first_publish_year: null as unknown as string,
           pages: undefined,
         },
       };
@@ -114,7 +114,7 @@ describe('downloadBooksCsv', () => {
       downloadBooksCsv([mockBook], mockLink);
 
       const expectedCsv = [
-        'Title,Description,Image,Author,Year,Pages',
+        'Title,First sentence,Image,Author,First publish year,Pages',
         `"Test Book","","","","",""`,
       ].join('\n');
 

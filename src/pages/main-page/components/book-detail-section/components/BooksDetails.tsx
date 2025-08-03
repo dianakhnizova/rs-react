@@ -18,7 +18,7 @@ export const BooksDetails: FC<Props> = ({ bookDetail }: Props) => {
         details={[
           {
             value:
-              bookDetail.bookDetails.description.trim() ||
+              bookDetail.bookDetails.description?.trim() ||
               messages.titleNotDescription,
             className: styles.description,
           },
@@ -27,7 +27,9 @@ export const BooksDetails: FC<Props> = ({ bookDetail }: Props) => {
             className: styles.authors,
           },
           {
-            value: bookDetail.bookDetails.year || messages.titleNotPageCount,
+            value:
+              bookDetail.bookDetails.first_publish_date ||
+              messages.titleNotPublishedDate,
             className: styles.year,
           },
         ]}

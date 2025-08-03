@@ -25,7 +25,7 @@ describe('transformGetBookByIdResponse', () => {
       bookDetails: {
         description: 'This is a test book.',
         authors: 'Author One, Author Two',
-        year: '2020',
+        first_publish_date: '2020',
       },
     });
   });
@@ -47,7 +47,7 @@ describe('transformGetBookByIdResponse', () => {
       bookDetails: {
         description: 'Object description',
         authors: '',
-        year: '',
+        first_publish_date: '',
       },
     });
   });
@@ -67,7 +67,7 @@ describe('transformGetBookByIdResponse', () => {
       bookDetails: {
         description: 'Fallback book',
         authors: '',
-        year: '',
+        first_publish_date: '',
       },
     });
   });

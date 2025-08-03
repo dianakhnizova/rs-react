@@ -18,7 +18,7 @@ export const transformGetBookByIdResponse = (
           ? book.description?.value
           : book.description || '',
       authors: authorNames.filter(Boolean).join(', '),
-      year: book.first_publish_date || '',
+      first_publish_date: book.first_publish_date || '',
     },
   };
 };
