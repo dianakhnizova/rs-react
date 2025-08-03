@@ -9,7 +9,7 @@ describe('downloadBooksCsv', () => {
     title: 'Example Book',
     image: 'http://example.com/image.jpg',
     bookDetails: {
-      description: 'Some description',
+      first_sentence: 'Some description',
       authors: 'Author Name',
       first_publish_year: '2023',
       pages: '300',
@@ -95,7 +95,7 @@ describe('downloadBooksCsv', () => {
         title: 'Test Book',
         image: '',
         bookDetails: {
-          description: '',
+          first_sentence: '',
           authors: '',
           first_publish_year: null as unknown as string,
           pages: undefined,

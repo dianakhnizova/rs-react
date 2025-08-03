@@ -18,7 +18,7 @@ export const downloadBooksCsv = (
 
   const rows = books.map(book => [
     `"${book.title}"`,
-    `"${book.bookDetails.description || ''}"`,
+    `"${book.bookDetails.first_sentence || ''}"`,
     `"${book.image || ''}"`,
     `"${book.bookDetails.authors || ''}"`,
     `"${book.bookDetails.first_publish_year || ''}"`,
