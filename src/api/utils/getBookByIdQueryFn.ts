@@ -1,4 +1,4 @@
-import { IBookData, IBookItemResponse } from '@/sources/interfaces';
+import { IBookData } from '@/sources/interfaces';
 import {
   BaseQueryApi,
   BaseQueryFn,
@@ -9,6 +9,7 @@ import {
 } from '@reduxjs/toolkit/query';
 import { fetchAuthorNames } from './fetchAuthorNames';
 import { transformGetBookByIdResponse } from './transformGetBookByIdResponse';
+import { isIBookItemResponse } from '@/utils/typeGuard';
 
 export const getBookByIdQueryFn = async (
   id: string,
@@ -20,7 +21,11 @@ export const getBookByIdQueryFn = async (
 > => {
   const bookResponse = await baseQuery(`/works/${id}.json`, api, {});
 
-  if (bookResponse.error || !bookResponse.data) {
+  if (
+    bookResponse.error ||
+    !bookResponse.data ||
+    !isIBookItemResponse(bookResponse.data)
+  ) {
     return {
       error: bookResponse.error || {
         status: 'CUSTOM_ERROR',
@@ -30,7 +35,7 @@ export const getBookByIdQueryFn = async (
     };
   }
 
-  const book = bookResponse.data as IBookItemResponse;
+  const book = bookResponse.data;
   const authorKeys = book.authors?.map(({ author }) => author.key) || [];
 
   const authorNames = await fetchAuthorNames(authorKeys, baseQuery, api);
