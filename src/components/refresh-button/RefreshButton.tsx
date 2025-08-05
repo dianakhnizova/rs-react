@@ -1,6 +1,20 @@
+import { bookApi } from '@/api/book.api';
 import { Button } from '../button/Button';
 import { messages } from './messages';
+import { useDispatch } from 'react-redux';
 
 export const RefreshButton = () => {
-  return <Button>{messages.refreshButton}</Button>;
+  const dispatch = useDispatch();
+
+  const handleRefreshButton = () => {
+    dispatch(
+      bookApi.util.invalidateTags([
+        { type: 'BooksList' },
+        { type: 'BookDetails' },
+      ])
+    );
+  };
+  return (
+    <Button onClick={handleRefreshButton}>{messages.refreshButton}</Button>
+  );
 };
