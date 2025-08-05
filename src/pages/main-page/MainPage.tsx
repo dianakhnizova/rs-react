@@ -4,23 +4,17 @@ import { SearchSection } from './components/search-section/SearchSection';
 import { BooksSection } from './components/books-section/BooksSection';
 import { Popup } from '@/components/popup/Popup';
 import { BooksList } from './components/books-section/components/books-list/BooksList';
-import { Button } from '@/components/button/Button';
-import { messages as mainMessages } from './messages';
 import { Outlet } from 'react-router-dom';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useGetBooksListQuery } from '@/api/book.api';
 import { Flyout } from '@/components/flyout/Flyout';
+import { RefreshButton } from '@/components/refresh-button/RefreshButton';
 
 export const MainPage = () => {
   const { searchTerm, handleSearchQuery } = useSearchQuery();
-  const {
-    isValidPage,
-    currentPage,
-    redirectToNotFound,
-    navigateToBookDetail,
-    navigateToAboutPage,
-  } = useNavigationToPath();
+  const { isValidPage, currentPage, redirectToNotFound, navigateToBookDetail } =
+    useNavigationToPath();
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -70,9 +64,7 @@ export const MainPage = () => {
         <Outlet />
       </div>
 
-      <Button onClick={navigateToAboutPage}>
-        {mainMessages.toAboutPageButton}
-      </Button>
+      <RefreshButton />
 
       <Flyout />
     </main>
