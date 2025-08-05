@@ -61,10 +61,9 @@ describe('BookCard', () => {
       />
     );
 
-    const image = screen.getByRole('img');
+    const image = screen.getByAltText('Test Book');
 
     expect(image).toHaveAttribute('src', 'test.jpg');
-    expect(image).toHaveAttribute('alt', 'Test Book');
     expect(
       screen.getByText(text => text.includes('Test Description'))
     ).toBeInTheDocument();
