@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styles from './MainPage.module.scss';
 import { SearchSection } from './components/search-section/SearchSection';
 import { BooksSection } from './components/books-section/BooksSection';
@@ -10,13 +10,12 @@ import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useGetBooksListQuery } from '@/api/book.api';
 import { Flyout } from '@/components/flyout/Flyout';
 import { RefreshButton } from '@/components/refresh-button/RefreshButton';
+import { getErrorMessage } from '@/utils/getErrorMessage';
 
 export const MainPage = () => {
   const { searchTerm, handleSearchQuery } = useSearchQuery();
   const { isValidPage, currentPage, redirectToNotFound, navigateToBookDetail } =
     useNavigationToPath();
-
-  const [errorMessage, setErrorMessage] = useState('');
 
   const { data, isFetching, isError, error } = useGetBooksListQuery({
     query: searchTerm,
@@ -29,24 +28,17 @@ export const MainPage = () => {
     }
   }, [isValidPage, redirectToNotFound]);
 
-  useEffect(() => {
-    if (isError && error && 'message' in error) {
-      setErrorMessage(error.message ?? '');
-    }
-  }, [isError, error]);
-
-  const onClose = () => {
-    setErrorMessage('');
-  };
-
   const books = data?.books || [];
   const totalItems = data?.totalItems || 0;
 
   return (
     <main data-testid="main-page" className={styles.container}>
-      <Popup isOpen={!!errorMessage} onClose={onClose} data-testid="popup">
-        <p className={styles.error}>{errorMessage}</p>
-      </Popup>
+      <Popup
+        isOpen={!!isError}
+        isError
+        error={getErrorMessage(error)}
+        data-testid="popup"
+      />
 
       <SearchSection onSearch={handleSearchQuery} searchTerm={searchTerm} />
 

@@ -13,6 +13,11 @@
   color: var(--clr-line);
   padding: 5px 10px;
   width: 90%;
+  border: 1px solid transparent;
+
+  &:focus {
+    border: 1px solid var(--clr-bg-button);
+  }
 }
 
 @media (max-width: 950px) {

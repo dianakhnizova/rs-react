@@ -7,6 +7,8 @@ import { useParams } from 'react-router-dom';
 import { Spinner } from '@/components/spinner/Spinner';
 import { useGetBookByIdQuery } from '@/api/book.api';
 import { skipToken } from '@reduxjs/toolkit/query';
+import { Popup } from '@/components/popup/Popup';
+import { getErrorMessage } from '@/utils/getErrorMessage';
 
 export const BookDetailSection = () => {
   const { currentPage, navigateToList } = useNavigationToPath();
@@ -16,6 +18,7 @@ export const BookDetailSection = () => {
     data: bookDetails,
     isFetching,
     isError,
+    error,
   } = useGetBookByIdQuery(detailsId ?? skipToken);
 
   const handleCloseButton = () => {
@@ -26,11 +29,15 @@ export const BookDetailSection = () => {
     <section className={styles.container}>
       <Spinner isLoading={isFetching} data-testid="spinner" />
 
-      {(isError || !bookDetails) && !isFetching && (
+      <Popup
+        isOpen={isError || (!bookDetails && !isFetching)}
+        isError
+        error={getErrorMessage(error)}
+      >
         <p className={styles.error}>
           {bookDetailsPageMessages.notFoundIdTitle}
         </p>
-      )}
+      </Popup>
 
       {bookDetails && <BooksDetails bookDetail={bookDetails} />}
 

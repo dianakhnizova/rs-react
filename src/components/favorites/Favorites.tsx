@@ -13,7 +13,7 @@ export const Favorites = () => {
 
   return (
     <div className={styles.container}>
-      <p>{cart.length}</p>
+      <p className={styles.title}>{cart.length}</p>
 
       <img
         src={theme === Theme.DARK ? FavoritesLightIcon : FavoritesDarkIcon}
