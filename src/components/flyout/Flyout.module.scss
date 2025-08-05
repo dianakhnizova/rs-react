@@ -42,3 +42,13 @@
   align-items: center;
   padding: 4px;
 }
+
+@media (max-width: 400px) {
+  .itemContainer {
+    gap: 20px;
+  }
+
+  .buttonContainer {
+    width: 100%;
+  }
+}
