@@ -15,6 +15,8 @@ export const Flyout = () => {
   const { clearCart } = useActions();
   const itemIsInCart = useAppSelector(selectItemIsInCart);
 
+  const cartLength = cart.length;
+
   const handleUnselectAllButton = () => {
     clearCart();
   };
@@ -28,12 +30,14 @@ export const Flyout = () => {
       <div className={styles.content}>
         {itemIsInCart ? (
           <>
-            <p>
-              {cart.length}
-              {messages.titleItemsPerCart}
+            <p className={styles.countTitle}>
+              {cartLength}
+              {cartLength > 1
+                ? messages.titleItemsPerCart
+                : messages.titleItemPerCart}
             </p>
 
-            {cart.length > ITEMS_PER_FLYOUT ? (
+            {cartLength > ITEMS_PER_FLYOUT ? (
               <Slider books={cart}>
                 {demonstrationBooks =>
                   demonstrationBooks.map(book => (

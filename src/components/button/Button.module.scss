@@ -31,3 +31,10 @@
     cursor: not-allowed;
   }
 }
+
+@media (max-width: 550px) {
+  .button {
+    font-size: 30%;
+    padding: 2px 20px;
+  }
+}

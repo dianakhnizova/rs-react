@@ -42,6 +42,8 @@ export const Pagination = ({
       <p data-testid="page-number" className={styles.pageNumberContainer}>
         {messages.pageTitle}
         {currentPage}
+        {messages.ofTitle}
+        {totalPages}
       </p>
 
       <Button

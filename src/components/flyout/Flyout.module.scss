@@ -43,7 +43,15 @@
   padding: 4px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 550px) {
+  .container {
+    padding: 8px;
+  }
+
+  .countTitle {
+    font-size: 6px;
+  }
+
   .itemContainer {
     gap: 20px;
   }

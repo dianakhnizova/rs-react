@@ -1,3 +1,4 @@
 export const messages = {
-  pageTitle: 'Page: ',
+  pageTitle: 'Page ',
+  ofTitle: ' of ',
 };
