@@ -27,6 +27,12 @@ const mockBook: IBookData = {
   },
 };
 
+vi.mock('../cover-image/CoverImage', () => ({
+  CoverImage: ({ book }: { book: IBookData }) => (
+    <img src={book.image || BookPlaceholder} alt={book.title} />
+  ),
+}));
+
 const renderWithProviders = (ui: React.ReactNode) =>
   render(
     <MemoryRouter>

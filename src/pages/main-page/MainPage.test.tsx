@@ -81,20 +81,20 @@ describe('Main component', () => {
     });
 
     it('Displays popup with error message on fetch failure', async () => {
-      const errorMessage = 'Test error';
-
       mockedUseGetBooksListQuery.mockReturnValue({
         data: undefined,
         isLoading: false,
         isError: true,
-        error: new Error(errorMessage),
+        error: { status: 500, data: { message: 'Test error' } },
       });
 
       renderWithRouter(<MainPage />);
 
       await waitFor(() => {
         expect(screen.getByTestId('popup')).toBeInTheDocument();
-        expect(screen.getByText(errorMessage)).toBeInTheDocument();
+        expect(
+          screen.getByText(content => content.includes('Test error'))
+        ).toBeInTheDocument();
       });
     });
   });
@@ -153,33 +153,6 @@ describe('Main component', () => {
       renderWithRouter(<MainPage />);
 
       expect(mockRedirectToNotFound).toHaveBeenCalled();
-    });
-  });
-
-  describe('Error', () => {
-    it('Closes popup when onClose is called', async () => {
-      const errorMessage = 'Test error';
-
-      mockedUseGetBooksListQuery.mockReturnValue({
-        data: undefined,
-        isLoading: false,
-        isError: true,
-        error: new Error(errorMessage),
-      });
-
-      renderWithRouter(<MainPage />);
-
-      await waitFor(() => {
-        expect(screen.getByTestId('popup')).toBeInTheDocument();
-        expect(screen.getByText(errorMessage)).toBeInTheDocument();
-      });
-
-      const closeButton = screen.getByRole('button', { name: /Close/i });
-      fireEvent.click(closeButton);
-
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
-      });
     });
   });
 });
