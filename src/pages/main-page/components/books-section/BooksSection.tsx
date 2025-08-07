@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const BooksSection: FC<Props> = ({ children }: Props) => {
+export const BooksSection: FC<Props> = ({ children }) => {
   return (
     <div className={styles.container}>
       <BookListHeader />

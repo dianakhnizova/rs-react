@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import styles from './SearchSection.module.scss';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
+import { useAppSelector } from '@/utils/hooks/useAppSelector';
+import { selectSearchTerm } from '@/store/slices/search-term/selectors';
+import { useActions } from '@/utils/hooks/useActions';
 
-interface Props {
-  onSearch: (value: string) => void;
-  searchTerm: string;
-}
+export const SearchSection = () => {
+  const { searchTerm } = useAppSelector(selectSearchTerm);
+  const { setSearchTerm } = useActions();
 
-export const SearchSection = ({ onSearch, searchTerm }: Props) => {
   const [searchInput, setSearchInput] = useState(searchTerm);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,13 +17,9 @@ export const SearchSection = ({ onSearch, searchTerm }: Props) => {
     setSearchInput(value);
   };
 
-  const handleSearchClick = () => {
-    onSearch(searchInput);
-  };
-
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    handleSearchClick();
+    setSearchTerm(searchInput);
   };
 
   return (
