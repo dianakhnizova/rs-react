@@ -8,6 +8,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { cartReducer } from '@/store/slices/cart/cart.slice';
 import { ThemeProvider } from '@/utils/ThemeContext';
+import { searchTermReducer } from '@/store/slices/search-term/search-term.slice';
 
 vi.mock('@/api/book.api', async () => {
   const actual = await import('@/api/book.api');
@@ -36,6 +37,7 @@ const mockedUseGetBooksListQuery = useGetBooksListQuery as ReturnType<
 const rootReducer = combineReducers({
   [bookApi.reducerPath]: bookApi.reducer,
   cart: cartReducer,
+  searchTerm: searchTermReducer,
 });
 
 const store = configureStore({ reducer: rootReducer });
@@ -61,6 +63,7 @@ describe('Main component', () => {
         data: undefined,
         isLoading: false,
         isError: false,
+        refetch: vi.fn(),
       });
 
       renderWithRouter(<MainPage />);
@@ -68,13 +71,11 @@ describe('Main component', () => {
       const input = screen.getByPlaceholderText(
         searchMessages.inputPlaceholder
       );
-
       fireEvent.change(input, { target: { value: 'react' } });
 
       const button = screen.getByRole('button', {
         name: searchMessages.searchButton,
       });
-
       fireEvent.click(button);
 
       expect(localStorage.getItem('searchInput')).toBe('react');
@@ -86,6 +87,7 @@ describe('Main component', () => {
         isLoading: false,
         isError: true,
         error: { status: 500, data: { message: 'Test error' } },
+        refetch: vi.fn(),
       });
 
       renderWithRouter(<MainPage />);
@@ -109,6 +111,7 @@ describe('Main component', () => {
         data: undefined,
         isLoading: false,
         isError: false,
+        refetch: vi.fn(),
       });
 
       renderWithRouter(<MainPage />);
@@ -116,13 +119,11 @@ describe('Main component', () => {
       const input = screen.getByPlaceholderText(
         searchMessages.inputPlaceholder
       );
-
       fireEvent.change(input, { target: { value: '   react   ' } });
 
       const button = screen.getByRole('button', {
         name: searchMessages.searchButton,
       });
-
       fireEvent.click(button);
 
       expect(localStorage.getItem('searchInput')).toBe('react');
@@ -138,6 +139,7 @@ describe('Main component', () => {
         },
         isLoading: false,
         isError: false,
+        refetch: vi.fn(),
       });
 
       renderWithRouter(<MainPage />);
