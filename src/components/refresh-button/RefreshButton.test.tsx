@@ -5,6 +5,7 @@ import { RefreshButton } from './RefreshButton';
 import { bookApi } from '@/api/book.api';
 import { messages } from './messages';
 import * as reactRedux from 'react-redux';
+import { BookApiTags } from '@/sources/enums';
 
 vi.mock('react-redux', async () => {
   const actual =
@@ -39,7 +40,7 @@ describe('RefreshButton', () => {
     await userEvent.click(button);
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      bookApi.util.invalidateTags([{ type: 'Books' }])
+      bookApi.util.invalidateTags([{ type: BookApiTags.BOOKS }])
     );
   });
 });

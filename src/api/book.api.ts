@@ -5,13 +5,14 @@ import { BooksListResponse } from '@/sources/types';
 import { buildBooksListQuery } from './utils/buildBooksListQuery';
 import { getBookByIdQueryFn } from './utils/getBookByIdQueryFn';
 import { getBaseUrl } from './utils/getBaseUrl';
+import { BookApiTags } from '@/sources/enums';
 
 export const bookApi = createApi({
   reducerPath: 'bookApi',
   baseQuery: fetchBaseQuery({
     baseUrl: getBaseUrl(),
   }),
-  tagTypes: ['Books'],
+  tagTypes: Object.values(BookApiTags),
 
   endpoints: builder => ({
     getBooksList: builder.query<
@@ -20,12 +21,12 @@ export const bookApi = createApi({
     >({
       query: buildBooksListQuery,
       transformResponse: transformGetBookListResponse,
-      providesTags: () => ['Books'],
+      providesTags: () => [BookApiTags.BOOKS],
     }),
 
     getBookById: builder.query<IBookData, string>({
       queryFn: getBookByIdQueryFn,
-      providesTags: () => ['Books'],
+      providesTags: () => [BookApiTags.BOOKS],
     }),
   }),
 });

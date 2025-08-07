@@ -8,13 +8,14 @@ import classNames from 'classnames';
 import { IBookData } from '@/sources/interfaces';
 import { ITEMS_PER_FLYOUT } from '@/sources/constants';
 import React from 'react';
+import { FC } from 'react';
 
 interface Props {
   books: IBookData[];
-  children: React.ElementType;
+  children: FC<{ books: IBookData[] }>;
 }
 
-export const Slider = ({ books, children }: Props) => {
+export const Slider: FC<Props> = ({ books, children }) => {
   const { theme } = useTheme();
   const [currentSlide, setCurrentSlide] = useState(1);
   const totalSlides = Math.ceil(books.length / ITEMS_PER_FLYOUT);
