@@ -7,12 +7,7 @@ export const RefreshButton = () => {
   const dispatch = useDispatch();
 
   const handleRefreshButton = () => {
-    dispatch(
-      bookApi.util.invalidateTags([
-        { type: 'BooksList' },
-        { type: 'BookDetails' },
-      ])
-    );
+    dispatch(bookApi.util.invalidateTags([{ type: 'Books' }]));
   };
   return (
     <Button onClick={handleRefreshButton}>{messages.refreshButton}</Button>

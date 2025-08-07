@@ -5,6 +5,7 @@ import styles from './Pagination.module.scss';
 import { useTheme } from '@/utils/ThemeContext';
 import { Theme } from '@/sources/enums';
 import { ButtonVariant } from '../button/enum';
+import { FC } from 'react';
 
 interface Props {
   currentPage: number;
@@ -12,11 +13,11 @@ interface Props {
   totalPages: number;
 }
 
-export const Pagination = ({
+export const Pagination: FC<Props> = ({
   currentPage,
   onPageChange,
   totalPages,
-}: Props) => {
+}) => {
   const { theme } = useTheme();
 
   const handlePrevButton = () => {

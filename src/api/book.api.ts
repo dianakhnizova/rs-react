@@ -11,7 +11,7 @@ export const bookApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: getBaseUrl(),
   }),
-  tagTypes: ['BooksList', 'BookDetails'],
+  tagTypes: ['Books'],
 
   endpoints: builder => ({
     getBooksList: builder.query<
@@ -20,12 +20,12 @@ export const bookApi = createApi({
     >({
       query: buildBooksListQuery,
       transformResponse: transformGetBookListResponse,
-      providesTags: () => [{ type: 'BooksList' }],
+      providesTags: () => ['Books'],
     }),
 
     getBookById: builder.query<IBookData, string>({
       queryFn: getBookByIdQueryFn,
-      providesTags: () => [{ type: 'BookDetails' }],
+      providesTags: () => ['Books'],
     }),
   }),
 });

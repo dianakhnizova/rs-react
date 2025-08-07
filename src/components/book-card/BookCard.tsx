@@ -1,18 +1,17 @@
 import styles from './BookCard.module.scss';
-import BookPlaceholder from '@/assets/img-placeholder.jpg';
 import { BookDetail, IBookData } from '@/sources/interfaces';
 import classNames from 'classnames';
 import { messages } from './messages';
 import { Checkbox } from '../checkbox/Checkbox';
 import { useActions } from '@/utils/hooks/useActions';
 import { Button } from '../button/Button';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { selectSelectedBook } from '@/store/slices/cart/selectors';
 import { ButtonVariant } from '../button/enum';
 import { useTheme } from '@/utils/ThemeContext';
 import { Theme } from '@/sources/enums';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { CoverSpinner } from '../cover-spinner/CoverSpinner';
+import { CoverImage } from '../cover-image/CoverImage';
 
 interface Props {
   book: IBookData;
@@ -30,9 +29,8 @@ export const BookCard: FC<Props> = ({
   isSelected,
   isDetails,
   isFlyout,
-}: Props) => {
-  const { title, image, id } = book;
-  const [isImageLoading, setIsImageLoading] = useState(!!image);
+}) => {
+  const { title, id } = book;
   const selectedBook = useAppSelector(selectSelectedBook(book.id));
   const { addItem, removeItem } = useActions();
   const { theme } = useTheme();
@@ -62,16 +60,7 @@ export const BookCard: FC<Props> = ({
           <p className={styles.titleName}>{title}</p>
         </div>
 
-        <div className={styles.image}>
-          {isImageLoading && <CoverSpinner isImageLoading />}
-
-          <img
-            src={image || BookPlaceholder}
-            alt={title}
-            className={styles.img}
-            onLoad={() => setIsImageLoading(false)}
-          />
-        </div>
+        <CoverImage book={book} />
       </div>
 
       {details &&

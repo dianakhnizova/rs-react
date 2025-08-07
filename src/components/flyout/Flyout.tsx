@@ -9,6 +9,15 @@ import { Slider } from '../slider/Slider';
 import { ITEMS_PER_FLYOUT } from '@/sources/constants';
 import { DownloadBooksButton } from '../download-books-button/DownloadBooksButton';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
+import { IBookData } from '@/sources/interfaces';
+
+const DemonstrationBooks = ({ books }: { books: IBookData[] }) => (
+  <>
+    {books.map(book => (
+      <BookCard key={book.id} book={book} isFlyout />
+    ))}
+  </>
+);
 
 export const Flyout = () => {
   const cart = useAppSelector(selectCart);
@@ -38,13 +47,7 @@ export const Flyout = () => {
             </p>
 
             {cartLength > ITEMS_PER_FLYOUT ? (
-              <Slider books={cart}>
-                {demonstrationBooks =>
-                  demonstrationBooks.map(book => (
-                    <BookCard key={book.id} book={book} isFlyout />
-                  ))
-                }
-              </Slider>
+              <Slider books={cart}>{DemonstrationBooks}</Slider>
             ) : (
               <div className={styles.itemContainer}>
                 {cart.map(book => (

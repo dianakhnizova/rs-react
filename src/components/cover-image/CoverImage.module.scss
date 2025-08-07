@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-1);
+  width: 34px;
+
+  img {
+    height: 50px;
+  }
+}
