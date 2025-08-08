@@ -1,16 +1,16 @@
 import { LocalStorage } from '@/sources/enums';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface searchTermState {
+interface searchState {
   searchTerm: string;
 }
 
-const initialState: searchTermState = {
+const initialState: searchState = {
   searchTerm: (localStorage.getItem(LocalStorage.SEARCH_KEY) || '').trim(),
 };
 
-export const searchTermSlice = createSlice({
-  name: 'searchTerm',
+export const searchSlice = createSlice({
+  name: 'search',
   initialState,
   reducers: {
     setSearchTerm: (state, action: PayloadAction<string>) => {
@@ -20,5 +20,5 @@ export const searchTermSlice = createSlice({
   },
 });
 
-export const searchTermReducer = searchTermSlice.reducer;
-export const searchTermActions = searchTermSlice.actions;
+export const searchReducer = searchSlice.reducer;
+export const searchActions = searchSlice.actions;

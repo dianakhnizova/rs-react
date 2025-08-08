@@ -2,14 +2,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { PagePath } from '@/router/enums';
 import { useCallback, useEffect } from 'react';
 import { useAppSelector } from './useAppSelector';
-import { selectPagination } from '@/store/slices/pagination/selectors';
+import { selectCurrentPage } from '@/store/slices/pagination/selectors';
 import { useActions } from './useActions';
 
 export const useNavigationToPath = () => {
   const { detailsId } = useParams();
   const navigate = useNavigate();
   const { page: pageParam } = useParams();
-  const { currentPage } = useAppSelector(selectPagination);
+  const currentPage = useAppSelector(selectCurrentPage);
   const { setCurrentPage } = useActions();
 
   const isValidPage =

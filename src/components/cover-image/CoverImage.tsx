@@ -1,25 +1,23 @@
 import { useState } from 'react';
 import styles from './CoverImage.module.scss';
-import { IBookData } from '@/sources/interfaces';
 import BookPlaceholder from '@/assets/img-placeholder.jpg';
 import CoverSpinnerPlaceholder from '@/assets/cover-spinner.gif';
+import classNames from 'classnames';
 
 interface Props {
-  book: IBookData;
+  src: string;
+  alt: string;
+  className: string;
 }
 
-export const CoverImage = ({ book }: Props) => {
-  const { title, image } = book;
-
-  const [isImageLoading, setIsImageLoading] = useState(!!image);
+export const CoverImage = ({ src, alt, className }: Props) => {
+  const [isImageLoading, setIsImageLoading] = useState(!!src);
 
   return (
-    <div className={styles.container}>
+    <div className={classNames(styles.container, className)}>
       <img
-        src={
-          isImageLoading ? CoverSpinnerPlaceholder : image || BookPlaceholder
-        }
-        alt={title}
+        src={isImageLoading ? CoverSpinnerPlaceholder : src || BookPlaceholder}
+        alt={alt}
         onLoad={() => setIsImageLoading(false)}
         onError={() => setIsImageLoading(false)}
       />

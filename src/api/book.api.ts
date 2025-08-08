@@ -21,12 +21,12 @@ export const bookApi = createApi({
     >({
       query: buildBooksListQuery,
       transformResponse: transformGetBookListResponse,
-      providesTags: () => [BookApiTags.BOOKS],
+      providesTags: [BookApiTags.BOOKS],
     }),
 
     getBookById: builder.query<IBookData, string>({
       queryFn: getBookByIdQueryFn,
-      providesTags: () => [BookApiTags.BOOKS],
+      providesTags: [BookApiTags.BOOKS],
     }),
   }),
 });

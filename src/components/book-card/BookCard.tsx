@@ -60,7 +60,11 @@ export const BookCard: FC<Props> = ({
           <p className={styles.titleName}>{title}</p>
         </div>
 
-        <CoverImage book={book} />
+        <CoverImage
+          src={book.image}
+          alt={book.title}
+          className={styles.image}
+        />
       </div>
 
       {details &&

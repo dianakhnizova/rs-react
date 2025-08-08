@@ -7,19 +7,24 @@ import { Theme } from '@/sources/enums';
 import { ButtonVariant } from '../button/enum';
 import { FC, useEffect } from 'react';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectPagination } from '@/store/slices/pagination/selectors';
+import {
+  selectCurrentPage,
+  selectTotalItems,
+} from '@/store/slices/pagination/selectors';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { useActions } from '@/utils/hooks/useActions';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useGetBooksListQuery } from '@/api/book.api';
-import { selectSearchTerm } from '@/store/slices/search-term/selectors';
+import { selectSearchTerm } from '@/store/slices/search/selectors';
 
 export const Pagination: FC = () => {
   const { navigateToPage } = useNavigationToPath();
   const { theme } = useTheme();
 
-  const { searchTerm } = useAppSelector(selectSearchTerm);
-  const { currentPage, totalItems } = useAppSelector(selectPagination);
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const currentPage = useAppSelector(selectCurrentPage);
+  const totalItems = useAppSelector(selectTotalItems);
+
   const { setCurrentPage, setTotalItem } = useActions();
 
   const { data } = useGetBooksListQuery({

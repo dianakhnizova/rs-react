@@ -1,12 +1,12 @@
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '@/store/slices/cart/cart.slice';
-import { searchTermActions } from '@/store/slices/search-term/search-term.slice';
 import { paginationActions } from '@/store/slices/pagination/pagination.slice';
+import { searchActions } from '@/store/slices/search/search.slice';
 
 const allActions = {
   ...cartActions,
-  ...searchTermActions,
+  ...searchActions,
   ...paginationActions,
 };
 

@@ -1,3 +1,6 @@
 import { TypeRootState } from '@/store/store';
 
-export const selectPagination = (state: TypeRootState) => state.pagination;
+export const selectCurrentPage = (state: TypeRootState) =>
+  state.pagination.currentPage;
+export const selectTotalItems = (state: TypeRootState) =>
+  state.pagination.totalItems;

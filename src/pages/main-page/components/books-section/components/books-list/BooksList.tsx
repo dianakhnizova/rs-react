@@ -6,9 +6,9 @@ import { Pagination } from '@/components/pagination/Pagination';
 import { Spinner } from '@/components/spinner/Spinner';
 import { FC } from 'react';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectPagination } from '@/store/slices/pagination/selectors';
+import { selectCurrentPage } from '@/store/slices/pagination/selectors';
 import { useGetBooksListQuery } from '@/api/book.api';
-import { selectSearchTerm } from '@/store/slices/search-term/selectors';
+import { selectSearchTerm } from '@/store/slices/search/selectors';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { getErrorMessage } from '@/utils/getErrorMessage';
 import { Popup } from '@/components/popup/Popup';
@@ -16,8 +16,8 @@ import { Popup } from '@/components/popup/Popup';
 export const BooksList: FC = () => {
   const { navigateToBookDetail } = useNavigationToPath();
 
-  const { searchTerm } = useAppSelector(selectSearchTerm);
-  const { currentPage } = useAppSelector(selectPagination);
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const currentPage = useAppSelector(selectCurrentPage);
 
   const { data, isFetching, isError, error } = useGetBooksListQuery({
     query: searchTerm,

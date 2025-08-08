@@ -10,12 +10,12 @@ import { skipToken } from '@reduxjs/toolkit/query';
 import { Popup } from '@/components/popup/Popup';
 import { getErrorMessage } from '@/utils/getErrorMessage';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectPagination } from '@/store/slices/pagination/selectors';
+import { selectCurrentPage } from '@/store/slices/pagination/selectors';
 
 export const BookDetailSection = () => {
   const { navigateToBookList } = useNavigationToPath();
   const { detailsId } = useParams();
-  const { currentPage } = useAppSelector(selectPagination);
+  const currentPage = useAppSelector(selectCurrentPage);
 
   const {
     data: bookDetails,

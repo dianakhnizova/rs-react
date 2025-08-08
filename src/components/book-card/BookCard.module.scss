@@ -47,10 +47,19 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      gap: 16px;
+    }
+
+    .title {
+      justify-content: center;
     }
 
     .titleName {
       color: var(--clr-hover);
+    }
+
+    .image {
+      height: 120px;
     }
 
     @media (max-width: 900px) {
@@ -68,6 +77,10 @@
     .titleName {
       font-size: 8px;
       color: var(--clr-hover);
+    }
+
+    .image {
+      height: 40px;
     }
 
     @media (max-width: 700px) {
