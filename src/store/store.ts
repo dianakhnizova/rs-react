@@ -2,11 +2,13 @@ import { bookApi } from '@/api/book.api';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { cartReducer } from './slices/cart/cart.slice';
 import { searchTermReducer } from './slices/search-term/search-term.slice';
+import { paginationReducer } from './slices/pagination/pagination.slice';
 
 const reducers = combineReducers({
   [bookApi.reducerPath]: bookApi.reducer,
   cart: cartReducer,
   searchTerm: searchTermReducer,
+  pagination: paginationReducer,
 });
 
 export const store = configureStore({

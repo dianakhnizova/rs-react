@@ -1,15 +1,29 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { PagePath } from '@/router/enums';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useAppSelector } from './useAppSelector';
+import { selectPagination } from '@/store/slices/pagination/selectors';
+import { useActions } from './useActions';
 
 export const useNavigationToPath = () => {
+  const { detailsId } = useParams();
   const navigate = useNavigate();
-  const { page: pageParam, detailsId } = useParams();
+  const { page: pageParam } = useParams();
+  const { currentPage } = useAppSelector(selectPagination);
+  const { setCurrentPage } = useActions();
 
   const isValidPage =
     !pageParam ||
     (pageParam && !Number.isNaN(Number(pageParam)) && Number(pageParam) >= 1);
-  const currentPage = pageParam ? Math.max(1, Number(pageParam)) : 1;
+
+  useEffect(() => {
+    if (isValidPage) {
+      const pageNum = pageParam ? Math.max(1, Number(pageParam)) : 1;
+      setCurrentPage(pageNum);
+    } else {
+      redirectToNotFound();
+    }
+  }, [pageParam, isValidPage]);
 
   const redirectToNotFound = useCallback(() => {
     void navigate(PagePath.notFound, { replace: true });
@@ -22,29 +36,23 @@ export const useNavigationToPath = () => {
     [navigate, currentPage]
   );
 
-  const navigateToAboutPage = useCallback(() => {
-    void navigate(PagePath.aboutPage);
-  }, [navigate]);
-
-  const navigateOnSearch = useCallback(() => {
-    const newUrl = detailsId ? `/1/${detailsId}` : '/1';
-    void navigate(newUrl);
-  }, [navigate, detailsId]);
-
-  const navigateToPage = useCallback(
-    (page: number) => {
-      const newUrl = detailsId ? `/${page}/${detailsId}` : `/${page}`;
-      void navigate(newUrl);
-    },
-    [navigate, detailsId]
-  );
-
-  const navigateToList = useCallback(
+  const navigateToBookList = useCallback(
     (page: number) => {
       void navigate(`/${page}`);
     },
     [navigate]
   );
+
+  const navigateToPage = useCallback(
+    (page: number) => {
+      void navigate(detailsId ? `/${page}/${detailsId}` : `/${page}`);
+    },
+    [navigate, detailsId]
+  );
+
+  const navigateToAboutPage = useCallback(() => {
+    void navigate(PagePath.aboutPage);
+  }, [navigate]);
 
   return {
     currentPage,
@@ -52,8 +60,7 @@ export const useNavigationToPath = () => {
     redirectToNotFound,
     navigateToBookDetail,
     navigateToAboutPage,
-    navigateOnSearch,
+    navigateToBookList,
     navigateToPage,
-    navigateToList,
   };
 };

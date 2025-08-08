@@ -5,27 +5,44 @@ import styles from './Pagination.module.scss';
 import { useTheme } from '@/utils/ThemeContext';
 import { Theme } from '@/sources/enums';
 import { ButtonVariant } from '../button/enum';
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { useAppSelector } from '@/utils/hooks/useAppSelector';
+import { selectPagination } from '@/store/slices/pagination/selectors';
+import { ITEMS_PER_PAGE } from '@/sources/constants';
+import { useActions } from '@/utils/hooks/useActions';
+import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
+import { useGetBooksListQuery } from '@/api/book.api';
+import { selectSearchTerm } from '@/store/slices/search-term/selectors';
 
-interface Props {
-  currentPage: number;
-  onPageChange: (page: number) => void;
-  totalPages: number;
-}
-
-export const Pagination: FC<Props> = ({
-  currentPage,
-  onPageChange,
-  totalPages,
-}) => {
+export const Pagination: FC = () => {
+  const { navigateToPage } = useNavigationToPath();
   const { theme } = useTheme();
 
+  const { searchTerm } = useAppSelector(selectSearchTerm);
+  const { currentPage, totalItems } = useAppSelector(selectPagination);
+  const { setCurrentPage, setTotalItem } = useActions();
+
+  const { data } = useGetBooksListQuery({
+    query: searchTerm,
+    page: currentPage,
+  });
+
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    if (data?.totalItems) setTotalItem(data?.totalItems);
+  }, [data, setTotalItem]);
+
   const handlePrevButton = () => {
-    onPageChange(currentPage - 1);
+    const newPage = currentPage - 1;
+    setCurrentPage(newPage);
+    void navigateToPage(newPage);
   };
 
   const handleNextButton = () => {
-    onPageChange(currentPage + 1);
+    const newPage = currentPage + 1;
+    setCurrentPage(newPage);
+    void navigateToPage(newPage);
   };
 
   return (

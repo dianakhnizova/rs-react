@@ -8,8 +8,7 @@ import { useActions } from '@/utils/hooks/useActions';
 
 export const SearchSection = () => {
   const { searchTerm } = useAppSelector(selectSearchTerm);
-  const { setSearchTerm } = useActions();
-
+  const { setSearchTerm, setCurrentPage } = useActions();
   const [searchInput, setSearchInput] = useState(searchTerm);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,6 +19,7 @@ export const SearchSection = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setSearchTerm(searchInput);
+    setCurrentPage(1);
   };
 
   return (
