@@ -1,57 +1,39 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { PagePath } from '@/router/enums';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useAppSelector } from './useAppSelector';
 import { selectCurrentPage } from '@/store/slices/pagination/selectors';
-import { useActions } from './useActions';
+import { useIsValidPage } from './useIsValidPage';
 
 export const useNavigationToPath = () => {
   const { detailsId } = useParams();
   const navigate = useNavigate();
-  const { page: pageParam } = useParams();
   const currentPage = useAppSelector(selectCurrentPage);
-  const { setCurrentPage } = useActions();
-
-  const isValidPage =
-    !pageParam ||
-    (pageParam && !Number.isNaN(Number(pageParam)) && Number(pageParam) >= 1);
-
-  useEffect(() => {
-    if (isValidPage) {
-      const pageNum = pageParam ? Math.max(1, Number(pageParam)) : 1;
-      setCurrentPage(pageNum);
-    } else {
-      redirectToNotFound();
-    }
-  }, [pageParam, isValidPage]);
-
-  const redirectToNotFound = useCallback(() => {
-    void navigate(PagePath.notFound, { replace: true });
-  }, [navigate]);
+  const isValidPage = useIsValidPage();
 
   const navigateToBookDetail = useCallback(
-    (bookId: string) => `/${currentPage}/${bookId}`,
-    [currentPage]
+    (bookId: string) =>
+      isValidPage ? `/${currentPage}/${bookId}` : PagePath.notFound,
+    [currentPage, isValidPage]
   );
 
   const navigateToBookList = useCallback(
     (page: number) => {
-      void navigate(`/${page}`);
+      if (isValidPage) void navigate(`/${page}`);
     },
     [navigate]
   );
 
   const navigateToPage = useCallback(
     (page: number) => {
-      void navigate(detailsId ? `/${page}/${detailsId}` : `/${page}`);
+      if (isValidPage)
+        void navigate(detailsId ? `/${page}/${detailsId}` : `/${page}`);
     },
     [navigate, detailsId]
   );
 
   return {
     currentPage,
-    isValidPage,
-    redirectToNotFound,
     navigateToBookDetail,
     navigateToBookList,
     navigateToPage,
