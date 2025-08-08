@@ -12,11 +12,12 @@ import { useTheme } from '@/utils/ThemeContext';
 import { Theme } from '@/sources/enums';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
 import { CoverImage } from '../cover-image/CoverImage';
+import { Link } from 'react-router-dom';
 
 interface Props {
   book: IBookData;
   details?: BookDetail[];
-  onClick?: () => void;
+  to?: string;
   isSelected?: boolean;
   isDetails?: boolean;
   isFlyout?: boolean;
@@ -25,7 +26,7 @@ interface Props {
 export const BookCard: FC<Props> = ({
   book,
   details,
-  onClick,
+  to,
   isSelected,
   isDetails,
   isFlyout,
@@ -49,23 +50,38 @@ export const BookCard: FC<Props> = ({
 
   return (
     <li
-      onClick={onClick}
       className={classNames(styles.book, {
         [styles.bookInDetails]: isDetails,
         [styles.bookInFlyout]: isFlyout,
       })}
     >
-      <div className={styles.container}>
-        <div className={styles.title}>
-          <p className={styles.titleName}>{title}</p>
-        </div>
+      {to ? (
+        <Link to={to} className={styles.link}>
+          <div className={styles.container}>
+            <div className={styles.title}>
+              <p className={styles.titleName}>{title}</p>
+            </div>
 
-        <CoverImage
-          src={book.image}
-          alt={book.title}
-          className={styles.image}
-        />
-      </div>
+            <CoverImage
+              src={book.image}
+              alt={book.title}
+              className={styles.image}
+            />
+          </div>
+        </Link>
+      ) : (
+        <div className={styles.container}>
+          <div className={styles.title}>
+            <p className={styles.titleName}>{title}</p>
+          </div>
+
+          <CoverImage
+            src={book.image}
+            alt={book.title}
+            className={styles.image}
+          />
+        </div>
+      )}
 
       {details &&
         details.map(({ value, className }, index) => {

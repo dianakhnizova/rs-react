@@ -45,7 +45,7 @@ export const BooksList: FC = () => {
             <BookCard
               key={book.id}
               book={book}
-              onClick={() => navigateToBookDetail(book.id)}
+              to={navigateToBookDetail(book.id)}
               isSelected
             />
           ))}

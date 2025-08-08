@@ -7,7 +7,6 @@ export const BooksSection: FC = () => {
   return (
     <div className={styles.container}>
       <BookListHeader />
-
       <BooksList />
     </div>
   );

@@ -30,10 +30,8 @@ export const useNavigationToPath = () => {
   }, [navigate]);
 
   const navigateToBookDetail = useCallback(
-    (bookId: string) => {
-      void navigate(`/${currentPage}/${bookId}`);
-    },
-    [navigate, currentPage]
+    (bookId: string) => `/${currentPage}/${bookId}`,
+    [currentPage]
   );
 
   const navigateToBookList = useCallback(
@@ -50,16 +48,11 @@ export const useNavigationToPath = () => {
     [navigate, detailsId]
   );
 
-  const navigateToAboutPage = useCallback(() => {
-    void navigate(PagePath.aboutPage);
-  }, [navigate]);
-
   return {
     currentPage,
     isValidPage,
     redirectToNotFound,
     navigateToBookDetail,
-    navigateToAboutPage,
     navigateToBookList,
     navigateToPage,
   };

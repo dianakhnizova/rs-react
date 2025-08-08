@@ -10,11 +10,10 @@ export const MainPage = () => {
     <main data-testid="main-page" className={styles.container}>
       <SearchSection />
 
-      <div className={styles.content}>
+      <section className={styles.content}>
         <BooksSection />
-
         <Outlet />
-      </div>
+      </section>
 
       <RefreshButton />
 
