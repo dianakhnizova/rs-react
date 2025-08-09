@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MainPage } from './MainPage';
-import { messages as searchMessages } from './components/search-section/messages';
+import { messages as searchMessages } from './components/search-book-section/messages';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 import { bookApi, useGetBooksListQuery } from '@/api/book.api';
