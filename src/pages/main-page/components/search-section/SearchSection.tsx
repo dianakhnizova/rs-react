@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './SearchSection.module.scss';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
 import { selectSearchTerm } from '@/store/slices/search/selectors';
 import { useActions } from '@/utils/hooks/useActions';
+import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 
 export const SearchSection = () => {
   const searchTerm = useAppSelector(selectSearchTerm);
   const { setSearchTerm, setCurrentPage } = useActions();
-  const [searchInput, setSearchInput] = useState(searchTerm);
+  const { searchInput, setSearchInput } = useSearchQuery(searchTerm);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;

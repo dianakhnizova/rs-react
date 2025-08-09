@@ -6,7 +6,7 @@ interface searchState {
 }
 
 const initialState: searchState = {
-  searchTerm: (localStorage.getItem(LocalStorage.SEARCH_KEY) || '').trim(),
+  searchTerm: localStorage.getItem(LocalStorage.SEARCH_KEY) || '',
 };
 
 export const searchSlice = createSlice({
@@ -15,7 +15,6 @@ export const searchSlice = createSlice({
   reducers: {
     setSearchTerm: (state, action: PayloadAction<string>) => {
       state.searchTerm = action.payload;
-      localStorage.setItem(LocalStorage.SEARCH_KEY, action.payload.trim());
     },
   },
 });
