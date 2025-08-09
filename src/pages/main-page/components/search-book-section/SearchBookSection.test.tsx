@@ -1,4 +1,4 @@
-import { SearchSection } from './SearchBookSection';
+import { SearchBookSection } from './SearchBookSection';
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -8,7 +8,7 @@ import { store } from '@/store/store';
 const renderComponent = () =>
   render(
     <Provider store={store}>
-      <SearchSection />
+      <SearchBookSection />
     </Provider>
   );
 

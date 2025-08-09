@@ -1,13 +1,11 @@
-import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectSearchTerm } from '@/store/slices/search/selectors';
+import styles from './SearchBookSection.module.scss';
 import { useActions } from '@/utils/hooks/useActions';
-import { SearchBar } from './search-bar/SearchBar';
+import { InputForm } from '../../../../components/input-form/InputForm';
 import { messages } from './messages';
 import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
 
 export const SearchBookSection = () => {
-  const searchTerm = useAppSelector(selectSearchTerm);
-  const { searchInput, setSearchInput } = useSearchQuery(searchTerm);
+  const { searchInput, setSearchInput } = useSearchQuery();
   const { setSearchTerm, setCurrentPage } = useActions();
 
   const handleSubmitBookSearch = () => {
@@ -16,14 +14,17 @@ export const SearchBookSection = () => {
   };
 
   return (
-    <SearchBar
+    <InputForm
       setSearchInput={setSearchInput}
-      handleSubmit={handleSubmitBookSearch}
+      onFormSubmitHandler={handleSubmitBookSearch}
       inputProps={{
         type: 'text',
         placeholder: messages.inputPlaceholder,
         value: searchInput,
+        className: styles.input,
       }}
+      buttonLabel={messages.searchButton}
+      isShowButton
     />
   );
 };
