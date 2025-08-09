@@ -7,3 +7,9 @@ export enum Theme {
   DARK = 'dark',
   LIGHT = 'light',
 }
+
+export enum BookApiTags {
+  BOOKS = 'books',
+  BOOK_LIST = 'bookList',
+  BOOK_BY_ID = 'bookById',
+}

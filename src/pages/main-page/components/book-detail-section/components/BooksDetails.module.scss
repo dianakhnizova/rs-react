@@ -23,9 +23,24 @@
   font-style: italic;
 }
 
-.printType,
 .year {
   text-align: end;
   font-size: 8px;
   font-weight: 100;
+}
+
+@media (max-width: 400px) {
+  .description {
+    font-size: 4px;
+  }
+
+  .authors {
+    font-size: 3px;
+  }
+
+  .year {
+    text-align: end;
+    font-size: 3px;
+    font-weight: 100;
+  }
 }

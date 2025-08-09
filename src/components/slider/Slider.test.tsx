@@ -6,6 +6,14 @@ import { Theme } from '@/sources/enums';
 import { IBookData } from '@/sources/interfaces';
 import React from 'react';
 
+const MockBooksRenderer = ({ books }: { books: IBookData[] }) => (
+  <>
+    {books.map(book => (
+      <div key={book.id}>{book.title}</div>
+    ))}
+  </>
+);
+
 const mockBooks: IBookData[] = [
   {
     id: '1',
@@ -61,14 +69,8 @@ describe('Slider', () => {
     );
   };
 
-  it('Renders children correctly', () => {
-    renderWithTheme(
-      <Slider books={mockBooks}>
-        {demonstrationBooks =>
-          demonstrationBooks.map(book => <div key={book.id}>{book.title}</div>)
-        }
-      </Slider>
-    );
+  it('renders first slide with first 3 books', () => {
+    renderWithTheme(<Slider books={mockBooks}>{MockBooksRenderer}</Slider>);
 
     expect(screen.getByText('Book 1')).toBeInTheDocument();
     expect(screen.getByText('Book 2')).toBeInTheDocument();
@@ -79,13 +81,7 @@ describe('Slider', () => {
   it('Disables prev button when on first slide', () => {
     vi.spyOn(React, 'useState').mockImplementationOnce(() => [1, vi.fn()]);
 
-    renderWithTheme(
-      <Slider books={mockBooks}>
-        {demonstrationBooks =>
-          demonstrationBooks.map(book => <div key={book.id}>{book.title}</div>)
-        }
-      </Slider>
-    );
+    renderWithTheme(<Slider books={mockBooks}>{MockBooksRenderer}</Slider>);
 
     const [prevButton] = screen.getAllByRole('button');
 
@@ -93,13 +89,7 @@ describe('Slider', () => {
   });
 
   it('Disables next button when on last slide', () => {
-    renderWithTheme(
-      <Slider books={mockBooks}>
-        {demonstrationBooks =>
-          demonstrationBooks.map(book => <div key={book.id}>{book.title}</div>)
-        }
-      </Slider>
-    );
+    renderWithTheme(<Slider books={mockBooks}>{MockBooksRenderer}</Slider>);
 
     const [, nextButton] = screen.getAllByRole('button');
 
@@ -109,13 +99,7 @@ describe('Slider', () => {
   });
 
   it('Clicking next button shows next slide content', () => {
-    renderWithTheme(
-      <Slider books={mockBooks}>
-        {booksToShow =>
-          booksToShow.map(book => <div key={book.id}>{book.title}</div>)
-        }
-      </Slider>
-    );
+    renderWithTheme(<Slider books={mockBooks}>{MockBooksRenderer}</Slider>);
 
     expect(screen.getByText('Book 1')).toBeInTheDocument();
     expect(screen.getByText('Book 2')).toBeInTheDocument();
@@ -130,13 +114,7 @@ describe('Slider', () => {
   });
 
   it('Clicking prev button returns to previous slide content', () => {
-    renderWithTheme(
-      <Slider books={mockBooks}>
-        {booksToShow =>
-          booksToShow.map(book => <div key={book.id}>{book.title}</div>)
-        }
-      </Slider>
-    );
+    renderWithTheme(<Slider books={mockBooks}>{MockBooksRenderer}</Slider>);
 
     const [prevButton, nextButton] = screen.getAllByRole('button');
     fireEvent.click(nextButton);
@@ -151,11 +129,7 @@ describe('Slider', () => {
 
   it('Resets currentSlide if books length is reduced and currentSlide becomes invalid', () => {
     const { rerender } = renderWithTheme(
-      <Slider books={mockBooks}>
-        {booksToShow =>
-          booksToShow.map(book => <div key={book.id}>{book.title}</div>)
-        }
-      </Slider>
+      <Slider books={mockBooks}>{MockBooksRenderer}</Slider>
     );
 
     const [, nextButton] = screen.getAllByRole('button');
@@ -169,11 +143,7 @@ describe('Slider', () => {
       <ThemeContext.Provider
         value={{ theme: Theme.LIGHT, toggleTheme: vi.fn() }}
       >
-        <Slider books={reducedBooks}>
-          {booksToShow =>
-            booksToShow.map(book => <div key={book.id}>{book.title}</div>)
-          }
-        </Slider>
+        <Slider books={reducedBooks}>{MockBooksRenderer}</Slider>
       </ThemeContext.Provider>
     );
 

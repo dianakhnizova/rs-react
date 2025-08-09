@@ -1,27 +1,16 @@
-import { useState, useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import { LocalStorage } from '@/sources/enums';
+import { useState } from 'react';
+import { useAppSelector } from './useAppSelector';
+import { selectSearchTerm } from '@/store/slices/search/selectors';
 
-export const useSearchQuery = (localStorageKey = LocalStorage.SEARCH_KEY) => {
-  const [searchTerm, setSearchTerm] = useState<string>(
-    (localStorage.getItem(LocalStorage.SEARCH_KEY) || '').trim()
-  );
+export const useSearchQuery = () => {
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const [searchInput, setSearchInput] = useState(searchTerm);
 
-  const { detailsId } = useParams();
-  const navigate = useNavigate();
+  const saveSearch = (value: string) => {
+    localStorage.setItem(LocalStorage.SEARCH_KEY, value.trim());
+    setSearchInput(value);
+  };
 
-  const handleSearchQuery = useCallback(
-    (newSearchTerm: string) => {
-      const trimmedSearchTerm = newSearchTerm.trim();
-      setSearchTerm(trimmedSearchTerm);
-      localStorage.setItem(localStorageKey, trimmedSearchTerm);
-
-      const newUrl = detailsId ? `/1/${detailsId}` : '/1';
-      void navigate(newUrl);
-    },
-
-    [detailsId, navigate, localStorageKey]
-  );
-
-  return { searchTerm, handleSearchQuery };
+  return { searchInput, setSearchInput: saveSearch };
 };

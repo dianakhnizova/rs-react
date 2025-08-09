@@ -27,6 +27,12 @@ const mockBook: IBookData = {
   },
 };
 
+vi.mock('../cover-image/CoverImage', () => ({
+  CoverImage: ({ book }: { book: IBookData }) => (
+    <img src={book.image || BookPlaceholder} alt={book.title} />
+  ),
+}));
+
 const renderWithProviders = (ui: React.ReactNode) =>
   render(
     <MemoryRouter>
@@ -61,10 +67,9 @@ describe('BookCard', () => {
       />
     );
 
-    const image = screen.getByRole('img');
+    const image = screen.getByAltText('Test Book');
 
     expect(image).toHaveAttribute('src', 'test.jpg');
-    expect(image).toHaveAttribute('alt', 'Test Book');
     expect(
       screen.getByText(text => text.includes('Test Description'))
     ).toBeInTheDocument();

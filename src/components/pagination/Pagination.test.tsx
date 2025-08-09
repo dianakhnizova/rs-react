@@ -14,7 +14,7 @@ describe('Pagination component', () => {
       <Pagination currentPage={2} totalPages={5} onPageChange={vi.fn()} />
     );
 
-    expect(screen.getByTestId('page-number')).toHaveTextContent('Page: 2');
+    expect(screen.getByTestId('page-number')).toHaveTextContent('Page 2 of 5');
 
     const buttons = screen.getAllByRole('button');
     const prevButton = buttons[0];
