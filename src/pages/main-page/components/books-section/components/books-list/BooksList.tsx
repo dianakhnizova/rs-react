@@ -2,7 +2,6 @@ import styles from './BooksList.module.scss';
 import { messages } from '@/sources/messages';
 import { BookCard } from '../../../../../../components/book-card/BookCard';
 import type { IBookData } from '@/sources/interfaces';
-import { Pagination } from '@/components/pagination/Pagination';
 import { Spinner } from '@/components/spinner/Spinner';
 import { FC } from 'react';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
@@ -12,6 +11,7 @@ import { selectSearchTerm } from '@/store/slices/search/selectors';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { getErrorMessage } from '@/utils/getErrorMessage';
 import { Popup } from '@/components/popup/Popup';
+import { BookListPagination } from './book-list-pagination/BookListPagination';
 
 export const BooksList: FC = () => {
   const { navigateToBookDetail } = useNavigationToPath();
@@ -52,7 +52,7 @@ export const BooksList: FC = () => {
         </ul>
       )}
 
-      {books.length > 0 && <Pagination />}
+      {books.length > 0 && <BookListPagination />}
     </>
   );
 };

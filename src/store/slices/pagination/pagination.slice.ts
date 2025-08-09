@@ -17,7 +17,7 @@ export const PaginationSlice = createSlice({
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
-    setTotalItem: (state, action: PayloadAction<number>) => {
+    setTotalItems: (state, action: PayloadAction<number>) => {
       state.totalItems = action.payload;
     },
   },

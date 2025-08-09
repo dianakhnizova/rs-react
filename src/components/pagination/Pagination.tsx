@@ -5,61 +5,33 @@ import styles from './Pagination.module.scss';
 import { useTheme } from '@/utils/ThemeContext';
 import { Theme } from '@/sources/enums';
 import { ButtonVariant } from '../button/enum';
-import { FC, useEffect } from 'react';
-import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import {
-  selectCurrentPage,
-  selectTotalItems,
-} from '@/store/slices/pagination/selectors';
-import { ITEMS_PER_PAGE } from '@/sources/constants';
-import { useActions } from '@/utils/hooks/useActions';
-import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
-import { useGetBooksListQuery } from '@/api/book.api';
-import { selectSearchTerm } from '@/store/slices/search/selectors';
+import { FC } from 'react';
 
-export const Pagination: FC = () => {
-  const { navigateToPage } = useNavigationToPath();
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  handlePrev: () => void;
+  handleNext: () => void;
+}
+
+export const Pagination: FC<Props> = ({
+  currentPage,
+  totalPages,
+  handlePrev,
+  handleNext,
+}) => {
   const { theme } = useTheme();
-
-  const searchTerm = useAppSelector(selectSearchTerm);
-  const currentPage = useAppSelector(selectCurrentPage);
-  const totalItems = useAppSelector(selectTotalItems);
-
-  const { setCurrentPage, setTotalItem } = useActions();
-
-  const { data } = useGetBooksListQuery({
-    query: searchTerm,
-    page: currentPage,
-  });
-
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-
-  useEffect(() => {
-    if (data?.totalItems) setTotalItem(data?.totalItems);
-  }, [data, setTotalItem]);
-
-  const handlePrevButton = () => {
-    const newPage = currentPage - 1;
-    setCurrentPage(newPage);
-    void navigateToPage(newPage);
-  };
-
-  const handleNextButton = () => {
-    const newPage = currentPage + 1;
-    setCurrentPage(newPage);
-    void navigateToPage(newPage);
-  };
 
   return (
     <div className={styles.container}>
       <Button
-        onClick={handlePrevButton}
+        onClick={handlePrev}
         disabled={currentPage === 1}
         variant={ButtonVariant.SECONDARY}
         className={classNames(styles.arrowPrevButton, {
           [styles.arrowPrevLightButton]: theme === Theme.LIGHT,
         })}
-        data-testid="pagination-button"
+        data-testid="pagination-prev-button"
       />
 
       <p data-testid="page-number" className={styles.pageNumberContainer}>
@@ -70,13 +42,13 @@ export const Pagination: FC = () => {
       </p>
 
       <Button
-        onClick={handleNextButton}
+        onClick={handleNext}
         disabled={currentPage >= totalPages}
         variant={ButtonVariant.SECONDARY}
         className={classNames(styles.arrowPrevButton, styles.arrowNextButton, {
           [styles.arrowNextLightButton]: theme === Theme.LIGHT,
         })}
-        data-testid="pagination-button"
+        data-testid="pagination-next-button"
       />
     </div>
   );
