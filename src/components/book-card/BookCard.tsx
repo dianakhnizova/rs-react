@@ -1,5 +1,4 @@
 import styles from './BookCard.module.scss';
-import BookPlaceholder from '@/assets/img-placeholder.jpg';
 import { BookDetail, IBookData } from '@/sources/interfaces';
 import classNames from 'classnames';
 import { messages } from './messages';
@@ -12,11 +11,13 @@ import { ButtonVariant } from '../button/enum';
 import { useTheme } from '@/utils/ThemeContext';
 import { Theme } from '@/sources/enums';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
+import { CoverImage } from '../cover-image/CoverImage';
+import { BookCardWrapper } from './book-card-wrapper/BookCardWrapper';
 
 interface Props {
   book: IBookData;
   details?: BookDetail[];
-  onClick?: () => void;
+  to?: string;
   isSelected?: boolean;
   isDetails?: boolean;
   isFlyout?: boolean;
@@ -25,12 +26,12 @@ interface Props {
 export const BookCard: FC<Props> = ({
   book,
   details,
-  onClick,
+  to,
   isSelected,
   isDetails,
   isFlyout,
-}: Props) => {
-  const { title, image, id } = book;
+}) => {
+  const { title, id } = book;
   const selectedBook = useAppSelector(selectSelectedBook(book.id));
   const { addItem, removeItem } = useActions();
   const { theme } = useTheme();
@@ -49,53 +50,54 @@ export const BookCard: FC<Props> = ({
 
   return (
     <li
-      onClick={onClick}
       className={classNames(styles.book, {
         [styles.bookInDetails]: isDetails,
         [styles.bookInFlyout]: isFlyout,
       })}
     >
-      <div className={styles.container}>
-        <div className={styles.title}>
-          <p className={styles.titleName}>{title}</p>
-        </div>
+      <BookCardWrapper to={to}>
+        <div className={styles.container}>
+          <div className={styles.title}>
+            <p className={styles.titleName}>{title}</p>
+          </div>
 
-        <div className={styles.image}>
-          <img
-            src={image || BookPlaceholder}
-            alt={title}
-            className={styles.img}
+          <CoverImage
+            src={book.image}
+            alt={book.title}
+            className={styles.image}
           />
         </div>
-      </div>
 
-      {details &&
-        details.map(({ value, className }, index) => {
-          if (!value) return null;
-          return (
-            <div key={index} className={className}>
-              <p>{value}</p>
-            </div>
-          );
-        })}
-
-      {isSelected && (
-        <Checkbox
-          label={!selectedBook ? messages.titleSelect : messages.titleSelected}
-          checked={selectedBook}
-          onChange={toggleCheckbox}
-        />
-      )}
-
-      {isFlyout && (
-        <Button
-          onClick={handleRemoveItem}
-          variant={ButtonVariant.SECONDARY}
-          className={classNames(styles.removeButton, {
-            [styles.removeLightButton]: theme === Theme.LIGHT,
+        {details &&
+          details.map(({ value, className }, index) => {
+            if (!value) return null;
+            return (
+              <div key={index} className={className}>
+                <p>{value}</p>
+              </div>
+            );
           })}
-        />
-      )}
+
+        {isSelected && (
+          <Checkbox
+            label={
+              !selectedBook ? messages.titleSelect : messages.titleSelected
+            }
+            checked={selectedBook}
+            onChange={toggleCheckbox}
+          />
+        )}
+
+        {isFlyout && (
+          <Button
+            onClick={handleRemoveItem}
+            variant={ButtonVariant.SECONDARY}
+            className={classNames(styles.removeButton, {
+              [styles.removeLightButton]: theme === Theme.LIGHT,
+            })}
+          />
+        )}
+      </BookCardWrapper>
     </li>
   );
 };

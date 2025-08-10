@@ -29,9 +29,11 @@ describe('App routing', () => {
     });
 
     render(
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </Provider>
     );
 
     expect(screen.getByTestId('about-page')).toBeInTheDocument();

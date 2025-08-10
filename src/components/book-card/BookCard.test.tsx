@@ -27,6 +27,12 @@ const mockBook: IBookData = {
   },
 };
 
+vi.mock('../cover-image/CoverImage', () => ({
+  CoverImage: ({ src, alt }: { src?: string; alt?: string }) => (
+    <img src={src || BookPlaceholder} alt={alt} />
+  ),
+}));
+
 const renderWithProviders = (ui: React.ReactNode) =>
   render(
     <MemoryRouter>
@@ -61,10 +67,9 @@ describe('BookCard', () => {
       />
     );
 
-    const image = screen.getByRole('img');
+    const image = screen.getByAltText('Test Book');
 
     expect(image).toHaveAttribute('src', 'test.jpg');
-    expect(image).toHaveAttribute('alt', 'Test Book');
     expect(
       screen.getByText(text => text.includes('Test Description'))
     ).toBeInTheDocument();
@@ -109,10 +114,13 @@ describe('BookCard', () => {
     const user = userEvent.setup();
 
     vi.spyOn(useActionsModule, 'useActions').mockReturnValue({
+      setCurrentPage: vi.fn(),
+      setTotalItems: vi.fn(),
+      setSearchTerm: vi.fn(),
       addItem: addItemMock,
       removeItem: removeItemMock,
       clearCart: clearCartMock,
-    });
+    } as unknown as ReturnType<typeof useActionsModule.useActions>);
 
     renderWithProviders(<BookCard book={mockBook} isFlyout />);
 

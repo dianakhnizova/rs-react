@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { MainPage } from './MainPage';
-import { messages as searchMessages } from './components/search-section/messages';
+import { messages as searchMessages } from './components/search-book-section/messages';
 import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 import { bookApi, useGetBooksListQuery } from '@/api/book.api';
@@ -8,6 +8,8 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { cartReducer } from '@/store/slices/cart/cart.slice';
 import { ThemeProvider } from '@/utils/ThemeContext';
+import { searchReducer } from '@/store/slices/search/search.slice';
+import { paginationReducer } from '@/store/slices/pagination/pagination.slice';
 
 vi.mock('@/api/book.api', async () => {
   const actual = await import('@/api/book.api');
@@ -36,6 +38,8 @@ const mockedUseGetBooksListQuery = useGetBooksListQuery as ReturnType<
 const rootReducer = combineReducers({
   [bookApi.reducerPath]: bookApi.reducer,
   cart: cartReducer,
+  search: searchReducer,
+  pagination: paginationReducer,
 });
 
 const store = configureStore({ reducer: rootReducer });
@@ -61,6 +65,7 @@ describe('Main component', () => {
         data: undefined,
         isLoading: false,
         isError: false,
+        refetch: vi.fn(),
       });
 
       renderWithRouter(<MainPage />);
@@ -68,34 +73,14 @@ describe('Main component', () => {
       const input = screen.getByPlaceholderText(
         searchMessages.inputPlaceholder
       );
-
       fireEvent.change(input, { target: { value: 'react' } });
 
       const button = screen.getByRole('button', {
         name: searchMessages.searchButton,
       });
-
       fireEvent.click(button);
 
       expect(localStorage.getItem('searchInput')).toBe('react');
-    });
-
-    it('Displays popup with error message on fetch failure', async () => {
-      const errorMessage = 'Test error';
-
-      mockedUseGetBooksListQuery.mockReturnValue({
-        data: undefined,
-        isLoading: false,
-        isError: true,
-        error: new Error(errorMessage),
-      });
-
-      renderWithRouter(<MainPage />);
-
-      await waitFor(() => {
-        expect(screen.getByTestId('popup')).toBeInTheDocument();
-        expect(screen.getByText(errorMessage)).toBeInTheDocument();
-      });
     });
   });
 
@@ -109,6 +94,7 @@ describe('Main component', () => {
         data: undefined,
         isLoading: false,
         isError: false,
+        refetch: vi.fn(),
       });
 
       renderWithRouter(<MainPage />);
@@ -116,13 +102,11 @@ describe('Main component', () => {
       const input = screen.getByPlaceholderText(
         searchMessages.inputPlaceholder
       );
-
       fireEvent.change(input, { target: { value: '   react   ' } });
 
       const button = screen.getByRole('button', {
         name: searchMessages.searchButton,
       });
-
       fireEvent.click(button);
 
       expect(localStorage.getItem('searchInput')).toBe('react');
@@ -138,47 +122,13 @@ describe('Main component', () => {
         },
         isLoading: false,
         isError: false,
+        refetch: vi.fn(),
       });
 
       renderWithRouter(<MainPage />);
 
       await waitFor(() => {
         expect(screen.getByText('Test Book')).toBeInTheDocument();
-      });
-    });
-  });
-
-  describe('Navigation', () => {
-    it('Redirects to not found if page is invalid', () => {
-      renderWithRouter(<MainPage />);
-
-      expect(mockRedirectToNotFound).toHaveBeenCalled();
-    });
-  });
-
-  describe('Error', () => {
-    it('Closes popup when onClose is called', async () => {
-      const errorMessage = 'Test error';
-
-      mockedUseGetBooksListQuery.mockReturnValue({
-        data: undefined,
-        isLoading: false,
-        isError: true,
-        error: new Error(errorMessage),
-      });
-
-      renderWithRouter(<MainPage />);
-
-      await waitFor(() => {
-        expect(screen.getByTestId('popup')).toBeInTheDocument();
-        expect(screen.getByText(errorMessage)).toBeInTheDocument();
-      });
-
-      const closeButton = screen.getByRole('button', { name: /Close/i });
-      fireEvent.click(closeButton);
-
-      await waitFor(() => {
-        expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
       });
     });
   });

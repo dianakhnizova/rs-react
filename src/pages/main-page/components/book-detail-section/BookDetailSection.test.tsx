@@ -23,7 +23,7 @@ vi.mock('@/api/book.api', async () => {
 vi.mock('@/utils/hooks/useNavigationToPath', () => ({
   useNavigationToPath: () => ({
     currentPage: 1,
-    navigateToList: mockNavigateToList,
+    navigateToBookList: mockNavigateToList,
   }),
 }));
 
@@ -36,6 +36,7 @@ describe('BookDetailSection', () => {
       data: undefined,
       isLoading: false,
       isError: true,
+      error: { status: 404, data: { message: 'Book not found' } },
     });
 
     render(
@@ -49,7 +50,7 @@ describe('BookDetailSection', () => {
     );
 
     expect(
-      screen.getByText(detailPageMessages.notFoundIdTitle)
+      screen.getByText('Error 404: {"message":"Book not found"}')
     ).toBeInTheDocument();
   });
 

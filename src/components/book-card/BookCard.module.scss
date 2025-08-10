@@ -1,12 +1,6 @@
-.image {
+.title {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-1);
-
-  img {
-    height: 50px;
-  }
+  width: 70%;
 }
 
 .titleName {
@@ -16,7 +10,7 @@
 .container {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 8px;
   width: 100%;
 }
 
@@ -24,44 +18,10 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 10px;
+  padding: 9px;
   background-color: var(--clr-bg-2);
   box-shadow: var(--shadow-3);
   cursor: pointer;
-
-  &.bookInDetails {
-    cursor: default;
-    gap: 8px;
-
-    img {
-      height: 120px;
-    }
-
-    .container {
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .titleName {
-      color: var(--clr-hover);
-    }
-  }
-
-  &.bookInFlyout {
-    cursor: default;
-    width: 25%;
-    gap: 8px;
-
-    img {
-      height: 30px;
-    }
-
-    .titleName {
-      font-size: 8px;
-      color: var(--clr-hover);
-    }
-  }
 
   .removeButton {
     background-image: url('../../assets/dark-theme/remove-ligth.svg');
@@ -79,6 +39,72 @@
     }
   }
 
+  &.bookInDetails {
+    cursor: default;
+    gap: 8px;
+
+    .container {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .title {
+      justify-content: center;
+    }
+
+    .titleName {
+      color: var(--clr-hover);
+    }
+
+    .image {
+      height: 120px;
+    }
+
+    @media (max-width: 900px) {
+      .titleName {
+        font-size: 6px;
+      }
+    }
+  }
+
+  &.bookInFlyout {
+    cursor: default;
+    width: 25%;
+    gap: 8px;
+
+    .titleName {
+      font-size: 8px;
+      color: var(--clr-hover);
+    }
+
+    .image {
+      height: 40px;
+    }
+
+    @media (max-width: 700px) {
+      .removeButton {
+        width: 12px;
+        height: 12px;
+      }
+
+      .title {
+        text-align: center;
+      }
+
+      .titleName {
+        font-size: 4px;
+      }
+
+      .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+    }
+  }
+
   &:not(.bookInDetails, .bookInFlyout):hover {
     transform: scale(1.03);
 
@@ -86,13 +112,12 @@
       color: var(--clr-hover);
     }
   }
-}
 
-@media (max-width: 900px) {
-  .image {
-    img {
-      width: 40px;
-      height: 60px;
+  @media (max-width: 700px) {
+    &.bookInFlyout {
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px;
     }
   }
 }

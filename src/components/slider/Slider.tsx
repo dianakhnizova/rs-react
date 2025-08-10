@@ -2,18 +2,20 @@ import { useTheme } from '@/utils/ThemeContext';
 import { Button } from '../button/Button';
 import styles from './Slider.module.scss';
 import { Theme } from '@/sources/enums';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ButtonVariant } from '../button/enum';
 import classNames from 'classnames';
 import { IBookData } from '@/sources/interfaces';
 import { ITEMS_PER_FLYOUT } from '@/sources/constants';
+import React from 'react';
+import { FC } from 'react';
 
 interface Props {
   books: IBookData[];
-  children: (items: IBookData[]) => ReactNode;
+  children: FC<{ books: IBookData[] }>;
 }
 
-export const Slider = ({ books, children }: Props) => {
+export const Slider: FC<Props> = ({ books, children }) => {
   const { theme } = useTheme();
   const [currentSlide, setCurrentSlide] = useState(1);
   const totalSlides = Math.ceil(books.length / ITEMS_PER_FLYOUT);
@@ -48,7 +50,9 @@ export const Slider = ({ books, children }: Props) => {
         })}
       />
 
-      <div className={styles.sliderContent}>{children(demonstrationBooks)}</div>
+      <div className={styles.sliderContent}>
+        {React.createElement(children, { books: demonstrationBooks })}
+      </div>
 
       <Button
         onClick={handleNextButton}

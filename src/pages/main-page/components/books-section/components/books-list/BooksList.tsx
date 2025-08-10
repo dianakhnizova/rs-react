@@ -2,39 +2,40 @@ import styles from './BooksList.module.scss';
 import { messages } from '@/sources/messages';
 import { BookCard } from '../../../../../../components/book-card/BookCard';
 import type { IBookData } from '@/sources/interfaces';
-import { Pagination } from '@/components/pagination/Pagination';
-import { ITEMS_PER_PAGE } from '@/sources/constants';
-import { useNavigate, useParams } from 'react-router-dom';
 import { Spinner } from '@/components/spinner/Spinner';
 import { FC } from 'react';
+import { useAppSelector } from '@/utils/hooks/useAppSelector';
+import { selectCurrentPage } from '@/store/slices/pagination/selectors';
+import { useGetBooksListQuery } from '@/api/book.api';
+import { selectSearchTerm } from '@/store/slices/search/selectors';
+import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
+import { getErrorMessage } from '@/utils/getErrorMessage';
+import { Popup } from '@/components/popup/Popup';
+import { BookListPagination } from './book-list-pagination/BookListPagination';
 
-export interface Props {
-  books: IBookData[];
-  totalItems: number;
-  currentPage: number;
-  onBookClick: (bookId: string) => void;
-  isFetching: boolean;
-}
+export const BooksList: FC = () => {
+  const { navigateToBookDetail } = useNavigationToPath();
 
-export const BooksList: FC<Props> = ({
-  books,
-  totalItems,
-  currentPage,
-  onBookClick,
-  isFetching,
-}: Props) => {
-  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-  const { detailsId } = useParams();
-  const navigate = useNavigate();
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const currentPage = useAppSelector(selectCurrentPage);
 
-  const handlePagination = (page: number) => {
-    const newUrl = detailsId ? `/${page}/${detailsId}` : `/${page}`;
-    void navigate(newUrl);
-  };
+  const { data, isFetching, isError, error } = useGetBooksListQuery({
+    query: searchTerm,
+    page: currentPage,
+  });
+
+  const books = data?.books || [];
 
   return (
     <>
       <Spinner isLoading={isFetching} data-testid="spinner" />
+
+      <Popup
+        isOpen={!!isError}
+        isError
+        error={getErrorMessage(error)}
+        data-testid="popup"
+      />
 
       {books.length === 0 ? (
         <p className={styles.title}>{messages.emptyList}</p>
@@ -44,20 +45,14 @@ export const BooksList: FC<Props> = ({
             <BookCard
               key={book.id}
               book={book}
-              onClick={() => onBookClick(book.id)}
+              to={navigateToBookDetail(book.id)}
               isSelected
             />
           ))}
         </ul>
       )}
 
-      {books.length > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          onPageChange={handlePagination}
-          totalPages={totalPages}
-        />
-      )}
+      {books.length > 0 && <BookListPagination />}
     </>
   );
 };

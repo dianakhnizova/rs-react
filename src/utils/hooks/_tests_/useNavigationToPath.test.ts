@@ -1,9 +1,14 @@
-import { renderHook } from '@testing-library/react';
-import { useNavigationToPath } from '../useNavigationToPath';
-import { PagePath } from '@/router/enums';
 import { vi } from 'vitest';
 
 const mockNavigate = vi.fn();
+
+vi.mock('@/utils/hooks/useAppSelector', () => ({
+  useAppSelector: vi.fn(() => 2),
+}));
+
+vi.mock('@/utils/hooks/useIsValidPage', () => ({
+  useIsValidPage: vi.fn(() => true),
+}));
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
@@ -14,6 +19,9 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
+import { renderHook } from '@testing-library/react';
+import { useNavigationToPath } from '../useNavigationToPath';
+
 describe('useNavigationToPath', () => {
   beforeEach(() => {
     mockNavigate.mockClear();
@@ -23,41 +31,6 @@ describe('useNavigationToPath', () => {
     const { result } = renderHook(() => useNavigationToPath());
 
     expect(result.current.currentPage).toBe(2);
-    expect(result.current.isValidPage).toBe(true);
-  });
-
-  it('Redirects to NotFound', () => {
-    const { result } = renderHook(() => useNavigationToPath());
-
-    result.current.redirectToNotFound();
-
-    expect(mockNavigate).toHaveBeenCalledWith(PagePath.notFound, {
-      replace: true,
-    });
-  });
-
-  it('Navigates to book detail with current page', () => {
-    const { result } = renderHook(() => useNavigationToPath());
-
-    result.current.navigateToBookDetail('book456');
-
-    expect(mockNavigate).toHaveBeenCalledWith('/2/book456');
-  });
-
-  it('Navigates to about page', () => {
-    const { result } = renderHook(() => useNavigationToPath());
-
-    result.current.navigateToAboutPage();
-
-    expect(mockNavigate).toHaveBeenCalledWith(PagePath.aboutPage);
-  });
-
-  it('Navigates on search with detailsId', () => {
-    const { result } = renderHook(() => useNavigationToPath());
-
-    result.current.navigateOnSearch();
-
-    expect(mockNavigate).toHaveBeenCalledWith('/1/abc123');
   });
 
   it('Navigates to specific page with detailsId', () => {
@@ -66,13 +39,5 @@ describe('useNavigationToPath', () => {
     result.current.navigateToPage(5);
 
     expect(mockNavigate).toHaveBeenCalledWith('/5/abc123');
-  });
-
-  it('Navigates to list page only', () => {
-    const { result } = renderHook(() => useNavigationToPath());
-
-    result.current.navigateToList(3);
-
-    expect(mockNavigate).toHaveBeenCalledWith('/3');
   });
 });

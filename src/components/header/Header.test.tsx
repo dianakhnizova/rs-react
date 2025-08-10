@@ -3,14 +3,18 @@ import { Header } from './Header';
 import { messages } from './components/options-menu/messages';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from '@/utils/ThemeContext';
+import { Provider } from 'react-redux';
+import { store } from '@/store/store';
 
 describe('Header component', () => {
   it('Renders the header with correct title', () => {
     render(
       <MemoryRouter>
-        <ThemeProvider>
-          <Header />
-        </ThemeProvider>
+        <Provider store={store}>
+          <ThemeProvider>
+            <Header />
+          </ThemeProvider>
+        </Provider>
       </MemoryRouter>
     );
 
