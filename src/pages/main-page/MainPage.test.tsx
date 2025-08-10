@@ -8,7 +8,6 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { cartReducer } from '@/store/slices/cart/cart.slice';
 import { ThemeProvider } from '@/utils/ThemeContext';
-import { searchTermReducer } from '@/store/slices/search/search.slice';
 
 vi.mock('@/api/book.api', async () => {
   const actual = await import('@/api/book.api');

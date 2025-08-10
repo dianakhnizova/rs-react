@@ -11,7 +11,12 @@ const renderWithTheme = (ui: React.ReactElement) => {
 describe('Pagination component', () => {
   it('Renders correctly with given props', () => {
     renderWithTheme(
-      <Pagination currentPage={2} totalPages={5} onPageChange={vi.fn()} />
+      <Pagination
+        currentPage={2}
+        totalPages={5}
+        handlePrev={vi.fn()}
+        handleNext={vi.fn()}
+      />
     );
 
     expect(screen.getByTestId('page-number')).toHaveTextContent('Page 2 of 5');
@@ -26,31 +31,41 @@ describe('Pagination component', () => {
     expect(nextButton).toBeEnabled();
   });
 
-  it('Calls onPageChange with currentPage - 1 when Prev button is clicked', async () => {
-    const onPageChange = vi.fn();
+  it('Calls handlePrev with currentPage - 1 when Prev button is clicked', async () => {
+    const handlePrev = vi.fn();
 
     renderWithTheme(
-      <Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />
+      <Pagination
+        currentPage={2}
+        totalPages={5}
+        handlePrev={vi.fn()}
+        handleNext={vi.fn()}
+      />
     );
 
     const buttons = screen.getAllByRole('button');
     const prevButton = buttons[0];
     await userEvent.click(prevButton);
 
-    expect(onPageChange).toHaveBeenCalledWith(1);
+    expect(handlePrev).toHaveBeenCalledWith(1);
   });
 
-  it('Calls onPageChange with currentPage + 1 when Next button is clicked', async () => {
-    const onPageChange = vi.fn();
+  it('Calls handleNext with currentPage + 1 when Next button is clicked', async () => {
+    const handleNext = vi.fn();
 
     renderWithTheme(
-      <Pagination currentPage={2} totalPages={5} onPageChange={onPageChange} />
+      <Pagination
+        currentPage={2}
+        totalPages={5}
+        handlePrev={vi.fn()}
+        handleNext={vi.fn()}
+      />
     );
 
     const buttons = screen.getAllByRole('button');
     const nextButton = buttons[1];
     await userEvent.click(nextButton);
 
-    expect(onPageChange).toHaveBeenCalledWith(3);
+    expect(handleNext).toHaveBeenCalledWith(3);
   });
 });
