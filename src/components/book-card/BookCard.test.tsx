@@ -28,8 +28,8 @@ const mockBook: IBookData = {
 };
 
 vi.mock('../cover-image/CoverImage', () => ({
-  CoverImage: ({ book }: { book: IBookData }) => (
-    <img src={book.image || BookPlaceholder} alt={book.title} />
+  CoverImage: ({ src, alt }: { src?: string; alt?: string }) => (
+    <img src={src || BookPlaceholder} alt={alt} />
   ),
 }));
 
@@ -114,10 +114,13 @@ describe('BookCard', () => {
     const user = userEvent.setup();
 
     vi.spyOn(useActionsModule, 'useActions').mockReturnValue({
+      setCurrentPage: vi.fn(),
+      setTotalItems: vi.fn(),
+      setSearchTerm: vi.fn(),
       addItem: addItemMock,
       removeItem: removeItemMock,
       clearCart: clearCartMock,
-    });
+    } as unknown as ReturnType<typeof useActionsModule.useActions>);
 
     renderWithProviders(<BookCard book={mockBook} isFlyout />);
 

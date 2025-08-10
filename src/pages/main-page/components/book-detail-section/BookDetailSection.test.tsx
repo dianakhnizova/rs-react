@@ -23,7 +23,7 @@ vi.mock('@/api/book.api', async () => {
 vi.mock('@/utils/hooks/useNavigationToPath', () => ({
   useNavigationToPath: () => ({
     currentPage: 1,
-    navigateToList: mockNavigateToList,
+    navigateToBookList: mockNavigateToList,
   }),
 }));
 

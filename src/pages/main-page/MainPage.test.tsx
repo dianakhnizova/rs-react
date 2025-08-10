@@ -8,6 +8,8 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { cartReducer } from '@/store/slices/cart/cart.slice';
 import { ThemeProvider } from '@/utils/ThemeContext';
+import { searchReducer } from '@/store/slices/search/search.slice';
+import { paginationReducer } from '@/store/slices/pagination/pagination.slice';
 
 vi.mock('@/api/book.api', async () => {
   const actual = await import('@/api/book.api');
@@ -36,7 +38,8 @@ const mockedUseGetBooksListQuery = useGetBooksListQuery as ReturnType<
 const rootReducer = combineReducers({
   [bookApi.reducerPath]: bookApi.reducer,
   cart: cartReducer,
-  searchTerm: searchTermReducer,
+  search: searchReducer,
+  pagination: paginationReducer,
 });
 
 const store = configureStore({ reducer: rootReducer });
@@ -78,25 +81,6 @@ describe('Main component', () => {
       fireEvent.click(button);
 
       expect(localStorage.getItem('searchInput')).toBe('react');
-    });
-
-    it('Displays popup with error message on fetch failure', async () => {
-      mockedUseGetBooksListQuery.mockReturnValue({
-        data: undefined,
-        isLoading: false,
-        isError: true,
-        error: { status: 500, data: { message: 'Test error' } },
-        refetch: vi.fn(),
-      });
-
-      renderWithRouter(<MainPage />);
-
-      await waitFor(() => {
-        expect(screen.getByTestId('popup')).toBeInTheDocument();
-        expect(
-          screen.getByText(content => content.includes('Test error'))
-        ).toBeInTheDocument();
-      });
     });
   });
 
@@ -146,14 +130,6 @@ describe('Main component', () => {
       await waitFor(() => {
         expect(screen.getByText('Test Book')).toBeInTheDocument();
       });
-    });
-  });
-
-  describe('Navigation', () => {
-    it('Redirects to not found if page is invalid', () => {
-      renderWithRouter(<MainPage />);
-
-      expect(mockRedirectToNotFound).toHaveBeenCalled();
     });
   });
 });

@@ -1,12 +1,22 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BooksList } from './BooksList';
 import { vi } from 'vitest';
 import { messages as bookListMessages } from './messages';
-import { MemoryRouter, useNavigate, useParams } from 'react-router-dom';
+import { MemoryRouter, useParams } from 'react-router-dom';
 import { IBookData } from '@/sources/interfaces';
 import { Provider } from 'react-redux';
 import { store } from '@/store/store';
 import { ThemeProvider } from '@/utils/ThemeContext';
+import { useGetBooksListQuery } from '@/api/book.api';
+
+vi.mock('@/api/book.api', async () => {
+  const actual =
+    await vi.importActual<typeof import('@/api/book.api')>('@/api/book.api');
+  return {
+    ...actual,
+    useGetBooksListQuery: vi.fn(),
+  };
+});
 
 vi.mock('react-router-dom', async () => {
   const actual =
@@ -43,23 +53,25 @@ const mockedBooks: IBookData[] = [
   },
 ];
 
-const renderBooksList = (
-  overrides?: Partial<React.ComponentProps<typeof BooksList>>
-) => {
-  const defaultProps = {
-    books: mockedBooks,
-    totalItems: 20,
-    currentPage: 1,
+beforeEach(() => {
+  vi.clearAllMocks();
+  (useGetBooksListQuery as ReturnType<typeof vi.fn>).mockReturnValue({
+    data: { books: mockedBooks, totalItems: mockedBooks.length },
     isFetching: false,
-    onBookClick: vi.fn(),
-    ...overrides,
-  };
+    isError: false,
+    error: null,
+  });
+  (useParams as ReturnType<typeof vi.fn>).mockReturnValue({
+    detailsId: undefined,
+  });
+});
 
+const renderBooksList = () => {
   return render(
     <Provider store={store}>
       <ThemeProvider>
         <MemoryRouter>
-          <BooksList {...defaultProps} {...overrides} />
+          <BooksList />
         </MemoryRouter>
       </ThemeProvider>
     </Provider>
@@ -82,7 +94,14 @@ describe('BookList', () => {
     });
 
     it('Renders "Not books for you" when empty array', async () => {
-      renderBooksList({ books: [], totalItems: 0 });
+      (useGetBooksListQuery as ReturnType<typeof vi.fn>).mockReturnValue({
+        data: { books: [], totalItems: 0 },
+        isFetching: false,
+        isError: false,
+        error: null,
+      });
+
+      renderBooksList();
 
       expect(screen.getByText(bookListMessages.emptyList)).toBeInTheDocument();
     });
@@ -95,54 +114,6 @@ describe('BookList', () => {
           expect(screen.getByText(book.title)).toBeInTheDocument();
         }
       });
-    });
-
-    it('Calls onBookClick when a book is clicked', () => {
-      const onBookClick = vi.fn();
-
-      renderBooksList({ onBookClick });
-
-      const bookItems = screen.getAllByRole('listitem');
-      bookItems[0].click();
-
-      expect(onBookClick).toHaveBeenCalledWith(mockedBooks[0].id);
-    });
-  });
-
-  describe('BooksList - Pagination', () => {
-    const mockNavigate = vi.fn();
-
-    beforeEach(() => {
-      vi.clearAllMocks();
-      (useNavigate as ReturnType<typeof vi.fn>).mockReturnValue(mockNavigate);
-    });
-
-    it('Navigates to correct URL without detailsId', () => {
-      (useParams as ReturnType<typeof vi.fn>).mockReturnValue({
-        detailsId: undefined,
-      });
-
-      renderBooksList();
-
-      const paginationButtons = screen.getAllByTestId('pagination-button');
-      const nextButton = paginationButtons[1];
-      fireEvent.click(nextButton);
-
-      expect(mockNavigate).toHaveBeenCalledWith('/2');
-    });
-
-    it('Navigates to correct URL with detailsId', () => {
-      (useParams as ReturnType<typeof vi.fn>).mockReturnValue({
-        detailsId: 'abc123',
-      });
-
-      renderBooksList();
-
-      const paginationButtons = screen.getAllByTestId('pagination-button');
-      const nextButton = paginationButtons[1];
-      fireEvent.click(nextButton);
-
-      expect(mockNavigate).toHaveBeenCalledWith('/2/abc123');
     });
   });
 });

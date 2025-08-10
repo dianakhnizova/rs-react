@@ -1,15 +1,20 @@
 import { render, screen } from '@testing-library/react';
 import { BooksSection } from './BooksSection';
+import { vi } from 'vitest';
 
-describe('ProductsSection', () => {
-  it('Renders children inside ProductsSection', () => {
-    render(
-      <BooksSection>
-        <div data-testid="mock-child">Hello from child</div>
-      </BooksSection>
-    );
+vi.mock('./components/book-list-header/BookListHeader', () => ({
+  BookListHeader: () => <div data-testid="book-list-header">Mock Header</div>,
+}));
 
-    expect(screen.getByTestId('mock-child')).toBeInTheDocument();
-    expect(screen.getByText('Hello from child')).toBeInTheDocument();
+vi.mock('./components/books-list/BooksList', () => ({
+  BooksList: () => <div data-testid="books-list">Mock Books List</div>,
+}));
+
+describe('BooksSection', () => {
+  it('renders BookListHeader and BooksList', () => {
+    render(<BooksSection />);
+
+    expect(screen.getByTestId('book-list-header')).toBeInTheDocument();
+    expect(screen.getByTestId('books-list')).toBeInTheDocument();
   });
 });
