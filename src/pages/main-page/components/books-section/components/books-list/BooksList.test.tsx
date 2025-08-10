@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { store } from '@/store/store';
 import { ThemeProvider } from '@/utils/ThemeContext';
 import { useGetBooksListQuery } from '@/api/book.api';
+import { getErrorMessage } from '@/utils/getErrorMessage';
 
 vi.mock('@/api/book.api', async () => {
   const actual =
@@ -114,6 +115,37 @@ describe('BookList', () => {
           expect(screen.getByText(book.title)).toBeInTheDocument();
         }
       });
+    });
+
+    it('Shows spinner when loading', () => {
+      (useGetBooksListQuery as ReturnType<typeof vi.fn>).mockReturnValue({
+        data: undefined,
+        isFetching: true,
+        isError: false,
+        error: null,
+      });
+
+      renderBooksList();
+
+      const spinner = screen.getByTestId('spinner');
+      expect(spinner).toBeInTheDocument();
+    });
+
+    it('Shows error popup when there is an error', () => {
+      const fakeError = { status: 500, data: 'Internal Server Error' };
+
+      (useGetBooksListQuery as ReturnType<typeof vi.fn>).mockReturnValue({
+        data: undefined,
+        isFetching: false,
+        isError: true,
+        error: fakeError,
+      });
+
+      renderBooksList();
+
+      const popup = screen.getByTestId('popup');
+      expect(popup).toBeInTheDocument();
+      expect(screen.getByText(getErrorMessage(fakeError))).toBeInTheDocument();
     });
   });
 });
