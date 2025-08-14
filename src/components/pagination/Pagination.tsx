@@ -1,3 +1,5 @@
+'use client';
+
 import classNames from 'classnames';
 import { Button } from '../button/Button';
 import { messages } from './messages';

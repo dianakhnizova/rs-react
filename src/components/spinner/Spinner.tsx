@@ -24,6 +24,7 @@ export const Spinner = ({ isLoading }: Props) => {
             height={230}
             style={{ width: '100%', height: 'auto' }}
             className={styles.image}
+            priority
           />
         </div>
 

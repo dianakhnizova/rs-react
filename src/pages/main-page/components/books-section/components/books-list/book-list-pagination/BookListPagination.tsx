@@ -1,49 +1,29 @@
 'use client';
 
-import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectSearchTerm } from '@/store/slices/search/selectors';
-import {
-  selectCurrentPage,
-  selectTotalItems,
-} from '@/store/slices/pagination/selectors';
-import { useActions } from '@/utils/hooks/useActions';
-import { useGetBooksListQuery } from '@/api/book.api';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
-import { useEffect } from 'react';
+import { FC } from 'react';
 import { Pagination } from '@/components/pagination/Pagination';
-import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 
-export const BookListPagination = () => {
-  const { navigateToPage } = useNavigationToPath();
+interface Props {
+  currentPage: number;
+  totalItems: number;
+  onPageChange: (page: number) => void;
+}
 
-  const searchTerm = useAppSelector(selectSearchTerm);
-
-  const currentPage = useAppSelector(selectCurrentPage);
-  const totalItems = useAppSelector(selectTotalItems);
-  const { setCurrentPage, setTotalItems } = useActions();
-
+export const BookListPagination: FC<Props> = ({
+  currentPage,
+  totalItems,
+  onPageChange,
+}) => {
   const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
-  const { data } = useGetBooksListQuery({
-    query: searchTerm,
-    page: currentPage,
-  });
-
   const handlePrev = () => {
-    const newPage = currentPage - 1;
-    setCurrentPage(newPage);
-    void navigateToPage(newPage);
+    if (currentPage > 1) onPageChange(currentPage - 1);
   };
 
   const handleNext = () => {
-    const newPage = currentPage + 1;
-    setCurrentPage(newPage);
-    void navigateToPage(newPage);
+    if (currentPage < totalPages) onPageChange(currentPage + 1);
   };
-
-  useEffect(() => {
-    if (data?.totalItems) setTotalItems(data?.totalItems);
-  }, [data, setTotalItems]);
 
   return (
     <Pagination
