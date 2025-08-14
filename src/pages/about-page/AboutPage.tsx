@@ -1,19 +1,21 @@
+'use client';
+
 import { RS_SCHOOL_URL } from '@/sources/constants';
 import styles from './AboutPage.module.scss';
 import { aboutMeDataList } from './utils/aboutMeList';
 import { messages } from './messages';
 import { Button } from '@/components/button/Button';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 
 export const AboutPage = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const navigateToBack = () => {
-    void navigate(-1);
+    router.back();
   };
 
   return (
-    <section data-testid="about-page" className={styles.container}>
+    <section className={styles.container}>
       <ul className={styles.infoContainer}>
         {aboutMeDataList.map((data, index) => {
           return (

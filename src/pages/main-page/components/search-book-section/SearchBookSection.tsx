@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './SearchBookSection.module.scss';
 import { useActions } from '@/utils/hooks/useActions';
 import { InputForm } from '../../../../components/input-form/InputForm';

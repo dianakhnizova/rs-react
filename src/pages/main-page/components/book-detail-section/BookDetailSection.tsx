@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './BookDetailSection.module.scss';
 import { BooksDetails } from './components/BooksDetails';
 import { messages as bookDetailsPageMessages } from './messages';

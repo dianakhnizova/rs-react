@@ -1,3 +1,5 @@
+'use client';
+
 import { LocalStorage } from '@/sources/enums';
 import { useState } from 'react';
 import { useAppSelector } from './useAppSelector';

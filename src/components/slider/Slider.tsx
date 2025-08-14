@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@/utils/ThemeContext';
 import { Button } from '../button/Button';
 import styles from './Slider.module.scss';

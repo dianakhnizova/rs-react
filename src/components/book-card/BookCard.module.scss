@@ -24,17 +24,17 @@
   cursor: pointer;
 
   .removeButton {
-    background-image: url('../../assets/dark-theme/remove-ligth.svg');
+    background-image: url('/dark-theme/remove-ligth.svg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 
     &.removeLightButton {
-      background-image: url('../../assets/light-theme/remove-dark.svg');
+      background-image: url('/light-theme/remove-dark.svg');
     }
 
     &:hover {
-      background-image: url('../../assets/hover/remove-hover.svg');
+      background-image: url('/hover/remove-hover.svg');
       background-color: var(--clr-bg-2);
     }
   }

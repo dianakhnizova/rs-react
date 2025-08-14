@@ -1,4 +1,3 @@
-import { LocalStorage } from '@/sources/enums';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface searchState {
@@ -6,7 +5,7 @@ interface searchState {
 }
 
 const initialState: searchState = {
-  searchTerm: localStorage.getItem(LocalStorage.SEARCH_KEY) || '',
+  searchTerm: '',
 };
 
 export const searchSlice = createSlice({

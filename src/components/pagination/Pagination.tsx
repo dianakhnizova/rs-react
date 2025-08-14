@@ -48,7 +48,6 @@ export const Pagination: FC<Props> = ({
         className={classNames(styles.arrowPrevButton, styles.arrowNextButton, {
           [styles.arrowNextLightButton]: theme === Theme.LIGHT,
         })}
-        data-testid="pagination-button"
       />
     </div>
   );

@@ -2,8 +2,8 @@ import { ToggleTheme } from '@/components/toggle-theme/ToggleTheme';
 import styles from './OptionsMenu.module.scss';
 import { messages } from './messages';
 import { PagePath } from '@/router/enums';
-import { NavLink } from 'react-router-dom';
 import { Favorites } from '@/components/favorites/Favorites';
+import Link from 'next/link';
 
 export const OptionsMenu = () => {
   return (
@@ -14,9 +14,9 @@ export const OptionsMenu = () => {
         <Favorites />
       </div>
 
-      <NavLink to={PagePath.root} className={styles.title}>
+      <Link href={PagePath.root} className={styles.title}>
         {messages.appTitle}
-      </NavLink>
+      </Link>
     </div>
   );
 };

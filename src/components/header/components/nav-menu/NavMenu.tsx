@@ -1,14 +1,14 @@
 import { PagePath } from '@/router/enums';
-import { NavLink } from 'react-router-dom';
 import styles from './NavMenu.module.scss';
 import { messages } from './messages';
+import Link from 'next/link';
 
 export const NavMenu = () => {
   return (
     <nav className={styles.container}>
-      <NavLink to={PagePath.aboutPage} className={styles.link}>
+      <Link href={PagePath.aboutPage} className={styles.link}>
         {messages.titleAboutLink}
-      </NavLink>
+      </Link>
     </nav>
   );
 };

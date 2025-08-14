@@ -1,3 +1,5 @@
+'use client';
+
 import { bookApi } from '@/api/book.api';
 import { Button } from '../button/Button';
 import { messages } from './messages';

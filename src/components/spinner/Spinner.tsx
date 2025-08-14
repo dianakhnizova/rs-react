@@ -1,10 +1,12 @@
 import styles from './Spinner.module.scss';
 import { messages } from './messages';
-import BookImage from '@/assets/book.png';
+import Image from 'next/image';
 
 interface Props {
   isLoading: boolean;
 }
+
+const BookImage = '/book.png';
 
 export const Spinner = ({ isLoading }: Props) => {
   if (!isLoading) return;
@@ -13,13 +15,15 @@ export const Spinner = ({ isLoading }: Props) => {
     <>
       <div className={styles.overlay} />
 
-      <div className={styles.container} data-testid="spinner">
+      <div className={styles.container}>
         <div className={styles.imgContainer}>
-          <img
+          <Image
             src={BookImage}
             alt={messages.titleSpinner}
+            width={100}
+            height={230}
+            style={{ width: '100%', height: 'auto' }}
             className={styles.image}
-            data-testid="spinner-img"
           />
         </div>
 

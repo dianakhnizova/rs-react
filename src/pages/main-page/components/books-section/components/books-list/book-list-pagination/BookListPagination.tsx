@@ -1,3 +1,5 @@
+'use client';
+
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
 import { selectSearchTerm } from '@/store/slices/search/selectors';
 import {

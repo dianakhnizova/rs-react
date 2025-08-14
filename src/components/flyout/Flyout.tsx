@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './Flyout.module.scss';
 import { messages } from './messages';
 import { Button } from '../button/Button';

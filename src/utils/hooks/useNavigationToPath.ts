@@ -1,13 +1,17 @@
-import { useNavigate, useParams } from 'react-router-dom';
+'use client';
+
 import { PagePath } from '@/router/enums';
 import { useCallback } from 'react';
 import { useAppSelector } from './useAppSelector';
 import { selectCurrentPage } from '@/store/slices/pagination/selectors';
 import { useIsValidPage } from './useIsValidPage';
+import { useParams, useRouter } from 'next/navigation';
 
 export const useNavigationToPath = () => {
-  const { detailsId } = useParams();
-  const navigate = useNavigate();
+  const router = useRouter();
+  const params = useParams<{ detailsId?: string }>();
+  const detailsId = params?.detailsId;
+
   const currentPage = useAppSelector(selectCurrentPage);
   const isValidPage = useIsValidPage();
 
@@ -19,17 +23,17 @@ export const useNavigationToPath = () => {
 
   const navigateToBookList = useCallback(
     (page: number) => {
-      if (isValidPage) void navigate(`/${page}`);
+      if (isValidPage) void router.push(`/${page}`);
     },
-    [navigate]
+    [router, isValidPage]
   );
 
   const navigateToPage = useCallback(
     (page: number) => {
       if (isValidPage)
-        void navigate(detailsId ? `/${page}/${detailsId}` : `/${page}`);
+        router.push(detailsId ? `/${page}/${detailsId}` : `/${page}`);
     },
-    [navigate, detailsId]
+    [router, detailsId, isValidPage]
   );
 
   return {

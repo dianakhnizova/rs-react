@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './BooksList.module.scss';
 import { messages } from '@/sources/messages';
 import { BookCard } from '../../../../../../components/book-card/BookCard';

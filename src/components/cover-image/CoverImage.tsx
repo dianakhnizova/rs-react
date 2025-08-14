@@ -1,7 +1,9 @@
+'use client';
+
 import { useState } from 'react';
+import Image from 'next/image';
+
 import styles from './CoverImage.module.scss';
-import BookPlaceholder from '@/assets/img-placeholder.jpg';
-import CoverSpinnerPlaceholder from '@/assets/cover-spinner.gif';
 import classNames from 'classnames';
 
 interface Props {
@@ -10,14 +12,19 @@ interface Props {
   className: string;
 }
 
+const BookPlaceholder = '/img-placeholder.jpg';
+const CoverSpinnerPlaceholder = '/cover-spinner.gif';
+
 export const CoverImage = ({ src, alt, className }: Props) => {
   const [isImageLoading, setIsImageLoading] = useState(!!src);
 
   return (
     <div className={classNames(styles.container, className)}>
-      <img
+      <Image
         src={isImageLoading ? CoverSpinnerPlaceholder : src || BookPlaceholder}
         alt={alt}
+        width={100}
+        height={100}
         onLoad={() => setIsImageLoading(false)}
         onError={() => setIsImageLoading(false)}
       />

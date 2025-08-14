@@ -5,9 +5,9 @@ import { BooksList } from './components/books-list/BooksList';
 
 export const BooksSection: FC = () => {
   return (
-    <div className={styles.container}>
+    <section className={styles.container}>
       <BookListHeader />
       <BooksList />
-    </div>
+    </section>
   );
 };
