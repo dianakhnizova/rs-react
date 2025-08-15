@@ -56,9 +56,6 @@ export const bookService = {
   getBookById: async (id: string): Promise<IBookData> => {
     const response = await fetch(`${OPEN_LIBRARY_WORK_URL}/${id}.json`);
 
-    if (!response.ok)
-      throw new Error(`Failed to fetch book by id: ${response.status}`);
-
     const book: IBookItemResponse =
       (await response.json()) as IBookItemResponse;
     const authorRefs = book.authors ?? [];

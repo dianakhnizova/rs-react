@@ -1,6 +1,6 @@
 'use client';
 
-import { PagePath } from '@/router/enums';
+import { PagePath } from '@/page-path/enums';
 import { useCallback } from 'react';
 import { useAppSelector } from './useAppSelector';
 import { selectCurrentPage } from '@/store/slices/pagination/selectors';

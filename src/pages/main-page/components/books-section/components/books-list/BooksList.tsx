@@ -8,10 +8,7 @@ import type { IBookData } from '@/sources/interfaces';
 import { Spinner } from '@/components/spinner/Spinner';
 import { FC, useEffect, useState } from 'react';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import {
-  selectCurrentPage,
-  selectTotalItems,
-} from '@/store/slices/pagination/selectors';
+import { selectCurrentPage } from '@/store/slices/pagination/selectors';
 import { selectSearchTerm } from '@/store/slices/search/selectors';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { getErrorMessage } from '@/utils/getErrorMessage';
@@ -21,31 +18,34 @@ import { fetchBooksData } from '@/api/fetchBooksData';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { useActions } from '@/utils/hooks/useActions';
 
-export const BooksList: FC = () => {
+interface Props {
+  initialBooks: IBookData[];
+  initialTotalItems: number;
+}
+
+export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
   const { navigateToBookDetail, navigateToPage } = useNavigationToPath();
-  const [books, setBooks] = useState<IBookData[]>([]);
+  const [books, setBooks] = useState<IBookData[]>(initialBooks);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const searchTerm = useAppSelector(selectSearchTerm);
   const currentPage = useAppSelector(selectCurrentPage);
-  const totalItems = useAppSelector(selectTotalItems);
-  const { setTotalItems, setCurrentPage } = useActions();
+  const { setCurrentPage } = useActions();
 
   useEffect(() => {
     const loadBooks = async () => {
       setIsLoading(true);
 
       try {
-        const { booksList, totalItems } = await fetchBooksData(
+        const { booksList } = await fetchBooksData(
           searchTerm,
           currentPage,
           ITEMS_PER_PAGE
         );
 
         setBooks(booksList);
-        setTotalItems(totalItems);
       } catch (error: unknown) {
         const message =
           error instanceof Error ? error.message : sourceMessages.errorMessage;
@@ -87,7 +87,7 @@ export const BooksList: FC = () => {
       {books.length > 0 && (
         <BookListPagination
           currentPage={currentPage}
-          totalItems={totalItems}
+          totalItems={initialTotalItems}
           onPageChange={page => {
             setCurrentPage(page);
             void navigateToPage(page);

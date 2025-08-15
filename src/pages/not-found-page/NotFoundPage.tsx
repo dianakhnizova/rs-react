@@ -1,4 +1,4 @@
-import { PagePath } from '@/router/enums';
+import { PagePath } from '@/page-path/enums';
 import { messages as notFoundMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
 import styles from './NotFoundPage.module.scss';

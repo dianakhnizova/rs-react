@@ -1,4 +1,4 @@
-import { PagePath } from '@/router/enums';
+import { PagePath } from '@/page-path/enums';
 import styles from './NavMenu.module.scss';
 import { messages } from './messages';
 import Link from 'next/link';
