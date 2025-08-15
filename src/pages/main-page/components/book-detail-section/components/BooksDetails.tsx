@@ -18,17 +18,17 @@ export const BooksDetails: FC<Props> = ({ bookDetail }: Props) => {
         details={[
           {
             value:
-              bookDetail.bookDetails.description?.trim() ||
+              bookDetail.bookDetails?.description?.trim() ||
               messages.titleNotDescription,
             className: styles.description,
           },
           {
-            value: bookDetail.bookDetails.authors || messages.titleNotAuthor,
+            value: bookDetail.bookDetails?.authors || messages.titleNotAuthor,
             className: styles.authors,
           },
           {
             value:
-              bookDetail.bookDetails.first_publish_date ||
+              bookDetail.bookDetails?.first_publish_date ||
               messages.titleNotPublishedDate,
             className: styles.year,
           },

@@ -4,6 +4,7 @@ import { Providers } from './Providers';
 import { Header } from '@/components/header/Header';
 import { Footer } from '@/components/footer/Footer';
 import { MainSection } from '@/components/main-section/main-section';
+import { Flyout } from '@/components/flyout/Flyout';
 
 interface Props {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ const RootLayout = ({ children }: Props) => {
         <Providers>
           <Header />
           <MainSection>{children}</MainSection>
+          <Flyout />
           <Footer />
         </Providers>
       </body>

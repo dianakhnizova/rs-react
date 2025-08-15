@@ -1,6 +1,7 @@
 .container {
   display: flex;
   align-items: center;
+  width: 16px;
 
   .toggleButton {
     background-image: url('/dark-theme/toggler-light.svg');

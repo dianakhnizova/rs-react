@@ -1,19 +1,12 @@
-'use client';
-
 import { RS_SCHOOL_URL } from '@/sources/constants';
 import styles from './AboutPage.module.scss';
 import { aboutMeDataList } from './utils/aboutMeList';
-import { messages } from './messages';
-import { Button } from '@/components/button/Button';
-import { useRouter } from 'next/navigation';
+import { messages as aboutMessages } from './messages';
+import { messages as sourceMessages } from '@/sources/messages';
+import Link from 'next/link';
+import { PagePath } from '@/router/enums';
 
 export const AboutPage = () => {
-  const router = useRouter();
-
-  const navigateToBack = () => {
-    router.back();
-  };
-
   return (
     <section className={styles.container}>
       <ul className={styles.infoContainer}>
@@ -27,16 +20,18 @@ export const AboutPage = () => {
         })}
       </ul>
 
-      <a
+      <Link
         href={RS_SCHOOL_URL}
         target="_blank"
         rel="noopener noreferrer"
         className={styles.link}
       >
-        {messages.linkTitle}
-      </a>
+        {aboutMessages.linkTitle}
+      </Link>
 
-      <Button onClick={navigateToBack}>{messages.backButton}</Button>
+      <Link href={PagePath.root} className={styles.link}>
+        {sourceMessages.navigateMainButton}
+      </Link>
     </section>
   );
 };

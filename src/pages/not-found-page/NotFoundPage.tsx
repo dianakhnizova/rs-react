@@ -1,28 +1,27 @@
-import { Button } from '@/components/button/Button';
-import { messages } from './messages';
-import styles from './NotFoundPage.module.scss';
-import NotFoundIcon from '@/assets/404.png';
-import { useNavigate } from 'react-router-dom';
 import { PagePath } from '@/router/enums';
+import { messages as notFoundMessages } from './messages';
+import { messages as sourceMessages } from '@/sources/messages';
+import styles from './NotFoundPage.module.scss';
+import Image from 'next/image';
+import Link from 'next/link';
+
+const NotFoundIcon = '/404.png';
 
 export const NotFoundPage = () => {
-  const navigate = useNavigate();
-
-  const navigateToMain = () => {
-    void navigate(PagePath.root);
-  };
-
   return (
     <section className={styles.container}>
       <div className={styles.imageContainer}>
-        <img
+        <Image
           src={NotFoundIcon}
-          alt={messages.imgTitle}
-          className={styles.image}
+          alt={notFoundMessages.imgTitle}
+          width={200}
+          height={300}
         />
       </div>
 
-      <Button onClick={navigateToMain}>{messages.navigateMainButton}</Button>
+      <Link href={PagePath.root} className={styles.link}>
+        {sourceMessages.navigateMainButton}
+      </Link>
     </section>
   );
 };

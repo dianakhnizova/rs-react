@@ -5,7 +5,7 @@ import { useCallback } from 'react';
 import { useAppSelector } from './useAppSelector';
 import { selectCurrentPage } from '@/store/slices/pagination/selectors';
 import { useIsValidPage } from './useIsValidPage';
-import { useParams, useRouter } from 'next/navigation';
+import { notFound, useParams, useRouter } from 'next/navigation';
 
 export const useNavigationToPath = () => {
   const router = useRouter();
@@ -17,7 +17,7 @@ export const useNavigationToPath = () => {
 
   const navigateToBookDetail = useCallback(
     (bookId: string) =>
-      isValidPage ? `/${currentPage}/${bookId}` : PagePath.notFound,
+      isValidPage ? `/${currentPage}/${bookId}` : notFound(),
     [currentPage, isValidPage]
   );
 
@@ -36,10 +36,15 @@ export const useNavigationToPath = () => {
     [router, detailsId, isValidPage]
   );
 
+  const navigateToMain = () => {
+    void router.push(PagePath.root);
+  };
+
   return {
     currentPage,
     navigateToBookDetail,
     navigateToBookList,
     navigateToPage,
+    navigateToMain,
   };
 };

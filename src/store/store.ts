@@ -9,19 +9,10 @@ const reducers = combineReducers({
   pagination: paginationReducer,
 });
 
-export const makeStore = (initialPage = 1) =>
-  configureStore({
-    reducer: reducers,
-    middleware: getDefaultMiddleware => getDefaultMiddleware(),
-    preloadedState: {
-      pagination: {
-        currentPage: initialPage,
-        totalItems: 0,
-      },
-    },
-  });
-
-export const store = makeStore();
+export const store = configureStore({
+  reducer: reducers,
+  middleware: getDefaultMiddleware => getDefaultMiddleware(),
+});
 
 export type TypeRootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

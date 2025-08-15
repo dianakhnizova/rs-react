@@ -58,16 +58,6 @@ a:active {
     rgb(134 132 132 / 31.6%) 0 1px 3px 0, rgb(134 103 103 / 27.4%) 0 0 0 1px;
 }
 
-#root {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  min-height: 100vh;
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
 html,
 body {
   font-family: var(--ff-base);
@@ -75,6 +65,13 @@ body {
   font-size: 75%;
   background-color: var(--clr-bg-1);
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 @media (hover: hover) {

@@ -63,7 +63,7 @@ export const BookDetailSection = () => {
       <Spinner isLoading={isBookLoading} />
 
       <Popup
-        isOpen={!!errorMessage || !bookDetails}
+        isOpen={!!errorMessage || (!bookDetails && !isBookLoading)}
         isError
         error={getErrorMessage(errorMessage)}
       >
