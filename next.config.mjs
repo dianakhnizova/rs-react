@@ -9,10 +9,7 @@ const nextConfig = {
         hostname: '**',
       },
     ],
-  },
-  experimental: {
-    globalNotFound: true,
-  },
+  }
 }
  
 export default nextConfig

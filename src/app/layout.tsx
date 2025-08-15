@@ -13,6 +13,11 @@ interface Props {
 export const metadata: Metadata = {
   title: 'Your Library',
   description: 'My App is a library',
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
 };
 
 const RootLayout = ({ children }: Props) => {
