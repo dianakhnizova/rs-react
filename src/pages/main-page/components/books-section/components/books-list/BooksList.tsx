@@ -7,21 +7,19 @@ import type { IBookData } from '@/sources/interfaces';
 import { FC } from 'react';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { BookListPagination } from './book-list-pagination/BookListPagination';
-import { useParams, useSearchParams } from 'next/navigation';
 
 interface Props {
   initialBooks: IBookData[];
   initialTotalItems: number;
+  currentPage: number;
 }
 
-export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
+export const BooksList: FC<Props> = ({
+  initialBooks,
+  initialTotalItems,
+  currentPage,
+}) => {
   const { navigateToBookDetail, navigateToPage } = useNavigationToPath();
-
-  const params = useParams<{ page: string; id: string }>();
-  const searchParams = useSearchParams();
-
-  const currentPage = Number(params?.page ?? 1);
-  const currentSearch = searchParams?.get('searchTerm') ?? '';
 
   return (
     <>
@@ -45,7 +43,7 @@ export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
           currentPage={currentPage}
           totalItems={initialTotalItems}
           onPageChange={page => {
-            void navigateToPage(page, currentSearch);
+            void navigateToPage(page);
           }}
         />
       )}

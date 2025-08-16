@@ -11,6 +11,8 @@ interface Props {
 
 const PageLayout = async ({ children, params, searchParams }: Props) => {
   const { page } = await params;
+  const currentPage = Number(page ?? 1);
+
   const searchTerm = searchParams?.searchTerm ?? '';
 
   const { booksList, totalItems } = await fetchBooksData(
@@ -21,7 +23,11 @@ const PageLayout = async ({ children, params, searchParams }: Props) => {
 
   return (
     <div className={styles.container}>
-      <MainPage initialBooks={booksList} initialTotalItems={totalItems} />
+      <MainPage
+        initialBooks={booksList}
+        initialTotalItems={totalItems}
+        currentPage={currentPage}
+      />
 
       {children}
     </div>

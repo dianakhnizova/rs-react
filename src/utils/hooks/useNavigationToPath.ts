@@ -59,7 +59,6 @@ export const useNavigationToPath = () => {
   };
 
   return {
-    currentPage,
     navigateToBookDetail,
     navigateToBookList,
     navigateToPage,

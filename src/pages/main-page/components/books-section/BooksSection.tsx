@@ -7,11 +7,13 @@ import { BooksList } from './components/books-list/BooksList';
 interface Props {
   initialBooks: IBookData[];
   initialTotalItems: number;
+  currentPage: number;
 }
 
 export const BooksSection: FC<Props> = ({
   initialBooks,
   initialTotalItems,
+  currentPage,
 }) => {
   return (
     <section className={styles.container}>
@@ -19,6 +21,7 @@ export const BooksSection: FC<Props> = ({
       <BooksList
         initialBooks={initialBooks}
         initialTotalItems={initialTotalItems}
+        currentPage={currentPage}
       />
     </section>
   );
