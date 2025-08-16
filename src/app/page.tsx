@@ -6,16 +6,16 @@ import { FC } from 'react';
 interface Props {
   searchParams: Promise<{
     searchTerm?: string;
-    currentPage?: string;
+    page?: string;
   }>;
 }
 
 const Page: FC<Props> = async ({ searchParams }) => {
-  const { searchTerm = '', currentPage = '1' } = await searchParams;
+  const { searchTerm = '', page = '1' } = await searchParams;
 
   const { booksList, totalItems } = await fetchBooksData(
     searchTerm,
-    Number(currentPage),
+    Number(page),
     ITEMS_PER_PAGE
   );
 

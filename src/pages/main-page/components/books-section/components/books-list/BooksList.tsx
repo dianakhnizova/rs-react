@@ -7,16 +7,13 @@ import { BookCard } from '../../../../../../components/book-card/BookCard';
 import type { IBookData } from '@/sources/interfaces';
 import { Spinner } from '@/components/spinner/Spinner';
 import { FC, useEffect, useState } from 'react';
-import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectCurrentPage } from '@/store/slices/pagination/selectors';
-import { selectSearchTerm } from '@/store/slices/search/selectors';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { getErrorMessage } from '@/utils/getErrorMessage';
 import { Popup } from '@/components/popup/Popup';
 import { BookListPagination } from './book-list-pagination/BookListPagination';
 import { fetchBooksData } from '@/api/fetchBooksData';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
-import { useActions } from '@/utils/hooks/useActions';
+import { useParams, useSearchParams } from 'next/navigation';
 
 interface Props {
   initialBooks: IBookData[];
@@ -31,19 +28,19 @@ export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const searchTerm = useAppSelector(selectSearchTerm);
-  const currentPage = useAppSelector(selectCurrentPage);
-  const { setCurrentPage } = useActions();
+  const params = useParams<{ page: string; id: string }>();
+  const searchParams = useSearchParams();
+
+  const currentPage = Number(params?.page ?? 1);
+  const currentSearch = searchParams?.get('searchTerm') ?? '';
 
   useEffect(() => {
-    if (searchTerm === '' && currentPage === 1) return;
-
     const loadBooks = async () => {
       setIsLoading(true);
 
       try {
         const { booksList, totalItems } = await fetchBooksData(
-          searchTerm,
+          currentSearch,
           currentPage,
           ITEMS_PER_PAGE
         );
@@ -61,7 +58,7 @@ export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
     };
 
     void loadBooks();
-  }, [searchTerm, currentPage]);
+  }, [currentPage, currentSearch]);
 
   return (
     <>
@@ -93,8 +90,7 @@ export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
           currentPage={currentPage}
           totalItems={totalItems}
           onPageChange={page => {
-            setCurrentPage(page);
-            void navigateToPage(page);
+            void navigateToPage(page, currentSearch);
           }}
         />
       )}
