@@ -53,10 +53,9 @@ export const BooksList: FC<Props> = ({
         setTotalItems(totalItems ?? 0);
         setErrorMessage('');
       } catch (error: unknown) {
-        const message =
-          error instanceof Error ? error.message : sourceMessages.errorMessage;
-
-        setErrorMessage(message);
+        setErrorMessage(
+          error instanceof Error ? error.message : sourceMessages.errorMessage
+        );
       } finally {
         setIsLoading(false);
       }

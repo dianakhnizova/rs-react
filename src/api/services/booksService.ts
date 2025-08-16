@@ -4,11 +4,8 @@ import {
   OPEN_LIBRARY_SEARCH_URL,
   OPEN_LIBRARY_WORK_URL,
 } from '@/sources/constants';
-import type {
-  IBookData,
-  IBookItemResponse,
-  IBooksListResponse,
-} from '@/sources/interfaces';
+import type { IBookData, IBookItemResponse } from '@/sources/interfaces';
+import { isIBookItemResponse, isIBooksListResponse } from '@/utils/typeGuard';
 
 export const bookService = {
   getBooksList: async (
@@ -25,8 +22,11 @@ export const bookService = {
 
     const response = await fetch(url.toString());
 
-    const data: IBooksListResponse =
-      (await response.json()) as IBooksListResponse;
+    const data: unknown = await response.json();
+
+    if (!isIBooksListResponse(data)) {
+      return { books: [], totalItems: 0 };
+    }
 
     const booksList: IBookData[] = Array.isArray(data?.docs)
       ? data.docs.map(book => ({
@@ -51,11 +51,20 @@ export const bookService = {
     return { books: booksList, totalItems: data.numFound || 0 };
   },
 
-  getBookById: async (id: string): Promise<IBookData> => {
+  getBookById: async (id: string): Promise<IBookData | null> => {
     const response = await fetch(`${OPEN_LIBRARY_WORK_URL}/${id}.json`);
 
-    const book: IBookItemResponse =
-      (await response.json()) as IBookItemResponse;
+    if (!response.ok) {
+      return null;
+    }
+
+    const data: unknown = await response.json();
+
+    if (!isIBookItemResponse(data)) {
+      return null;
+    }
+
+    const book: IBookItemResponse = data;
     const authorRefs = book.authors ?? [];
     const authorKeys = authorRefs.map(({ author }) => author.key);
 

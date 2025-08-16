@@ -17,6 +17,7 @@ const Page: FC<Props> = async ({ searchParams }) => {
   let booksList: IBookData[] = [];
   let totalItems = 0;
   const errorMessage = '';
+
   try {
     const result = await fetchBooksData(
       searchTerm,
