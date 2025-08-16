@@ -1,5 +1,3 @@
-'use client';
-
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { FC } from 'react';
 import { Pagination } from '@/components/pagination/Pagination';

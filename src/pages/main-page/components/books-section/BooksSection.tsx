@@ -1,13 +1,25 @@
 import styles from './BooksSection.module.scss';
 import { BookListHeader } from './components/book-list-header/BookListHeader';
 import { FC } from 'react';
-import { ServerBookList } from './components/books-list/ServerBookList';
+import { IBookData } from '@/sources/interfaces';
+import { BooksList } from './components/books-list/BooksList';
 
-export const BooksSection: FC = () => {
+interface Props {
+  initialBooks: IBookData[];
+  initialTotalItems: number;
+}
+
+export const BooksSection: FC<Props> = ({
+  initialBooks,
+  initialTotalItems,
+}) => {
   return (
     <section className={styles.container}>
       <BookListHeader />
-      <ServerBookList searchTerm="" currentPage={1} />
+      <BooksList
+        initialBooks={initialBooks}
+        initialTotalItems={initialTotalItems}
+      />
     </section>
   );
 };

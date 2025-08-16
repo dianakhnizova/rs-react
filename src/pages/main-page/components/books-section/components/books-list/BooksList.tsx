@@ -25,27 +25,31 @@ interface Props {
 
 export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
   const { navigateToBookDetail, navigateToPage } = useNavigationToPath();
-  const [books, setBooks] = useState<IBookData[]>(initialBooks);
+  const [books, setBooks] = useState<IBookData[]>(initialBooks ?? []);
+  const [totalItems, setTotalItems] = useState<number>(initialTotalItems ?? 0);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const searchTerm = useAppSelector(selectSearchTerm);
   const currentPage = useAppSelector(selectCurrentPage);
   const { setCurrentPage } = useActions();
 
   useEffect(() => {
+    if (searchTerm === '' && currentPage === 1) return;
+
     const loadBooks = async () => {
       setIsLoading(true);
 
       try {
-        const { booksList } = await fetchBooksData(
+        const { booksList, totalItems } = await fetchBooksData(
           searchTerm,
           currentPage,
           ITEMS_PER_PAGE
         );
 
         setBooks(booksList);
+        setTotalItems(totalItems ?? 0);
       } catch (error: unknown) {
         const message =
           error instanceof Error ? error.message : sourceMessages.errorMessage;
@@ -87,7 +91,7 @@ export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
       {books.length > 0 && (
         <BookListPagination
           currentPage={currentPage}
-          totalItems={initialTotalItems}
+          totalItems={totalItems}
           onPageChange={page => {
             setCurrentPage(page);
             void navigateToPage(page);
