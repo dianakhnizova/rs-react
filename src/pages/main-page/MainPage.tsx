@@ -7,14 +7,9 @@ import { IBookData } from '@/sources/interfaces';
 interface Props {
   initialBooks: IBookData[];
   initialTotalItems: number;
-  currentPage: number;
 }
 
-export const MainPage = ({
-  initialBooks,
-  initialTotalItems,
-  currentPage,
-}: Props) => {
+export const MainPage = ({ initialBooks, initialTotalItems }: Props) => {
   return (
     <main className={styles.container}>
       <SearchBookSection />
@@ -23,7 +18,6 @@ export const MainPage = ({
         <BooksSection
           initialBooks={initialBooks}
           initialTotalItems={initialTotalItems}
-          currentPage={currentPage}
         />
       </section>
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { PagePath } from '@/page-path/enums';
+import { PagePath } from '@/sources/page-path/enums';
 import { useCallback } from 'react';
 import { useIsValidPage } from './useIsValidPage';
 import {

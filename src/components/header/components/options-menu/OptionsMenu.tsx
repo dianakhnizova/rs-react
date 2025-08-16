@@ -1,7 +1,7 @@
 import { ToggleTheme } from '@/components/toggle-theme/ToggleTheme';
 import styles from './OptionsMenu.module.scss';
 import { messages } from './messages';
-import { PagePath } from '@/page-path/enums';
+import { PagePath } from '@/sources/page-path/enums';
 import { Favorites } from '@/components/favorites/Favorites';
 import Link from 'next/link';
 

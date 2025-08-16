@@ -1,4 +1,4 @@
-import { PagePath } from '@/page-path/enums';
+import { PagePath } from '@/sources/page-path/enums';
 import styles from './NavMenu.module.scss';
 import { messages } from './messages';
 import Link from 'next/link';

@@ -4,7 +4,7 @@ import { aboutMeDataList } from './utils/aboutMeList';
 import { messages as aboutMessages } from './messages';
 import { messages as sourceMessages } from '@/sources/messages';
 import Link from 'next/link';
-import { PagePath } from '@/page-path/enums';
+import { PagePath } from '@/sources/page-path/enums';
 
 export const AboutPage = () => {
   return (
