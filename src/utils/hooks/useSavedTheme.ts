@@ -1,18 +1,21 @@
+'use client';
+
 import { LocalStorage, Theme } from '@/sources/enums';
+import { useEffect, useState } from 'react';
 
 export const useSavedTheme = (): [Theme, (theme: Theme) => void] => {
-  const getInitialTheme = (): Theme => {
-    const stored = localStorage.getItem(LocalStorage.THEME_KEY);
+  const [theme, setTheme] = useState<Theme>(Theme.DARK);
 
+  useEffect(() => {
+    const stored = localStorage.getItem(LocalStorage.THEME_KEY);
     if (stored === Theme.DARK || stored === Theme.LIGHT) {
-      return stored;
+      setTheme(stored);
     }
-    return Theme.DARK;
-  };
+  }, []);
 
   const setSavedTheme = (theme: Theme) => {
     localStorage.setItem('theme', theme);
   };
 
-  return [getInitialTheme(), setSavedTheme];
+  return [theme, setSavedTheme];
 };

@@ -1,3 +1,5 @@
+'use client';
+
 import { Theme } from '@/sources/enums';
 import { messages } from '@/sources/messages';
 import {

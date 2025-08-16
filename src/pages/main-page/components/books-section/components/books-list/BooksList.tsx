@@ -1,44 +1,77 @@
+'use client';
+
 import styles from './BooksList.module.scss';
-import { messages } from '@/sources/messages';
+import { messages as mainMessages } from './messages';
+import { messages as sourceMessages } from '@/sources/messages';
 import { BookCard } from '../../../../../../components/book-card/BookCard';
 import type { IBookData } from '@/sources/interfaces';
 import { Spinner } from '@/components/spinner/Spinner';
-import { FC } from 'react';
-import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectCurrentPage } from '@/store/slices/pagination/selectors';
-import { useGetBooksListQuery } from '@/api/book.api';
-import { selectSearchTerm } from '@/store/slices/search/selectors';
+import { FC, useEffect, useState } from 'react';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
-import { getErrorMessage } from '@/utils/getErrorMessage';
 import { Popup } from '@/components/popup/Popup';
 import { BookListPagination } from './book-list-pagination/BookListPagination';
+import { fetchBooksData } from '@/api/fetchBooksData';
+import { ITEMS_PER_PAGE } from '@/sources/constants';
+import { useParams, useSearchParams } from 'next/navigation';
 
-export const BooksList: FC = () => {
-  const { navigateToBookDetail } = useNavigationToPath();
+interface Props {
+  initialBooks: IBookData[];
+  initialTotalItems: number;
+  initialErrorMessage: string;
+}
 
-  const searchTerm = useAppSelector(selectSearchTerm);
-  const currentPage = useAppSelector(selectCurrentPage);
+export const BooksList: FC<Props> = ({
+  initialBooks,
+  initialTotalItems,
+  initialErrorMessage,
+}) => {
+  const { navigateToBookDetail, navigateToPage } = useNavigationToPath();
+  const [books, setBooks] = useState<IBookData[]>(initialBooks ?? []);
+  const [totalItems, setTotalItems] = useState<number>(initialTotalItems ?? 0);
 
-  const { data, isFetching, isError, error } = useGetBooksListQuery({
-    query: searchTerm,
-    page: currentPage,
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(initialErrorMessage);
 
-  const books = data?.books || [];
+  const params = useParams<{ page: string; id: string }>();
+  const searchParams = useSearchParams();
+
+  const currentPage = Number(params?.page ?? 1);
+  const currentSearch = searchParams?.get('searchTerm') ?? '';
+
+  useEffect(() => {
+    const loadBooks = async () => {
+      setIsLoading(true);
+
+      try {
+        const { booksList, totalItems } = await fetchBooksData(
+          currentSearch,
+          currentPage,
+          ITEMS_PER_PAGE
+        );
+
+        setBooks(booksList);
+        setTotalItems(totalItems ?? 0);
+        setErrorMessage('');
+      } catch (error: unknown) {
+        setErrorMessage(
+          error instanceof Error ? error.message : sourceMessages.errorMessage
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadBooks();
+  }, [currentPage, currentSearch]);
 
   return (
     <>
-      <Spinner isLoading={isFetching} data-testid="spinner" />
+      <Spinner isLoading={isLoading} />
 
-      <Popup
-        isOpen={!!isError}
-        isError
-        error={getErrorMessage(error)}
-        data-testid="popup"
-      />
+      <Popup isOpen={!!errorMessage} isError error={errorMessage} />
 
       {books.length === 0 ? (
-        <p className={styles.title}>{messages.emptyList}</p>
+        <p className={styles.title}>{mainMessages.emptyList}</p>
       ) : (
         <ul className={styles.booksContainer}>
           {books.map((book: IBookData) => (
@@ -52,7 +85,15 @@ export const BooksList: FC = () => {
         </ul>
       )}
 
-      {books.length > 0 && <BookListPagination />}
+      {books.length > 0 && (
+        <BookListPagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          onPageChange={page => {
+            void navigateToPage(page, currentSearch);
+          }}
+        />
+      )}
     </>
   );
 };

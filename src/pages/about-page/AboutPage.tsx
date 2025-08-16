@@ -1,19 +1,14 @@
 import { RS_SCHOOL_URL } from '@/sources/constants';
 import styles from './AboutPage.module.scss';
 import { aboutMeDataList } from './utils/aboutMeList';
-import { messages } from './messages';
-import { Button } from '@/components/button/Button';
-import { useNavigate } from 'react-router-dom';
+import { messages as aboutMessages } from './messages';
+import { messages as sourceMessages } from '@/sources/messages';
+import Link from 'next/link';
+import { PagePath } from '@/page-path/enums';
 
 export const AboutPage = () => {
-  const navigate = useNavigate();
-
-  const navigateToBack = () => {
-    void navigate(-1);
-  };
-
   return (
-    <section data-testid="about-page" className={styles.container}>
+    <section className={styles.container}>
       <ul className={styles.infoContainer}>
         {aboutMeDataList.map((data, index) => {
           return (
@@ -25,16 +20,18 @@ export const AboutPage = () => {
         })}
       </ul>
 
-      <a
+      <Link
         href={RS_SCHOOL_URL}
         target="_blank"
         rel="noopener noreferrer"
         className={styles.link}
       >
-        {messages.linkTitle}
-      </a>
+        {aboutMessages.linkTitle}
+      </Link>
 
-      <Button onClick={navigateToBack}>{messages.backButton}</Button>
+      <Link href={PagePath.root} className={styles.link}>
+        {sourceMessages.navigateMainButton}
+      </Link>
     </section>
   );
 };

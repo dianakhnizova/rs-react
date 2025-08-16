@@ -1,5 +1,5 @@
+import Link from 'next/link';
 import styles from './BookCardWrapper.module.scss';
-import { Link } from 'react-router-dom';
 
 interface Props {
   to?: string;
@@ -8,7 +8,7 @@ interface Props {
 
 export const BookCardWrapper = ({ to, children }: Props) => {
   return to ? (
-    <Link to={to} className={styles.link}>
+    <Link href={to} className={styles.link}>
       {children}
     </Link>
   ) : (

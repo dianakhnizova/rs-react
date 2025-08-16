@@ -1,41 +1,68 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { PagePath } from '@/router/enums';
+'use client';
+
+import { PagePath } from '@/page-path/enums';
 import { useCallback } from 'react';
-import { useAppSelector } from './useAppSelector';
-import { selectCurrentPage } from '@/store/slices/pagination/selectors';
 import { useIsValidPage } from './useIsValidPage';
+import {
+  notFound,
+  useParams,
+  useRouter,
+  useSearchParams,
+} from 'next/navigation';
 
 export const useNavigationToPath = () => {
-  const { detailsId } = useParams();
-  const navigate = useNavigate();
-  const currentPage = useAppSelector(selectCurrentPage);
+  const params = useParams<{ page: string; id: string; detailsId?: string }>();
+  const currentPage = params?.page ?? '1';
+  const detailsId = params?.detailsId;
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentSearch = searchParams?.get('searchTerm');
+
   const isValidPage = useIsValidPage();
 
   const navigateToBookDetail = useCallback(
-    (bookId: string) =>
-      isValidPage ? `/${currentPage}/${bookId}` : PagePath.notFound,
-    [currentPage, isValidPage]
+    (bookId: string) => {
+      if (!isValidPage) return notFound();
+
+      let url = `/${currentPage}/${bookId}`;
+      if (currentSearch) {
+        url += `?searchTerm=${encodeURIComponent(currentSearch)}`;
+      }
+
+      return url;
+    },
+    [currentPage, currentSearch, isValidPage]
   );
 
-  const navigateToBookList = useCallback(
-    (page: number) => {
-      if (isValidPage) void navigate(`/${page}`);
-    },
-    [navigate]
-  );
+  const navigateToBookList = useCallback(() => {
+    let url = `/${currentPage}`;
+    if (currentSearch) {
+      url += `?searchTerm=${encodeURIComponent(currentSearch)}`;
+    }
+    return url;
+  }, [currentPage, currentSearch]);
 
   const navigateToPage = useCallback(
-    (page: number) => {
-      if (isValidPage)
-        void navigate(detailsId ? `/${page}/${detailsId}` : `/${page}`);
+    (page: number, searchTerm?: string) => {
+      let url = detailsId ? `/${page}/${detailsId}` : `/${page}`;
+      if (searchTerm) {
+        url += `?searchTerm=${encodeURIComponent(searchTerm)}`;
+      }
+      if (isValidPage) void router.push(url);
     },
-    [navigate, detailsId]
+    [router, detailsId, isValidPage]
   );
+
+  const navigateToMain = () => {
+    void router.push(PagePath.root);
+  };
 
   return {
     currentPage,
     navigateToBookDetail,
     navigateToBookList,
     navigateToPage,
+    navigateToMain,
   };
 };

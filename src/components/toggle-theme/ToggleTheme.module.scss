@@ -1,19 +1,20 @@
 .container {
   display: flex;
   align-items: center;
+  width: 16px;
 
   .toggleButton {
-    background-image: url('../../assets/dark-theme//toggler-light.svg');
+    background-image: url('/dark-theme/toggler-light.svg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 
     &.toggleLightButton {
-      background-image: url('../../assets/light-theme//toggler-dark.svg');
+      background-image: url('/light-theme/toggler-dark.svg');
     }
 
     &:hover {
-      background-image: url('../../assets//hover/toggler-hover.svg');
+      background-image: url('/hover/toggler-hover.svg');
     }
   }
 }

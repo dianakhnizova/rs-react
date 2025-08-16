@@ -1,3 +1,5 @@
+'use client';
+
 import { useTheme } from '@/utils/ThemeContext';
 import styles from './ToggleTheme.module.scss';
 import { Button } from '../button/Button';

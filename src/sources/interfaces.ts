@@ -2,7 +2,7 @@ export interface IBookData {
   id: string;
   title: string;
   image: string;
-  bookDetails: IBookDetails;
+  bookDetails?: IBookDetails;
 }
 
 export interface IBookDetails {

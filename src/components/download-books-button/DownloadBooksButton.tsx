@@ -1,3 +1,5 @@
+'use client';
+
 import { downloadBooksCsv } from '@/utils/downloadBooksCsv';
 import { useRef } from 'react';
 import { Button } from '../button/Button';

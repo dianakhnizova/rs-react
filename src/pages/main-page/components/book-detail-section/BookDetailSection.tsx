@@ -1,54 +1,85 @@
+'use client';
+
+import { bookService } from '@/api/services/booksService';
 import styles from './BookDetailSection.module.scss';
 import { BooksDetails } from './components/BooksDetails';
 import { messages as bookDetailsPageMessages } from './messages';
 import { Button } from '@/components/button/Button';
+import { IBookData } from '@/sources/interfaces';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
-import { useParams } from 'react-router-dom';
-import { Spinner } from '@/components/spinner/Spinner';
-import { useGetBookByIdQuery } from '@/api/book.api';
-import { skipToken } from '@reduxjs/toolkit/query';
+import Link from 'next/link';
+import { FC, useEffect, useState } from 'react';
 import { Popup } from '@/components/popup/Popup';
-import { getErrorMessage } from '@/utils/getErrorMessage';
-import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectCurrentPage } from '@/store/slices/pagination/selectors';
+import { messages as sourceMessages } from '@/sources/messages';
+import { Spinner } from '@/components/spinner/Spinner';
 
-export const BookDetailSection = () => {
+interface Props {
+  detailsId: string;
+  initialBookDetails: IBookData | null;
+  initialErrorMessage: string;
+}
+
+export const BookDetailSection: FC<Props> = ({
+  detailsId,
+  initialBookDetails,
+  initialErrorMessage,
+}) => {
+  const [bookDetails, setBookDetails] = useState<IBookData | null>(
+    initialBookDetails
+  );
+
+  const [errorMessage, setErrorMessage] = useState(initialErrorMessage);
+  const [isDetailsLoading, setIsDetailsLoading] = useState(false);
+
   const { navigateToBookList } = useNavigationToPath();
-  const { detailsId } = useParams();
-  const currentPage = useAppSelector(selectCurrentPage);
 
-  const {
-    data: bookDetails,
-    isFetching,
-    isError,
-    error,
-  } = useGetBookByIdQuery(detailsId ?? skipToken);
+  useEffect(() => {
+    const loadBookDetails = async () => {
+      if (!detailsId) {
+        setBookDetails(null);
+        return;
+      }
+      setIsDetailsLoading(true);
 
-  const handleCloseButton = () => {
-    navigateToBookList(currentPage);
-  };
+      try {
+        const bookDetails = await bookService.getBookById(detailsId);
+
+        if (!bookDetails) {
+          setBookDetails(null);
+          setErrorMessage('');
+        } else {
+          setBookDetails(bookDetails);
+          setErrorMessage('');
+        }
+      } catch (error: unknown) {
+        setErrorMessage(
+          error instanceof Error ? error.message : sourceMessages.errorMessage
+        );
+      } finally {
+        setIsDetailsLoading(false);
+      }
+    };
+
+    void loadBookDetails();
+  }, [detailsId]);
 
   return (
     <section className={styles.container}>
-      <Spinner isLoading={isFetching} data-testid="spinner" />
+      <Spinner isLoading={isDetailsLoading} />
 
-      <Popup
-        isOpen={isError || (!bookDetails && !isFetching)}
-        isError
-        error={getErrorMessage(error)}
-      >
+      {!bookDetails && !isDetailsLoading && (
         <p className={styles.error}>
           {bookDetailsPageMessages.notFoundIdTitle}
         </p>
-      </Popup>
+      )}
+
+      <Popup isOpen={!!errorMessage} isError error={errorMessage} />
 
       {bookDetails && <BooksDetails bookDetail={bookDetails} />}
 
-      {!isFetching && (
-        <Button onClick={handleCloseButton}>
-          {bookDetailsPageMessages.closeButton}
-        </Button>
-      )}
+      <Link href={navigateToBookList()}>
+        <Button>{bookDetailsPageMessages.closeButton}</Button>
+      </Link>
     </section>
   );
 };

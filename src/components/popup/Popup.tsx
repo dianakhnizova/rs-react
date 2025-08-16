@@ -16,7 +16,7 @@ export const Popup = ({ isOpen, isError, error, onClose, children }: Props) => {
 
   return (
     <>
-      <div className={styles.overlay} onClick={onClose} data-testid="popup" />
+      <div className={styles.overlay} onClick={onClose} />
 
       <div className={styles.container}>
         {isError ? <p className={styles.error}>{error}</p> : children}

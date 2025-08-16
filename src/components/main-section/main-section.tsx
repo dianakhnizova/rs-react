@@ -1,10 +1,9 @@
-import { Outlet } from 'react-router-dom';
 import styles from './main-section.module.css';
 
-export const MainSection = () => {
-  return (
-    <main className={styles.section}>
-      <Outlet />
-    </main>
-  );
+interface Props {
+  children: React.ReactNode;
+}
+
+export const MainSection = ({ children }: Props) => {
+  return <main className={styles.section}>{children} </main>;
 };
