@@ -24,8 +24,6 @@ export const bookService = {
     url.searchParams.set('limit', String(pageItemsResults));
 
     const response = await fetch(url.toString());
-    if (!response.ok)
-      throw new Error(`Failed to fetch books list: ${response.status}`);
 
     const data: IBooksListResponse =
       (await response.json()) as IBooksListResponse;

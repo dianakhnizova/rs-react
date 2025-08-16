@@ -7,9 +7,14 @@ import { IBookData } from '@/sources/interfaces';
 interface Props {
   initialBooks: IBookData[];
   initialTotalItems: number;
+  initialErrorMessage: string;
 }
 
-export const MainPage = ({ initialBooks, initialTotalItems }: Props) => {
+export const MainPage = ({
+  initialBooks,
+  initialTotalItems,
+  initialErrorMessage,
+}: Props) => {
   return (
     <main className={styles.container}>
       <SearchBookSection />
@@ -18,6 +23,7 @@ export const MainPage = ({ initialBooks, initialTotalItems }: Props) => {
         <BooksSection
           initialBooks={initialBooks}
           initialTotalItems={initialTotalItems}
+          initialErrorMessage={initialErrorMessage}
         />
       </section>
 
