@@ -1,9 +1,7 @@
 'use client';
 
 import { useCallback } from 'react';
-import { useIsValidPage } from './useIsValidPage';
 import {
-  notFound,
   useParams,
   usePathname,
   useRouter,
@@ -21,14 +19,10 @@ export const useNavigationToPath = () => {
   const currentPage = segments?.[1] ?? '1';
   const detailsId = segments?.[2];
   const currentSearch = searchParams?.get('searchTerm');
-
-  const isValidPage = useIsValidPage();
   const locale = params?.locale ?? 'en';
 
   const navigateToBookDetail = useCallback(
     (bookId: string) => {
-      if (!isValidPage) return notFound();
-
       let url = `/${currentPage}/${bookId}`;
       if (currentSearch) {
         url += `?searchTerm=${encodeURIComponent(currentSearch)}`;
@@ -36,7 +30,7 @@ export const useNavigationToPath = () => {
 
       return url;
     },
-    [currentPage, currentSearch, isValidPage]
+    [currentPage, currentSearch]
   );
 
   const navigateToBookList = useCallback(() => {
@@ -57,9 +51,9 @@ export const useNavigationToPath = () => {
 
       if (searchTerm) url += `?searchTerm=${encodeURIComponent(searchTerm)}`;
 
-      if (isValidPage) void router.push(url);
+      void router.push(url);
     },
-    [router, isValidPage, locale, detailsId]
+    [router, locale, detailsId]
   );
 
   return {
