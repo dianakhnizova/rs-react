@@ -1,4 +1,4 @@
-import './styles/global.scss';
+import '@/app/[locale]/styles/global.scss';
 import { Metadata } from 'next';
 import { Providers } from './Providers';
 import { Header } from '@/components/header/Header';

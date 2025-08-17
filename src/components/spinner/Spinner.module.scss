@@ -23,14 +23,12 @@
 }
 
 .imgContainer {
-  width: 60%;
+  position: relative;
+  width: 100px;
+  height: 230px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.image {
-  width: 90%;
 }
 
 .loadingTitle {

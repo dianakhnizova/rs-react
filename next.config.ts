@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['covers.openlibrary.org'],
   },
+  sassOptions: {
+    includePaths: ['./src/app/[locale]/styles'],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();

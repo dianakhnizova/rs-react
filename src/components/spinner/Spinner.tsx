@@ -11,7 +11,7 @@ interface Props {
 const BookImage = '/book.png';
 
 export const Spinner = ({ isLoading }: Props) => {
-  const t = useTranslations('Refresh');
+  const t = useTranslations('Spinner');
 
   if (!isLoading) return;
 
@@ -24,9 +24,8 @@ export const Spinner = ({ isLoading }: Props) => {
           <Image
             src={BookImage}
             alt={t('titleSpinner')}
-            width={100}
-            height={230}
-            className={styles.image}
+            fill
+            style={{ objectFit: 'contain' }}
             priority
           />
         </div>

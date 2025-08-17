@@ -28,6 +28,7 @@ export const CoverImage = ({ src, alt, className }: Props) => {
         onLoad={() => setIsImageLoading(false)}
         onError={() => setIsImageLoading(false)}
         priority
+        unoptimized
       />
     </div>
   );
