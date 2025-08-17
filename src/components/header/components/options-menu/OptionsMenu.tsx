@@ -1,3 +1,5 @@
+'use client';
+
 import { ToggleTheme } from '@/components/toggle-theme/ToggleTheme';
 import styles from './OptionsMenu.module.scss';
 import { messages } from './messages';

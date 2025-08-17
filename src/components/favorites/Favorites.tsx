@@ -24,7 +24,6 @@ export const Favorites = () => {
         alt={messages.altTitle}
         width={20}
         height={20}
-        className={styles.icon}
       />
     </div>
   );

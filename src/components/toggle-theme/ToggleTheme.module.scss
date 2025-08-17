@@ -1,20 +1,4 @@
 .container {
   display: flex;
   align-items: center;
-  width: 16px;
-
-  .toggleButton {
-    background-image: url('/dark-theme/toggler-light.svg');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    &.toggleLightButton {
-      background-image: url('/light-theme/toggler-dark.svg');
-    }
-
-    &:hover {
-      background-image: url('/hover/toggler-hover.svg');
-    }
-  }
 }
