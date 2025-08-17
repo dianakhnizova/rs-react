@@ -1,6 +1,5 @@
 'use client';
 
-import { PagePath } from '@/sources/page-path/enums';
 import { useCallback } from 'react';
 import { useIsValidPage } from './useIsValidPage';
 import {
@@ -9,6 +8,7 @@ import {
   useRouter,
   useSearchParams,
 } from 'next/navigation';
+import { PagePath } from '@/sources/enums';
 
 export const useNavigationToPath = () => {
   const params = useParams<{ page: string; id: string; detailsId?: string }>();

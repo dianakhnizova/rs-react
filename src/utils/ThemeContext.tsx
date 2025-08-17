@@ -9,7 +9,6 @@ import {
   useState,
   useEffect,
 } from 'react';
-import { useSavedTheme } from './hooks/useSavedTheme';
 
 interface Props {
   theme: Theme;
@@ -19,15 +18,12 @@ interface Props {
 export const ThemeContext = createContext<Props | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [initialTheme, persistTheme] = useSavedTheme();
-
-  const [theme, setTheme] = useState<Theme>(initialTheme);
+  const [theme, setTheme] = useState<Theme>(Theme.DARK);
 
   const toggleTheme = () => {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK;
 
     setTheme(newTheme);
-    persistTheme(newTheme);
   };
 
   useEffect(() => {

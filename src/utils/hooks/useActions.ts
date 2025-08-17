@@ -1,3 +1,5 @@
+'use client';
+
 import { bindActionCreators } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '@/store/slices/cart/cart.slice';

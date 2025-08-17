@@ -6,12 +6,14 @@ import { selectCart } from '@/store/slices/cart/selectors';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
 import { useTheme } from '@/utils/ThemeContext';
 import { Theme } from '@/sources/enums';
-import { messages } from './messages';
+import { useTranslations } from 'next-intl';
 
 const FavoritesDarkIcon = '/light-theme/favorites-dark.svg';
 const FavoritesLightIcon = '/dark-theme/favorites-light.svg';
 
 export const Favorites = () => {
+  const a = useTranslations('Alt');
+
   const cart = useAppSelector(selectCart);
   const { theme } = useTheme();
 
@@ -21,7 +23,7 @@ export const Favorites = () => {
 
       <Image
         src={theme === Theme.DARK ? FavoritesLightIcon : FavoritesDarkIcon}
-        alt={messages.altTitle}
+        alt={a('favoritesTitle')}
         width={20}
         height={20}
       />

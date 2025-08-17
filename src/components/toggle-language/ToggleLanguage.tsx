@@ -7,14 +7,13 @@ import styles from './ToggleLanguage.module.scss';
 import { Theme } from '@/sources/enums';
 import { useState } from 'react';
 import { useTheme } from '@/utils/ThemeContext';
-import { messages } from './messages';
 import { ButtonVariant } from '../button/enum';
-
-const TogglerDarkTheme = '/dark-theme/light-language.svg';
-const TogglerLightTheme = '/light-theme/dark-language.svg';
-const TogglerHover = '/hover/language-hover.svg';
+import { useTranslations } from 'next-intl';
+import { TogglerDarkTheme, TogglerHover, TogglerLightTheme } from './constants';
 
 export const ToggleLanguage = () => {
+  const a = useTranslations('Alt');
+
   const { theme } = useTheme();
   const [hovered, setHovered] = useState(false);
 
@@ -48,12 +47,7 @@ export const ToggleLanguage = () => {
         onMouseLeave={() => setHovered(false)}
         className={styles.toggleButton}
       >
-        <Image
-          src={iconSrc}
-          alt={messages.altTitle}
-          width={16}
-          height={16}
-        ></Image>
+        <Image src={iconSrc} alt={a('languageTitle')} width={16} height={16} />
       </Button>
     </div>
   );

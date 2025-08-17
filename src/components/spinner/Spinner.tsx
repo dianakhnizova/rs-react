@@ -1,5 +1,7 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import styles from './Spinner.module.scss';
-import { messages } from './messages';
 import Image from 'next/image';
 
 interface Props {
@@ -9,6 +11,8 @@ interface Props {
 const BookImage = '/book.png';
 
 export const Spinner = ({ isLoading }: Props) => {
+  const t = useTranslations('Refresh');
+
   if (!isLoading) return;
 
   return (
@@ -19,16 +23,15 @@ export const Spinner = ({ isLoading }: Props) => {
         <div className={styles.imgContainer}>
           <Image
             src={BookImage}
-            alt={messages.titleSpinner}
+            alt={t('titleSpinner')}
             width={100}
             height={230}
-            style={{ width: '100%', height: 'auto' }}
             className={styles.image}
             priority
           />
         </div>
 
-        <h2 className={styles.loadingTitle}>{messages.titleLoading}</h2>
+        <h2 className={styles.loadingTitle}>{t('titleLoading')}</h2>
       </div>
     </>
   );

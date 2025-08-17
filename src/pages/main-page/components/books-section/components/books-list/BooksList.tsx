@@ -1,7 +1,6 @@
 'use client';
 
 import styles from './BooksList.module.scss';
-import { messages as mainMessages } from './messages';
 import { BookCard } from '../../../../../../components/book-card/BookCard';
 import type { IBookData } from '@/sources/interfaces';
 import { FC, useEffect, useState } from 'react';
@@ -10,6 +9,7 @@ import { BookListPagination } from './book-list-pagination/BookListPagination';
 import { useParams, useSearchParams } from 'next/navigation';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { fetchBooksData } from '@/app/api/books/fetchBooksData';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   initialBooks: IBookData[];
@@ -17,6 +17,8 @@ interface Props {
 }
 
 export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
+  const s = useTranslations('Sources');
+
   const { navigateToBookDetail, navigateToPage } = useNavigationToPath();
 
   const [books, setBooks] = useState<IBookData[]>(initialBooks);
@@ -44,7 +46,7 @@ export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
   return (
     <>
       {books.length === 0 ? (
-        <p className={styles.title}>{mainMessages.emptyList}</p>
+        <p className={styles.title}>{s('emptyList')}</p>
       ) : (
         <ul className={styles.booksContainer}>
           {books.map((book: IBookData) => (

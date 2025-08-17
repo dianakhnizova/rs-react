@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './MainPage.module.scss';
 import { SearchBookSection } from './components/search-book-section/SearchBookSection';
 import { BooksSection } from './components/books-section/BooksSection';

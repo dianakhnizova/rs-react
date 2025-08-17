@@ -2,11 +2,13 @@
 
 import { useRef } from 'react';
 import { Button } from '../button/Button';
-import { messages } from './messages';
 import { selectCart } from '@/store/slices/cart/selectors';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
+import { useTranslations } from 'next-intl';
 
 export const DownloadBooksButton = () => {
+  const t = useTranslations('Flyout');
+
   const cart = useAppSelector(selectCart);
   const link = useRef<HTMLAnchorElement>(null);
 
@@ -34,7 +36,7 @@ export const DownloadBooksButton = () => {
   return (
     <>
       <Button onClick={() => void handleDownloadButton()}>
-        {messages.titleDownloadButton}
+        {t('titleDownloadButton')}
       </Button>
 
       <a ref={link} style={{ display: 'none' }} />

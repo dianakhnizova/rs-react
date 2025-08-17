@@ -6,14 +6,13 @@ import { Button } from '../button/Button';
 import Image from 'next/image';
 import { Theme } from '@/sources/enums';
 import { ButtonVariant } from '../button/enum';
-import { messages } from './messages';
 import { useState } from 'react';
-
-const TogglerDarkTheme = '/dark-theme/toggler-light.svg';
-const TogglerLightTheme = '/light-theme/toggler-dark.svg';
-const TogglerHover = '/hover/toggler-hover.svg';
+import { useTranslations } from 'next-intl';
+import { TogglerDarkTheme, TogglerHover, TogglerLightTheme } from './constants';
 
 export const ToggleTheme = () => {
+  const a = useTranslations('Alt');
+
   const { theme, toggleTheme } = useTheme();
   const [hovered, setHovered] = useState(false);
 
@@ -31,7 +30,7 @@ export const ToggleTheme = () => {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
       >
-        <Image src={iconSrc} alt={messages.altTitle} width={16} height={16} />
+        <Image src={iconSrc} alt={a('themeTitle')} width={16} height={16} />
       </Button>
     </div>
   );

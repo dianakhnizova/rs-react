@@ -1,13 +1,17 @@
-import { PagePath } from '@/sources/page-path/enums';
+'use client';
+
 import styles from './NavMenu.module.scss';
-import { messages } from './messages';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { PagePath } from '@/sources/enums';
 
 export const NavMenu = () => {
+  const t = useTranslations('Header');
+
   return (
     <nav className={styles.container}>
       <Link href={PagePath.aboutPage} className={styles.link}>
-        {messages.titleAboutLink}
+        {t('about')}
       </Link>
     </nav>
   );

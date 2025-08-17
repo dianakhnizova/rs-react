@@ -1,41 +1,13 @@
-import { messages } from './messages';
 import type { MyData } from '@/sources/types';
 
-export const aboutMeDataList: MyData[] = [
-  {
-    label: messages.labels.labelName,
-    data: messages.data.dataName,
-  },
-  {
-    label: messages.labels.labelAge,
-    data: messages.data.dataAge,
-  },
-  {
-    label: messages.labels.labelLocation,
-    data: messages.data.dataLocation,
-  },
-  {
-    label: messages.labels.labelEducation,
-    data: messages.data.dataEducation,
-  },
-  {
-    label: messages.labels.labelCertificate,
-    data: messages.data.dataCertificate,
-  },
-  {
-    label: messages.labels.labelExperience,
-    data: messages.data.dataExperience,
-  },
-  {
-    label: messages.labels.labelFreelance,
-    data: messages.data.dataFreelance,
-  },
-  {
-    label: messages.labels.labelReadyWork,
-    data: messages.data.dataReadyWork,
-  },
-  {
-    label: messages.labels.labelEnglish,
-    data: messages.data.dataEnglish,
-  },
+export const getAboutMeDataList = (t: (key: string) => string): MyData[] => [
+  { label: t('labels.labelName'), data: t('data.dataName') },
+  { label: t('labels.labelAge'), data: t('data.dataAge') },
+  { label: t('labels.labelLocation'), data: t('data.dataLocation') },
+  { label: t('labels.labelEducation'), data: t('data.dataEducation') },
+  { label: t('labels.labelCertificate'), data: t('data.dataCertificate') },
+  { label: t('labels.labelExperience'), data: t('data.dataExperience') },
+  { label: t('labels.labelFreelance'), data: t('data.dataFreelance') },
+  { label: t('labels.labelReadyWork'), data: t('data.dataReadyWork') },
+  { label: t('labels.labelEnglish'), data: t('data.dataEnglish') },
 ];

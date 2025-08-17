@@ -2,10 +2,10 @@
 
 import styles from './BookDetailSection.module.scss';
 import { BooksDetails } from './components/BooksDetails';
-import { messages as bookDetailsPageMessages, messages } from './messages';
 import { Button } from '@/components/button/Button';
 import { IBookData } from '@/sources/interfaces';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { FC } from 'react';
 interface Props {
@@ -13,6 +13,8 @@ interface Props {
 }
 
 export const BookDetailSection: FC<Props> = ({ initialBookDetails }) => {
+  const t = useTranslations('BookDetails');
+
   const { navigateToBookList } = useNavigationToPath();
 
   return (
@@ -20,11 +22,11 @@ export const BookDetailSection: FC<Props> = ({ initialBookDetails }) => {
       {initialBookDetails ? (
         <BooksDetails bookDetail={initialBookDetails} />
       ) : (
-        <p className={styles.error}>{messages.notFoundIdTitle}</p>
+        <p className={styles.error}>{t('notFoundIdTitle')}</p>
       )}
 
       <Link href={navigateToBookList()}>
-        <Button>{bookDetailsPageMessages.closeButton}</Button>
+        <Button>{t('close')}</Button>
       </Link>
     </section>
   );

@@ -1,11 +1,12 @@
+'use client';
+
 import styles from './BookCard.module.scss';
 import { BookDetail, IBookData } from '@/sources/interfaces';
 import classNames from 'classnames';
-import { messages } from './messages';
 import { Checkbox } from '../checkbox/Checkbox';
 import { useActions } from '@/utils/hooks/useActions';
 import { Button } from '../button/Button';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { selectSelectedBook } from '@/store/slices/cart/selectors';
 import { ButtonVariant } from '../button/enum';
 import { useTheme } from '@/utils/ThemeContext';
@@ -13,6 +14,13 @@ import { Theme } from '@/sources/enums';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
 import { CoverImage } from '../cover-image/CoverImage';
 import { BookCardWrapper } from './book-card-wrapper/BookCardWrapper';
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import {
+  RemoveDarkTheme,
+  RemoveHoverTheme,
+  RemoveLightTheme,
+} from './constants';
 
 interface Props {
   book: IBookData;
@@ -31,10 +39,20 @@ export const BookCard: FC<Props> = ({
   isDetails,
   isFlyout,
 }) => {
+  const t = useTranslations('BookCard');
+  const a = useTranslations('Alt');
+
   const { title, id } = book;
   const selectedBook = useAppSelector(selectSelectedBook(book.id));
   const { addItem, removeItem } = useActions();
   const { theme } = useTheme();
+  const [hovered, setHovered] = useState(false);
+
+  const iconRemoveSrc = hovered
+    ? RemoveHoverTheme
+    : theme === Theme.DARK
+      ? RemoveDarkTheme
+      : RemoveLightTheme;
 
   const toggleCheckbox = () => {
     if (!selectedBook) {
@@ -80,9 +98,7 @@ export const BookCard: FC<Props> = ({
 
         {isSelected && (
           <Checkbox
-            label={
-              !selectedBook ? messages.titleSelect : messages.titleSelected
-            }
+            label={!selectedBook ? t('titleSelect') : t('titleSelected')}
             checked={selectedBook}
             onChange={toggleCheckbox}
           />
@@ -92,10 +108,16 @@ export const BookCard: FC<Props> = ({
           <Button
             onClick={handleRemoveItem}
             variant={ButtonVariant.SECONDARY}
-            className={classNames(styles.removeButton, {
-              [styles.removeLightButton]: theme === Theme.LIGHT,
-            })}
-          />
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            <Image
+              src={iconRemoveSrc}
+              alt={a('removeTitle')}
+              width={16}
+              height={16}
+            />
+          </Button>
         )}
       </BookCardWrapper>
     </li>

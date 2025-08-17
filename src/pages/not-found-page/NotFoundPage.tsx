@@ -1,26 +1,30 @@
-import { PagePath } from '@/sources/page-path/enums';
-import { messages as notFoundMessages } from './messages';
-import { messages as sourceMessages } from '@/sources/messages';
+'use client';
+
 import styles from './NotFoundPage.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { PagePath } from '@/sources/enums';
 
 const NotFoundIcon = '/404.png';
 
 export const NotFoundPage = () => {
+  const s = useTranslations('Sources');
+  const a = useTranslations('Alt');
+
   return (
     <section className={styles.container}>
       <div className={styles.imageContainer}>
         <Image
           src={NotFoundIcon}
-          alt={notFoundMessages.imgTitle}
+          alt={a('imgNotFoundTitle')}
           width={200}
           height={300}
         />
       </div>
 
       <Link href={PagePath.root} className={styles.link}>
-        {sourceMessages.navigateMainButton}
+        {s('navigateMain')}
       </Link>
     </section>
   );

@@ -1,12 +1,18 @@
+'use client';
+
 import { RS_SCHOOL_URL } from '@/sources/constants';
 import styles from './AboutPage.module.scss';
-import { aboutMeDataList } from './utils/aboutMeList';
-import { messages as aboutMessages } from './messages';
-import { messages as sourceMessages } from '@/sources/messages';
 import Link from 'next/link';
-import { PagePath } from '@/sources/page-path/enums';
+import { useTranslations } from 'next-intl';
+import { getAboutMeDataList } from './utils/aboutMeList';
+import { PagePath } from '@/sources/enums';
 
 export const AboutPage = () => {
+  const t = useTranslations('AboutPage');
+  const s = useTranslations('Sources');
+
+  const aboutMeDataList = getAboutMeDataList(t);
+
   return (
     <section className={styles.container}>
       <ul className={styles.infoContainer}>
@@ -26,11 +32,11 @@ export const AboutPage = () => {
         rel="noopener noreferrer"
         className={styles.link}
       >
-        {aboutMessages.linkTitle}
+        {t('linkTitle')}
       </Link>
 
       <Link href={PagePath.root} className={styles.link}>
-        {sourceMessages.navigateMainButton}
+        {s('navigateMain')}
       </Link>
     </section>
   );

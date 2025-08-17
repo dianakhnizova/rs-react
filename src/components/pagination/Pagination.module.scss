@@ -3,36 +3,4 @@
   align-items: center;
   padding: 4px;
   gap: 20px;
-
-  .arrowPrevButton {
-    background-image: url('/dark-theme//arrow-prev.svg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    &.arrowPrevLightButton {
-      background-image: url('/light-theme//arrow-dark-prev.svg');
-    }
-
-    &.arrowNextButton {
-      background-image: url('/dark-theme//arrow-next.svg');
-
-      &:hover:not(:disabled) {
-        background-image: url('/hover/arrow-next-hover.svg');
-      }
-
-      &.arrowNextLightButton {
-        background-image: url('/light-theme/arrow-dark-next.svg');
-      }
-    }
-
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    &:hover:not(:disabled) {
-      background-image: url('/hover/arrow-prev-hover.svg');
-    }
-  }
 }

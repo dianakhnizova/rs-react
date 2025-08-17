@@ -1,6 +1,6 @@
 import styles from './PageLayout.module.scss';
 import { MainPage } from '@/pages/main-page/MainPage';
-import { fetchBooksData } from '../api/books/fetchBooksData';
+import { fetchBooksData } from '@/app/api/books/fetchBooksData';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   searchParams?: { searchTerm?: string };
 }
 
-const PageLayout = async ({ children, params, searchParams }: Props) => {
+const LocaleLayout = async ({ children, params, searchParams }: Props) => {
   const { page } = await params;
   const searchTerm = searchParams?.searchTerm ?? '';
 
@@ -28,4 +28,4 @@ const PageLayout = async ({ children, params, searchParams }: Props) => {
   );
 };
 
-export default PageLayout;
+export default LocaleLayout;

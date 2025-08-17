@@ -5,9 +5,13 @@ import { Header } from '@/components/header/Header';
 import { Footer } from '@/components/footer/Footer';
 import { MainSection } from '@/components/main-section/main-section';
 import { Flyout } from '@/components/flyout/Flyout';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { routing } from '@/i18n/routing';
 
 interface Props {
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }
 
 export const metadata: Metadata = {
@@ -20,16 +24,24 @@ export const metadata: Metadata = {
   },
 };
 
-const RootLayout = ({ children }: Props) => {
+const RootLayout = async ({ children, params }: Props) => {
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
-        <Providers>
-          <Header />
-          <MainSection>{children}</MainSection>
-          <Flyout />
-          <Footer />
-        </Providers>
+        <NextIntlClientProvider>
+          <Providers>
+            <Header />
+            <MainSection>{children}</MainSection>
+            <Flyout />
+            <Footer />
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

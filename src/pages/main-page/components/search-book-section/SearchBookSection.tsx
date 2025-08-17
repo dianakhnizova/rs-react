@@ -2,11 +2,13 @@
 
 import styles from './SearchBookSection.module.scss';
 import { InputForm } from '../../../../components/input-form/InputForm';
-import { messages } from './messages';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const SearchBookSection = () => {
+  const t = useTranslations('SearchBookSection');
+
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
@@ -39,11 +41,11 @@ export const SearchBookSection = () => {
       onFormSubmitHandler={handleSubmitBookSearch}
       inputProps={{
         type: 'text',
-        placeholder: messages.inputPlaceholder,
+        placeholder: t('search'),
         value: localValue,
         className: styles.input,
       }}
-      buttonLabel={messages.searchButton}
+      buttonLabel={t('search')}
       isShowButton
     />
   );

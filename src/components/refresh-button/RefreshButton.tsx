@@ -1,14 +1,14 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Button } from '../button/Button';
-import { messages } from './messages';
 
 const handleRefreshButton = () => {
   console.log('Refresh');
 };
 
 export const RefreshButton = () => {
-  return (
-    <Button onClick={handleRefreshButton}>{messages.refreshButton}</Button>
-  );
+  const t = useTranslations('Refresh');
+
+  return <Button onClick={handleRefreshButton}>{t('refresh')}</Button>;
 };
