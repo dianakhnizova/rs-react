@@ -4,16 +4,23 @@ import { fetchBooksData } from '@/app/api/books/fetchBooksData';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { IBookData } from '@/sources/interfaces';
 import { messages } from '@/sources/messages';
+import { notFound } from 'next/navigation';
 
 interface Props {
   children: React.ReactNode;
-  params: Promise<{ page: string }>;
+  params: Promise<{ locale: string; book: string }>;
   searchParams?: { searchTerm?: string };
 }
 
 const LocaleLayout = async ({ children, params, searchParams }: Props) => {
-  const { page } = await params;
+  const { book } = await params;
   const searchTerm = searchParams?.searchTerm ?? '';
+  const bookValue = book ?? '1';
+  const pageNumber = Number(bookValue);
+
+  if (Number.isNaN(pageNumber) || pageNumber < 1) {
+    notFound();
+  }
 
   let booksList: IBookData[] = [];
   let totalItems = 0;
@@ -22,7 +29,7 @@ const LocaleLayout = async ({ children, params, searchParams }: Props) => {
   try {
     const result = await fetchBooksData(
       searchTerm,
-      Number(page ?? '1'),
+      Number(book ?? '1'),
       ITEMS_PER_PAGE
     );
     booksList = result.booksList;
