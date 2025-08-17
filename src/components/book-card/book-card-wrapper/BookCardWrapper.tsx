@@ -1,5 +1,5 @@
 import styles from './BookCardWrapper.module.scss';
-import { Link } from 'react-router-dom';
+import { createNavigation } from 'next-intl/navigation';
 
 interface Props {
   to?: string;
@@ -7,8 +7,10 @@ interface Props {
 }
 
 export const BookCardWrapper = ({ to, children }: Props) => {
+  const { Link } = createNavigation();
+
   return to ? (
-    <Link to={to} className={styles.link}>
+    <Link href={to} className={styles.link}>
       {children}
     </Link>
   ) : (

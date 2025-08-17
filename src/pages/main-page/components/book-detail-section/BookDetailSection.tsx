@@ -1,54 +1,58 @@
+'use client';
+
+import { Popup } from '@/components/popup/Popup';
 import styles from './BookDetailSection.module.scss';
 import { BooksDetails } from './components/BooksDetails';
-import { messages as bookDetailsPageMessages } from './messages';
 import { Button } from '@/components/button/Button';
+import { IBookData } from '@/sources/interfaces';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
-import { useParams } from 'react-router-dom';
-import { Spinner } from '@/components/spinner/Spinner';
-import { useGetBookByIdQuery } from '@/api/book.api';
-import { skipToken } from '@reduxjs/toolkit/query';
-import { Popup } from '@/components/popup/Popup';
-import { getErrorMessage } from '@/utils/getErrorMessage';
-import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectCurrentPage } from '@/store/slices/pagination/selectors';
+import { useTranslations } from 'next-intl';
+import { createNavigation } from 'next-intl/navigation';
+import { FC, useEffect, useState } from 'react';
 
-export const BookDetailSection = () => {
+interface Props {
+  initialBookDetails: IBookData | null;
+  initialError: string | null;
+}
+
+export const BookDetailSection: FC<Props> = ({
+  initialBookDetails,
+  initialError,
+}) => {
+  const t = useTranslations('BookDetails');
+  const s = useTranslations('Sources');
+
+  const [errorMessage, setErrorMessage] = useState(initialError);
+
+  const { Link } = createNavigation();
+
   const { navigateToBookList } = useNavigationToPath();
-  const { detailsId } = useParams();
-  const currentPage = useAppSelector(selectCurrentPage);
 
-  const {
-    data: bookDetails,
-    isFetching,
-    isError,
-    error,
-  } = useGetBookByIdQuery(detailsId ?? skipToken);
-
-  const handleCloseButton = () => {
-    navigateToBookList(currentPage);
-  };
+  useEffect(() => {
+    if (initialError) {
+      setErrorMessage(initialError);
+    }
+  }, [initialError]);
 
   return (
     <section className={styles.container}>
-      <Spinner isLoading={isFetching} data-testid="spinner" />
-
-      <Popup
-        isOpen={isError || (!bookDetails && !isFetching)}
-        isError
-        error={getErrorMessage(error)}
-      >
-        <p className={styles.error}>
-          {bookDetailsPageMessages.notFoundIdTitle}
-        </p>
-      </Popup>
-
-      {bookDetails && <BooksDetails bookDetail={bookDetails} />}
-
-      {!isFetching && (
-        <Button onClick={handleCloseButton}>
-          {bookDetailsPageMessages.closeButton}
-        </Button>
+      {initialError && (
+        <Popup
+          isOpen={!!errorMessage}
+          isError
+          error={errorMessage ?? s('errorDetailsMessage')}
+        />
       )}
+
+      {initialBookDetails ? (
+        <BooksDetails bookDetail={initialBookDetails} />
+      ) : (
+        <p className={styles.error}>{t('notFoundIdTitle')}</p>
+      )}
+
+      <Link href={navigateToBookList()}>
+        <Button>{t('close')}</Button>
+      </Link>
     </section>
   );
 };

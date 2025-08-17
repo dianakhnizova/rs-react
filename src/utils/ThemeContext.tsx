@@ -1,3 +1,5 @@
+'use client';
+
 import { Theme } from '@/sources/enums';
 import { messages } from '@/sources/messages';
 import {
@@ -7,7 +9,6 @@ import {
   useState,
   useEffect,
 } from 'react';
-import { useSavedTheme } from './hooks/useSavedTheme';
 
 interface Props {
   theme: Theme;
@@ -17,15 +18,20 @@ interface Props {
 export const ThemeContext = createContext<Props | undefined>(undefined);
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [initialTheme, persistTheme] = useSavedTheme();
+  const [theme, setTheme] = useState<Theme>(Theme.DARK);
 
-  const [theme, setTheme] = useState<Theme>(initialTheme);
+  useEffect(() => {
+    const stored = localStorage.getItem('theme');
+    if (stored === Theme.DARK || stored === Theme.LIGHT) {
+      setTheme(stored);
+    }
+  }, []);
 
   const toggleTheme = () => {
     const newTheme = theme === Theme.DARK ? Theme.LIGHT : Theme.DARK;
 
     setTheme(newTheme);
-    persistTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
   };
 
   useEffect(() => {

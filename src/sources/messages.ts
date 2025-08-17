@@ -1,6 +1,6 @@
 export const messages = {
-  notFoundDataTitle: 'Not found',
+  errorThemeContext: 'useTheme must be used within a ThemeProvider',
   emptyList: 'Not books for you',
   errorMessage: 'Failed to load books.',
-  errorThemeContext: 'useTheme must be used within a ThemeProvider',
+  errorDetailsMessage: 'Failed to load book details',
 };

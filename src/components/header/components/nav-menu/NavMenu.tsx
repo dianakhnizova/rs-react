@@ -1,14 +1,19 @@
-import { PagePath } from '@/router/enums';
-import { NavLink } from 'react-router-dom';
+'use client';
+
 import styles from './NavMenu.module.scss';
-import { messages } from './messages';
+import { useTranslations } from 'next-intl';
+import { PagePath } from '@/sources/enums';
+import { createNavigation } from 'next-intl/navigation';
 
 export const NavMenu = () => {
+  const t = useTranslations('Header');
+  const { Link } = createNavigation();
+
   return (
     <nav className={styles.container}>
-      <NavLink to={PagePath.aboutPage} className={styles.link}>
-        {messages.titleAboutLink}
-      </NavLink>
+      <Link href={PagePath.aboutPage} className={styles.link}>
+        {t('about')}
+      </Link>
     </nav>
   );
 };

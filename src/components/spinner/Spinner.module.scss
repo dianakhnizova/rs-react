@@ -8,7 +8,7 @@
   border-radius: 10px;
   background-color: var(--clr-bg-1);
   z-index: 1000;
-  padding: 40px;
+  padding: 20px;
   width: 20%;
 }
 
@@ -23,14 +23,12 @@
 }
 
 .imgContainer {
-  width: 80%;
+  position: relative;
+  width: 100px;
+  height: 230px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.image {
-  width: 90%;
 }
 
 .loadingTitle {

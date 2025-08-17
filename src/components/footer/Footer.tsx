@@ -1,10 +1,12 @@
+import { useTranslations } from 'next-intl';
 import styles from './Footer.module.scss';
-import { messages } from './messages';
 
 export const Footer = () => {
+  const t = useTranslations('Footer');
+
   return (
     <footer className={styles.container}>
-      <p>{messages.bottomTitle}</p>
+      <p>{t('title')}</p>
     </footer>
   );
 };

@@ -1,29 +1,52 @@
+'use client';
+
 import styles from './SearchBookSection.module.scss';
-import { useActions } from '@/utils/hooks/useActions';
 import { InputForm } from '../../../../components/input-form/InputForm';
-import { messages } from './messages';
-import { useSearchQuery } from '@/utils/hooks/useSearchQuery';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 export const SearchBookSection = () => {
-  const { searchInput, setSearchInput } = useSearchQuery();
-  const { setSearchTerm, setCurrentPage } = useActions();
+  const t = useTranslations('SearchBookSection');
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const segments = pathname?.split('/').filter(Boolean);
+  const locale = segments?.[0] ?? 'en';
+  const page = '1';
+
+  const currentSearch = searchParams?.get('searchTerm') ?? '';
+
+  const [localValue, setLocalValue] = useState(currentSearch);
+
+  useEffect(() => {
+    setLocalValue(currentSearch);
+  }, [currentSearch]);
 
   const handleSubmitBookSearch = () => {
-    setSearchTerm(searchInput);
-    setCurrentPage(1);
+    const detailsId = segments?.[2];
+    const newPath = `/${locale}/${page}${detailsId ? `/${detailsId}` : ''}`;
+
+    const query = localValue
+      ? `?searchTerm=${encodeURIComponent(localValue)}`
+      : '';
+
+    router.push(`${newPath}${query}`);
   };
 
   return (
     <InputForm
-      setSearchInput={setSearchInput}
+      setSearchInput={setLocalValue}
       onFormSubmitHandler={handleSubmitBookSearch}
       inputProps={{
         type: 'text',
-        placeholder: messages.inputPlaceholder,
-        value: searchInput,
+        placeholder: t('search'),
+        value: localValue,
         className: styles.input,
       }}
-      buttonLabel={messages.searchButton}
+      buttonLabel={t('search')}
       isShowButton
     />
   );

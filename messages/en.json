@@ -1,0 +1,107 @@
+{
+  "Metadata": {
+    "title": "Your Library",
+    "description": "My app is a library"
+  },
+
+  "Header": {
+    "title": "Your library",
+    "about": "About us"
+  },
+
+  "BookListHeader": {
+    "title": "Title",
+    "image": "Image"
+  },
+
+  "SearchBookSection": {
+    "search": "Search"
+  },
+
+  "BookCard": {
+    "titleSelect": "Select",
+    "titleSelected": "Selected"
+  },
+
+  "BookDetails": {
+    "notFoundIdTitle": "Book id not found",
+    "close": "Close",
+    "titleNot": "Not title",
+    "titleNotDescription": "Not description",
+    "titleNotAuthor": "Not author",
+    "titleNotPublishedDate": "Not information about published date"
+  },
+
+  "Pagination": {
+    "pageTitle": "Page ",
+    "ofTitle": " of "
+  },
+
+  "Refresh": {
+    "refresh": "Refresh"
+  },
+
+  "AboutPage": {
+    "linkTitle": " RS School React course",
+    "labels": {
+      "labelName": "Name: ",
+      "labelAge": "Age: ",
+      "labelLocation": "Location: ",
+      "labelEducation": "Education: ",
+      "labelCertificate": "Certificate: ",
+      "labelExperience": "Experience: ",
+      "labelFreelance": "Freelance: ",
+      "labelReadyWork": "Ready to Work: ",
+      "labelEnglish": "English: "
+    },
+    "data": {
+      "dataName": "Diana Khnizova",
+      "dataAge": "31",
+      "dataLocation": "Kazakhstan, Almaty",
+      "dataEducation": "Almaty University of Power Engineering and Telecommunications",
+      "dataCertificate": "RS School Courses - JavaScript/Front-end 2024Q4",
+      "dataExperience": "1 year",
+      "dataFreelance": "Available",
+      "dataReadyWork": "Yes",
+      "dataEnglish": "B1"
+    }
+  },
+
+  "Footer": {
+    "title": "© Diana Khnizova, Inc. All rights reserved."
+  },
+
+  "Sources": {
+    "emptyList": "Not books for you",
+    "errorMessage": "Failed to load books.",
+    "errorDetailsMessage": "Failed to load book details",
+    "navigateMain": "Back to Main"
+  },
+
+  "Alt": {
+    "imgNotFoundTitle": "Not Found Page",
+    "favoritesTitle": "Favorite icon",
+    "languageTitle": "Language Toggler",
+    "themeTitle": "Theme Toggler",
+    "removeTitle": "Remove",
+    "prevTitle": "Prev",
+    "nextTitle": "Next"
+  },
+
+  "Flyout": {
+    "titleDownloadButton": "Download",
+    "titleUnselectAllButton": "Unselect all",
+    "titleEmpty": "Empty cart",
+    "titleItemsPerCart": " items are selected",
+    "titleItemPerCart": " item is selected"
+  },
+
+  "Popup": {
+    "close": "Close"
+  },
+
+  "Spinner": {
+    "titleLoading": "Loading...",
+    "titleSpinner": "Spinner"
+  }
+}

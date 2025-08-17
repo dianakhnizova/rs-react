@@ -19,6 +19,11 @@
     height: 16px;
     background: transparent;
     box-shadow: none;
+    border: none;
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 
   &:hover {

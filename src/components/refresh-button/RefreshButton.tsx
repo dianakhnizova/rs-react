@@ -1,17 +1,14 @@
-import { bookApi } from '@/api/book.api';
+'use client';
+
+import { useTranslations } from 'next-intl';
 import { Button } from '../button/Button';
-import { messages } from './messages';
-import { useDispatch } from 'react-redux';
-import { BookApiTags } from '@/sources/enums';
+
+const handleRefreshButton = () => {
+  console.log('Refresh');
+};
 
 export const RefreshButton = () => {
-  const dispatch = useDispatch();
+  const t = useTranslations('Refresh');
 
-  const handleRefreshButton = () => {
-    dispatch(bookApi.util.invalidateTags([{ type: BookApiTags.BOOKS }]));
-  };
-
-  return (
-    <Button onClick={handleRefreshButton}>{messages.refreshButton}</Button>
-  );
+  return <Button onClick={handleRefreshButton}>{t('refresh')}</Button>;
 };

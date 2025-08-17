@@ -1,5 +1,6 @@
+'use client';
+
 import styles from './Flyout.module.scss';
-import { messages } from './messages';
 import { Button } from '../button/Button';
 import { BookCard } from '../book-card/BookCard';
 import { useActions } from '@/utils/hooks/useActions';
@@ -10,8 +11,11 @@ import { ITEMS_PER_FLYOUT } from '@/sources/constants';
 import { DownloadBooksButton } from '../download-books-button/DownloadBooksButton';
 import { useAppSelector } from '@/utils/hooks/useAppSelector';
 import { DemonstrationBooks } from '../book-card/DemonstrationBooks';
+import { useTranslations } from 'next-intl';
 
 export const Flyout = () => {
+  const t = useTranslations('Flyout');
+
   const cart = useAppSelector(selectCart);
   const { clearCart } = useActions();
   const itemIsInCart = useAppSelector(selectItemIsInCart);
@@ -33,9 +37,7 @@ export const Flyout = () => {
           <>
             <p className={styles.countTitle}>
               {cartLength}
-              {cartLength > 1
-                ? messages.titleItemsPerCart
-                : messages.titleItemPerCart}
+              {cartLength > 1 ? t('titleItemsPerCart') : t('titleItemPerCart')}
             </p>
 
             {cartLength > ITEMS_PER_FLYOUT ? (
@@ -49,13 +51,13 @@ export const Flyout = () => {
             )}
           </>
         ) : (
-          <p>{messages.titleEmpty}</p>
+          <p>{t('titleEmpty')}</p>
         )}
       </div>
 
       <div className={styles.buttonContainer}>
         <Button onClick={handleUnselectAllButton}>
-          {messages.titleUnselectAllButton}
+          {t('titleUnselectAllButton')}
         </Button>
 
         <DownloadBooksButton />

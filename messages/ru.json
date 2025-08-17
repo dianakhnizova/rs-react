@@ -1,0 +1,107 @@
+{
+  "Metadata": {
+    "title": "Ваша библиотека",
+    "description": "Моё приложение — библиотека"
+  },
+
+  "Header": {
+    "title": "Твоя библиотека",
+    "about": "О нас"
+  },
+
+  "BookListHeader": {
+    "title": "Название",
+    "image": "Обложка"
+  },
+
+  "SearchBookSection": {
+    "search": "Поиск"
+  },
+
+  "BookCard": {
+    "titleSelect": "Выбрать",
+    "titleSelected": "Выбрано"
+  },
+
+  "BookDetails": {
+    "notFoundIdTitle": "ID книги не найден",
+    "close": "Закрыть",
+    "titleNot": "Нет названия",
+    "titleNotDescription": "Нет описания",
+    "titleNotAuthor": "Нет автора",
+    "titleNotPublishedDate": "Нет информации о дате публикации"
+  },
+
+  "Pagination": {
+    "pageTitle": "Страница ",
+    "ofTitle": " из "
+  },
+
+  "Refresh": {
+    "refresh": "Обновить"
+  },
+
+  "AboutPage": {
+    "linkTitle": "Курс RS School по React",
+    "labels": {
+      "labelName": "Имя: ",
+      "labelAge": "Возраст: ",
+      "labelLocation": "Местоположение: ",
+      "labelEducation": "Образование: ",
+      "labelCertificate": "Сертификат: ",
+      "labelExperience": "Опыт работы: ",
+      "labelFreelance": "Фриланс: ",
+      "labelReadyWork": "Готов к работе: ",
+      "labelEnglish": "Английский: "
+    },
+    "data": {
+      "dataName": "Диана Хнизова",
+      "dataAge": "31",
+      "dataLocation": "Казахстан, Алматы",
+      "dataEducation": "Алматинский университет энергетики и телекоммуникаций",
+      "dataCertificate": "Курсы RS School - JavaScript/Front-end 2024Q4",
+      "dataExperience": "1 год",
+      "dataFreelance": "Доступен",
+      "dataReadyWork": "Да",
+      "dataEnglish": "B1"
+    }
+  },
+
+  "Footer": {
+    "title": "© Диана Хнизова, все права защищены."
+  },
+
+  "Sources": {
+    "emptyList": "Книг для вас нет",
+    "errorMessage": "Не удалось загрузить книги.",
+    "navigateMain": "Вернуться на главную",
+    "errorDetailsMessage": "Не удалось загрузить детали книги"
+  },
+
+  "Alt": {
+    "imgNotFoundTitle": "Страница не найдена",
+    "favoritesTitle": "Иконка избранного",
+    "languageTitle": "Переключатель языка",
+    "themeTitle": "Переключатель темы",
+    "removeTitle": "Удалить",
+    "prevTitle": "Назад",
+    "nextTitle": "Вперед"
+  },
+
+  "Flyout": {
+    "titleDownloadButton": "Скачать",
+    "titleUnselectAllButton": "Снять все",
+    "titleEmpty": "Корзина пуста",
+    "titleItemsPerCart": " элементов выбрано",
+    "titleItemPerCart": " элемент выбран"
+  },
+
+  "Popup": {
+    "close": "Закрыть"
+  },
+
+  "Spinner": {
+    "titleLoading": "Загрузка...",
+    "titleSpinner": "Спиннер"
+  }
+}

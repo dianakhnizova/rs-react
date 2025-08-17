@@ -1,29 +1,34 @@
+import { useTranslations } from 'next-intl';
 import styles from './Spinner.module.scss';
-import { messages } from './messages';
-import BookImage from '@/assets/book.png';
+import Image from 'next/image';
 
 interface Props {
   isLoading: boolean;
 }
 
+const BookImage = '/book.png';
+
 export const Spinner = ({ isLoading }: Props) => {
+  const t = useTranslations('Spinner');
+
   if (!isLoading) return;
 
   return (
     <>
       <div className={styles.overlay} />
 
-      <div className={styles.container} data-testid="spinner">
+      <div className={styles.container}>
         <div className={styles.imgContainer}>
-          <img
+          <Image
             src={BookImage}
-            alt={messages.titleSpinner}
-            className={styles.image}
-            data-testid="spinner-img"
+            alt={t('titleSpinner')}
+            fill
+            style={{ objectFit: 'contain' }}
+            priority
           />
         </div>
 
-        <h2 className={styles.loadingTitle}>{messages.titleLoading}</h2>
+        <h2 className={styles.loadingTitle}>{t('titleLoading')}</h2>
       </div>
     </>
   );

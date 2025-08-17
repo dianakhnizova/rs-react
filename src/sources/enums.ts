@@ -13,3 +13,8 @@ export enum BookApiTags {
   BOOK_LIST = 'bookList',
   BOOK_BY_ID = 'bookById',
 }
+
+export enum PagePath {
+  root = '/1',
+  aboutPage = '/about',
+}

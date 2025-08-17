@@ -1,23 +1,33 @@
 import styles from './MainPage.module.scss';
 import { SearchBookSection } from './components/search-book-section/SearchBookSection';
 import { BooksSection } from './components/books-section/BooksSection';
-import { Outlet } from 'react-router-dom';
-import { Flyout } from '@/components/flyout/Flyout';
 import { RefreshButton } from '@/components/refresh-button/RefreshButton';
+import { IBookData } from '@/sources/interfaces';
 
-export const MainPage = () => {
+interface Props {
+  initialBooks: IBookData[];
+  initialTotalItems: number;
+  initialError: string | null;
+}
+
+export const MainPage = ({
+  initialBooks,
+  initialTotalItems,
+  initialError,
+}: Props) => {
   return (
-    <main data-testid="main-page" className={styles.container}>
+    <main className={styles.container}>
       <SearchBookSection />
 
       <section className={styles.content}>
-        <BooksSection />
-        <Outlet />
+        <BooksSection
+          initialBooks={initialBooks}
+          initialTotalItems={initialTotalItems}
+          initialError={initialError}
+        />
       </section>
 
       <RefreshButton />
-
-      <Flyout />
     </main>
   );
 };

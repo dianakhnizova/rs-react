@@ -58,3 +58,19 @@ export interface BookDetail {
   value: string | number;
   className: string;
 }
+
+export interface Messages {
+  MainPage?: Record<string, string>;
+  Header?: Record<string, string>;
+  Footer?: Record<string, string>;
+  BookListHeader?: Record<string, string>;
+  BookDetail?: Record<string, string>;
+  AboutPage?: Record<string, string>;
+  Sources?: Record<string, string>;
+  Notfound?: Record<string, string>;
+  Flyout?: Record<string, string>;
+  Alt?: Record<string, string>;
+  Spinner?: Record<string, string>;
+  Popup?: Record<string, string>;
+  Pagination?: Record<string, string>;
+}

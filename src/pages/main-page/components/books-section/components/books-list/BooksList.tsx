@@ -1,58 +1,108 @@
+'use client';
+
 import styles from './BooksList.module.scss';
-import { messages } from '@/sources/messages';
 import { BookCard } from '../../../../../../components/book-card/BookCard';
 import type { IBookData } from '@/sources/interfaces';
-import { Spinner } from '@/components/spinner/Spinner';
-import { FC } from 'react';
-import { useAppSelector } from '@/utils/hooks/useAppSelector';
-import { selectCurrentPage } from '@/store/slices/pagination/selectors';
-import { useGetBooksListQuery } from '@/api/book.api';
-import { selectSearchTerm } from '@/store/slices/search/selectors';
+import { FC, useEffect, useState } from 'react';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
-import { getErrorMessage } from '@/utils/getErrorMessage';
-import { Popup } from '@/components/popup/Popup';
 import { BookListPagination } from './book-list-pagination/BookListPagination';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { ITEMS_PER_PAGE } from '@/sources/constants';
+import { fetchBooksData } from '@/app/api/books/fetchBooksData';
+import { useTranslations } from 'next-intl';
+import { Spinner } from '@/components/spinner/Spinner';
+import { Popup } from '@/components/popup/Popup';
 
-export const BooksList: FC = () => {
-  const { navigateToBookDetail } = useNavigationToPath();
+interface Props {
+  initialBooks: IBookData[];
+  initialTotalItems: number;
+  initialError: string | null;
+}
 
-  const searchTerm = useAppSelector(selectSearchTerm);
-  const currentPage = useAppSelector(selectCurrentPage);
+export const BooksList: FC<Props> = ({
+  initialBooks,
+  initialTotalItems,
+  initialError,
+}) => {
+  const s = useTranslations('Sources');
 
-  const { data, isFetching, isError, error } = useGetBooksListQuery({
-    query: searchTerm,
-    page: currentPage,
-  });
+  const { navigateToBookDetail, navigateToPage } = useNavigationToPath();
 
-  const books = data?.books || [];
+  const [books, setBooks] = useState<IBookData[]>(initialBooks);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(initialError);
+
+  const [totalItems, setTotalItems] = useState(initialTotalItems);
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const segments = pathname?.split('/').filter(Boolean);
+
+  const currentPage = Number(segments?.[1] ?? 1);
+  const currentSearch = searchParams?.get('searchTerm') ?? '';
+
+  useEffect(() => {
+    const loadBooksList = async () => {
+      setIsLoading(true);
+
+      try {
+        const { booksList, totalItems } = await fetchBooksData(
+          currentSearch,
+          currentPage,
+          ITEMS_PER_PAGE
+        );
+        setBooks(booksList);
+        setTotalItems(totalItems);
+      } catch (error: unknown) {
+        const message =
+          error instanceof Error ? error.message : s('errorMessage');
+
+        setErrorMessage(message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    void loadBooksList();
+  }, [currentPage, currentSearch]);
 
   return (
     <>
-      <Spinner isLoading={isFetching} data-testid="spinner" />
-
-      <Popup
-        isOpen={!!isError}
-        isError
-        error={getErrorMessage(error)}
-        data-testid="popup"
-      />
-
       {books.length === 0 ? (
-        <p className={styles.title}>{messages.emptyList}</p>
+        <p className={styles.title}>{s('emptyList')}</p>
       ) : (
-        <ul className={styles.booksContainer}>
-          {books.map((book: IBookData) => (
-            <BookCard
-              key={book.id}
-              book={book}
-              to={navigateToBookDetail(book.id)}
-              isSelected
-            />
-          ))}
-        </ul>
+        <>
+          <Spinner isLoading={isLoading} />
+
+          <Popup
+            isOpen={!!errorMessage}
+            isError
+            error={errorMessage ?? undefined}
+          />
+
+          <ul className={styles.booksContainer}>
+            {books.map((book: IBookData) => (
+              <BookCard
+                key={book.id}
+                book={book}
+                to={navigateToBookDetail(book.id)}
+                isSelected
+              />
+            ))}
+          </ul>
+        </>
       )}
 
-      {books.length > 0 && <BookListPagination />}
+      {books.length > 0 && (
+        <BookListPagination
+          currentPage={currentPage}
+          totalItems={totalItems}
+          onPageChange={page => {
+            void navigateToPage(page, currentSearch);
+          }}
+        />
+      )}
     </>
   );
 };

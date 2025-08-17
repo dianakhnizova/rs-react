@@ -6,24 +6,24 @@
   padding: 10px;
 
   .arrowPrevButton {
-    background-image: url('../../assets/dark-theme//arrow-prev.svg');
+    background-image: url('/dark-theme//arrow-prev.svg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 
     &.arrowPrevLightButton {
-      background-image: url('../../assets/light-theme//arrow-dark-prev.svg');
+      background-image: url('/light-theme//arrow-dark-prev.svg');
     }
 
     &.arrowNextButton {
-      background-image: url('../../assets/dark-theme//arrow-next.svg');
+      background-image: url('/dark-theme//arrow-next.svg');
 
       &:hover:not(:disabled) {
-        background-image: url('../../assets/hover/arrow-next-hover.svg');
+        background-image: url('/hover/arrow-next-hover.svg');
       }
 
       &.arrowNextLightButton {
-        background-image: url('../../assets/light-theme/arrow-dark-next.svg');
+        background-image: url('/light-theme/arrow-dark-next.svg');
       }
     }
 
@@ -33,7 +33,7 @@
     }
 
     &:hover:not(:disabled) {
-      background-image: url('../../assets/hover/arrow-prev-hover.svg');
+      background-image: url('/hover/arrow-prev-hover.svg');
     }
   }
 }

@@ -1,3 +1,5 @@
+'use client';
+
 import { useSelector, TypedUseSelectorHook } from 'react-redux';
 import { TypeRootState } from '@/store/store';
 
