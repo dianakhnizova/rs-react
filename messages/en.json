@@ -1,4 +1,9 @@
 {
+  "Metadata": {
+    "title": "Your Library",
+    "description": "My app is a library"
+  },
+
   "Header": {
     "title": "Your library",
     "about": "About us"
@@ -69,6 +74,7 @@
   "Sources": {
     "emptyList": "Not books for you",
     "errorMessage": "Failed to load books.",
+    "errorDetailsMessage": "Failed to load book details",
     "navigateMain": "Back to Main"
   },
 

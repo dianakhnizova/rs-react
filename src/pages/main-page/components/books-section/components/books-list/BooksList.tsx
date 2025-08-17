@@ -16,17 +16,22 @@ import { Popup } from '@/components/popup/Popup';
 interface Props {
   initialBooks: IBookData[];
   initialTotalItems: number;
+  initialError: string | null;
 }
 
-export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
+export const BooksList: FC<Props> = ({
+  initialBooks,
+  initialTotalItems,
+  initialError,
+}) => {
   const s = useTranslations('Sources');
 
   const { navigateToBookDetail, navigateToPage } = useNavigationToPath();
 
   const [books, setBooks] = useState<IBookData[]>(initialBooks);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(initialError);
 
   const [totalItems, setTotalItems] = useState(initialTotalItems);
 
@@ -69,9 +74,11 @@ export const BooksList: FC<Props> = ({ initialBooks, initialTotalItems }) => {
         <>
           <Spinner isLoading={isLoading} />
 
-          <Popup isOpen={!!errorMessage} isError>
-            <p className={styles.error}>{errorMessage}</p>
-          </Popup>
+          <Popup
+            isOpen={!!errorMessage}
+            isError
+            error={errorMessage ?? undefined}
+          />
 
           <ul className={styles.booksContainer}>
             {books.map((book: IBookData) => (

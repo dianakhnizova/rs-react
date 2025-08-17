@@ -1,4 +1,9 @@
 {
+  "Metadata": {
+    "title": "Ваша библиотека",
+    "description": "Моё приложение — библиотека"
+  },
+
   "Header": {
     "title": "Твоя библиотека",
     "about": "О нас"
@@ -69,7 +74,8 @@
   "Sources": {
     "emptyList": "Книг для вас нет",
     "errorMessage": "Не удалось загрузить книги.",
-    "navigateMain": "Вернуться на главную"
+    "navigateMain": "Вернуться на главную",
+    "errorDetailsMessage": "Не удалось загрузить детали книги"
   },
 
   "Alt": {
