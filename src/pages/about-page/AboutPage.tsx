@@ -2,14 +2,16 @@
 
 import { RS_SCHOOL_URL } from '@/sources/constants';
 import styles from './AboutPage.module.scss';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { getAboutMeDataList } from './utils/aboutMeList';
 import { PagePath } from '@/sources/enums';
+import { createNavigation } from 'next-intl/navigation';
 
 export const AboutPage = () => {
   const t = useTranslations('AboutPage');
   const s = useTranslations('Sources');
+
+  const { Link } = createNavigation();
 
   const aboutMeDataList = getAboutMeDataList(t);
 

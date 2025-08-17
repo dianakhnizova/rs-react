@@ -6,7 +6,7 @@ import { Button } from '@/components/button/Button';
 import { IBookData } from '@/sources/interfaces';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { createNavigation } from 'next-intl/navigation';
 import { FC } from 'react';
 interface Props {
   initialBookDetails: IBookData | null;
@@ -14,6 +14,8 @@ interface Props {
 
 export const BookDetailSection: FC<Props> = ({ initialBookDetails }) => {
   const t = useTranslations('BookDetails');
+
+  const { Link } = createNavigation();
 
   const { navigateToBookList } = useNavigationToPath();
 

@@ -2,15 +2,17 @@
 
 import styles from './NotFoundPage.module.scss';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { PagePath } from '@/sources/enums';
+import { createNavigation } from 'next-intl/navigation';
 
 const NotFoundIcon = '/404.png';
 
 export const NotFoundPage = () => {
   const s = useTranslations('Sources');
   const a = useTranslations('Alt');
+
+  const { Link } = createNavigation();
 
   return (
     <section className={styles.container}>

@@ -1,12 +1,13 @@
 'use client';
 
 import styles from './NavMenu.module.scss';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { PagePath } from '@/sources/enums';
+import { createNavigation } from 'next-intl/navigation';
 
 export const NavMenu = () => {
   const t = useTranslations('Header');
+  const { Link } = createNavigation();
 
   return (
     <nav className={styles.container}>
