@@ -27,9 +27,9 @@ export async function generateMetadata({ params }: Props) {
     title: t('title'),
     description: t('description'),
     icons: {
-      icon: '/favicon.png',
-      shortcut: '/favicon.png',
-      apple: '/favicon.png',
+      icon: [{ url: '/favicon.png', type: 'image/png', sizes: '32x32' }],
+      shortcut: ['/favicon.png'],
+      apple: ['/favicon.png'],
     },
   };
 }

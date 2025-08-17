@@ -37,18 +37,22 @@ export const useNavigationToPath = () => {
 
   const navigateToBookList = useCallback(() => {
     let url = `/${currentPage}`;
+
     if (currentSearch) {
       url += `?searchTerm=${encodeURIComponent(currentSearch)}`;
     }
+
     return url;
   }, [currentPage, currentSearch]);
 
   const navigateToPage = useCallback(
     (page: number, searchTerm?: string) => {
       let url = detailsId ? `/${page}/${detailsId}` : `/${page}`;
+
       if (searchTerm) {
         url += `?searchTerm=${encodeURIComponent(searchTerm)}`;
       }
+
       if (isValidPage) void router.push(url);
     },
     [router, detailsId, isValidPage]

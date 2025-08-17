@@ -13,7 +13,7 @@ export const SearchBookSection = () => {
   const pathname = usePathname();
 
   const currentSearch = searchParams?.get('searchTerm') ?? '';
-  const currentDetailsId = pathname?.split('/')[2] ?? '';
+  const currentDetailsId = pathname?.split('/')[3] ?? '';
 
   const router = useRouter();
 
