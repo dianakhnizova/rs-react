@@ -1,5 +1,3 @@
-'use client';
-
 import { useTranslations } from 'next-intl';
 import styles from './Spinner.module.scss';
 import Image from 'next/image';

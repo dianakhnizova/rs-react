@@ -1,5 +1,3 @@
-'use client';
-
 import type { ReactNode } from 'react';
 import styles from './Popup.module.scss';
 import { Button } from '../button/Button';

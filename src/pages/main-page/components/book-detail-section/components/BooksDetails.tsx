@@ -1,5 +1,3 @@
-'use client';
-
 import { BookCard } from '@/components/book-card/BookCard';
 import { IBookData } from '@/sources/interfaces';
 import styles from './BooksDetails.module.scss';

@@ -1,5 +1,3 @@
-'use client';
-
 import { RS_SCHOOL_URL } from '@/sources/constants';
 import styles from './AboutPage.module.scss';
 import { useTranslations } from 'next-intl';
