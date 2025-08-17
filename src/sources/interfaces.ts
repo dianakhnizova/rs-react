@@ -60,7 +60,7 @@ export interface BookDetail {
 }
 
 export interface Messages {
-  HomePage?: Record<string, string>;
+  MainPage?: Record<string, string>;
   Header?: Record<string, string>;
   Footer?: Record<string, string>;
   BookListHeader?: Record<string, string>;
