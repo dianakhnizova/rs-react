@@ -5,21 +5,25 @@ import { useIsValidPage } from './useIsValidPage';
 import {
   notFound,
   useParams,
+  usePathname,
   useRouter,
   useSearchParams,
 } from 'next/navigation';
-import { PagePath } from '@/sources/enums';
 
 export const useNavigationToPath = () => {
-  const params = useParams<{ page: string; id: string; detailsId?: string }>();
-  const currentPage = params?.page ?? '1';
-  const detailsId = params?.detailsId;
-
   const router = useRouter();
+  const pathname = usePathname();
+  const params = useParams<{ locale: string }>();
+
   const searchParams = useSearchParams();
+  const segments = pathname?.split('/').filter(Boolean);
+
+  const currentPage = segments?.[1] ?? '1';
+  const detailsId = segments?.[2];
   const currentSearch = searchParams?.get('searchTerm');
 
   const isValidPage = useIsValidPage();
+  const locale = params?.locale ?? 'en';
 
   const navigateToBookDetail = useCallback(
     (bookId: string) => {
@@ -47,25 +51,20 @@ export const useNavigationToPath = () => {
 
   const navigateToPage = useCallback(
     (page: number, searchTerm?: string) => {
-      let url = detailsId ? `/${page}/${detailsId}` : `/${page}`;
+      let url = detailsId
+        ? `/${locale}/${page}/${detailsId}`
+        : `/${locale}/${page}`;
 
-      if (searchTerm) {
-        url += `?searchTerm=${encodeURIComponent(searchTerm)}`;
-      }
+      if (searchTerm) url += `?searchTerm=${encodeURIComponent(searchTerm)}`;
 
       if (isValidPage) void router.push(url);
     },
-    [router, detailsId, isValidPage]
+    [router, isValidPage, locale, detailsId]
   );
-
-  const navigateToMain = () => {
-    void router.push(PagePath.root);
-  };
 
   return {
     navigateToBookDetail,
     navigateToBookList,
     navigateToPage,
-    navigateToMain,
   };
 };

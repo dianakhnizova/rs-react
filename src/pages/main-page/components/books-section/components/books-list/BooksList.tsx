@@ -6,7 +6,7 @@ import type { IBookData } from '@/sources/interfaces';
 import { FC, useEffect, useState } from 'react';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { BookListPagination } from './book-list-pagination/BookListPagination';
-import { useParams, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 import { fetchBooksData } from '@/app/api/books/fetchBooksData';
 import { useTranslations } from 'next-intl';
@@ -35,10 +35,11 @@ export const BooksList: FC<Props> = ({
 
   const [totalItems, setTotalItems] = useState(initialTotalItems);
 
-  const params = useParams<{ page: string; id: string }>();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
+  const segments = pathname?.split('/').filter(Boolean);
 
-  const currentPage = Number(params?.page ?? 1);
+  const currentPage = Number(segments?.[1] ?? 1);
   const currentSearch = searchParams?.get('searchTerm') ?? '';
 
   useEffect(() => {

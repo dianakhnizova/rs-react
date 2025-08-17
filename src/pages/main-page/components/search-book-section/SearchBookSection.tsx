@@ -8,14 +8,16 @@ import { useTranslations } from 'next-intl';
 
 export const SearchBookSection = () => {
   const t = useTranslations('SearchBookSection');
+  const router = useRouter();
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
-  const currentSearch = searchParams?.get('searchTerm') ?? '';
-  const currentDetailsId = pathname?.split('/')[3] ?? '';
+  const segments = pathname?.split('/').filter(Boolean);
+  const locale = segments?.[0] ?? 'en';
+  const page = '1';
 
-  const router = useRouter();
+  const currentSearch = searchParams?.get('searchTerm') ?? '';
 
   const [localValue, setLocalValue] = useState(currentSearch);
 
@@ -24,13 +26,12 @@ export const SearchBookSection = () => {
   }, [currentSearch]);
 
   const handleSubmitBookSearch = () => {
-    let newPath = '/1';
-    if (currentDetailsId) {
-      newPath += `/${currentDetailsId}`;
-    }
+    const detailsId = segments?.[2];
+    const newPath = `/${locale}/${page}${detailsId ? `/${detailsId}` : ''}`;
+
     const query = localValue
-      ? `?searchTerm=${encodeURIComponent(localValue)}&page=1`
-      : '?page=1';
+      ? `?searchTerm=${encodeURIComponent(localValue)}`
+      : '';
 
     router.push(`${newPath}${query}`);
   };
