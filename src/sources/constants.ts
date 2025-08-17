@@ -7,6 +7,7 @@ const getAuthorUrl = (key: string) => `https://openlibrary.org${key}.json`;
 const RS_SCHOOL_URL = 'https://rs.school/courses/reactjs';
 const ITEMS_PER_PAGE = 4;
 const ITEMS_PER_FLYOUT = 3;
+const STATUS_SERVER = 404;
 
 export {
   OPEN_LIBRARY_URL,
@@ -17,4 +18,5 @@ export {
   RS_SCHOOL_URL,
   ITEMS_PER_PAGE,
   ITEMS_PER_FLYOUT,
+  STATUS_SERVER,
 };

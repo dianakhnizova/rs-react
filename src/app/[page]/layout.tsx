@@ -1,6 +1,6 @@
 import styles from './PageLayout.module.scss';
 import { MainPage } from '@/pages/main-page/MainPage';
-import { fetchBooksData } from '@/api/fetchBooksData';
+import { fetchBooksData } from '../api/books/fetchBooksData';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
 
 interface Props {

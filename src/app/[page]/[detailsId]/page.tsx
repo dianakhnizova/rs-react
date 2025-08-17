@@ -1,4 +1,4 @@
-import { bookService } from '@/api/services/booksService';
+import { bookService } from '@/app/api/books/services/booksService';
 import { BookDetailSection } from '@/pages/main-page/components/book-detail-section/BookDetailSection';
 import { IBookData } from '@/sources/interfaces';
 

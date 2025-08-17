@@ -8,8 +8,8 @@ import { FC, useEffect, useState } from 'react';
 import { useNavigationToPath } from '@/utils/hooks/useNavigationToPath';
 import { BookListPagination } from './book-list-pagination/BookListPagination';
 import { useParams, useSearchParams } from 'next/navigation';
-import { fetchBooksData } from '@/api/fetchBooksData';
 import { ITEMS_PER_PAGE } from '@/sources/constants';
+import { fetchBooksData } from '@/app/api/books/fetchBooksData';
 
 interface Props {
   initialBooks: IBookData[];
