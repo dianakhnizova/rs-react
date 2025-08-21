@@ -1,13 +1,13 @@
 import classNames from 'classnames';
 import styles from './Button.module.scss';
-import { ButtonVariant } from './enums';
+import { Variant } from '@/sources/enums';
 
 type Props = {
-  variant?: ButtonVariant;
+  variant?: Variant;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button: React.FC<Props> = ({
-  variant = ButtonVariant.PRIMARY,
+  variant = Variant.PRIMARY,
   className,
   ...rest
 }: Props) => {
