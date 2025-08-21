@@ -4,13 +4,15 @@ import classNames from 'classnames';
 import { Variant } from '@/sources/enums';
 import { GenderInput } from './components/gender-input/GenderInput';
 import { Input } from './components/text-input/Input';
+import type { Country } from '@/sources/interfaces';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
   label: string;
-  type: string;
   variant?: Variant;
   isGender?: boolean;
+  isDataList?: boolean;
+  countries?: Country[];
   maleRef?: React.RefObject<HTMLInputElement | null>;
   femaleRef?: React.RefObject<HTMLInputElement | null>;
 }
@@ -20,10 +22,11 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
     {
       htmlFor,
       label,
-      type,
       className,
       variant = Variant.PRIMARY,
       isGender,
+      isDataList,
+      countries,
       maleRef,
       femaleRef,
       ...rest
@@ -36,7 +39,6 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       <GenderInput
         htmlFor={htmlFor}
         label={label}
-        type={type}
         maleRef={maleRef!}
         femaleRef={femaleRef!}
         className={inputClassName}
@@ -46,8 +48,9 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       <Input
         htmlFor={htmlFor}
         label={label}
-        type={type}
         ref={ref}
+        isDataList={isDataList}
+        countries={countries}
         className={inputClassName}
         {...rest}
       />

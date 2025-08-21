@@ -17,3 +17,7 @@ export enum HTML_FOR {
   CONFIRM_PASSWORD = 'confirmPassword',
   COUNTRY = 'country',
 }
+
+export enum List {
+  COUNTRY_LIST = 'countryList',
+}

@@ -1,11 +1,14 @@
 import { useFormRefs } from './useFormRefs';
 import styles from '@/components/uncontrolled-form/UncontrolledForm.module.scss';
 import { messages } from '@/sources/messages';
-import { HTML_FOR, InputType, Variant } from '@/sources/enums';
+import { HTML_FOR, InputType, List, Variant } from '@/sources/enums';
 import type { InputFields } from '@/sources/interfaces';
+import { useSelector } from 'react-redux';
+import { selectCountry } from '@/store/slices/country/selectors';
 
 export const useInputFields = () => {
   const refs = useFormRefs();
+  const countries = useSelector(selectCountry);
 
   const inputFields: InputFields[] = [
     {
@@ -66,11 +69,15 @@ export const useInputFields = () => {
       label: messages.label.photo,
       type: InputType.FILE,
       ref: refs.imageRef,
+      className: styles.file,
     },
     {
       htmlFor: HTML_FOR.COUNTRY,
       label: messages.label.country,
       type: InputType.TEXT,
+      isDataList: true,
+      list: List.COUNTRY_LIST,
+      countries,
       ref: refs.countryRef,
       className: styles.country,
     },

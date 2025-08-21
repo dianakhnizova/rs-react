@@ -18,7 +18,15 @@ export interface InputFields {
   variant?: Variant;
   className?: string;
   isGender?: boolean;
+  isDataList?: boolean;
+  list?: string;
+  countries?: Country[];
   ref?: React.RefObject<HTMLInputElement | null>;
   maleRef?: React.RefObject<HTMLInputElement | null>;
   femaleRef?: React.RefObject<HTMLInputElement | null>;
+}
+
+export interface Country {
+  id: string;
+  name: string;
 }

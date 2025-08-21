@@ -13,12 +13,14 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "classnames": "^2.5.1",
     "eslint-plugin-unicorn": "^60.0.0",
     "hook-form": "^0.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-hook-form": "^7.62.0"
+    "react-hook-form": "^7.62.0",
+    "react-redux": "^9.2.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
