@@ -1,0 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+}
+
+.genderContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--shadow-4);
+  padding: 10px;
+}
+
+.radioButtonContainer {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}

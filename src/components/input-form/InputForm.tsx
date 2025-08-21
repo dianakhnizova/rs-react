@@ -2,31 +2,55 @@ import React, { forwardRef } from 'react';
 import styles from './InputForm.module.scss';
 import classNames from 'classnames';
 import { Variant } from '@/sources/enums';
+import { GenderInput } from './gender-form/GenderInput';
+import { messages } from '@/sources/messages';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
   label: string;
+  type: string;
   variant?: Variant;
+  isGender?: boolean;
 }
 
 export const InputForm = forwardRef<HTMLInputElement, Props>(
-  ({ htmlFor, label, className, variant = Variant.PRIMARY, ...rest }, ref) => {
-    return (
-      <div className={styles.container}>
-        <label
+  (
+    {
+      htmlFor,
+      label,
+      type,
+      className,
+      variant = Variant.PRIMARY,
+      isGender,
+      ...rest
+    },
+    ref
+  ) => {
+    {
+      return isGender ? (
+        <GenderInput
           htmlFor={htmlFor}
-          className={classNames(styles.label, styles[variant], className)}
-        >
-          {label}
-        </label>
-        <input
-          id={htmlFor}
-          ref={ref}
-          className={classNames(styles.input, styles[variant], className)}
-          {...rest}
+          label={messages.label.gender}
+          type={type}
         />
-      </div>
-    );
+      ) : (
+        <div className={styles.container}>
+          <label
+            htmlFor={htmlFor}
+            className={classNames(styles.label, styles[variant], className)}
+          >
+            {label}
+          </label>
+          <input
+            id={htmlFor}
+            type={type}
+            ref={ref}
+            className={classNames(styles.input, styles[variant], className)}
+            {...rest}
+          />
+        </div>
+      );
+    }
   }
 );
 

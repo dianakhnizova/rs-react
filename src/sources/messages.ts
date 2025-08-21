@@ -6,13 +6,15 @@ export const messages = {
     password: 'Password',
     confirmPassword: 'Confirm Password',
     gender: 'Your gender',
+    male: 'Male',
+    female: 'Female',
     acceptTerms: 'I accept the terms',
     photo: 'Photo',
     country: 'Country',
   },
 
   placeholder: {
-    namespace: 'Enter name',
+    name: 'Enter name',
     age: 'Enter age',
     email: 'Enter email',
     password: 'Enter password',

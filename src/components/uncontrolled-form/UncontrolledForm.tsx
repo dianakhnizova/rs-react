@@ -22,6 +22,7 @@ export const UncontrolledForm = () => {
           htmlFor={InputType.TEXT}
           label={messages.label.name}
           type={InputType.TEXT}
+          placeholder={messages.placeholder.name}
           ref={refs.nameRef}
         />
 
@@ -29,6 +30,7 @@ export const UncontrolledForm = () => {
           htmlFor={InputType.NUMBER}
           label={messages.label.age}
           type={InputType.NUMBER}
+          placeholder={messages.placeholder.age}
           ref={refs.ageRef}
         />
 
@@ -36,6 +38,7 @@ export const UncontrolledForm = () => {
           htmlFor={InputType.EMAIL}
           label={messages.label.email}
           type={InputType.EMAIL}
+          placeholder={messages.placeholder.email}
           ref={refs.emailRef}
         />
 
@@ -43,6 +46,7 @@ export const UncontrolledForm = () => {
           htmlFor={InputType.PASSWORD}
           label={messages.label.password}
           type={InputType.PASSWORD}
+          placeholder={messages.placeholder.password}
           ref={refs.passwordRef}
         />
 
@@ -50,6 +54,7 @@ export const UncontrolledForm = () => {
           htmlFor={HTML_FOR.CONFIRM_PASSWORD}
           label={messages.label.confirmPassword}
           type={InputType.PASSWORD}
+          placeholder={messages.placeholder.confirm}
           ref={refs.confirmPasswordRef}
         />
 
@@ -57,9 +62,10 @@ export const UncontrolledForm = () => {
           htmlFor={InputType.RADIO}
           label={messages.label.gender}
           type={InputType.RADIO}
-          ref={refs.genderFemaleRef}
+          ref={refs.genderFemaleRef || refs.genderMaleRef}
           variant={Variant.SECONDARY}
           className={styles.gender}
+          isGender
         />
 
         <InputForm
