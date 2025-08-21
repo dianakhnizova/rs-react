@@ -8,8 +8,10 @@ export const getUserData = (refs: ReturnType<typeof useFormRefs>) => {
     password: refs.passwordRef.current?.value || '',
     confirmPassword: refs.confirmPasswordRef.current?.value || '',
     gender: refs.genderMaleRef.current?.checked
-      ? 'male'
-      : refs.genderFemaleRef.current?.checked,
+      ? refs.genderMaleRef.current.value
+      : refs.genderFemaleRef.current?.checked
+        ? refs.genderFemaleRef.current.value
+        : undefined,
     acceptTerm: refs.acceptTermsRef.current?.checked || false,
     country: refs.countryRef.current?.value || '',
     image: refs.imageRef.current?.files || undefined,

@@ -2,8 +2,8 @@ import React, { forwardRef } from 'react';
 import styles from './InputForm.module.scss';
 import classNames from 'classnames';
 import { Variant } from '@/sources/enums';
-import { GenderInput } from './gender-form/GenderInput';
-import { messages } from '@/sources/messages';
+import { GenderInput } from './components/gender-input/GenderInput';
+import { Input } from './components/text-input/Input';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
@@ -11,6 +11,8 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   type: string;
   variant?: Variant;
   isGender?: boolean;
+  maleRef?: React.RefObject<HTMLInputElement | null>;
+  femaleRef?: React.RefObject<HTMLInputElement | null>;
 }
 
 export const InputForm = forwardRef<HTMLInputElement, Props>(
@@ -22,35 +24,34 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       className,
       variant = Variant.PRIMARY,
       isGender,
+      maleRef,
+      femaleRef,
       ...rest
     },
     ref
   ) => {
-    {
-      return isGender ? (
-        <GenderInput
-          htmlFor={htmlFor}
-          label={messages.label.gender}
-          type={type}
-        />
-      ) : (
-        <div className={styles.container}>
-          <label
-            htmlFor={htmlFor}
-            className={classNames(styles.label, styles[variant], className)}
-          >
-            {label}
-          </label>
-          <input
-            id={htmlFor}
-            type={type}
-            ref={ref}
-            className={classNames(styles.input, styles[variant], className)}
-            {...rest}
-          />
-        </div>
-      );
-    }
+    const inputClassName = classNames(styles.input, styles[variant], className);
+
+    return isGender ? (
+      <GenderInput
+        htmlFor={htmlFor}
+        label={label}
+        type={type}
+        maleRef={maleRef!}
+        femaleRef={femaleRef!}
+        className={inputClassName}
+        {...rest}
+      />
+    ) : (
+      <Input
+        htmlFor={htmlFor}
+        label={label}
+        type={type}
+        ref={ref}
+        className={inputClassName}
+        {...rest}
+      />
+    );
   }
 );
 
