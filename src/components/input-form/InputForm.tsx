@@ -13,6 +13,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   isGender?: boolean;
   isDataList?: boolean;
   countries?: Country[];
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   maleRef?: React.RefObject<HTMLInputElement | null>;
   femaleRef?: React.RefObject<HTMLInputElement | null>;
 }
@@ -27,6 +28,7 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       isGender,
       isDataList,
       countries,
+      onChange,
       maleRef,
       femaleRef,
       ...rest
@@ -51,6 +53,7 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
         ref={ref}
         isDataList={isDataList}
         countries={countries}
+        onChange={onChange}
         className={inputClassName}
         {...rest}
       />

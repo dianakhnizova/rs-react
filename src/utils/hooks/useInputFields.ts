@@ -5,10 +5,37 @@ import { HTML_FOR, InputType, List, Variant } from '@/sources/enums';
 import type { InputFields } from '@/sources/interfaces';
 import { useSelector } from 'react-redux';
 import { selectCountry } from '@/store/slices/country/selectors';
+import { fileToBase64 } from '../fileToBase64';
+import { useActions } from './useActions';
 
 export const useInputFields = () => {
   const refs = useFormRefs();
   const countries = useSelector(selectCountry);
+  const { setImage } = useActions();
+
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const MAX_SIZE = 2 * 1024 * 1024;
+    if (file.size > MAX_SIZE) {
+      return;
+    }
+
+    const allowedTypes = ['image/png', 'image/jpeg'];
+    if (!allowedTypes.includes(file.type)) {
+      return;
+    }
+
+    try {
+      const base64 = await fileToBase64(file);
+      setImage(base64);
+    } catch (error: unknown) {
+      console.error(error);
+    }
+  };
 
   const inputFields: InputFields[] = [
     {
@@ -69,6 +96,7 @@ export const useInputFields = () => {
       label: messages.label.photo,
       type: InputType.FILE,
       ref: refs.imageRef,
+      onChange: handleImageChange,
       className: styles.file,
     },
     {

@@ -18,6 +18,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         id={htmlFor}
         ref={ref}
         list={isDataList ? List.COUNTRY_LIST : undefined}
+        accept="image/png,image/jpeg"
         className={className}
         {...rest}
       />

@@ -16,6 +16,7 @@ export interface InputFields {
   type: string;
   placeholder?: string;
   variant?: Variant;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
   isGender?: boolean;
   isDataList?: boolean;
