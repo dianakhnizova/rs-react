@@ -1,3 +1,4 @@
+import styles from './ControlledForm.module.scss';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import type { InputFields, UserForm } from '@/sources/interfaces';
@@ -18,10 +19,12 @@ export const ControlledForm = () => {
   });
   const { inputFields } = useInputFields();
 
+  console.log('formState.errors:', formState.errors);
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)} isDisabled={!formState.isValid}>
       {inputFields.map((field, index) => (
-        <div key={index}>
+        <div key={index} className={styles.container}>
           <InputForm
             {...field}
             register={register}
@@ -29,7 +32,7 @@ export const ControlledForm = () => {
           />
 
           {formState.errors[field.name] && (
-            <span style={{ color: 'red', fontSize: '12px' }}>
+            <span className={styles.error}>
               {formState.errors[field.name]?.message}
             </span>
           )}

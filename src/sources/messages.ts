@@ -28,6 +28,7 @@ export const messages = {
   },
 
   error: {
+    errorMessage: 'Error',
     emailMessage: 'Invalid email address',
     password: {
       message1: 'Password must be at least 8 characters long',
