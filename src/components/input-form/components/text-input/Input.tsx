@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import styles from './Input.module.scss';
 import type { Country } from '@/sources/interfaces';
-import { List } from '@/sources/enums';
+import { ImageFormat, InputType, List } from '@/sources/enums';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
@@ -18,7 +18,11 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         id={htmlFor}
         ref={ref}
         list={isDataList ? List.COUNTRY_LIST : undefined}
-        accept="image/png,image/jpeg"
+        accept={
+          rest.type === InputType.FILE
+            ? `${ImageFormat.PNG},${ImageFormat.JPEG}`
+            : undefined
+        }
         className={className}
         {...rest}
       />

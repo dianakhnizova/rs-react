@@ -1,11 +1,15 @@
 import type { FC } from 'react';
 import styles from './GenderInput.module.scss';
 import { messages } from '@/sources/messages';
+import type { UseFormRegister } from 'react-hook-form';
+import type { UserForm } from '@/sources/interfaces';
+import { Gender, InputType } from '@/sources/enums';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
-  htmlFor: string;
+interface Props
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'name'> {
+  htmlFor: keyof UserForm;
   label: string;
-  register: UseFormRegister<InputFields>;
+  register?: UseFormRegister<UserForm>;
   maleRef?: React.RefObject<HTMLInputElement | null>;
   femaleRef?: React.RefObject<HTMLInputElement | null>;
 }
@@ -24,28 +28,32 @@ export const GenderInput: FC<Props> = ({
 
     <div className={styles.genderContainer}>
       <div className={styles.radioButtonContainer}>
-        <label htmlFor={`${htmlFor}-male`}>{messages.label.male}</label>
+        <label htmlFor={`${htmlFor}-${Gender.MALE}`}>
+          {messages.label.male}
+        </label>
         <input
-          id={`${htmlFor}-male`}
+          id={`${htmlFor}-${Gender.MALE}`}
+          value={Gender.MALE}
           name={htmlFor}
-          ref={register ? undefined : maleRef}
-          value="male"
+          type={InputType.RADIO}
           className={className}
-          {...(register ? register(htmlFor as keyof InputFields) : {})}
-          {...rest}
+          ref={register ? undefined : maleRef}
+          {...(register ? register(htmlFor) : rest)}
         />
       </div>
 
       <div className={styles.radioButtonContainer}>
-        <label htmlFor={`${htmlFor}-female`}>{messages.label.female}</label>
+        <label htmlFor={`${htmlFor}-${Gender.FEMALE}`}>
+          {messages.label.female}
+        </label>
         <input
-          id={`${htmlFor}-female`}
+          id={`${htmlFor}-${Gender.FEMALE}`}
+          value={Gender.FEMALE}
           name={htmlFor}
-          ref={register ? undefined : femaleRef}
-          value="female"
+          type={InputType.RADIO}
           className={className}
-          {...(register ? register(htmlFor as keyof InputFields) : {})}
-          {...rest}
+          ref={register ? undefined : femaleRef}
+          {...(register ? register(htmlFor) : rest)}
         />
       </div>
     </div>

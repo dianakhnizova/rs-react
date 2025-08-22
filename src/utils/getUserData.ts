@@ -12,8 +12,8 @@ export const getUserData = (refs: ReturnType<typeof useFormRefs>) => {
       : refs.genderFemaleRef.current?.checked
         ? refs.genderFemaleRef.current.value
         : undefined,
-    acceptTerm: refs.acceptTermsRef.current?.checked || false,
+    acceptTerms: refs.acceptTermsRef.current?.checked || false,
     country: refs.countryRef.current?.value || '',
-    image: refs.imageRef.current?.files || undefined,
+    file: refs.imageRef.current?.files || undefined,
   };
 };

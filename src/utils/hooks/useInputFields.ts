@@ -19,16 +19,6 @@ export const useInputFields = () => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const MAX_SIZE = 2 * 1024 * 1024;
-    if (file.size > MAX_SIZE) {
-      return;
-    }
-
-    const allowedTypes = ['image/png', 'image/jpeg'];
-    if (!allowedTypes.includes(file.type)) {
-      return;
-    }
-
     try {
       const base64 = await fileToBase64(file);
       setImage(base64);
@@ -39,15 +29,17 @@ export const useInputFields = () => {
 
   const inputFields: InputFields[] = [
     {
-      htmlFor: InputType.TEXT,
+      htmlFor: HTML_FOR.NAME,
       label: messages.label.name,
+      name: HTML_FOR.NAME,
       type: InputType.TEXT,
       placeholder: messages.placeholder.name,
       ref: refs.nameRef,
     },
     {
-      htmlFor: InputType.NUMBER,
+      htmlFor: HTML_FOR.AGE,
       label: messages.label.age,
+      name: HTML_FOR.AGE,
       type: InputType.NUMBER,
       placeholder: messages.placeholder.age,
       ref: refs.ageRef,
@@ -55,6 +47,7 @@ export const useInputFields = () => {
     {
       htmlFor: InputType.EMAIL,
       label: messages.label.email,
+      name: InputType.EMAIL,
       type: InputType.EMAIL,
       placeholder: messages.placeholder.email,
       ref: refs.emailRef,
@@ -62,6 +55,7 @@ export const useInputFields = () => {
     {
       htmlFor: InputType.PASSWORD,
       label: messages.label.password,
+      name: InputType.PASSWORD,
       type: InputType.PASSWORD,
       placeholder: messages.placeholder.password,
       ref: refs.passwordRef,
@@ -69,13 +63,15 @@ export const useInputFields = () => {
     {
       htmlFor: HTML_FOR.CONFIRM_PASSWORD,
       label: messages.label.confirmPassword,
+      name: HTML_FOR.CONFIRM_PASSWORD,
       type: InputType.PASSWORD,
       placeholder: messages.placeholder.confirm,
       ref: refs.confirmPasswordRef,
     },
     {
-      htmlFor: InputType.RADIO,
+      htmlFor: HTML_FOR.GENDER,
       label: messages.label.gender,
+      name: HTML_FOR.GENDER,
       type: InputType.RADIO,
       variant: Variant.SECONDARY,
       className: styles.gender,
@@ -84,8 +80,9 @@ export const useInputFields = () => {
       femaleRef: refs.genderFemaleRef,
     },
     {
-      htmlFor: InputType.CHECKBOX,
+      htmlFor: HTML_FOR.ACCEPT_TERMS,
       label: messages.label.acceptTerms,
+      name: HTML_FOR.ACCEPT_TERMS,
       type: InputType.CHECKBOX,
       ref: refs.acceptTermsRef,
       variant: Variant.SECONDARY,
@@ -94,6 +91,7 @@ export const useInputFields = () => {
     {
       htmlFor: InputType.FILE,
       label: messages.label.photo,
+      name: InputType.FILE,
       type: InputType.FILE,
       ref: refs.imageRef,
       onChange: handleImageChange,
@@ -102,6 +100,7 @@ export const useInputFields = () => {
     {
       htmlFor: HTML_FOR.COUNTRY,
       label: messages.label.country,
+      name: HTML_FOR.COUNTRY,
       type: InputType.TEXT,
       isDataList: true,
       list: List.COUNTRY_LIST,

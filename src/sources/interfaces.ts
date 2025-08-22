@@ -13,6 +13,7 @@ export interface UserForm {
 export interface InputFields {
   htmlFor: string;
   label: string;
+  name: string;
   type: string;
   placeholder?: string;
   variant?: Variant;
