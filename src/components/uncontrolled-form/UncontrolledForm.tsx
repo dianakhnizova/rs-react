@@ -23,7 +23,7 @@ export const UncontrolledForm = () => {
         ))}
       </div>
 
-      <Button>{messages.button.submitButton}</Button>
+      <Button type="submit">{messages.button.submitButton}</Button>
     </form>
   );
 };

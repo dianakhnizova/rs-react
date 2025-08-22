@@ -16,6 +16,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   maleRef?: React.RefObject<HTMLInputElement | null>;
   femaleRef?: React.RefObject<HTMLInputElement | null>;
+  register?: UseFormRegister<InputFields>;
 }
 
 export const InputForm = forwardRef<HTMLInputElement, Props>(
@@ -31,6 +32,7 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       onChange,
       maleRef,
       femaleRef,
+      register,
       ...rest
     },
     ref
@@ -41,20 +43,22 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       <GenderInput
         htmlFor={htmlFor}
         label={label}
-        maleRef={maleRef!}
-        femaleRef={femaleRef!}
+        maleRef={maleRef}
+        femaleRef={femaleRef}
         className={inputClassName}
+        register={register}
         {...rest}
       />
     ) : (
       <Input
         htmlFor={htmlFor}
         label={label}
-        ref={ref}
+        ref={register ? undefined : ref}
         isDataList={isDataList}
         countries={countries}
         onChange={onChange}
         className={inputClassName}
+        {...(register ? register(htmlFor as keyof InputFields) : {})}
         {...rest}
       />
     );

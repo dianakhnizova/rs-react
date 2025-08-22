@@ -4,16 +4,26 @@ import { messages } from './messages';
 import { UncontrolledForm } from '@/components/uncontrolled-form/UncontrolledForm';
 import { useState } from 'react';
 import { Modal } from '@/components/modal/Modal';
+import { ControlledForm } from '@/components/controlled-form/ControlledForm';
 
 export const HomePage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUncontrolledModalOpen, setIsUncontrolledModalOpen] = useState(false);
+  const [isControlledModalOpen, setIsControlledModalOpen] = useState(false);
 
-  const handleUncontrolledButton = () => {
-    setIsModalOpen(true);
+  const handleUncontrolledOpenModal = () => {
+    setIsUncontrolledModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleUncontrolledCloseModal = () => {
+    setIsUncontrolledModalOpen(false);
+  };
+
+  const handleControlledOpenModal = () => {
+    setIsControlledModalOpen(true);
+  };
+
+  const handleControlledCloseModal = () => {
+    setIsControlledModalOpen(false);
   };
 
   return (
@@ -21,14 +31,27 @@ export const HomePage = () => {
       <h1 className={styles.title}>{messages.appTitle}</h1>
 
       <div className={styles.buttonContainer}>
-        <Button onClick={handleUncontrolledButton}>
+        <Button onClick={handleUncontrolledOpenModal}>
           {messages.uncontrolledButton}
         </Button>
-        <Button>{messages.reactHookFormButton}</Button>
+
+        <Button onClick={handleControlledOpenModal}>
+          {messages.reactHookFormButton}
+        </Button>
       </div>
 
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+      <Modal
+        isOpen={isUncontrolledModalOpen}
+        onClose={handleUncontrolledCloseModal}
+      >
         <UncontrolledForm />
+      </Modal>
+
+      <Modal
+        isOpen={isControlledModalOpen}
+        onClose={handleControlledCloseModal}
+      >
+        <ControlledForm />
       </Modal>
     </div>
   );

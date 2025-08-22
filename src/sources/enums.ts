@@ -13,6 +13,10 @@ export enum InputType {
   FILE = 'file',
 }
 
+export enum ButtonType {
+  SUBMIT = 'submit',
+}
+
 export enum HTML_FOR {
   CONFIRM_PASSWORD = 'confirmPassword',
   COUNTRY = 'country',

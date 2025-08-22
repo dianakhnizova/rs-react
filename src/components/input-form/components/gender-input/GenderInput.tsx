@@ -5,13 +5,15 @@ import { messages } from '@/sources/messages';
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
   label: string;
-  maleRef: React.RefObject<HTMLInputElement | null>;
-  femaleRef: React.RefObject<HTMLInputElement | null>;
+  register: UseFormRegister<InputFields>;
+  maleRef?: React.RefObject<HTMLInputElement | null>;
+  femaleRef?: React.RefObject<HTMLInputElement | null>;
 }
 
 export const GenderInput: FC<Props> = ({
   htmlFor,
   label,
+  register,
   maleRef,
   femaleRef,
   className,
@@ -26,9 +28,10 @@ export const GenderInput: FC<Props> = ({
         <input
           id={`${htmlFor}-male`}
           name={htmlFor}
-          ref={maleRef}
+          ref={register ? undefined : maleRef}
           value="male"
           className={className}
+          {...(register ? register(htmlFor as keyof InputFields) : {})}
           {...rest}
         />
       </div>
@@ -38,9 +41,10 @@ export const GenderInput: FC<Props> = ({
         <input
           id={`${htmlFor}-female`}
           name={htmlFor}
-          ref={femaleRef}
+          ref={register ? undefined : femaleRef}
           value="female"
           className={className}
+          {...(register ? register(htmlFor as keyof InputFields) : {})}
           {...rest}
         />
       </div>
