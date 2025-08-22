@@ -24,5 +24,6 @@ export const messages = {
 
   button: {
     submitButton: 'Submit',
+    closeButton: 'Close',
   },
 };
