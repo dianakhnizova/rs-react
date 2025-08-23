@@ -57,13 +57,15 @@ export const Input = forwardRef<HTMLInputElement, Props>(
           </datalist>
         )}
 
-        {(errorMessage || passwordStrength) && (
-          <InfoBar
-            htmlFor={htmlFor}
-            errorMessage={errorMessage}
-            passwordStrength={passwordStrength}
-          />
-        )}
+        <div className={styles.infoWrapper}>
+          {(errorMessage || passwordStrength) && (
+            <InfoBar
+              htmlFor={htmlFor}
+              errorMessage={errorMessage}
+              passwordStrength={passwordStrength}
+            />
+          )}
+        </div>
       </div>
     );
   }
