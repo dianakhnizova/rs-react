@@ -1,13 +1,9 @@
 import { forwardRef } from 'react';
 import styles from './Input.module.scss';
 import type { Country } from '@/sources/interfaces';
-import {
-  ImageFormat,
-  InputType,
-  List,
-  PasswordStrength,
-} from '@/sources/enums';
-import classNames from 'classnames';
+import type { PasswordStrength } from '@/sources/enums';
+import { ImageFormat, InputType, List } from '@/sources/enums';
+import { InfoBar } from './components/info-bar/InfoBar';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
@@ -62,29 +58,11 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         )}
 
         {(errorMessage || passwordStrength) && (
-          <div className={styles.info}>
-            <span className={styles.error}>{errorMessage}</span>
-
-            {htmlFor === InputType.PASSWORD && (
-              <div className={styles.strength}>
-                <div
-                  className={classNames(
-                    styles.bar,
-                    passwordStrength ? styles[passwordStrength] : styles.weak
-                  )}
-                />
-
-                <span className={styles.label}>
-                  {passwordStrength === PasswordStrength.WEAK &&
-                    PasswordStrength.WEAK}
-                  {passwordStrength === PasswordStrength.MEDIUM &&
-                    PasswordStrength.MEDIUM}
-                  {passwordStrength === PasswordStrength.STRONG &&
-                    PasswordStrength.STRONG}
-                </span>
-              </div>
-            )}
-          </div>
+          <InfoBar
+            htmlFor={htmlFor}
+            errorMessage={errorMessage}
+            passwordStrength={passwordStrength}
+          />
         )}
       </div>
     );
