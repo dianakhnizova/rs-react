@@ -8,6 +8,7 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { useActions } from '@/utils/hooks/useActions';
 import { fileToBase64 } from '@/utils/fileToBase64';
+import type { PasswordStrength } from '@/sources/enums';
 import { InputType } from '@/sources/enums';
 import { getPasswordStrength } from '@/utils/getPasswordStrength';
 
@@ -18,7 +19,8 @@ interface Props {
 export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   const { inputFields, refs } = useInputFields();
   const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
-  const [passwordStrength, setPasswordStrength] = useState<string | null>(null);
+  const [passwordStrength, setPasswordStrength] =
+    useState<PasswordStrength | null>(null);
 
   const { addUserData } = useActions();
 
