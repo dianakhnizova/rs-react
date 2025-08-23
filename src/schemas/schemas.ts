@@ -8,12 +8,32 @@ import {
   PASSWORD_REGEX,
 } from '@/sources/constants';
 
+export const nameSchema = z
+  .string()
+  .trim()
+  .min(1, { message: messages.error.nameMessage })
+  .refine(name => NAME_REGEX.test(name), {
+    message: messages.error.nameMessage,
+  });
+export const ageSchema = z
+  .string()
+  .trim()
+  .refine(val => !Number.isNaN(Number(val)), {
+    message: messages.error.age.message1,
+  })
+  .refine(val => Number(val) > 0, { message: messages.error.age.message2 })
+  .refine(val => Number(val) % 1 === 0, {
+    message: messages.error.age.message3,
+  });
+
 export const emailSchema = z
   .string()
+  .trim()
   .email({ message: messages.error.emailMessage });
 
 export const passwordSchema = z
   .string()
+  .trim()
   .min(8, { message: messages.error.password.message1 })
   .refine(p => PASSWORD_REGEX.UPPERCASE.test(p), {
     message: messages.error.password.message2,
@@ -28,21 +48,7 @@ export const passwordSchema = z
     message: messages.error.password.message5,
   });
 
-export const nameSchema = z.string().refine(name => NAME_REGEX.test(name), {
-  message: messages.error.nameMessage,
-});
-
-export const ageSchema = z
-  .string()
-  .refine(val => !Number.isNaN(Number(val)), {
-    message: messages.error.age.message1,
-  })
-  .refine(val => Number(val) > 0, { message: messages.error.age.message2 })
-  .refine(val => Number(val) % 1 === 0, {
-    message: messages.error.age.message3,
-  });
-
-export const confirmSchema = z.string();
+export const confirmSchema = z.string().trim();
 
 export const genderSchema = z.enum([Gender.MALE, Gender.FEMALE], {
   message: messages.error.genderMessage,

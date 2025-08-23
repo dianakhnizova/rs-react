@@ -28,7 +28,6 @@ export const ControlledForm: FC<Props> = ({ onSuccess }) => {
 
     const formData: FullUserForm = {
       ...data,
-      confirmPassword: data.password,
       file: fileBase64,
     };
 

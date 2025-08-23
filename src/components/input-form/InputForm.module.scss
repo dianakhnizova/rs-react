@@ -20,3 +20,9 @@
     border: none;
   }
 }
+
+.accept,
+.gender {
+  cursor: pointer;
+  accent-color: var(--clr-hover);
+}

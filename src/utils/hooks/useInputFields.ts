@@ -1,5 +1,5 @@
 import { useFormRefs } from './useFormRefs';
-import styles from '@/components/uncontrolled-form/UncontrolledForm.module.scss';
+import styles from '@/components/input-form/InputForm.module.scss';
 import { messages } from '@/sources/messages';
 import { HTML_FOR, InputType, List, Variant } from '@/sources/enums';
 import type { InputFields } from '@/sources/interfaces';
@@ -57,10 +57,10 @@ export const useInputFields = () => {
       name: HTML_FOR.GENDER,
       type: InputType.RADIO,
       variant: Variant.SECONDARY,
-      className: styles.gender,
       isGender: true,
       maleRef: refs.genderMaleRef,
       femaleRef: refs.genderFemaleRef,
+      className: styles.gender,
     },
 
     {

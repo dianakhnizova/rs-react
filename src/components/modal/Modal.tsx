@@ -30,12 +30,27 @@ export const Modal: FC<Props> = ({
     if (isOpen) {
       lastActiveElement.current = document.activeElement as HTMLElement;
 
+      document.body.style.overflow = 'hidden';
+
       setTimeout(() => {
-        containerRef.current?.focus();
+        const firstInput = containerRef.current?.querySelector<HTMLElement>(
+          'input, textarea, select, button, [tabindex]:not([tabindex="-1"])'
+        );
+        if (firstInput) {
+          firstInput.focus();
+        } else {
+          containerRef.current?.focus();
+
+          document.body.style.overflow = '';
+        }
       }, 0);
     } else {
       lastActiveElement.current?.focus();
     }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   if (!isOpen) return null;
