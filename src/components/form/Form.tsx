@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import React from 'react';
 import styles from './Form.module.scss';
 import { Button } from '../button/Button';
 import { ButtonType } from '@/sources/enums';

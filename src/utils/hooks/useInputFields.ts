@@ -62,15 +62,7 @@ export const useInputFields = () => {
       maleRef: refs.genderMaleRef,
       femaleRef: refs.genderFemaleRef,
     },
-    {
-      htmlFor: HTML_FOR.ACCEPT_TERMS,
-      label: messages.label.acceptTerms,
-      name: HTML_FOR.ACCEPT_TERMS,
-      type: InputType.CHECKBOX,
-      ref: refs.acceptTermsRef,
-      variant: Variant.SECONDARY,
-      className: styles.accept,
-    },
+
     {
       htmlFor: InputType.FILE,
       label: messages.label.photo,
@@ -89,6 +81,15 @@ export const useInputFields = () => {
       countries,
       ref: refs.countryRef,
       className: styles.country,
+    },
+    {
+      htmlFor: HTML_FOR.ACCEPT_TERMS,
+      label: messages.label.acceptTerms,
+      name: HTML_FOR.ACCEPT_TERMS,
+      type: InputType.CHECKBOX,
+      ref: refs.acceptTermsRef,
+      variant: Variant.SECONDARY,
+      className: styles.accept,
     },
   ];
 

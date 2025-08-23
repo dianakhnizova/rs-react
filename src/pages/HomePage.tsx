@@ -5,10 +5,12 @@ import { UncontrolledForm } from '@/components/uncontrolled-form/UncontrolledFor
 import { useState } from 'react';
 import { Modal } from '@/components/modal/Modal';
 import { ControlledForm } from '@/components/controlled-form/ControlledForm';
+import { UserList } from '@/components/user-list/UserList';
 
 export const HomePage = () => {
   const [isUncontrolledModalOpen, setIsUncontrolledModalOpen] = useState(false);
   const [isControlledModalOpen, setIsControlledModalOpen] = useState(false);
+  const [showUserData, setShowUserData] = useState(false);
 
   const handleUncontrolledOpenModal = () => {
     setIsUncontrolledModalOpen(true);
@@ -24,6 +26,11 @@ export const HomePage = () => {
 
   const handleControlledCloseModal = () => {
     setIsControlledModalOpen(false);
+  };
+
+  const handleFormSuccess = () => {
+    setIsUncontrolledModalOpen(false);
+    setShowUserData(true);
   };
 
   return (
@@ -44,8 +51,10 @@ export const HomePage = () => {
         isOpen={isUncontrolledModalOpen}
         onClose={handleUncontrolledCloseModal}
       >
-        <UncontrolledForm />
+        <UncontrolledForm onSuccess={handleFormSuccess} />
       </Modal>
+
+      {showUserData && <UserList onClose={() => setShowUserData(false)} />}
 
       <Modal
         isOpen={isControlledModalOpen}

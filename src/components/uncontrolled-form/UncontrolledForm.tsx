@@ -5,12 +5,18 @@ import { getUserData } from '@/utils/getUserData';
 import { Form } from '../form/Form';
 import { ZodError } from 'zod';
 import { userSchema } from '@/schemas/userSchema';
+import type { FC } from 'react';
 import { useState } from 'react';
 import { useActions } from '@/utils/hooks/useActions';
 
-export const UncontrolledForm = () => {
+interface Props {
+  onSuccess?: () => void;
+}
+
+export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   const { inputFields, refs } = useInputFields();
   const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
+
   const { addUserData } = useActions();
 
   const onSubmit = async (event: React.FormEvent) => {
@@ -20,10 +26,11 @@ export const UncontrolledForm = () => {
 
     try {
       const validatedData = userSchema.parse(userData);
-      console.log(validatedData);
 
       addUserData(validatedData);
       setErrorMessage({});
+
+      if (onSuccess) onSuccess();
     } catch (error) {
       if (error instanceof ZodError) {
         const fieldErrors: Record<string, string> = {};
@@ -37,8 +44,6 @@ export const UncontrolledForm = () => {
         setErrorMessage(fieldErrors);
       }
     }
-
-    console.log(userData);
   };
 
   return (
