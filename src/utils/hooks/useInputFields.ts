@@ -5,27 +5,10 @@ import { HTML_FOR, InputType, List, Variant } from '@/sources/enums';
 import type { InputFields } from '@/sources/interfaces';
 import { useSelector } from 'react-redux';
 import { selectCountry } from '@/store/slices/country/selectors';
-import { fileToBase64 } from '../fileToBase64';
-import { useActions } from './useActions';
 
 export const useInputFields = () => {
   const refs = useFormRefs();
   const countries = useSelector(selectCountry);
-  const { setImage } = useActions();
-
-  const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    try {
-      const base64 = await fileToBase64(file);
-      setImage(base64);
-    } catch (error: unknown) {
-      console.error(error);
-    }
-  };
 
   const inputFields: InputFields[] = [
     {
@@ -94,7 +77,6 @@ export const useInputFields = () => {
       name: InputType.FILE,
       type: InputType.FILE,
       ref: refs.imageRef,
-      onChange: handleImageChange,
       className: styles.file,
     },
     {

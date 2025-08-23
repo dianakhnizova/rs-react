@@ -6,29 +6,29 @@ import { Form } from '../form/Form';
 import { ZodError } from 'zod';
 import { userSchema } from '@/schemas/userSchema';
 import { useState } from 'react';
-import type { UserForm } from '@/sources/interfaces';
+import { useActions } from '@/utils/hooks/useActions';
 
 export const UncontrolledForm = () => {
   const { inputFields, refs } = useInputFields();
   const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
+  const { addUserData } = useActions();
 
-  const onSubmit = (event: React.FormEvent) => {
+  const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const userData = getUserData(refs);
+    const userData = await getUserData(refs);
 
     try {
       const validatedData = userSchema.parse(userData);
       console.log(validatedData);
 
+      addUserData(validatedData);
       setErrorMessage({});
     } catch (error) {
       if (error instanceof ZodError) {
-        const zodError = error as ZodError<UserForm>;
-
         const fieldErrors: Record<string, string> = {};
 
-        zodError.issues.forEach(err => {
+        error.issues.forEach(err => {
           const path = err.path[0];
 
           fieldErrors[path as string] = err.message;

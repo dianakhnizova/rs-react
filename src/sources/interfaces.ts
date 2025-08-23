@@ -2,12 +2,17 @@ import type { Variant } from './enums';
 
 export interface UserForm {
   name: string;
-  age: number;
+  age: string;
   email: string;
   password: string;
   gender: string;
   acceptTerms: boolean;
   country: string;
+}
+
+export interface FullUserForm extends UserForm {
+  confirmPassword: string;
+  file?: string;
 }
 
 export interface InputFields {

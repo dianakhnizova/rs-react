@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "types": ["vitest", "@testing-library/jest-dom"],
 
-    "moduleResolution": "bundler",
+    "moduleResolution": "node",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
@@ -19,7 +19,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "allowJs": true,
+    "allowJs": false,
     "noUncheckedSideEffectImports": true,
 
     "baseUrl": ".",
@@ -27,5 +27,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "*.d.ts", "types/**/*"]
+  "include": ["src", "*.d.ts", "types/**/*"],
+  "exclude": ["node_modules", "dist", ".cache"]
 }

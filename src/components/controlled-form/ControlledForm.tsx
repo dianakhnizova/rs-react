@@ -17,9 +17,8 @@ export const ControlledForm = () => {
     resolver: zodResolver(userSchema),
     mode: 'onChange',
   });
-  const { inputFields } = useInputFields();
 
-  console.log('formState.errors:', formState.errors);
+  const { inputFields } = useInputFields();
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)} isDisabled={!formState.isValid}>
