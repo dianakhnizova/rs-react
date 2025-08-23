@@ -12,7 +12,7 @@ export interface UserForm {
 
 export interface FullUserForm extends UserForm {
   confirmPassword: string;
-  file?: string;
+  file: string;
 }
 
 export interface InputFields {

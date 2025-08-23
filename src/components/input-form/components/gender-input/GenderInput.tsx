@@ -2,14 +2,14 @@ import type { FC } from 'react';
 import styles from './GenderInput.module.scss';
 import { messages } from '@/sources/messages';
 import type { UseFormRegister } from 'react-hook-form';
-import type { UserForm } from '@/sources/interfaces';
+import type { FullUserForm } from '@/sources/interfaces';
 import { Gender, InputType } from '@/sources/enums';
 
 interface Props
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'name'> {
-  htmlFor: keyof UserForm;
+  htmlFor: keyof FullUserForm;
   label: string;
-  register?: UseFormRegister<UserForm>;
+  register?: UseFormRegister<FullUserForm>;
   maleRef?: React.RefObject<HTMLInputElement | null>;
   femaleRef?: React.RefObject<HTMLInputElement | null>;
 }

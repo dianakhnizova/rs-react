@@ -8,6 +8,7 @@ import { userSchema } from '@/schemas/userSchema';
 import type { FC } from 'react';
 import { useState } from 'react';
 import { useActions } from '@/utils/hooks/useActions';
+import { fileToBase64 } from '@/utils/fileToBase64';
 
 interface Props {
   onSuccess?: () => void;
@@ -22,12 +23,14 @@ export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   const onSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const userData = await getUserData(refs);
+    const userData = getUserData(refs);
 
     try {
       const validatedData = userSchema.parse(userData);
 
-      addUserData(validatedData);
+      const fileBase64 = await fileToBase64(validatedData.file[0]);
+
+      addUserData({ ...validatedData, file: fileBase64 });
       setErrorMessage({});
 
       if (onSuccess) onSuccess();

@@ -51,21 +51,16 @@ export const countrySchema = z
   .min(1, { message: messages.error.countryMessage });
 
 export const fileSchema = z
-  .string()
-  .min(1, { message: messages.error.file.message1 })
+  .instanceof(FileList)
+  .refine(files => files.length === 1, {
+    message: 'Please upload one file',
+  })
   .refine(
-    str =>
-      str.startsWith('data:image/png') || str.startsWith('data:image/jpeg'),
-    {
-      message: messages.error.file.message2,
-    }
+    files =>
+      files.length === 0 || ['image/png', 'image/jpeg'].includes(files[0].type),
+    'Only PNG or JPEG files are allowed'
   )
   .refine(
-    str => {
-      const size = (str.length * 3) / 4;
-      return size <= 5 * 1024 * 1024;
-    },
-    {
-      message: messages.error.file.message3,
-    }
+    files => files.length === 0 || files[0].size <= 5 * 1024 * 1024,
+    'File size must be less than 5MB'
   );

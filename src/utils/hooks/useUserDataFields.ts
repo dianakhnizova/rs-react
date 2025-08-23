@@ -14,8 +14,8 @@ export const useUserDataFields = () => {
     { label: messages.label.password, data: user.password },
     { label: messages.label.confirmPassword, data: user.confirmPassword },
     { label: messages.label.gender, data: user.gender },
-    { label: messages.label.acceptTerms, data: user.acceptTerms },
-    { label: messages.label.photo, data: user.file || '' },
     { label: messages.label.country, data: user.country },
+    { label: messages.label.photo, data: user.file || '' },
+    { label: messages.label.acceptTerms, data: user.acceptTerms ? 'Yes' : '' },
   ]);
 };

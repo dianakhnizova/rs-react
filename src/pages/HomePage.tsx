@@ -30,6 +30,7 @@ export const HomePage = () => {
 
   const handleFormSuccess = () => {
     setIsUncontrolledModalOpen(false);
+    setIsControlledModalOpen(false);
     setShowUserData(true);
   };
 
@@ -54,14 +55,14 @@ export const HomePage = () => {
         <UncontrolledForm onSuccess={handleFormSuccess} />
       </Modal>
 
-      {showUserData && <UserList onClose={() => setShowUserData(false)} />}
-
       <Modal
         isOpen={isControlledModalOpen}
         onClose={handleControlledCloseModal}
       >
-        <ControlledForm />
+        <ControlledForm onSuccess={handleFormSuccess} />
       </Modal>
+
+      {showUserData && <UserList onClose={() => setShowUserData(false)} />}
     </div>
   );
 };
