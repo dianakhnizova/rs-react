@@ -18,6 +18,13 @@
   box-shadow: var(--shadow-1);
   padding: 10px;
   gap: 9px;
+  transition:
+    border 0.3s,
+    background-color 0.3s;
+}
+
+.highlight {
+  border: 2px solid var(--clr-hover);
 }
 
 .data {

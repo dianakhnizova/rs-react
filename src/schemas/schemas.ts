@@ -1,6 +1,12 @@
 import { z } from 'zod';
 import { messages } from '@/sources/messages';
-import { Gender } from '@/sources/enums';
+import { Gender, ImageFormat } from '@/sources/enums';
+import {
+  MAX_SIZE_IMAGE,
+  NAME_REGEX,
+  ONE_MB,
+  PASSWORD_REGEX,
+} from '@/sources/constants';
 
 export const emailSchema = z
   .string()
@@ -9,20 +15,20 @@ export const emailSchema = z
 export const passwordSchema = z
   .string()
   .min(8, { message: messages.error.password.message1 })
-  .refine(p => /[A-Z]/.test(p), {
+  .refine(p => PASSWORD_REGEX.UPPERCASE.test(p), {
     message: messages.error.password.message2,
   })
-  .refine(p => /[a-z]/.test(p), {
+  .refine(p => PASSWORD_REGEX.LOWERCASE.test(p), {
     message: messages.error.password.message3,
   })
-  .refine(p => /[0-9]/.test(p), {
+  .refine(p => PASSWORD_REGEX.DIGIT.test(p), {
     message: messages.error.password.message4,
   })
-  .refine(p => /[!@#$%^&*(),.?":{}|<>]/.test(p), {
+  .refine(p => PASSWORD_REGEX.SPECIAL.test(p), {
     message: messages.error.password.message5,
   });
 
-export const nameSchema = z.string().refine(name => /^[A-ZА-ЯЁ]/.test(name), {
+export const nameSchema = z.string().refine(name => NAME_REGEX.test(name), {
   message: messages.error.nameMessage,
 });
 
@@ -53,14 +59,16 @@ export const countrySchema = z
 export const fileSchema = z
   .instanceof(FileList)
   .refine(files => files.length === 1, {
-    message: 'Please upload one file',
+    message: messages.error.file.message1,
   })
   .refine(
     files =>
-      files.length === 0 || ['image/png', 'image/jpeg'].includes(files[0].type),
-    'Only PNG or JPEG files are allowed'
+      files.length === 0 ||
+      files[0].type === ImageFormat.PNG ||
+      files[0].type === ImageFormat.JPEG,
+    messages.error.file.message2
   )
   .refine(
-    files => files.length === 0 || files[0].size <= 5 * 1024 * 1024,
-    'File size must be less than 5MB'
+    files => files.length === 0 || files[0].size <= MAX_SIZE_IMAGE * ONE_MB,
+    messages.error.file.message3
   );
