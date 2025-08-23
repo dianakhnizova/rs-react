@@ -39,3 +39,9 @@ export enum ImageFormat {
   PNG = 'image/png',
   JPEG = 'image/jpeg',
 }
+
+export enum PasswordStrength {
+  WEAK = 'weak',
+  MEDIUM = 'medium',
+  STRONG = 'strong',
+}

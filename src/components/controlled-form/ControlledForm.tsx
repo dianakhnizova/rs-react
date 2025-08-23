@@ -1,4 +1,3 @@
-import styles from './ControlledForm.module.scss';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import type { InputFields, UserForm } from '@/sources/interfaces';
@@ -9,16 +8,20 @@ import { userSchema } from '@/schemas/userSchema';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useActions } from '@/utils/hooks/useActions';
 import { fileToBase64 } from '@/utils/fileToBase64';
+import { useEffect } from 'react';
+import { InputType, HTML_FOR } from '@/sources/enums';
+import { getPasswordStrength } from '@/utils/getPasswordStrength';
 
 interface Props {
   onSuccess?: () => void;
 }
 
 export const ControlledForm: FC<Props> = ({ onSuccess }) => {
-  const { register, handleSubmit, formState } = useForm<UserForm>({
-    resolver: zodResolver(userSchema),
-    mode: 'onChange',
-  });
+  const { register, handleSubmit, watch, trigger, formState } =
+    useForm<UserForm>({
+      resolver: zodResolver(userSchema),
+      mode: 'onChange',
+    });
 
   const { inputFields } = useInputFields();
   const { addUserData } = useActions();
@@ -36,22 +39,29 @@ export const ControlledForm: FC<Props> = ({ onSuccess }) => {
     if (onSuccess) onSuccess();
   };
 
+  const password = watch(InputType.PASSWORD);
+  const strength = getPasswordStrength(password || '');
+
+  useEffect(() => {
+    if (password) {
+      void trigger(HTML_FOR.CONFIRM_PASSWORD);
+    }
+  }, [password, trigger]);
+
   return (
     <Form onSubmit={handleSubmit(onSubmit)} isDisabled={!formState.isValid}>
-      {inputFields.map((field, index) => (
-        <div key={index} className={styles.container}>
-          <InputForm
-            {...field}
-            register={register}
-            {...(register ? register(field.name as keyof UserForm) : {})}
-          />
-
-          {formState.errors[field.name] && (
-            <span className={styles.error}>
-              {formState.errors[field.name]?.message}
-            </span>
-          )}
-        </div>
+      {inputFields.map(field => (
+        <InputForm
+          key={field.name}
+          {...field}
+          register={register}
+          passwordStrength={strength}
+          errorMessage={
+            formState.errors[field.name] &&
+            formState.errors[field.name]?.message
+          }
+          {...(register ? register(field.name as keyof UserForm) : {})}
+        />
       ))}
     </Form>
   );

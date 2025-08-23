@@ -3,7 +3,7 @@ import styles from './InputForm.module.scss';
 import classNames from 'classnames';
 import { Variant } from '@/sources/enums';
 import { GenderInput } from './components/gender-input/GenderInput';
-import { Input } from './components/text-input/Input';
+import { Input } from './components/input/Input';
 import type { Country, InputFields, UserForm } from '@/sources/interfaces';
 import type { UseFormRegister } from 'react-hook-form';
 
@@ -14,10 +14,11 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   isGender?: boolean;
   isDataList?: boolean;
   countries?: Country[];
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   maleRef?: React.RefObject<HTMLInputElement | null>;
   femaleRef?: React.RefObject<HTMLInputElement | null>;
   register?: UseFormRegister<InputFields>;
+  passwordStrength?: PasswordStrength;
+  errorMessage?: string;
 }
 
 export const InputForm = forwardRef<HTMLInputElement, Props>(
@@ -30,10 +31,11 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       isGender,
       isDataList,
       countries,
-      onChange,
       maleRef,
       femaleRef,
       register,
+      passwordStrength,
+      errorMessage,
       ...rest
     },
     ref
@@ -57,7 +59,8 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
         ref={register ? undefined : ref}
         isDataList={isDataList}
         countries={countries}
-        onChange={onChange}
+        passwordStrength={passwordStrength}
+        errorMessage={errorMessage}
         className={inputClassName}
         {...(register ? register(htmlFor as keyof UserForm) : {})}
         {...rest}

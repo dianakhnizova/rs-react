@@ -1,4 +1,3 @@
-import styles from './UncontrolledForm.module.scss';
 import { InputForm } from '../input-form/InputForm';
 import { useInputFields } from '@/utils/hooks/useInputFields';
 import { getUserData } from '@/utils/getUserData';
@@ -9,6 +8,8 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { useActions } from '@/utils/hooks/useActions';
 import { fileToBase64 } from '@/utils/fileToBase64';
+import { InputType } from '@/sources/enums';
+import { getPasswordStrength } from '@/utils/getPasswordStrength';
 
 interface Props {
   onSuccess?: () => void;
@@ -17,6 +18,7 @@ interface Props {
 export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   const { inputFields, refs } = useInputFields();
   const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
+  const [passwordStrength, setPasswordStrength] = useState<string | null>(null);
 
   const { addUserData } = useActions();
 
@@ -51,14 +53,21 @@ export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
 
   return (
     <Form onSubmit={onSubmit}>
-      {inputFields.map((field, index) => (
-        <div key={index} className={styles.container}>
-          <InputForm {...field} />
-
-          {errorMessage[field.name] && (
-            <span className={styles.error}>{errorMessage[field.name]}</span>
-          )}
-        </div>
+      {inputFields.map(field => (
+        <InputForm
+          key={field.name}
+          {...field}
+          errorMessage={errorMessage[field.name] && errorMessage[field.name]}
+          passwordStrength={
+            field.type === InputType.PASSWORD ? passwordStrength : undefined
+          }
+          onChange={
+            field.type === InputType.PASSWORD
+              ? event =>
+                  setPasswordStrength(getPasswordStrength(event.target.value))
+              : undefined
+          }
+        />
       ))}
     </Form>
   );

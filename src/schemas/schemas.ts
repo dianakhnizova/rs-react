@@ -48,8 +48,10 @@ export const passwordSchema = z
     message: messages.error.password.message5,
   });
 
-export const confirmSchema = z.string().trim();
-
+export const confirmSchema = z
+  .string()
+  .trim()
+  .min(1, { message: messages.error.confirmMessage });
 export const genderSchema = z.enum([Gender.MALE, Gender.FEMALE], {
   message: messages.error.genderMessage,
 });
