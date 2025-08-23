@@ -25,7 +25,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       passwordStrength,
       errorMessage,
       className,
-
       ...rest
     },
     ref

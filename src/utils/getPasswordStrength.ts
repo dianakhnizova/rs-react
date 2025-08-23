@@ -1,4 +1,4 @@
-export type PasswordStrength = 'weak' | 'medium' | 'strong';
+import { PasswordStrength } from '@/sources/enums';
 
 export function getPasswordStrength(password: string): PasswordStrength {
   let strength = 0;
@@ -9,7 +9,7 @@ export function getPasswordStrength(password: string): PasswordStrength {
   if (/\d/.test(password)) strength++;
   if (/[^A-Za-z0-9]/.test(password)) strength++;
 
-  if (strength <= 2) return 'weak';
-  if (strength === 3 || strength === 4) return 'medium';
-  return 'strong';
+  if (strength <= 2) return PasswordStrength.WEAK;
+  if (strength === 3 || strength === 4) return PasswordStrength.MEDIUM;
+  return PasswordStrength.STRONG;
 }

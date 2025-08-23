@@ -36,6 +36,7 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       register,
       passwordStrength,
       errorMessage,
+      onChange,
       ...rest
     },
     ref
@@ -61,6 +62,7 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
         countries={countries}
         passwordStrength={passwordStrength}
         errorMessage={errorMessage}
+        onChange={onChange}
         className={inputClassName}
         {...(register ? register(htmlFor as keyof UserForm) : {})}
         {...rest}
