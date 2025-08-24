@@ -17,7 +17,7 @@ export const InfoBar: FC<Props> = ({
   <div className={styles.info}>
     <span className={styles.error}>{errorMessage}</span>
 
-    {htmlFor === InputType.PASSWORD && (
+    {htmlFor === InputType.PASSWORD && passwordStrength && (
       <div className={styles.strength}>
         <div
           className={classNames(

@@ -56,7 +56,9 @@ export const ControlledForm: FC<Props> = ({ onSuccess }) => {
           key={field.name}
           {...field}
           register={register}
-          passwordStrength={strength}
+          passwordStrength={
+            field.name === InputType.PASSWORD && password ? strength : undefined
+          }
           errorMessage={
             formState.errors[field.name] &&
             formState.errors[field.name]?.message
