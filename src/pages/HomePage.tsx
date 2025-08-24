@@ -1,11 +1,11 @@
 import { Button } from '@/components/button/Button';
 import styles from './HomePage.module.scss';
-import { messages } from './messages';
 import { UncontrolledForm } from '@/components/uncontrolled-form/UncontrolledForm';
 import { useState } from 'react';
 import { Modal } from '@/components/modal/Modal';
 import { ControlledForm } from '@/components/controlled-form/ControlledForm';
 import { UserList } from '@/components/user-list/UserList';
+import { messages } from '@/sources/messages';
 
 export const HomePage = () => {
   const [isUncontrolledModalOpen, setIsUncontrolledModalOpen] = useState(false);
@@ -36,15 +36,15 @@ export const HomePage = () => {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>{messages.appTitle}</h1>
+      <h1 className={styles.title}>{messages.homePageMessages.appTitle}</h1>
 
       <div className={styles.buttonContainer}>
         <Button onClick={handleUncontrolledOpenModal}>
-          {messages.uncontrolledButton}
+          {messages.homePageMessages.uncontrolledButton}
         </Button>
 
         <Button onClick={handleControlledOpenModal}>
-          {messages.reactHookFormButton}
+          {messages.homePageMessages.reactHookFormButton}
         </Button>
       </div>
 
@@ -62,7 +62,7 @@ export const HomePage = () => {
         <ControlledForm onSuccess={handleFormSuccess} />
       </Modal>
 
-      {showUserData && <UserList onClose={() => setShowUserData(false)} />}
+      {showUserData && <UserList />}
     </div>
   );
 };

@@ -1,4 +1,5 @@
-import { InputType, PasswordStrength } from '@/sources/enums';
+import type { PasswordStrength } from '@/sources/enums';
+import { InputType } from '@/sources/enums';
 import styles from './InfoBar.module.scss';
 import classNames from 'classnames';
 import type { FC } from 'react';
@@ -26,13 +27,7 @@ export const InfoBar: FC<Props> = ({
           )}
         />
 
-        <span className={styles.label}>
-          {passwordStrength === PasswordStrength.WEAK && PasswordStrength.WEAK}
-          {passwordStrength === PasswordStrength.MEDIUM &&
-            PasswordStrength.MEDIUM}
-          {passwordStrength === PasswordStrength.STRONG &&
-            PasswordStrength.STRONG}
-        </span>
+        <span className={styles.label}>{passwordStrength}</span>
       </div>
     )}
   </div>

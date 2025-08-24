@@ -63,15 +63,6 @@ export const ControlledForm: FC<Props> = ({ onSuccess }) => {
             formState.errors[field.name] &&
             formState.errors[field.name]?.message
           }
-          autocomplete={
-            field.name === InputType.EMAIL
-              ? InputType.EMAIL
-              : field.name === InputType.PASSWORD
-                ? InputType.PASSWORD
-                : field.name === HTML_FOR.CONFIRM_PASSWORD
-                  ? HTML_FOR.CONFIRM_PASSWORD
-                  : undefined
-          }
           {...(register ? register(field.name as keyof UserForm) : {})}
         />
       ))}

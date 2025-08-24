@@ -53,4 +53,12 @@ export const messages = {
     },
     confirmMessage: 'Passwords must match',
   },
+
+  altUser: 'User',
+  photoLabel: 'Photo',
+  homePageMessages: {
+    uncontrolledButton: 'Uncontrolled components',
+    reactHookFormButton: 'React Hook Form',
+    appTitle: 'User Registration',
+  },
 };

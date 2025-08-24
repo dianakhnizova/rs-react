@@ -20,7 +20,6 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegister<InputFields>;
   passwordStrength?: PasswordStrength;
   errorMessage?: string;
-  autocomplete?: string;
 }
 
 export const InputForm = forwardRef<HTMLInputElement, Props>(
@@ -38,7 +37,6 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       register,
       passwordStrength,
       errorMessage,
-      autocomplete,
       ...rest
     },
     ref
@@ -65,7 +63,6 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
         countries={countries}
         passwordStrength={passwordStrength}
         errorMessage={errorMessage}
-        autoComplete={autocomplete}
         className={inputClassName}
         {...(register ? register(htmlFor as keyof UserForm) : {})}
         {...rest}

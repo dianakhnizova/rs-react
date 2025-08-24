@@ -1,10 +1,11 @@
 import { forwardRef } from 'react';
 import styles from './Input.module.scss';
 import type { Country } from '@/sources/interfaces';
-import type { PasswordStrength } from '@/sources/enums';
+import { PasswordStrength } from '@/sources/enums';
 import { ImageFormat, InputType, List } from '@/sources/enums';
 import { InfoBar } from './components/info-bar/InfoBar';
 import * as React from 'react';
+import classNames from 'classnames';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
@@ -13,7 +14,6 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   countries?: Country[];
   passwordStrength?: PasswordStrength;
   errorMessage?: string;
-  autocomplete?: string;
 }
 
 export const Input = forwardRef<HTMLInputElement, Props>(
@@ -26,12 +26,17 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       countries,
       passwordStrength,
       errorMessage,
-      autocomplete,
       className,
       ...rest
     },
     ref
   ) => {
+    const inputClass = classNames(className, {
+      [styles.weak]: passwordStrength === PasswordStrength.WEAK,
+      [styles.medium]: passwordStrength === PasswordStrength.MEDIUM,
+      [styles.strong]: passwordStrength === PasswordStrength.STRONG,
+    });
+
     return (
       <div className={styles.container}>
         <label htmlFor={htmlFor}>{label}</label>
@@ -45,8 +50,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
               ? `${ImageFormat.PNG},${ImageFormat.JPEG}`
               : undefined
           }
-          autoComplete={autocomplete}
-          className={className}
+          className={inputClass}
           {...rest}
         />
 
