@@ -51,7 +51,19 @@ export const passwordSchema = z
 export const confirmSchema = z
   .string()
   .trim()
-  .min(1, { message: messages.error.confirmMessage });
+  .min(1, { message: messages.error.confirmMessage })
+  .refine(p => PASSWORD_REGEX.UPPERCASE.test(p), {
+    message: messages.error.password.message2,
+  })
+  .refine(p => PASSWORD_REGEX.LOWERCASE.test(p), {
+    message: messages.error.password.message3,
+  })
+  .refine(p => PASSWORD_REGEX.DIGIT.test(p), {
+    message: messages.error.password.message4,
+  })
+  .refine(p => PASSWORD_REGEX.SPECIAL.test(p), {
+    message: messages.error.password.message5,
+  });
 
 export const genderSchema = z
   .enum([Gender.MALE, Gender.FEMALE], {

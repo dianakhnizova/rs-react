@@ -7,13 +7,15 @@ import { InfoBar } from './components/info-bar/InfoBar';
 import * as React from 'react';
 import classNames from 'classnames';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   htmlFor: string;
   label: string;
   isDataList?: boolean;
   countries?: Country[];
   passwordStrength?: PasswordStrength;
   errorMessage?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, Props>(
@@ -26,6 +28,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       countries,
       passwordStrength,
       errorMessage,
+      onChange,
       className,
       ...rest
     },
@@ -50,6 +53,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
               ? `${ImageFormat.PNG},${ImageFormat.JPEG}`
               : undefined
           }
+          onChange={onChange}
           className={inputClass}
           {...rest}
         />

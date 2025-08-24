@@ -8,7 +8,8 @@ import { Input } from './components/input/Input';
 import type { Country, InputFields, UserForm } from '@/sources/interfaces';
 import type { UseFormRegister } from 'react-hook-form';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   htmlFor: string;
   label: string;
   variant?: Variant;
@@ -20,6 +21,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegister<InputFields>;
   passwordStrength?: PasswordStrength;
   errorMessage?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const InputForm = forwardRef<HTMLInputElement, Props>(
@@ -37,6 +39,7 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
       register,
       passwordStrength,
       errorMessage,
+      onChange,
       ...rest
     },
     ref
@@ -63,6 +66,7 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
         countries={countries}
         passwordStrength={passwordStrength}
         errorMessage={errorMessage}
+        onChange={!register ? onChange : undefined}
         className={inputClassName}
         {...(register ? register(htmlFor as keyof UserForm) : {})}
         {...rest}

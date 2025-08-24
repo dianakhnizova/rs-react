@@ -8,6 +8,9 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import { useActions } from '@/utils/hooks/useActions';
 import { fileToBase64 } from '@/utils/fileToBase64';
+import type { PasswordStrength } from '@/sources/enums';
+import { InputType } from '@/sources/enums';
+import { getPasswordStrength } from '@/utils/getPasswordStrength';
 
 interface Props {
   onSuccess?: () => void;
@@ -16,6 +19,9 @@ interface Props {
 export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   const { inputFields, refs } = useInputFields();
   const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
+  const [passwordStrength, setPasswordStrength] = useState<
+    PasswordStrength | undefined
+  >();
 
   const { addUserData } = useActions();
 
@@ -28,6 +34,8 @@ export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
       const validatedData = userSchema.parse(userData);
 
       const fileBase64 = await fileToBase64(validatedData.file[0]);
+
+      setPasswordStrength(getPasswordStrength(validatedData.password));
 
       addUserData({ ...validatedData, file: fileBase64 });
       setErrorMessage({});
@@ -55,6 +63,15 @@ export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
           key={field.name}
           {...field}
           errorMessage={errorMessage[field.name]}
+          passwordStrength={
+            field.htmlFor === InputType.PASSWORD ? passwordStrength : undefined
+          }
+          onChange={
+            field.type === InputType.PASSWORD
+              ? (event: React.ChangeEvent<HTMLInputElement>) =>
+                  setPasswordStrength(getPasswordStrength(event.target.value))
+              : undefined
+          }
         />
       ))}
     </Form>
