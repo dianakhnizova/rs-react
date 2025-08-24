@@ -19,8 +19,10 @@ interface Props {
 export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   const { inputFields, refs } = useInputFields();
   const [errorMessage, setErrorMessage] = useState<Record<string, string>>({});
-  const [passwordStrength, setPasswordStrength] =
-    useState<PasswordStrength | null>(null);
+
+  const [submittedStrength, setSubmittedStrength] = useState<
+    PasswordStrength | undefined
+  >(undefined);
 
   const { addUserData } = useActions();
 
@@ -33,6 +35,9 @@ export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
       const validatedData = userSchema.parse(userData);
 
       const fileBase64 = await fileToBase64(validatedData.file[0]);
+
+      const strength = getPasswordStrength(validatedData.password);
+      setSubmittedStrength(strength);
 
       addUserData({ ...validatedData, file: fileBase64 });
       setErrorMessage({});
@@ -61,15 +66,7 @@ export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
           {...field}
           errorMessage={errorMessage[field.name] && errorMessage[field.name]}
           passwordStrength={
-            field.type === InputType.PASSWORD
-              ? (passwordStrength ?? undefined)
-              : undefined
-          }
-          onChange={
-            field.type === InputType.PASSWORD
-              ? (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setPasswordStrength(getPasswordStrength(event.target.value))
-              : undefined
+            field.type === InputType.PASSWORD ? submittedStrength : undefined
           }
           autocomplete={
             field.name === InputType.EMAIL

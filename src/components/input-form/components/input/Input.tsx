@@ -4,9 +4,9 @@ import type { Country } from '@/sources/interfaces';
 import type { PasswordStrength } from '@/sources/enums';
 import { ImageFormat, InputType, List } from '@/sources/enums';
 import { InfoBar } from './components/info-bar/InfoBar';
+import * as React from 'react';
 
-interface Props
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
   label: string;
   isDataList?: boolean;
@@ -14,7 +14,6 @@ interface Props
   passwordStrength?: PasswordStrength;
   errorMessage?: string;
   autocomplete?: string;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, Props>(
@@ -28,7 +27,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       passwordStrength,
       errorMessage,
       autocomplete,
-      onChange,
       className,
       ...rest
     },
@@ -48,7 +46,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(
               : undefined
           }
           autoComplete={autocomplete}
-          onChange={onChange}
           className={className}
           {...rest}
         />

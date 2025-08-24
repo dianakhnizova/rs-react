@@ -6,10 +6,7 @@ import type { FC } from 'react';
 interface Props {
   htmlFor: string;
   errorMessage?: string;
-  passwordStrength?:
-    | PasswordStrength.WEAK
-    | PasswordStrength.MEDIUM
-    | PasswordStrength.STRONG;
+  passwordStrength?: PasswordStrength;
 }
 
 export const InfoBar: FC<Props> = ({
