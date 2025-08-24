@@ -17,6 +17,7 @@ describe('user.slice', () => {
 
   it('should return initial state', () => {
     const state = userReducer(undefined, { type: 'unknown' });
+
     expect(state).toEqual({ userData: [] });
   });
 
@@ -25,6 +26,7 @@ describe('user.slice', () => {
       { userData: [] },
       userActions.addUserData(mockUser)
     );
+
     expect(state.userData).toHaveLength(1);
     expect(state.userData[0]).toEqual(mockUser);
   });
@@ -34,6 +36,7 @@ describe('user.slice', () => {
       { userData: [mockUser] },
       userActions.clearUserData()
     );
+
     expect(state.userData).toEqual([]);
   });
 });

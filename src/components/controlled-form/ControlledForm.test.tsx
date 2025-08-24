@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { vi } from 'vitest';
 import { store } from '@/store/store';
 import { ControlledForm } from './ControlledForm';
+import { InputFormProps } from '@/sources/interfaces';
 
 vi.mock('@/utils/hooks/useInputFields', () => ({
   useInputFields: () => ({
@@ -26,7 +27,12 @@ vi.mock('@/utils/hooks/useInputFields', () => ({
 }));
 
 vi.mock('../input-form/InputForm', () => ({
-  InputForm: ({ passwordStrength, label, htmlFor, errorMessage }: any) => (
+  InputForm: ({
+    passwordStrength,
+    label,
+    htmlFor,
+    errorMessage,
+  }: InputFormProps) => (
     <div>
       <label htmlFor={htmlFor}>{label}</label>
       {passwordStrength !== undefined && (

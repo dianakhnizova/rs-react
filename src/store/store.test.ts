@@ -19,12 +19,15 @@ describe('Redux Store', () => {
     store.dispatch(userActions.addUserData(mockUser));
 
     const state = store.getState();
+
     expect(state.user.userData).toContainEqual(mockUser);
   });
 
   it('should clear user data', () => {
     store.dispatch(userActions.clearUserData());
+
     const state = store.getState();
+
     expect(state.user.userData).toEqual([]);
   });
 });

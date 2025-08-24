@@ -21,7 +21,8 @@ describe('UserList', () => {
 
     render(<UserList />);
 
-    const container = screen.getByTestId('userlist-container');
+    const container = screen.getByTestId('user-list-container');
+
     expect(container).toBeInTheDocument();
 
     expect(screen.getByText(/Name:/)).toBeInTheDocument();
@@ -34,7 +35,9 @@ describe('UserList', () => {
     ]);
 
     render(<UserList />);
+
     const img = screen.getByAltText(messages.altUser);
+
     expect(img).toHaveAttribute('src', 'pic.png');
   });
 });

@@ -22,6 +22,7 @@ vi.mock('@/components/user-list/UserList', () => ({
 describe('HomePage', () => {
   it('renders title and buttons', () => {
     render(<HomePage />);
+
     expect(
       screen.getByRole('heading', { name: /user registration/i })
     ).toBeInTheDocument();

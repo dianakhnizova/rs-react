@@ -33,6 +33,14 @@ export interface InputFields {
   femaleRef?: React.RefObject<HTMLInputElement | null>;
 }
 
+export interface InputFormProps {
+  label: string;
+  htmlFor: string;
+  errorMessage?: string;
+  inputRef: React.RefObject<HTMLInputElement>;
+  passwordStrength?: string;
+}
+
 export interface Country {
   id: string;
   name: string;

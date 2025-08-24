@@ -12,6 +12,7 @@ describe('fileToBase64', () => {
 
     const base64Data = result.split(',')[1];
     const decoded = atob(base64Data);
+
     expect(decoded).toBe(content);
   });
 });

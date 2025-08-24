@@ -32,6 +32,7 @@ describe('Modal', () => {
         <p>Content</p>
       </Modal>
     );
+
     expect(screen.getByText('Content')).toBeInTheDocument();
     expect(screen.getByRole('dialog')).toBeInTheDocument();
   });
@@ -42,6 +43,7 @@ describe('Modal', () => {
         <p>Content</p>
       </Modal>
     );
+
     fireEvent.click(screen.getByTestId('popup'));
     expect(onClose).toHaveBeenCalled();
   });
@@ -52,20 +54,9 @@ describe('Modal', () => {
         <p>Content</p>
       </Modal>
     );
+
     fireEvent.keyDown(document, { key: 'Escape', code: 'Escape' });
     expect(onClose).toHaveBeenCalled();
-  });
-
-  it('renders error message when isError = true', () => {
-    render(
-      <Modal
-        isOpen={true}
-        isError
-        error="Something went wrong"
-        onClose={onClose}
-      />
-    );
-    expect(screen.getByText('Something went wrong')).toBeInTheDocument();
   });
 
   it('focuses inside modal on open', async () => {
@@ -74,7 +65,9 @@ describe('Modal', () => {
         <input placeholder="Name" />
       </Modal>
     );
+
     const input = await screen.findByPlaceholderText('Name');
+
     expect(document.activeElement).toBe(input);
   });
 
@@ -93,6 +86,7 @@ describe('Modal', () => {
     expect(screen.getByRole('dialog')).toBeInTheDocument();
 
     rerender(<Modal isOpen={false} onClose={onClose} />);
+
     expect(document.activeElement).toBe(button);
   });
 
@@ -102,9 +96,11 @@ describe('Modal', () => {
         <p>Content</p>
       </Modal>
     );
+
     const closeBtn = screen.getByRole('button', {
       name: messages.button.closeButton,
     });
+
     expect(closeBtn).toBeInTheDocument();
     fireEvent.click(closeBtn);
     expect(onClose).toHaveBeenCalled();

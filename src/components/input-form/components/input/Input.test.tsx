@@ -23,6 +23,7 @@ describe('Input with country autocomplete', () => {
     );
 
     const datalist = screen.getByTestId('country-list');
+
     expect(datalist).toBeInTheDocument();
     expect(datalist).toHaveAttribute('id', List.COUNTRY_LIST);
 

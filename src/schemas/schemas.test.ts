@@ -79,6 +79,7 @@ describe('Form validation schemas', () => {
       type: 'text/plain',
       lastModified: Date.now(),
     });
+
     const invalidList = Object.create(FileList.prototype);
     invalidList.length = 1;
     invalidList.item = (i: number) => (i === 0 ? invalidFile : null);

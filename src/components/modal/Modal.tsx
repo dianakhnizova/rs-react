@@ -36,20 +36,15 @@ export const Modal: FC<Props> = ({
         const firstInput = containerRef.current?.querySelector<HTMLElement>(
           'input, textarea, select, button, [tabindex]:not([tabindex="-1"])'
         );
-        if (firstInput) {
-          firstInput.focus();
-        } else {
-          containerRef.current?.focus();
 
-          document.body.style.overflow = '';
-        }
+        if (firstInput) firstInput.focus();
+        else containerRef.current?.focus();
       }, 0);
-    } else {
-      lastActiveElement.current?.focus();
     }
 
     return () => {
       document.body.style.overflow = '';
+      lastActiveElement.current?.focus();
     };
   }, [isOpen]);
 

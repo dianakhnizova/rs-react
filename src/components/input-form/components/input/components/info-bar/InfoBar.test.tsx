@@ -5,6 +5,7 @@ import { InputType, PasswordStrength } from '@/sources/enums';
 describe('InfoBar', () => {
   it('displays error message when provided', () => {
     render(<InfoBar htmlFor="username" errorMessage="Required field" />);
+
     expect(screen.getByText('Required field')).toBeInTheDocument();
   });
 
@@ -16,6 +17,7 @@ describe('InfoBar', () => {
     expect(screen.getByText('Invalid input')).toBeInTheDocument();
 
     rerender(<InfoBar htmlFor="username" />);
+
     expect(screen.queryByText('Invalid input')).not.toBeInTheDocument();
   });
 
@@ -41,6 +43,7 @@ describe('InfoBar', () => {
 
   it('does not render strength if passwordStrength is missing', () => {
     render(<InfoBar htmlFor={InputType.PASSWORD} />);
+
     expect(screen.queryByText(/weak|medium|strong/i)).not.toBeInTheDocument();
   });
 });

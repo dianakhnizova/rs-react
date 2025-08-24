@@ -9,6 +9,7 @@ describe('ReactPortal', () => {
 
   it('renders children into existing wrapper element', () => {
     const existing = document.createElement('div');
+
     existing.id = WRAPPER_ROOT_PORTAL_ID;
     document.body.appendChild(existing);
 
@@ -32,6 +33,7 @@ describe('ReactPortal', () => {
     );
 
     const wrapper = document.getElementById(WRAPPER_ROOT_PORTAL_ID);
+
     expect(wrapper).not.toBeNull();
     expect(wrapper).toContainElement(screen.getByText('New Portal'));
   });
@@ -48,6 +50,7 @@ describe('ReactPortal', () => {
 
   it('supports custom wrapperId', () => {
     const customId = 'custom-portal';
+
     render(
       <ReactPortal wrapperId={customId}>
         <span>Custom Portal Content</span>
@@ -55,6 +58,7 @@ describe('ReactPortal', () => {
     );
 
     const wrapper = document.getElementById(customId);
+
     expect(wrapper).not.toBeNull();
     expect(wrapper).toContainElement(screen.getByText('Custom Portal Content'));
   });

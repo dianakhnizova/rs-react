@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { vi } from 'vitest';
 import { store } from '@/store/store';
 import { UncontrolledForm } from './UncontrolledForm';
+import { InputFormProps } from '@/sources/interfaces';
 
 const mockAddUserData = vi.fn();
 
@@ -44,7 +45,7 @@ vi.mock('@/utils/hooks/useInputFields', () => ({
 }));
 
 vi.mock('../input-form/InputForm', () => ({
-  InputForm: ({ label, htmlFor, errorMessage, inputRef }: any) => (
+  InputForm: ({ label, htmlFor, errorMessage, inputRef }: InputFormProps) => (
     <div>
       <label htmlFor={htmlFor}>{label}</label>
       {errorMessage && <div>{errorMessage}</div>}
@@ -95,6 +96,7 @@ describe('UncontrolledForm', () => {
     );
 
     const submitButton = screen.getByRole('button', { name: /submit/i });
+
     expect(submitButton).toBeInTheDocument();
     expect(submitButton).not.toBeDisabled();
   });

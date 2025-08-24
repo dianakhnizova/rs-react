@@ -36,7 +36,9 @@ describe('UserData', () => {
     ]);
 
     render(<UserData />);
+
     const img = screen.getByAltText(messages.altUser);
+
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute('src', 'photo-url.png');
   });
