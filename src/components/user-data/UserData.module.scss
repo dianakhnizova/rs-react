@@ -1,0 +1,36 @@
+.userCard {
+  display: grid;
+  align-items: center;
+  background-color: var(--clr-bg-2);
+  grid-template-columns: 1fr 2fr;
+  width: 40%;
+  height: 260px;
+  box-shadow: var(--shadow-1);
+  padding: 10px;
+  gap: 4px;
+  transition:
+    border 0.3s,
+    background-color 0.3s;
+  border: 2px solid transparent;
+}
+
+.highlight {
+  border: 2px solid var(--clr-hover);
+}
+
+.data {
+  display: contents;
+  font-style: italic;
+}
+
+.label {
+  grid-column: 1;
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+  max-width: 65px;
+  max-height: 70px;
+  object-fit: contain;
+}

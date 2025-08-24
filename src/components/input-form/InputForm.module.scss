@@ -1,0 +1,28 @@
+.input {
+  width: 100%;
+  background: transparent;
+  font-size: 10px;
+  border: 1px solid transparent;
+
+  &.primary {
+    box-shadow: var(--shadow-4);
+    color: var(--clr-line);
+    padding: 4px 10px;
+
+    &:focus {
+      border: 1px solid var(--clr-hover);
+    }
+  }
+
+  &.secondary {
+    width: 16px;
+    height: 16px;
+    border: none;
+  }
+}
+
+.accept,
+.gender {
+  cursor: pointer;
+  accent-color: var(--clr-hover);
+}

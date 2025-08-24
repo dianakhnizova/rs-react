@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  box-shadow: var(--shadow-2);
+  gap: 20px;
+  align-items: center;
+  padding: 10px;
+}

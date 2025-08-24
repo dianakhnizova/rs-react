@@ -1,0 +1,39 @@
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  .error {
+    color: var(--clr-error-1);
+    padding: 0 6px;
+  }
+
+  .strength {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 30%;
+
+    .bar {
+      flex: 1;
+      height: 2px;
+    }
+
+    .weak {
+      background: var(--clr-error-1);
+    }
+
+    .medium {
+      background: var(--clr-error-2);
+    }
+
+    .strong {
+      background: var(--clr-error-3);
+    }
+
+    .label {
+      color: var(--clr-disabled-600);
+    }
+  }
+}

@@ -1,0 +1,97 @@
+import { useFormRefs } from './useFormRefs';
+import styles from '@/components/input-form/InputForm.module.scss';
+import { messages } from '@/sources/messages';
+import { HTML_FOR, InputType, List, Variant } from '@/sources/enums';
+import type { InputFields } from '@/sources/interfaces';
+import { useSelector } from 'react-redux';
+import { selectCountry } from '@/store/slices/country/selectors';
+
+export const useInputFields = () => {
+  const refs = useFormRefs();
+  const countries = useSelector(selectCountry);
+
+  const inputFields: InputFields[] = [
+    {
+      htmlFor: HTML_FOR.NAME,
+      label: messages.label.name,
+      name: HTML_FOR.NAME,
+      type: InputType.TEXT,
+      placeholder: messages.placeholder.name,
+      ref: refs.nameRef,
+    },
+    {
+      htmlFor: HTML_FOR.AGE,
+      label: messages.label.age,
+      name: HTML_FOR.AGE,
+      type: InputType.NUMBER,
+      placeholder: messages.placeholder.age,
+      ref: refs.ageRef,
+    },
+    {
+      htmlFor: InputType.EMAIL,
+      label: messages.label.email,
+      name: InputType.EMAIL,
+      type: InputType.EMAIL,
+      placeholder: messages.placeholder.email,
+      ref: refs.emailRef,
+    },
+    {
+      htmlFor: InputType.PASSWORD,
+      label: messages.label.password,
+      name: InputType.PASSWORD,
+      type: InputType.PASSWORD,
+      placeholder: messages.placeholder.password,
+      ref: refs.passwordRef,
+    },
+    {
+      htmlFor: HTML_FOR.CONFIRM_PASSWORD,
+      label: messages.label.confirmPassword,
+      name: HTML_FOR.CONFIRM_PASSWORD,
+      type: InputType.PASSWORD,
+      placeholder: messages.placeholder.confirm,
+      ref: refs.confirmPasswordRef,
+    },
+    {
+      htmlFor: HTML_FOR.GENDER,
+      label: messages.label.gender,
+      name: HTML_FOR.GENDER,
+      type: InputType.RADIO,
+      variant: Variant.SECONDARY,
+      isGender: true,
+      maleRef: refs.genderMaleRef,
+      femaleRef: refs.genderFemaleRef,
+      className: styles.gender,
+    },
+
+    {
+      htmlFor: InputType.FILE,
+      label: messages.label.photo,
+      name: InputType.FILE,
+      type: InputType.FILE,
+      ref: refs.imageRef,
+      className: styles.file,
+    },
+    {
+      htmlFor: HTML_FOR.COUNTRY,
+      label: messages.label.country,
+      name: HTML_FOR.COUNTRY,
+      type: InputType.TEXT,
+      isDataList: true,
+      list: List.COUNTRY_LIST,
+      countries,
+      ref: refs.countryRef,
+      className: styles.country,
+    },
+    {
+      htmlFor: HTML_FOR.ACCEPT_TERMS,
+      label: messages.label.acceptTerms,
+      name: HTML_FOR.ACCEPT_TERMS,
+      type: InputType.CHECKBOX,
+      ref: refs.acceptTermsRef,
+      variant: Variant.SECONDARY,
+      className: styles.accept,
+    },
+  ];
+
+  return { inputFields, refs };
+};
