@@ -41,8 +41,9 @@ describe('Form validation schemas', () => {
   });
 
   it('validates confirm correctly', () => {
-    expect(confirmSchema.safeParse('anything').success).toBe(true);
+    expect(confirmSchema.safeParse('Abcdef1!').success).toBe(true);
     expect(confirmSchema.safeParse('').success).toBe(false);
+    expect(confirmSchema.safeParse('abcdefg').success).toBe(false);
   });
 
   it('validates gender correctly', () => {
