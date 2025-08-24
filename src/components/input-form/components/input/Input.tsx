@@ -55,7 +55,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
         />
 
         {isDataList && countries && (
-          <datalist id={List.COUNTRY_LIST}>
+          <datalist id={List.COUNTRY_LIST} data-testid="country-list">
             {countries.map(country => (
               <option key={country.id} value={country.name}>
                 {country.name}
