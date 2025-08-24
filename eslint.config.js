@@ -25,7 +25,14 @@ export default tseslint
         'tests',
         'vite.config.ts',
         'vitest-setup.ts',
-        'vitest.config.ts'
+        'vitest.config.ts',
+        'tests',
+        '**/__tests__/**',
+        '**/tests/**',
+        '**/*.test.ts',
+        '**/*.test.tsx',
+        '**/*.spec.ts',
+        '**/*.spec.tsx',
       ],
     },
     {

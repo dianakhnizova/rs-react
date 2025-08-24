@@ -21,6 +21,7 @@ export const InfoBar: FC<Props> = ({
     {htmlFor === InputType.PASSWORD && passwordStrength && (
       <div className={styles.strength}>
         <div
+          role="presentation"
           className={classNames(
             styles.bar,
             passwordStrength ? styles[passwordStrength] : styles.weak
