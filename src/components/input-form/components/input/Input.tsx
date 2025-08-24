@@ -5,13 +5,16 @@ import type { PasswordStrength } from '@/sources/enums';
 import { ImageFormat, InputType, List } from '@/sources/enums';
 import { InfoBar } from './components/info-bar/InfoBar';
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
   htmlFor: string;
   label: string;
   isDataList?: boolean;
   countries?: Country[];
   passwordStrength?: PasswordStrength;
   errorMessage?: string;
+  autocomplete?: string;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Input = forwardRef<HTMLInputElement, Props>(
@@ -24,6 +27,8 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       countries,
       passwordStrength,
       errorMessage,
+      autocomplete,
+      onChange,
       className,
       ...rest
     },
@@ -42,6 +47,8 @@ export const Input = forwardRef<HTMLInputElement, Props>(
               ? `${ImageFormat.PNG},${ImageFormat.JPEG}`
               : undefined
           }
+          autoComplete={autocomplete}
+          onChange={onChange}
           className={className}
           {...rest}
         />

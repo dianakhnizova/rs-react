@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useActions } from '@/utils/hooks/useActions';
 import { fileToBase64 } from '@/utils/fileToBase64';
 import type { PasswordStrength } from '@/sources/enums';
-import { InputType } from '@/sources/enums';
+import { HTML_FOR, InputType } from '@/sources/enums';
 import { getPasswordStrength } from '@/utils/getPasswordStrength';
 
 interface Props {
@@ -65,9 +65,18 @@ export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
           }
           onChange={
             field.type === InputType.PASSWORD
-              ? event =>
+              ? (event: React.ChangeEvent<HTMLInputElement>) =>
                   setPasswordStrength(getPasswordStrength(event.target.value))
               : undefined
+          }
+          autocomplete={
+            field.name === InputType.EMAIL
+              ? InputType.EMAIL
+              : field.name === InputType.PASSWORD
+                ? InputType.PASSWORD
+                : field.name === HTML_FOR.CONFIRM_PASSWORD
+                  ? HTML_FOR.CONFIRM_PASSWORD
+                  : undefined
           }
         />
       ))}

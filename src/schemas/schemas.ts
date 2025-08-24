@@ -52,9 +52,12 @@ export const confirmSchema = z
   .string()
   .trim()
   .min(1, { message: messages.error.confirmMessage });
-export const genderSchema = z.enum([Gender.MALE, Gender.FEMALE], {
-  message: messages.error.genderMessage,
-});
+
+export const genderSchema = z
+  .enum([Gender.MALE, Gender.FEMALE], {
+    message: messages.error.genderMessage,
+  })
+  .transform(val => val as Gender);
 
 export const acceptSchema = z.boolean().refine(val => val === true, {
   message: messages.error.acceptTermsMessage,
