@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">64.7% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/17</span>
+                <span class='fraction'>11/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">57.14% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>8/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>3/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">68.75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>11/16</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -153,6 +153,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -161,34 +172,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -224,17 +224,17 @@ interface Props {
   onSuccess?: () =&gt; void;
 }
 &nbsp;
-export const ControlledForm: FC&lt;Props&gt; = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >({</span> onSuccess }) =&gt; {</span>
+export const ControlledForm: FC&lt;Props&gt; = ({ onSuccess }) =&gt; {
   const { register, handleSubmit, watch, trigger, formState } =
-<span class="cstat-no" title="statement not covered" >    useForm&lt;FullUserForm&gt;({</span>
+    useForm&lt;FullUserForm&gt;({
       resolver: zodResolver(userSchema),
       mode: 'onChange',
     });
 &nbsp;
-  const { inputFields } = <span class="cstat-no" title="statement not covered" >useInputFields();</span>
-  const { addUserData } = <span class="cstat-no" title="statement not covered" >useActions();</span>
+  const { inputFields } = useInputFields();
+  const { addUserData } = useActions();
 &nbsp;
-  const onSubmit: SubmitHandler&lt;InputFields&gt; = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async d</span>ata =&gt; {</span>
+  const onSubmit: SubmitHandler&lt;InputFields&gt; = <span class="fstat-no" title="function not covered" >async d</span>ata =&gt; {
     const fileBase64 = <span class="cstat-no" title="statement not covered" >await fileToBase64(data.file[0]);</span>
 &nbsp;
     const formData: FullUserForm = <span class="cstat-no" title="statement not covered" >{</span>
@@ -247,30 +247,30 @@ export const ControlledForm: FC&lt;Props&gt; = <span class="cstat-no" title="sta
 <span class="cstat-no" title="statement not covered" >    if (onSuccess) <span class="cstat-no" title="statement not covered" >onSuccess();</span></span>
   };
 &nbsp;
-  const password = <span class="cstat-no" title="statement not covered" >watch(InputType.PASSWORD);</span>
-  const strength = <span class="cstat-no" title="statement not covered" >getPasswordStrength(password || '');</span>
+  const password = watch(InputType.PASSWORD);
+  const strength = getPasswordStrength(password || '');
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >    if (password) {</span>
+  useEffect(() =&gt; {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (password) {
 <span class="cstat-no" title="statement not covered" >      void trigger(HTML_FOR.CONFIRM_PASSWORD);</span>
     }
   }, [password, trigger]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;Form onSubmit={handleSubmit(onSubmit)} isDisabled={!formState.isValid}&gt;
-      {inputFields.map(<span class="fstat-no" title="function not covered" >field =&gt; (</span>
-<span class="cstat-no" title="statement not covered" >        &lt;InputForm</span>
+      {inputFields.map(field =&gt; (
+        &lt;InputForm
           key={field.name}
           {...field}
           register={register}
           passwordStrength={
-            field.name === InputType.PASSWORD &amp;&amp; password ? strength : undefined
+            field.name === InputType.PASSWORD &amp;&amp; password ? <span class="branch-0 cbranch-no" title="branch not covered" >strength : u</span>ndefined
           }
           errorMessage={
             formState.errors[field.name] &amp;&amp;
-            formState.errors[field.name]?.message
+<span class="branch-1 cbranch-no" title="branch not covered" >            formState.errors[field.name]?.message</span>
           }
-          {...(register ? register(field.name as keyof UserForm) : {})}
+          {...(register ? register(field.name as keyof UserForm) : <span class="branch-1 cbranch-no" title="branch not covered" >{})}</span>
         /&gt;
       ))}
     &lt;/Form&gt;
@@ -283,7 +283,7 @@ export const ControlledForm: FC&lt;Props&gt; = <span class="cstat-no" title="sta
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-24T13:58:39.117Z
+                at 2025-08-24T14:27:38.333Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>
