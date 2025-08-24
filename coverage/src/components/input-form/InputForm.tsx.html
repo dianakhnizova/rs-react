@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">85.71% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>6/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -161,7 +161,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -180,11 +180,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -210,7 +208,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { forwardRef } from 'react';
 import styles from './InputForm.module.scss';
 import classNames from 'classnames';
@@ -235,13 +235,13 @@ interface Props extends React.InputHTMLAttributes&lt;HTMLInputElement&gt; {
   errorMessage?: string;
 }
 &nbsp;
-export const InputForm = <span class="cstat-no" title="statement not covered" >forwardRef&lt;HTMLInputElement, Props&gt;(</span>
-<span class="fstat-no" title="function not covered" >  (</span>
+export const InputForm = forwardRef&lt;HTMLInputElement, Props&gt;(
+  (
     {
       htmlFor,
       label,
       className,
-      variant = <span class="branch-0 cbranch-no" title="branch not covered" >Variant.PRIMARY,</span>
+      variant = Variant.PRIMARY,
       isGender,
       isDataList,
       countries,
@@ -254,10 +254,10 @@ export const InputForm = <span class="cstat-no" title="statement not covered" >f
     },
     ref
   ) =&gt; {
-    const inputClassName = <span class="cstat-no" title="statement not covered" >classNames(styles.input, styles[variant], className);</span>
+    const inputClassName = classNames(styles.input, styles[variant], className);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    return isGender ? (</span>
-      &lt;GenderInput
+    return isGender ? (
+<span class="branch-0 cbranch-no" title="branch not covered" >      &lt;GenderInput</span>
         htmlFor={htmlFor}
         label={label}
         maleRef={maleRef}
@@ -284,7 +284,7 @@ export const InputForm = <span class="cstat-no" title="statement not covered" >f
   }
 );
 &nbsp;
-<span class="cstat-no" title="statement not covered" >InputForm.displayName = 'InputForm';</span>
+InputForm.displayName = 'InputForm';
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -292,7 +292,7 @@ export const InputForm = <span class="cstat-no" title="statement not covered" >f
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-24T13:34:00.710Z
+                at 2025-08-24T13:58:39.117Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

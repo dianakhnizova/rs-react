@@ -12,7 +12,7 @@ interface Props {
 
 export const Form: FC<Props> = ({ onSubmit, children, isDisabled }) => {
   return (
-    <form onSubmit={onSubmit} className={styles.form}>
+    <form onSubmit={onSubmit} aria-label="form" className={styles.form}>
       <div className={styles.container}>{children}</div>
 
       <Button type={ButtonType.SUBMIT} disabled={isDisabled}>

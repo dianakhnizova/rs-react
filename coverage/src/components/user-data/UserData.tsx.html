@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>14/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">92.85% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>13/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -120,34 +120,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -171,34 +171,34 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { messages } from '@/sources/messages';
 &nbsp;
-export const UserData = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-  const allUsersData = <span class="cstat-no" title="statement not covered" >useUserDataFields();</span>
-  const [highlightIndex, setHighlightIndex] = <span class="cstat-no" title="statement not covered" >useState&lt;number | null&gt;(null);</span>
-  const [prevLength, setPrevLength] = <span class="cstat-no" title="statement not covered" >useState(0);</span>
+export const UserData = () =&gt; {
+  const allUsersData = useUserDataFields();
+  const [highlightIndex, setHighlightIndex] = useState&lt;number | null&gt;(null);
+  const [prevLength, setPrevLength] = useState(0);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >    if (allUsersData.length &gt; prevLength) {</span>
-      const newIndex = <span class="cstat-no" title="statement not covered" >allUsersData.length - 1;</span>
-<span class="cstat-no" title="statement not covered" >      setHighlightIndex(newIndex);</span>
+  useEffect(() =&gt; {
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (allUsersData.length &gt; prevLength) {
+      const newIndex = allUsersData.length - 1;
+      setHighlightIndex(newIndex);
 &nbsp;
-      const timer = <span class="cstat-no" title="statement not covered" >setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etHighlightIndex(null), 3</span>000);</span>
-<span class="cstat-no" title="statement not covered" >      return <span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >c</span>learTimeout(timer);</span></span>
+      const timer = setTimeout(<span class="fstat-no" title="function not covered" >() =&gt; <span class="cstat-no" title="statement not covered" >s</span>etHighlightIndex(null), 3</span>000);
+      return () =&gt; clearTimeout(timer);
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    setPrevLength(allUsersData.length);</span>
   }, [allUsersData.length, prevLength]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;&gt;
-      {allUsersData.map(<span class="fstat-no" title="function not covered" >(u</span>serDataList, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >        &lt;div</span>
+      {allUsersData.map((userDataList, index) =&gt; (
+        &lt;div
           key={index}
           className={classNames(styles.userCard, {
             [styles.highlight]: index === highlightIndex,
           })}
         &gt;
-          {userDataList.map(<span class="fstat-no" title="function not covered" >(f</span>ield, index) =&gt; (
-<span class="cstat-no" title="statement not covered" >            &lt;div key={index} className={styles.data}&gt;</span>
+          {userDataList.map((field, index) =&gt; (
+            &lt;div key={index} className={styles.data}&gt;
               &lt;span className={styles.label}&gt;{field.label}: &lt;/span&gt;
               {field.label === messages.photoLabel &amp;&amp; field.data ? (
                 &lt;img
@@ -223,7 +223,7 @@ export const UserData = <span class="cstat-no" title="statement not covered" ><s
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-08-24T13:34:00.710Z
+                at 2025-08-24T13:58:39.117Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

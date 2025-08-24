@@ -4,7 +4,7 @@ import type { FC } from 'react';
 
 export const UserList: FC = () => {
   return (
-    <div className={styles.container}>
+    <div data-testid="userlist-container" className={styles.container}>
       <UserData />
     </div>
   );
