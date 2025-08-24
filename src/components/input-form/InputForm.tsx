@@ -52,6 +52,7 @@ export const InputForm = forwardRef<HTMLInputElement, Props>(
         maleRef={maleRef}
         femaleRef={femaleRef}
         className={inputClassName}
+        errorMessage={errorMessage}
         register={register}
         {...rest}
       />

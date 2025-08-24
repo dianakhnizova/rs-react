@@ -24,6 +24,7 @@ export default tseslint
         'coverage/',
         'tests',
         'vite.config.ts',
+        'vitest-setup.ts'
       ],
     },
     {

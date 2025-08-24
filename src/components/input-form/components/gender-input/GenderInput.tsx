@@ -12,6 +12,7 @@ interface Props
   register?: UseFormRegister<FullUserForm>;
   maleRef?: React.RefObject<HTMLInputElement | null>;
   femaleRef?: React.RefObject<HTMLInputElement | null>;
+  errorMessage?: string;
 }
 
 export const GenderInput: FC<Props> = ({
@@ -20,6 +21,7 @@ export const GenderInput: FC<Props> = ({
   register,
   maleRef,
   femaleRef,
+  errorMessage,
   className,
   ...rest
 }) => (
@@ -57,5 +59,7 @@ export const GenderInput: FC<Props> = ({
         />
       </div>
     </div>
+
+    {errorMessage && <span className={styles.error}>{errorMessage}</span>}
   </div>
 );
