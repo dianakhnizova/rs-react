@@ -61,7 +61,9 @@ export const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
           {...field}
           errorMessage={errorMessage[field.name] && errorMessage[field.name]}
           passwordStrength={
-            field.type === InputType.PASSWORD ? passwordStrength : undefined
+            field.type === InputType.PASSWORD
+              ? (passwordStrength ?? undefined)
+              : undefined
           }
           onChange={
             field.type === InputType.PASSWORD
