@@ -8,4 +8,13 @@ export const messages = {
     labelPopulation: 'Population',
     labelISO: 'ISO code',
   },
+
+  spinner: {
+    titleLoading: 'Loading...',
+    titleSpinner: 'Spinner',
+  },
+
+  error: {
+    unknown: 'Unknown error',
+  },
 };
