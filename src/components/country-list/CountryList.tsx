@@ -1,15 +1,22 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Table } from '../table/Table';
 import styles from './CountryList.module.scss';
 import type { CountryData } from '@/sources/interfaces';
 import { MISSING_VALUE } from '@/sources/constants';
 import { messages } from '@/sources/messages';
+import { CountryInfo } from '../country-info/CountryInfo';
 
 interface Props {
   countries: CountryData[];
 }
 
 export const CountryList: FC<Props> = ({ countries }) => {
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+
+  const handleClick = (countryName: string) => {
+    setSelectedCountry(prev => (prev === countryName ? null : countryName));
+  };
+
   return (
     <div className={styles.container}>
       <Table
@@ -20,19 +27,26 @@ export const CountryList: FC<Props> = ({ countries }) => {
         ]}
       />
 
-      <div className={styles.divider}></div>
+      <div className={styles.divider} />
 
-      <div className={styles.list}>
+      <div className={styles.listContainer}>
         {countries.map(country => {
           const latestPopulation =
             country.data.at(-1)?.population ?? MISSING_VALUE;
 
           return (
-            <Table
-              key={country.name}
-              columns={[country.name, latestPopulation, country.iso_code]}
-              isList
-            />
+            <div key={`${country.name}-list`} className={styles.list}>
+              <Table
+                key={country.name}
+                columns={[country.name, latestPopulation, country.iso_code]}
+                handleClick={() => handleClick(country.name)}
+                isList
+              />
+
+              {selectedCountry === country.name && (
+                <CountryInfo info={[country]} />
+              )}
+            </div>
           );
         })}
       </div>

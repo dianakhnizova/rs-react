@@ -1,3 +1,3 @@
-import { Data } from './interfaces';
+import { ErrorState, PendingState, SuccessState } from './interfaces';
 
-export type RawCo2Data = Record<string, { iso_code?: string; data: Data[] }>;
+export type Co2DataState = PendingState | SuccessState | ErrorState;

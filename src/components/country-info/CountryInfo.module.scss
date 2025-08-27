@@ -13,13 +13,13 @@
   border: 1px solid var(--clr-border);
 }
 
-.listContainer {
+.infoContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
   border-right: 1px solid var(--clr-border);
-  max-height: 600px;
+  max-height: 200px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {
@@ -39,11 +39,4 @@
   &::-webkit-scrollbar-thumb:hover {
     background-color: var(--clr-bg-1);
   }
-}
-
-.list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
 }

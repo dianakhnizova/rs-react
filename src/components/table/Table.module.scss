@@ -1,6 +1,6 @@
 .container {
   display: grid;
-  grid-template-columns: 2fr 3fr 2fr;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   width: 90%;
   box-shadow: var(--shadow-4);
   padding: 8px;
@@ -15,7 +15,6 @@
   align-items: center;
   justify-content: center;
   border-right: 1px solid var(--clr-border);
-  font-size: 14px;
   color: var(--clr-bg-button);
 
   &.cellList {
@@ -31,6 +30,10 @@
         border-radius: 15px;
       }
     }
+  }
+
+  &.cellInfoList {
+    color: var(--clr-line);
   }
 
   &:last-child {

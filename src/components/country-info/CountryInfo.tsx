@@ -1,0 +1,48 @@
+import { messages } from '@/sources/messages';
+import { Table } from '../table/Table';
+import styles from './CountryInfo.module.scss';
+import { CountryData } from '@/sources/interfaces';
+import { FC } from 'react';
+import { MISSING_VALUE } from '@/sources/constants';
+
+interface Props {
+  info: CountryData[];
+}
+
+export const CountryInfo: FC<Props> = ({ info }) => {
+  return (
+    <div className={styles.container}>
+      <Table
+        columns={[
+          messages.tableHeaderCountryInfo.labelYear,
+          messages.tableHeaderCountryInfo.labelPopulation,
+          messages.tableHeaderCountryInfo.labelCo2,
+          messages.tableHeaderCountryInfo.labelCo2PerCapita,
+        ]}
+      />
+
+      <div className={styles.divider} />
+
+      <div className={styles.infoContainer}>
+        {info.map(country =>
+          country.data.map((info, index) => {
+            const countryInfo: (string | number)[] = [
+              info.year,
+              info.population ?? MISSING_VALUE,
+              info.cement_co2,
+              info.cement_co2_per_capita ?? MISSING_VALUE,
+            ];
+
+            return (
+              <Table
+                key={`${country.name}-info-${index}`}
+                columns={countryInfo}
+                isInfoList
+              />
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+};
