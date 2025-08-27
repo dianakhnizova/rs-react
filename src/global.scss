@@ -33,6 +33,7 @@ a:active {
   --clr-error-3: #008000;
   --clr-bg-button: #57c4dc;
   --clr-line-button: #fff;
+  --clr-border: #374151;
   --clr-focus-button: #283540;
   --clr-bg-1: #23272f;
   --clr-bg-2: #212121;
@@ -40,11 +41,7 @@ a:active {
   --clr-hover: #343a45;
   --shadow-1:
     rgb(159 159 161 / 41.9%) 0 0 0.25em, rgb(100 100 101 / 36.4%) 0 0.25em 1em;
-  --shadow-2:
-    rgb(116 115 115 / 34.3%) 0 6px 24px 0, rgb(116 80 80 / 8%) 0 0 0 1px;
-  --shadow-3: rgb(186 183 183 / 84.6%) 0 0 5px 0, rgb(0 0 0 / 10%) 0 0 1px 0;
-  --shadow-4:
-    rgb(134 132 132 / 31.6%) 0 1px 3px 0, rgb(134 103 103 / 27.4%) 0 0 0 1px;
+  --shadow-4: rgb(55 65 81 / 50%) 0 1px 3px 0, rgb(55 65 81 / 50%) 0 0 0 1px;
 }
 
 #root {
