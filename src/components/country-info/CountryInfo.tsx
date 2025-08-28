@@ -29,7 +29,7 @@ export const CountryInfo: FC<Props> = ({ info }) => {
             const countryInfo: (string | number)[] = [
               info.year,
               info.population ?? MISSING_VALUE,
-              info.cement_co2,
+              info.cement_co2 ?? MISSING_VALUE,
               info.cement_co2_per_capita ?? MISSING_VALUE,
             ];
 
