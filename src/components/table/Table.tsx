@@ -6,6 +6,7 @@ interface Props {
   columns: (string | number)[];
   isList?: boolean;
   isInfoList?: boolean;
+  isActive?: boolean;
   handleClick?: () => void;
 }
 
@@ -13,6 +14,7 @@ export const Table: FC<Props> = ({
   columns,
   isList,
   isInfoList,
+  isActive,
   handleClick,
 }) => {
   return (
@@ -27,7 +29,8 @@ export const Table: FC<Props> = ({
           className={classNames(
             styles.cell,
             { [styles.cellList]: isList },
-            { [styles.cellInfoList]: isInfoList }
+            { [styles.cellInfoList]: isInfoList },
+            { [styles.active]: isList && i === 0 && isActive }
           )}
           onClick={isList && i === 0 ? handleClick : undefined}
         >

@@ -41,6 +41,7 @@ export const CountryList: FC<Props> = ({ countries }) => {
                 columns={[country.name, latestPopulation, country.iso_code]}
                 handleClick={() => handleClick(country.name)}
                 isList
+                isActive={selectedCountry === country.name}
               />
 
               {selectedCountry === country.name && (
