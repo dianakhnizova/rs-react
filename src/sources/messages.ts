@@ -1,6 +1,12 @@
 export const messages = {
+  homePage: {
+    appTitle: 'Climate Data Viewer',
+  },
+
   button: {
     search: 'Search',
+    close: 'Close',
+    select: 'Select columns',
   },
 
   tableHeaderCountryList: {

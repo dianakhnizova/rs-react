@@ -2,16 +2,32 @@ import { messages } from '@/sources/messages';
 import { Table } from '../table/Table';
 import styles from './CountryInfo.module.scss';
 import { CountryData } from '@/sources/interfaces';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { MISSING_VALUE } from '@/sources/constants';
+import { Button } from '../button/Button';
+import { Modal } from '../modal/Modal';
 
 interface Props {
   info: CountryData[];
 }
 
 export const CountryInfo: FC<Props> = ({ info }) => {
+  const [isdModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className={styles.container}>
+      <Button onClick={handleOpenModal}>{messages.button.select}</Button>
+
+      <Modal isOpen={isdModalOpen} onClose={handleCloseModal}></Modal>
+
       <Table
         columns={[
           messages.tableHeaderCountryInfo.labelYear,
