@@ -26,12 +26,11 @@ export const Table: FC<Props> = ({
       {columns.map((label, i) => (
         <div
           key={i}
-          className={classNames(
-            styles.cell,
-            { [styles.cellList]: isList },
-            { [styles.cellInfoList]: isInfoList },
-            { [styles.active]: isList && i === 0 && isActive }
-          )}
+          className={classNames(styles.cell, {
+            [styles.cellList]: isList,
+            [styles.cellInfoList]: isInfoList,
+            [styles.active]: isList && i === 0 && isActive,
+          })}
           onClick={isList && i === 0 ? handleClick : undefined}
         >
           {label}

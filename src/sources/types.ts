@@ -7,4 +7,10 @@ export type ColumnPicker = {
   htmlFor: string;
   label: string;
   type: string;
+  key: string;
+};
+
+export type SelectedColumn = {
+  key: string;
+  label: string;
 };

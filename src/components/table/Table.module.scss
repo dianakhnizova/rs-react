@@ -16,6 +16,9 @@
   justify-content: center;
   border-right: 1px solid var(--clr-border);
   color: var(--clr-bg-button);
+  white-space: normal;
+  word-break: break-word;
+  padding: 4px;
 
   &.cellList {
     font-size: 12px;
