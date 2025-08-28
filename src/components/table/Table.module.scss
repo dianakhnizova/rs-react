@@ -35,6 +35,8 @@
 
       &.active {
         color: var(--clr-bg-button);
+        background-color: var(--clr-hover);
+        border-radius: 15px;
       }
     }
   }
