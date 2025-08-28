@@ -1,20 +1,22 @@
-import { FC, useState } from 'react';
 import { Table } from '../table/Table';
 import styles from './CountryList.module.scss';
-import type { CountryData } from '@/sources/interfaces';
 import { MISSING_VALUE } from '@/sources/constants';
 import { messages } from '@/sources/messages';
 import { CountryInfo } from '../country-info/CountryInfo';
+import { useSelector } from 'react-redux';
+import {
+  selectCountry,
+  selectSelectedCountry,
+} from '@/store/slices/country/selectors';
+import { useActions } from '@/utils/hooks/useActions';
 
-interface Props {
-  countries: CountryData[];
-}
-
-export const CountryList: FC<Props> = ({ countries }) => {
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+export const CountryList = () => {
+  const countries = useSelector(selectCountry);
+  const selectedCountry = useSelector(selectSelectedCountry);
+  const { setSelectedCountry } = useActions();
 
   const handleClick = (countryName: string) => {
-    setSelectedCountry(prev => (prev === countryName ? null : countryName));
+    setSelectedCountry(countryName);
   };
 
   return (
