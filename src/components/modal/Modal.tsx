@@ -26,7 +26,7 @@ export const Modal: FC<Props> = ({ isOpen, onClose, children }) => {
       <div className={styles.overlay} onClick={onClose} />
 
       <div className={styles.container}>
-        <p className={styles.error}>{children}</p>
+        {children}
 
         {onClose && <Button onClick={onClose}>{messages.button.close}</Button>}
       </div>

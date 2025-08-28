@@ -6,6 +6,7 @@ import { FC, useState } from 'react';
 import { MISSING_VALUE } from '@/sources/constants';
 import { Button } from '../button/Button';
 import { Modal } from '../modal/Modal';
+import { ColumnPicker } from '../column-piker/ColumnPicker';
 
 interface Props {
   info: CountryData[];
@@ -26,7 +27,9 @@ export const CountryInfo: FC<Props> = ({ info }) => {
     <div className={styles.container}>
       <Button onClick={handleOpenModal}>{messages.button.select}</Button>
 
-      <Modal isOpen={isdModalOpen} onClose={handleCloseModal}></Modal>
+      <Modal isOpen={isdModalOpen} onClose={handleCloseModal}>
+        <ColumnPicker />
+      </Modal>
 
       <Table
         columns={[

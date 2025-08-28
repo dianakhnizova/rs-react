@@ -7,6 +7,7 @@ export const messages = {
     search: 'Search',
     close: 'Close',
     select: 'Select columns',
+    selectColumn: 'Select',
   },
 
   tableHeaderCountryList: {
@@ -29,5 +30,13 @@ export const messages = {
 
   error: {
     unknown: 'Unknown error',
+  },
+
+  label: {
+    methane: 'Methane',
+    nitrous_oxide: 'Nitrous_oxide',
+    share_global_cumulative_luc_co2: 'Share_global_cumulative_luc_co2',
+    temperature_change_from_co2: 'Temperature_change_from_co2',
+    total_ghg: 'Total_ghg',
   },
 };
