@@ -10,6 +10,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   isCheckbox?: boolean;
   isLabel?: boolean;
   isSearch?: boolean;
+  setInput?: (value: string) => void;
 }
 
 export const Input: FC<Props> = ({
@@ -19,14 +20,23 @@ export const Input: FC<Props> = ({
   isCheckbox,
   isLabel,
   isSearch,
+  setInput,
   ...rest
 }) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (setInput) {
+      setInput(value);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.inputWrapper}>
         <input
           id={id}
           {...rest}
+          onChange={handleInputChange}
           className={classNames(isCheckbox ? styles.checkbox : styles.input)}
         />
 

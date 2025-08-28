@@ -50,5 +50,6 @@ export const messages = {
 
   alt: {
     search: 'Search',
+    close: 'Close',
   },
 };

@@ -1,22 +1,37 @@
 import { InputType } from '@/sources/enums';
 import { Input } from '../input/Input';
 import { messages } from '@/sources/messages';
-import { Button } from '../button/Button';
 import styles from './Search.module.scss';
-
-const handleSearch = () => {};
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectSearchTerm } from '@/store/slices/search-term/selectors';
+import { useActions } from '@/utils/hooks/useActions';
 
 export const Search = () => {
+  const searchTerm = useSelector(selectSearchTerm);
+  const { setSearchTerm } = useActions();
+  const [searchInput, setSearchInput] = useState(searchTerm);
+
+  const handleSearchClick = () => {
+    setSearchTerm(searchInput);
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    handleSearchClick();
+  };
+
   return (
     <div className={styles.container}>
-      <Input
-        id={InputType.TEXT}
-        type={InputType.TEXT}
-        placeholder={messages.button.search}
-        isSearch
-      />
-
-      <Button onClick={handleSearch}>{messages.button.search}</Button>
+      <form onSubmit={handleSubmit} className={styles.container}>
+        <Input
+          id={InputType.TEXT}
+          type={InputType.TEXT}
+          placeholder={messages.button.search}
+          setInput={setSearchInput}
+          isSearch
+        />
+      </form>
     </div>
   );
 };

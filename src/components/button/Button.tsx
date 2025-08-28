@@ -4,17 +4,21 @@ import { Variant } from '@/sources/enums';
 
 type Props = {
   variant?: Variant;
+  children?: React.ReactNode;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button: React.FC<Props> = ({
   variant = Variant.PRIMARY,
   className,
+  children,
   ...rest
 }: Props) => {
   return (
     <button
       className={classNames(styles.button, styles[variant], className)}
       {...rest}
-    />
+    >
+      {children}
+    </button>
   );
 };

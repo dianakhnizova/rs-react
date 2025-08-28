@@ -5,6 +5,7 @@ import { messages } from '@/sources/messages';
 import ReactPortal from '../react-portal/ReactPortal';
 import { useEscapeKey } from '@/utils/hooks/useEscapeKey';
 import { Button } from '../button/Button';
+import { Variant } from '@/sources/enums';
 
 interface Props {
   isOpen: boolean;
@@ -26,9 +27,21 @@ export const Modal: FC<Props> = ({ isOpen, onClose, children }) => {
       <div className={styles.overlay} onClick={onClose} />
 
       <div className={styles.container}>
-        {children}
+        {onClose && (
+          <Button
+            onClick={onClose}
+            variant={Variant.SECONDARY}
+            className={styles.closeButton}
+          >
+            <img
+              src={'close.svg'}
+              alt={messages.alt.close}
+              className={styles.image}
+            />
+          </Button>
+        )}
 
-        {onClose && <Button onClick={onClose}>{messages.button.close}</Button>}
+        {children}
       </div>
     </ReactPortal>
   );
