@@ -47,4 +47,8 @@ export const messages = {
     temperature_change_from_co2: 'temperature_change_from_co2',
     total_ghg: 'total_ghg',
   },
+
+  alt: {
+    search: 'Search',
+  },
 };

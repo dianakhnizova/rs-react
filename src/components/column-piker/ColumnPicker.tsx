@@ -47,6 +47,7 @@ export const ColumnPicker: FC<Props> = ({ onSelect }) => {
               selectedColumn => selectedColumn.key === column.key
             )}
             isCheckbox
+            isLabel
             onChange={() =>
               toggleCheckbox({ key: column.key, label: column.label })
             }
