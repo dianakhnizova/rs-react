@@ -27,21 +27,6 @@
     font-size: 12px;
     text-align: center;
     color: var(--clr-line);
-
-    &:first-child {
-      cursor: pointer;
-
-      &:hover {
-        background-color: var(--clr-hover);
-        border-radius: 15px;
-      }
-
-      &.active {
-        color: var(--clr-bg-button);
-        background-color: var(--clr-hover);
-        border-radius: 15px;
-      }
-    }
   }
 
   &.cellInfoList {

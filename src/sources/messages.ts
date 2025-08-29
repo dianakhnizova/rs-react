@@ -14,11 +14,7 @@ export const messages = {
     labelName: 'Country',
     labelPopulation: 'Population',
     labelISO: 'ISO code',
-  },
-
-  tableHeaderCountryInfo: {
     labelYear: 'Year',
-    labelPopulation: 'Population',
     labelCo2: 'CO2',
     labelCo2PerCapita: 'CO2 per capita',
   },
@@ -53,7 +49,6 @@ export const messages = {
     close: 'Close',
   },
 
-  select: 'Select year',
   sort: {
     sortBy: 'Sort by',
     sortByAsc: 'Asc',

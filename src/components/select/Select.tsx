@@ -4,7 +4,7 @@ import React, { FC } from 'react';
 interface Props {
   setSelectedValue: (value: string | null) => void;
   options: (number | string)[];
-  defaultValue: string;
+  defaultValue: string | number | null;
 }
 
 export const Select: FC<Props> = ({

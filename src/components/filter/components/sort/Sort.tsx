@@ -15,6 +15,13 @@ export const Sort = () => {
   const options = [messages.sort.sortByPopulation, messages.sort.sortByName];
 
   const onSelectSort = (value: string | null) => {
+    if (!value || value === messages.sort.sortBy) {
+      setSelectedField(null);
+      setDirection(null);
+      setSortOrder(null);
+      return;
+    }
+
     setSelectedField(value);
     setDirection(null);
   };

@@ -7,8 +7,6 @@ import { selectSelectedYear } from '@/store/slices/year/selectors';
 interface Props {
   columns: (string | number)[];
   isList?: boolean;
-  isInfoList?: boolean;
-  isActive?: boolean;
   handleClick?: () => void;
   highlightIndex?: number[];
 }
@@ -16,8 +14,6 @@ interface Props {
 export const Table: FC<Props> = ({
   columns,
   isList,
-  isInfoList,
-  isActive,
   handleClick,
   highlightIndex,
 }) => {
@@ -45,8 +41,6 @@ export const Table: FC<Props> = ({
           key={i}
           className={classNames(styles.cell, {
             [styles.cellList]: isList,
-            [styles.cellInfoList]: isInfoList,
-            [styles.active]: isList && i === 0 && isActive,
             [styles.highlightIndex]:
               isHighlighted && highlightIndex?.includes(i),
           })}

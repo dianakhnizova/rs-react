@@ -4,13 +4,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CountryState {
   countries: CountryData[];
-  selectedCountry: string | null;
-  sortOrder: SortOrder;
+  sortOrder: SortOrder | null;
 }
 
 const initialState: CountryState = {
   countries: [],
-  selectedCountry: null,
   sortOrder: SortOrder.NAME_ASC,
 };
 
@@ -18,10 +16,6 @@ export const countrySlice = createSlice({
   name: 'country',
   initialState,
   reducers: {
-    setSelectedCountry: (state, action: { payload: string | null }) => {
-      state.selectedCountry =
-        state.selectedCountry === action.payload ? null : action.payload;
-    },
     setCountries: (state, action: { payload: CountryData[] }) => {
       state.countries = action.payload;
     },
