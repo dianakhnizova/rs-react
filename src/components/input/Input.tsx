@@ -28,6 +28,10 @@ export const Input: FC<Props> = ({
     if (setInput) {
       setInput(value);
     }
+
+    if (rest.onChange) {
+      rest.onChange(event);
+    }
   };
 
   return (
