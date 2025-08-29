@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import { CountryListWrapper } from '@/components/country-list/CountryListWrapper';
 import { messages } from '@/sources/messages';
 import { Search } from '@/components/search/Search';
+import { Filter } from '@/components/filter/Filter';
 
 export const HomePage = () => {
   return (
@@ -13,6 +14,8 @@ export const HomePage = () => {
 
         <Search />
       </div>
+
+      <Filter />
 
       <Suspense fallback={<Spinner isLoading={true} />}>
         <CountryListWrapper />
