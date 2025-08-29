@@ -1,19 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 interface YearState {
-  year: string | null;
+  years: number[];
+  selectedYear: number | null;
 }
 
 const initialState: YearState = {
-  year: null,
+  years: [],
+  selectedYear: null,
 };
 
 export const yearSlice = createSlice({
   name: 'year',
   initialState,
   reducers: {
-    setSelectedYear: (state, action: { payload: string | null }) => {
-      state.year = state.year === action.payload ? null : action.payload;
+    setSelectedYear: (state, action: { payload: number | null }) => {
+      state.selectedYear =
+        state.selectedYear === action.payload ? null : action.payload;
+    },
+    setYears: (state, action: { payload: number[] }) => {
+      state.years = action.payload;
     },
   },
 });

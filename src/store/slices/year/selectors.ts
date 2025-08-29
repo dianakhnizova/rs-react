@@ -1,5 +1,6 @@
 import { TypeRootState } from '@/store/store';
 
-export const selectYear = (state: TypeRootState) => state.year;
+export const selectYears = (state: TypeRootState) => state.year.years;
 
-export const selectSelectedYear = (state: TypeRootState) => state.year.year;
+export const selectSelectedYear = (state: TypeRootState) =>
+  state.year.selectedYear;

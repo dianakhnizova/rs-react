@@ -9,6 +9,7 @@ import { Modal } from '../modal/Modal';
 import { ColumnPicker } from '../column-piker/ColumnPicker';
 import { useSelector } from 'react-redux';
 import { selectColumns } from '@/store/slices/selected-column/selectors';
+import { selectSelectedYear } from '@/store/slices/year/selectors';
 
 interface Props {
   info: CountryData[];
@@ -17,6 +18,8 @@ interface Props {
 export const CountryInfo: FC<Props> = ({ info }) => {
   const [isdModalOpen, setIsModalOpen] = useState(false);
   const selectedColumns = useSelector(selectColumns);
+  const selectedYear = useSelector(selectSelectedYear);
+
   const columnLabels = selectedColumns.map(column => column.label);
   const selectedInfo = selectedColumns.map(column => column.key);
 
@@ -53,15 +56,19 @@ export const CountryInfo: FC<Props> = ({ info }) => {
       <div className={styles.divider} />
 
       <div className={styles.infoContainer}>
-        {info.map(country =>
-          country.data.map((info, index) => {
+        {info.map(country => {
+          const yearData = selectedYear
+            ? country.data.filter(data => data.year === selectedYear)
+            : country.data;
+
+          return yearData.map((data, index) => {
             const countryInfo: (string | number)[] = [
-              info.year,
-              info.population ?? MISSING_VALUE,
-              info.cement_co2 ?? MISSING_VALUE,
-              info.cement_co2_per_capita ?? MISSING_VALUE,
+              data.year,
+              data.population ?? MISSING_VALUE,
+              data.cement_co2 ?? MISSING_VALUE,
+              data.cement_co2_per_capita ?? MISSING_VALUE,
               ...selectedInfo.map(
-                key => info[key as keyof typeof info] ?? MISSING_VALUE
+                key => data[key as keyof typeof data] ?? MISSING_VALUE
               ),
             ];
 
@@ -72,8 +79,8 @@ export const CountryInfo: FC<Props> = ({ info }) => {
                 isInfoList
               />
             );
-          })
-        )}
+          });
+        })}
       </div>
     </div>
   );

@@ -52,4 +52,6 @@ export const messages = {
     search: 'Search',
     close: 'Close',
   },
+
+  select: 'Select year',
 };

@@ -9,10 +9,13 @@ import {
   selectSelectedCountry,
 } from '@/store/slices/country/selectors';
 import { useActions } from '@/utils/hooks/useActions';
+import { selectSelectedYear } from '@/store/slices/year/selectors';
 
 export const CountryList = () => {
   const countries = useSelector(selectCountry);
   const selectedCountry = useSelector(selectSelectedCountry);
+  const selectedYear = useSelector(selectSelectedYear);
+
   const { setSelectedCountry } = useActions();
 
   const handleClick = (countryName: string) => {
@@ -33,14 +36,17 @@ export const CountryList = () => {
 
       <div className={styles.listContainer}>
         {countries.map(country => {
-          const latestPopulation =
-            country.data.at(-1)?.population ?? MISSING_VALUE;
+          const yearData = selectedYear
+            ? country.data.find(d => d.year === selectedYear)
+            : country.data.at(-1);
+
+          const population = yearData?.population ?? MISSING_VALUE;
 
           return (
             <div key={`${country.name}-list`} className={styles.list}>
               <Table
                 key={country.name}
-                columns={[country.name, latestPopulation, country.iso_code]}
+                columns={[country.name, population, country.iso_code]}
                 handleClick={() => handleClick(country.name)}
                 isList
                 isActive={selectedCountry === country.name}
