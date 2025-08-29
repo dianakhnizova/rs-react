@@ -8,6 +8,7 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor?: string;
   label?: string;
   isCheckbox?: boolean;
+  isRadio?: boolean;
   isLabel?: boolean;
   isSearch?: boolean;
   setInput?: (value: string) => void;
@@ -18,6 +19,7 @@ export const Input: FC<Props> = ({
   htmlFor,
   label,
   isCheckbox,
+  isRadio,
   isLabel,
   isSearch,
   setInput,
@@ -41,7 +43,9 @@ export const Input: FC<Props> = ({
           id={id}
           {...rest}
           onChange={handleInputChange}
-          className={classNames(isCheckbox ? styles.checkbox : styles.input)}
+          className={classNames(
+            isCheckbox ? styles.checkbox : isRadio ? styles.radio : styles.input
+          )}
         />
 
         {isSearch && (

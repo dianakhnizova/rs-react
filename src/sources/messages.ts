@@ -54,4 +54,11 @@ export const messages = {
   },
 
   select: 'Select year',
+  sort: {
+    sortBy: 'Sort by',
+    sortByAsc: 'Asc',
+    sortByDesc: 'Desc',
+    sortByPopulation: 'Population',
+    sortByName: 'Country',
+  },
 };

@@ -1,22 +1,26 @@
 import styles from './Select.module.scss';
 import React, { FC } from 'react';
-import { messages } from '@/sources/messages';
 
 interface Props {
-  setSelectedValue: (value: number | null) => void;
-  options: number[];
+  setSelectedValue: (value: string | null) => void;
+  options: (number | string)[];
+  defaultValue: string;
 }
 
-export const Select: FC<Props> = ({ setSelectedValue, options }) => {
+export const Select: FC<Props> = ({
+  setSelectedValue,
+  options,
+  defaultValue,
+}) => {
   const onSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
 
-    setSelectedValue(value ? Number(value) : null);
+    setSelectedValue(value || null);
   };
 
   return (
     <select defaultValue="" onChange={onSelect} className={styles.select}>
-      <option value="">{messages.select}</option>
+      <option value="">{defaultValue}</option>
 
       {options.map(option => (
         <option key={option} value={option} className={styles.option}>

@@ -4,15 +4,17 @@ import { MISSING_VALUE } from '@/sources/constants';
 import { messages } from '@/sources/messages';
 import { CountryInfo } from '../country-info/CountryInfo';
 import { useSelector } from 'react-redux';
-import {
-  selectCountry,
-  selectSelectedCountry,
-} from '@/store/slices/country/selectors';
+import { selectSelectedCountry } from '@/store/slices/country/selectors';
 import { useActions } from '@/utils/hooks/useActions';
 import { selectSelectedYear } from '@/store/slices/year/selectors';
+import { CountryData } from '@/sources/interfaces';
+import { FC } from 'react';
 
-export const CountryList = () => {
-  const countries = useSelector(selectCountry);
+interface Props {
+  countries: CountryData[];
+}
+
+export const CountryList: FC<Props> = ({ countries }) => {
   const selectedCountry = useSelector(selectSelectedCountry);
   const selectedYear = useSelector(selectSelectedYear);
 

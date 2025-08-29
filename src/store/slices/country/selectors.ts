@@ -5,3 +5,6 @@ export const selectCountry = (state: TypeRootState) =>
 
 export const selectSelectedCountry = (state: TypeRootState) =>
   state.countries.selectedCountry;
+
+export const selectSelectedSortOrder = (state: TypeRootState) =>
+  state.countries.sortOrder;
