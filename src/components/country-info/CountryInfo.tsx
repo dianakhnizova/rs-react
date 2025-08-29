@@ -77,6 +77,14 @@ export const CountryInfo: FC<Props> = ({ info }) => {
                 key={`${country.name}-info-${index}`}
                 columns={countryInfo}
                 isInfoList
+                highlightIndex={
+                  selectedYear === data.year
+                    ? Array.from(
+                        { length: countryInfo.length },
+                        (_, i) => i
+                      ).slice(1)
+                    : []
+                }
               />
             );
           });

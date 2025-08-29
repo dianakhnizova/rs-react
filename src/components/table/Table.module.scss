@@ -51,4 +51,8 @@
   &:last-child {
     border-right: none;
   }
+
+  &.highlightIndex {
+    color: var(--clr-bg-button);
+  }
 }

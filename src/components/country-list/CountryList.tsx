@@ -50,6 +50,7 @@ export const CountryList = () => {
                 handleClick={() => handleClick(country.name)}
                 isList
                 isActive={selectedCountry === country.name}
+                highlightIndex={[1]}
               />
 
               {selectedCountry === country.name && (

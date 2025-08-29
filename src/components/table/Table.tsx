@@ -1,6 +1,8 @@
-import type { FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 import styles from './Table.module.scss';
 import classNames from 'classnames';
+import { useSelector } from 'react-redux';
+import { selectSelectedYear } from '@/store/slices/year/selectors';
 
 interface Props {
   columns: (string | number)[];
@@ -8,6 +10,7 @@ interface Props {
   isInfoList?: boolean;
   isActive?: boolean;
   handleClick?: () => void;
+  highlightIndex?: number[];
 }
 
 export const Table: FC<Props> = ({
@@ -16,7 +19,21 @@ export const Table: FC<Props> = ({
   isInfoList,
   isActive,
   handleClick,
+  highlightIndex,
 }) => {
+  const selectedYear = useSelector(selectSelectedYear);
+  const [isHighlighted, setIsHighlighted] = useState(false);
+
+  useEffect(() => {
+    setIsHighlighted(true);
+
+    const timeout = setTimeout(() => {
+      setIsHighlighted(false);
+    }, 2000);
+
+    return () => clearTimeout(timeout);
+  }, [selectedYear]);
+
   return (
     <div
       className={classNames(styles.container, {
@@ -30,6 +47,8 @@ export const Table: FC<Props> = ({
             [styles.cellList]: isList,
             [styles.cellInfoList]: isInfoList,
             [styles.active]: isList && i === 0 && isActive,
+            [styles.highlightIndex]:
+              isHighlighted && highlightIndex?.includes(i),
           })}
           onClick={isList && i === 0 ? handleClick : undefined}
         >
