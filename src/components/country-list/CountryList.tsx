@@ -47,8 +47,9 @@ export const CountryList: FC<Props> = ({ countries }) => {
       <Table
         columns={[
           messages.tableHeaderCountryList.labelName,
-          messages.tableHeaderCountryList.labelPopulation,
           messages.tableHeaderCountryList.labelISO,
+          messages.tableHeaderCountryList.labelPopulation,
+
           messages.tableHeaderCountryList.labelYear,
           messages.tableHeaderCountryList.labelCo2,
           messages.tableHeaderCountryList.labelCo2PerCapita,
@@ -76,8 +77,8 @@ export const CountryList: FC<Props> = ({ countries }) => {
                 key={country.name}
                 columns={[
                   country.name,
-                  population,
                   country.iso_code,
+                  population,
                   year,
                   cementCo2,
                   cementCo2PerCapita,
@@ -90,7 +91,7 @@ export const CountryList: FC<Props> = ({ countries }) => {
                 highlightIndex={Array.from(
                   { length: 6 + selectedInfo.length },
                   (_, i) => i
-                ).slice(1)}
+                ).slice(2)}
               />
             </div>
           );
