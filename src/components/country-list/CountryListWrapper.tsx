@@ -9,12 +9,12 @@ import { selectCountry } from '@/store/slices/country/selectors';
 const resource = createCo2Data();
 
 export const CountryListWrapper = () => {
-  const countries = useSelector(selectCountry);
-
-  const searchTerm = useSelector(selectSearchTerm);
-  const { setCountries, setYears } = useActions();
-
   const countryList = resource.read();
+
+  const countries = useSelector(selectCountry);
+  const searchTerm = useSelector(selectSearchTerm);
+
+  const { setCountries, setYears } = useActions();
 
   const filteredCountryList = useMemo(() => {
     return countryList.filter(country =>

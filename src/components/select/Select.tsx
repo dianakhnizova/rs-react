@@ -1,34 +1,26 @@
-import { useSelector } from 'react-redux';
 import styles from './Select.module.scss';
-import { selectYears } from '@/store/slices/year/selectors';
-import { useActions } from '@/utils/hooks/useActions';
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import { messages } from '@/sources/messages';
 
-export const Select = () => {
-  const years = useSelector(selectYears);
-  const [selected, setSelected] = useState('');
+interface Props {
+  setSelectedValue: (value: number | null) => void;
+  options: number[];
+}
 
-  const { setSelectedYear } = useActions();
-
+export const Select: FC<Props> = ({ setSelectedValue, options }) => {
   const onSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const value = event.target.value;
-    setSelected(value);
 
-    if (value) {
-      setSelectedYear(Number(value));
-    } else {
-      setSelectedYear(null);
-    }
+    setSelectedValue(value ? Number(value) : null);
   };
 
   return (
-    <select value={selected} onChange={onSelect} className={styles.select}>
+    <select defaultValue="" onChange={onSelect} className={styles.select}>
       <option value="">{messages.select}</option>
 
-      {years.map(year => (
-        <option key={year} className={styles.option}>
-          {year}
+      {options.map(option => (
+        <option key={option} value={option} className={styles.option}>
+          {option}
         </option>
       ))}
     </select>
