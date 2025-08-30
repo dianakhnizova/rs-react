@@ -13,10 +13,12 @@ export const filterAndSortCountries = (
   switch (sortOrder) {
     case SortOrder.NAME_ASC: {
       result = [...result].sort((a, b) => a.name.localeCompare(b.name));
+
       break;
     }
     case SortOrder.NAME_DESC: {
       result = [...result].sort((a, b) => b.name.localeCompare(a.name));
+
       break;
     }
     case SortOrder.POPULATION_ASC: {
@@ -30,6 +32,7 @@ export const filterAndSortCountries = (
 
         return aPop - bPop;
       });
+
       break;
     }
     case SortOrder.POPULATION_DESC: {
@@ -43,6 +46,7 @@ export const filterAndSortCountries = (
 
         return bPop - aPop;
       });
+
       break;
     }
   }

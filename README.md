@@ -63,7 +63,7 @@ Initial profiling was performed using **React DevTools Profiler**.
   - **Render Duration: 51.2ms**
   - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-### - Screenshots
+### - Screenshots:
 
 #### Flame Graph for columns
 ![Profiler Flame Graph](docs/images/flame-column-before.png)
@@ -71,6 +71,64 @@ Initial profiling was performed using **React DevTools Profiler**.
 #### Ranked Chart for columns
 ![Profiler Ranked Chart](docs/images/ranked-column-before.png)
 
+
+ ## After optimization
+
+  ### - Sorting a column:
+
+  - **Commit Duration: 1.9s**
+  - **Render Duration: 2.7ms**
+  - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+
+### - Screenshots:
+
+#### Flame Graph for sorting
+![Profiler Flame Graph](docs/images/flame-sort-after.png)
+
+#### Ranked Chart for sorting
+![Profiler Ranked Chart](docs/images/ranked-sort-before.png)
+
+  ### - Searching for a country:
+
+  - **Commit Duration: 2.6s**
+  - **Render Duration: 0.6ms**
+  - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+
+### - Screenshots:
+
+#### Flame Graph for search
+![Profiler Flame Graph](docs/images/flame-search-after.png)
+
+#### Ranked Chart for search
+![Profiler Ranked Chart](docs/images/ranked-search-after.png)
+
+  ### - Selecting a year:
+
+  - **Commit Duration: 1.9s**
+  - **Render Duration: 62.7ms**
+  - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+
+### - Screenshots:
+
+#### Flame Graph for year
+![Profiler Flame Graph](docs/images/flame-year-after.png)
+
+#### Ranked Chart for year
+![Profiler Ranked Chart](docs/images/ranked-year-after.png)
+
+  ### - Adding/removing columns:
+
+  - **Commit Duration: 0.9s**
+  - **Render Duration: 13.3ms**
+  - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+
+### - Screenshots:
+
+#### Flame Graph for columns
+![Profiler Flame Graph](docs/images/flame-column-after.png)
+
+#### Ranked Chart for columns
+![Profiler Ranked Chart](docs/images/ranked-column-after.png)
 
 ---
 
