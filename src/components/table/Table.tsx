@@ -1,22 +1,16 @@
 import { useEffect, useState, type FC } from 'react';
 import styles from './Table.module.scss';
-import classNames from 'classnames';
 import { useSelector } from 'react-redux';
 import { selectSelectedYear } from '@/store/slices/year/selectors';
+import classNames from 'classnames';
 
 interface Props {
-  columns: (string | number)[];
-  isList?: boolean;
-  handleClick?: () => void;
+  headers: (string | number)[];
+  rows: (string | number)[][];
   highlightIndex?: number[];
 }
 
-export const Table: FC<Props> = ({
-  columns,
-  isList,
-  handleClick,
-  highlightIndex,
-}) => {
+export const Table: FC<Props> = ({ headers, rows, highlightIndex }) => {
   const selectedYear = useSelector(selectSelectedYear);
   const [isHighlighted, setIsHighlighted] = useState(false);
 
@@ -31,24 +25,32 @@ export const Table: FC<Props> = ({
   }, [selectedYear]);
 
   return (
-    <div
-      className={classNames(styles.container, {
-        [styles.containerList]: isList,
-      })}
-    >
-      {columns.map((label, i) => (
-        <div
-          key={i}
-          className={classNames(styles.cell, {
-            [styles.cellList]: isList,
-            [styles.highlightIndex]:
-              isHighlighted && highlightIndex?.includes(i),
-          })}
-          onClick={isList && i === 0 ? handleClick : undefined}
-        >
-          {label}
-        </div>
-      ))}
-    </div>
+    <table className={styles.container}>
+      <thead className={styles.header}>
+        <tr>
+          {headers.map((header, i) => (
+            <th key={i}>{header}</th>
+          ))}
+        </tr>
+      </thead>
+
+      <tbody>
+        {rows.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            {row.map((cell, i) => (
+              <td
+                key={i}
+                className={classNames({
+                  [styles.highlighted]:
+                    isHighlighted && highlightIndex?.includes(i),
+                })}
+              >
+                {cell}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };

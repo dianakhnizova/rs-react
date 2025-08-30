@@ -8,6 +8,7 @@ import { SelectedColumn } from '@/sources/types';
 import { useSelector } from 'react-redux';
 import { selectColumns } from '@/store/slices/selected-column/selectors';
 import { useActions } from '@/utils/hooks/useActions';
+import { isColumnSelected } from '@/utils/isColumnSelected';
 
 interface Props {
   onSelect: (selected: SelectedColumn[]) => void;
@@ -18,9 +19,7 @@ export const ColumnPicker: FC<Props> = ({ onSelect }) => {
   const { selectColumn, removeColumn } = useActions();
 
   const toggleCheckbox = (column: { key: string; label: string }) => {
-    const isSelected = selectedColumns.some(
-      selectedColumn => selectedColumn.key === column.key
-    );
+    const isSelected = isColumnSelected(selectedColumns, column);
 
     if (!isSelected) {
       selectColumn(column);
@@ -43,9 +42,10 @@ export const ColumnPicker: FC<Props> = ({ onSelect }) => {
             htmlFor={column.htmlFor}
             type={column.type}
             label={column.label}
-            checked={selectedColumns.some(
-              selectedColumn => selectedColumn.key === column.key
-            )}
+            checked={isColumnSelected(selectedColumns, {
+              key: column.key,
+              label: column.label,
+            })}
             isCheckbox
             isLabel
             onChange={() =>

@@ -1,4 +1,4 @@
-import { InputId, InputType } from '@/sources/enums';
+import { InputId, InputType, Keys } from '@/sources/enums';
 import { messages } from '@/sources/messages';
 import { ColumnPicker } from '@/sources/types';
 
@@ -8,7 +8,7 @@ export const columnPicker: ColumnPicker[] = [
     htmlFor: InputId.ONE,
     label: messages.label.methane,
     type: InputType.CHECKBOX,
-    key: messages.key.methane,
+    key: Keys.METHANE,
   },
 
   {
@@ -16,7 +16,7 @@ export const columnPicker: ColumnPicker[] = [
     htmlFor: InputId.TWO,
     label: messages.label.nitrous_oxide,
     type: InputType.CHECKBOX,
-    key: messages.key.nitrous_oxide,
+    key: Keys.NITROUS_OXIDE,
   },
 
   {
@@ -24,7 +24,7 @@ export const columnPicker: ColumnPicker[] = [
     htmlFor: InputId.THREE,
     label: messages.label.share_global_cumulative_luc_co2,
     type: InputType.CHECKBOX,
-    key: messages.key.share_global_cumulative_luc_co2,
+    key: Keys.SHARE_GLOBAL_CUMULATIVE_LUC_CO2,
   },
 
   {
@@ -32,7 +32,7 @@ export const columnPicker: ColumnPicker[] = [
     htmlFor: InputId.FOUR,
     label: messages.label.temperature_change_from_co2,
     type: InputType.CHECKBOX,
-    key: messages.key.temperature_change_from_co2,
+    key: Keys.TEMPERATURE_CHANGE_FROM_CO2,
   },
 
   {
@@ -40,6 +40,6 @@ export const columnPicker: ColumnPicker[] = [
     htmlFor: InputId.FIVE,
     label: messages.label.total_ghg,
     type: InputType.CHECKBOX,
-    key: messages.key.total_ghg,
+    key: Keys.TOTAL_GHG,
   },
 ];

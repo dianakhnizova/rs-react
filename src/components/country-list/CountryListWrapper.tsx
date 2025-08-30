@@ -8,7 +8,8 @@ import {
   selectCountry,
   selectSelectedSortOrder,
 } from '@/store/slices/country/selectors';
-import { SortOrder } from '@/sources/enums';
+import { filterAndSortCountries } from '@/utils/filterAndSortCountries';
+import { getUniqueYears } from '@/utils/getUniqueYears';
 
 const resource = createCo2Data();
 
@@ -21,55 +22,15 @@ export const CountryListWrapper = () => {
   const { setCountries, setYears } = useActions();
 
   const displayCountries = useMemo(() => {
-    let result = countries.filter(country =>
-      country.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    switch (sortOrder) {
-      case SortOrder.NAME_ASC: {
-        result = [...result].sort((a, b) => a.name.localeCompare(b.name));
-        break;
-      }
-      case SortOrder.NAME_DESC: {
-        result = [...result].sort((a, b) => b.name.localeCompare(a.name));
-        break;
-      }
-      case SortOrder.POPULATION_ASC: {
-        result = [...result].sort((a, b) => {
-          const aPop = Number(a.data.at(-1)?.population ?? 0);
-          const bPop = Number(b.data.at(-1)?.population ?? 0);
-          return aPop - bPop;
-        });
-        break;
-      }
-      case SortOrder.POPULATION_DESC: {
-        result = [...result].sort((a, b) => {
-          const aPop = Number(a.data.at(-1)?.population ?? 0);
-          const bPop = Number(b.data.at(-1)?.population ?? 0);
-          return bPop - aPop;
-        });
-        break;
-      }
-    }
-
-    return result;
+    return filterAndSortCountries(countries, searchTerm, sortOrder);
   }, [countries, searchTerm, sortOrder]);
 
-  const years = useMemo(
-    () => [
-      ...new Set(
-        countries.flatMap(country => country.data.map(data => data.year))
-      ),
-    ],
-    [countries]
-  );
+  const years = useMemo(() => getUniqueYears(countries), [countries]);
 
   useEffect(() => {
     setCountries(countryList);
     setYears(years);
   }, [countries, setCountries, setYears, years]);
-
-  console.log(countries);
 
   return <CountryList countries={displayCountries} />;
 };

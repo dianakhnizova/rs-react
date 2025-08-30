@@ -23,17 +23,14 @@ export const Input: FC<Props> = ({
   isLabel,
   isSearch,
   setInput,
+  onChange,
   ...rest
 }) => {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    if (setInput) {
-      setInput(value);
-    }
 
-    if (rest.onChange) {
-      rest.onChange(event);
-    }
+    setInput?.(value);
+    onChange?.(event);
   };
 
   return (
