@@ -17,9 +17,9 @@ Initial profiling was performed using **React DevTools Profiler**.
 
   ### - Sorting a column:
 
-**Commit Duration: 2s**
-**Render Duration: 2.7ms**
-**Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+  - **Commit Duration: 2s**
+  - **Render Duration: 2.7ms**
+  - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
 - Screenshots:
 
@@ -31,9 +31,9 @@ Initial profiling was performed using **React DevTools Profiler**.
 
   ### - Searching for a country:
 
-**Commit Duration: 2.8s**
-**Render Duration: 1ms**
-**Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+  - **Commit Duration: 2.8s**
+  - **Render Duration: 1ms**
+  - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
 - Screenshots:
 
@@ -45,9 +45,9 @@ Initial profiling was performed using **React DevTools Profiler**.
 
   ### - Selecting a year:
 
-**Commit Duration: 1.7s**
-**Render Duration: 67.8ms**
-**Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+  - **Commit Duration: 1.7s**
+  - **Render Duration: 67.8ms**
+  - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
 - Screenshots:
 
@@ -59,9 +59,9 @@ Initial profiling was performed using **React DevTools Profiler**.
 
   ### - Adding/removing columns:
 
-**Commit Duration: 1s**
-**Render Duration: 51.2ms**
-**Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+  - **Commit Duration: 1s**
+  - **Render Duration: 51.2ms**
+  - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
 - Screenshots
 
