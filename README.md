@@ -15,13 +15,13 @@ Initial profiling was performed using **React DevTools Profiler**.
 
  ## Before optimization
 
-  - Sorting a column:
+  ### - Sorting a column:
 
 **Commit Duration:** : 2s
 **Render Duration:** : 2.7ms
 **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-### - Screenshots
+- Screenshots:
 
 #### Flame Graph for sorting
 ![Profiler Flame Graph](docs/images/flame-sort-before.png)
@@ -29,13 +29,13 @@ Initial profiling was performed using **React DevTools Profiler**.
 #### Ranked Chart for sorting
 ![Profiler Ranked Chart](docs/images/ranked-sort-before.png)
 
-  - Searching for a country:
+  ### - Searching for a country:
 
 **Commit Duration:** : 2.8s
 **Render Duration:** : 1ms
 **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-  ### - Screenshots
+- Screenshots:
 
 #### Flame Graph for search
 ![Profiler Flame Graph](docs/images/flame-search-before.png)
@@ -43,13 +43,13 @@ Initial profiling was performed using **React DevTools Profiler**.
 #### Ranked Chart for search
 ![Profiler Ranked Chart](docs/images/ranked-search-before.png)
 
-  - Selecting a year:
+  ### - Selecting a year:
 
 **Commit Duration:** : 1.7s
 **Render Duration:** : 67.8ms
 **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-  ### - Screenshots
+- Screenshots:
 
 #### Flame Graph for year
 ![Profiler Flame Graph](docs/images/flame-year-before.png)
@@ -57,13 +57,13 @@ Initial profiling was performed using **React DevTools Profiler**.
 #### Ranked Chart for year
 ![Profiler Ranked Chart](docs/images/ranked-year-before.png)
 
-  - Adding/removing columns:
+  ### - Adding/removing columns:
 
 **Commit Duration:** : 1s
 **Render Duration:** : 51.2ms
 **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-  ### - Screenshots
+- Screenshots
 
 #### Flame Graph for columns
 ![Profiler Flame Graph](docs/images/flame-column-before.png)
