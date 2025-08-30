@@ -1,69 +1,74 @@
-# React + TypeScript + Vite
+# My App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Climate Data Viewer
 
-Currently, two official plugins are available:
+## Performance Profiling
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Initial profiling was performed using **React DevTools Profiler**.
 
-## Expanding the ESLint configuration
+- **Tested interactions:**
+  - Sorting a column
+  - Searching for a country
+  - Selecting a year
+  - Adding/removing columns
+  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+ - **Before optimization:** 
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+  - Sorting a column
+  **Commit Duration:** : 2s
+  **Render Duration:** : 2.7ms
+  **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Screenshots
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+#### Flame Graph
+![Profiler Flame Graph](docs/images/flame-sort-before.png)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### Ranked Chart
+![Profiler Ranked Chart](docs/images/ranked-sort-before.png)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+  - Searching for a country
+  **Commit Duration:** : 2.8s
+  **Render Duration:** : 1ms
+  **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+  ### Screenshots
+
+#### Flame Graph
+![Profiler Flame Graph](docs/images/flame-search-before.png)
+
+#### Ranked Chart
+![Profiler Ranked Chart](docs/images/ranked-search-before.png)
+
+  - Selecting a year
+  **Commit Duration:** : 1.7s
+  **Render Duration:** : 67.8ms
+  **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+
+  ### Screenshots
+
+#### Flame Graph
+![Profiler Flame Graph](docs/images/flame-year-before.png)
+
+#### Ranked Chart
+![Profiler Ranked Chart](docs/images/ranked-year-before.png)
+
+  - Adding/removing columns
+  **Commit Duration:** : 1s
+  **Render Duration:** : 51.2ms
+  **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
+
+  ### Screenshots
+
+#### Flame Graph
+![Profiler Flame Graph](docs/images/flame-column-before.png)
+
+#### Ranked Chart
+![Profiler Ranked Chart](docs/images/ranked-column-before.png)
+
+
+---
+
+> Overall performance is acceptable. The main bottleneck is re-rendering the entire table when state changes (especially column updates).  
+> Possible improvements: memoization of rows, virtualization for large datasets.
