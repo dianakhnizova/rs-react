@@ -21,7 +21,7 @@ Initial profiling was performed using **React DevTools Profiler**.
   - **Render Duration: 2.7ms**
   - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-- Screenshots:
+### - Screenshots:
 
 #### Flame Graph for sorting
 ![Profiler Flame Graph](docs/images/flame-sort-before.png)
@@ -35,7 +35,7 @@ Initial profiling was performed using **React DevTools Profiler**.
   - **Render Duration: 1ms**
   - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-- Screenshots:
+### - Screenshots:
 
 #### Flame Graph for search
 ![Profiler Flame Graph](docs/images/flame-search-before.png)
@@ -49,7 +49,7 @@ Initial profiling was performed using **React DevTools Profiler**.
   - **Render Duration: 67.8ms**
   - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-- Screenshots:
+### - Screenshots:
 
 #### Flame Graph for year
 ![Profiler Flame Graph](docs/images/flame-year-before.png)
@@ -63,7 +63,7 @@ Initial profiling was performed using **React DevTools Profiler**.
   - **Render Duration: 51.2ms**
   - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
-- Screenshots
+### - Screenshots
 
 #### Flame Graph for columns
 ![Profiler Flame Graph](docs/images/flame-column-before.png)
