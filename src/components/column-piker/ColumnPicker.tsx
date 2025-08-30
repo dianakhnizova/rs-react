@@ -3,7 +3,7 @@ import { Button } from '../button/Button';
 import styles from './ColumnPicker.module.scss';
 import { Input } from '../input/Input';
 import { columnPicker } from './columnPickerList';
-import { FC } from 'react';
+import { FC, useCallback } from 'react';
 import { SelectedColumn } from '@/sources/types';
 import { useSelector } from 'react-redux';
 import { selectColumns } from '@/store/slices/selected-column/selectors';
@@ -18,19 +18,22 @@ export const ColumnPicker: FC<Props> = ({ onSelect }) => {
   const selectedColumns = useSelector(selectColumns);
   const { selectColumn, removeColumn } = useActions();
 
-  const toggleCheckbox = (column: { key: string; label: string }) => {
-    const isSelected = isColumnSelected(selectedColumns, column);
+  const toggleCheckbox = useCallback(
+    (column: { key: string; label: string }) => {
+      const isSelected = isColumnSelected(selectedColumns, column);
 
-    if (!isSelected) {
-      selectColumn(column);
-    } else {
-      removeColumn({ key: column.key });
-    }
-  };
+      if (!isSelected) {
+        selectColumn(column);
+      } else {
+        removeColumn({ key: column.key });
+      }
+    },
+    [selectedColumns, selectColumn, removeColumn]
+  );
 
-  const handleSelectButton = () => {
+  const handleSelectButton = useCallback(() => {
     onSelect(selectedColumns);
-  };
+  }, [onSelect, selectedColumns]);
 
   return (
     <div className={styles.container}>

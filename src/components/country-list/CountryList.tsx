@@ -5,7 +5,7 @@ import { messages } from '@/sources/messages';
 import { useSelector } from 'react-redux';
 import { selectSelectedYear } from '@/store/slices/year/selectors';
 import { CountryData } from '@/sources/interfaces';
-import { FC, useMemo, useState } from 'react';
+import { FC, useCallback, useMemo, useState } from 'react';
 import { Button } from '../button/Button';
 import { ColumnPicker } from '../column-piker/ColumnPicker';
 import { Modal } from '../modal/Modal';
@@ -27,23 +27,26 @@ export const CountryList: FC<Props> = ({ countries }) => {
 
   const [isdModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     setIsModalOpen(true);
-  };
+  }, []);
 
-  const onSelect = () => {
+  const onSelect = useCallback(() => {
     setIsModalOpen(false);
-  };
+  }, []);
 
-  const headers = [
-    messages.tableHeaderCountryList.labelName,
-    messages.tableHeaderCountryList.labelISO,
-    messages.tableHeaderCountryList.labelPopulation,
-    messages.tableHeaderCountryList.labelYear,
-    messages.tableHeaderCountryList.labelCo2,
-    messages.tableHeaderCountryList.labelCo2PerCapita,
-    ...columnLabels,
-  ];
+  const headers = useMemo(
+    () => [
+      messages.tableHeaderCountryList.labelName,
+      messages.tableHeaderCountryList.labelISO,
+      messages.tableHeaderCountryList.labelPopulation,
+      messages.tableHeaderCountryList.labelYear,
+      messages.tableHeaderCountryList.labelCo2,
+      messages.tableHeaderCountryList.labelCo2PerCapita,
+      ...columnLabels,
+    ],
+    [columnLabels]
+  );
 
   const rows = useMemo(() => {
     return countries.map(country => {
@@ -69,7 +72,10 @@ export const CountryList: FC<Props> = ({ countries }) => {
     });
   }, [countries, selectedYear, columnKeys]);
 
-  const highlightIndex = getHighlightIndex(columnKeys.length);
+  const highlightIndex = useMemo(
+    () => getHighlightIndex(columnKeys.length),
+    [columnKeys.length]
+  );
 
   return (
     <div className={styles.container}>

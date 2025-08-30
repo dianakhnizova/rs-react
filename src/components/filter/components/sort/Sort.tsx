@@ -2,7 +2,7 @@ import { Select } from '@/components/select/Select';
 import { messages } from '@/sources/messages';
 import { useActions } from '@/utils/hooks/useActions';
 import { InputType, SortOrder } from '@/sources/enums';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Input } from '@/components/input/Input';
 
 export const Sort = () => {
@@ -14,34 +14,40 @@ export const Sort = () => {
 
   const options = [messages.sort.sortByPopulation, messages.sort.sortByName];
 
-  const onSelectSort = (value: string | null) => {
-    if (!value || value === messages.sort.sortBy) {
-      setSelectedField(null);
+  const onSelectSort = useCallback(
+    (value: string | null) => {
+      if (!value || value === messages.sort.sortBy) {
+        setSelectedField(null);
+        setDirection(null);
+        setSortOrder(null);
+        return;
+      }
+
+      setSelectedField(value);
       setDirection(null);
-      setSortOrder(null);
-      return;
-    }
+    },
+    [setSortOrder]
+  );
 
-    setSelectedField(value);
-    setDirection(null);
-  };
+  const onDirectionChange = useCallback(
+    (direction: SortOrder.ASC | SortOrder.DESC) => {
+      setDirection(direction);
 
-  const onDirectionChange = (direction: SortOrder.ASC | SortOrder.DESC) => {
-    setDirection(direction);
-
-    if (selectedField === messages.sort.sortByName) {
-      setSortOrder(
-        direction === SortOrder.ASC ? SortOrder.NAME_ASC : SortOrder.NAME_DESC
-      );
-    }
-    if (selectedField === messages.sort.sortByPopulation) {
-      setSortOrder(
-        direction === SortOrder.ASC
-          ? SortOrder.POPULATION_ASC
-          : SortOrder.POPULATION_DESC
-      );
-    }
-  };
+      if (selectedField === messages.sort.sortByName) {
+        setSortOrder(
+          direction === SortOrder.ASC ? SortOrder.NAME_ASC : SortOrder.NAME_DESC
+        );
+      }
+      if (selectedField === messages.sort.sortByPopulation) {
+        setSortOrder(
+          direction === SortOrder.ASC
+            ? SortOrder.POPULATION_ASC
+            : SortOrder.POPULATION_DESC
+        );
+      }
+    },
+    [selectedField, setSortOrder]
+  );
 
   return (
     <>
@@ -67,7 +73,6 @@ export const Sort = () => {
             id={InputType.CHECKBOX}
             type={InputType.RADIO}
             isRadio
-            isCheckbox
             checked={direction === SortOrder.DESC}
             onChange={() => onDirectionChange(SortOrder.DESC)}
             isLabel

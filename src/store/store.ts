@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { columnReducer } from './slices/selected-column/selectedColumn.slice';
-import { countryReducer } from './slices/country/country.slice';
 import { searchTermReducer } from './slices/search-term/searchTerm.slice';
 import { yearReducer } from './slices/year/year.slice';
+import { sortReducer } from './slices/sort/sort.slice';
 
 export const store = configureStore({
   reducer: {
     columns: columnReducer,
-    countries: countryReducer,
+    sort: sortReducer,
     searchTerm: searchTermReducer,
     year: yearReducer,
   },

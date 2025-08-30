@@ -1,4 +1,4 @@
-import { countryActions } from '@/store/slices/country/country.slice';
+import { sortActions } from '@/store/slices/sort/sort.slice';
 import { searchTermActions } from '@/store/slices/search-term/searchTerm.slice';
 import { columnActions } from '@/store/slices/selected-column/selectedColumn.slice';
 import { yearActions } from '@/store/slices/year/year.slice';
@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 
 const allActions = {
   ...columnActions,
-  ...countryActions,
+  ...sortActions,
   ...searchTermActions,
   ...yearActions,
 };

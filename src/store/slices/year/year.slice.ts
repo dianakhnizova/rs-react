@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface YearState {
   years: number[];
@@ -14,11 +14,11 @@ export const yearSlice = createSlice({
   name: 'year',
   initialState,
   reducers: {
-    setSelectedYear: (state, action: { payload: number | null }) => {
+    setSelectedYear: (state, action: PayloadAction<number | null>) => {
       state.selectedYear =
         state.selectedYear === action.payload ? null : action.payload;
     },
-    setYears: (state, action: { payload: number[] }) => {
+    setYears: (state, action: PayloadAction<number[]>) => {
       state.years = action.payload;
     },
   },
