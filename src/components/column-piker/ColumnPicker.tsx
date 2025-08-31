@@ -3,7 +3,7 @@ import { Button } from '../button/Button';
 import styles from './ColumnPicker.module.scss';
 import { Input } from '../input/Input';
 import { columnPicker } from './columnPickerList';
-import { FC, useCallback } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { SelectedColumn } from '@/sources/types';
 import { useSelector } from 'react-redux';
 import { selectColumns } from '@/store/slices/selected-column/selectors';
@@ -14,7 +14,7 @@ interface Props {
   onSelect: (selected: SelectedColumn[]) => void;
 }
 
-export const ColumnPicker: FC<Props> = ({ onSelect }) => {
+export const ColumnPicker: FC<Props> = memo(({ onSelect }) => {
   const selectedColumns = useSelector(selectColumns);
   const { selectColumn, removeColumn } = useActions();
 
@@ -63,4 +63,4 @@ export const ColumnPicker: FC<Props> = ({ onSelect }) => {
       </Button>
     </div>
   );
-};
+});

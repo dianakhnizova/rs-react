@@ -1,5 +1,5 @@
 import styles from './Select.module.scss';
-import React, { FC, memo, useCallback } from 'react';
+import React, { FC, useCallback } from 'react';
 
 interface Props {
   setSelectedValue: (value: string | null) => void;
@@ -7,27 +7,29 @@ interface Props {
   defaultValue?: string | number | null;
 }
 
-export const Select: FC<Props> = memo(
-  ({ setSelectedValue, options, defaultValue }) => {
-    const onSelect = useCallback(
-      (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const value = event.target.value;
+export const Select: FC<Props> = ({
+  setSelectedValue,
+  options,
+  defaultValue,
+}) => {
+  const onSelect = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      const value = event.target.value;
 
-        setSelectedValue(value || null);
-      },
-      [setSelectedValue]
-    );
+      setSelectedValue(value || null);
+    },
+    [setSelectedValue]
+  );
 
-    return (
-      <select defaultValue="" onChange={onSelect} className={styles.select}>
-        {defaultValue && <option value="">{defaultValue}</option>}
+  return (
+    <select defaultValue="" onChange={onSelect} className={styles.select}>
+      {defaultValue && <option value="">{defaultValue}</option>}
 
-        {options.map(option => (
-          <option key={option} value={option} className={styles.option}>
-            {option}
-          </option>
-        ))}
-      </select>
-    );
-  }
-);
+      {options.map(option => (
+        <option key={option} value={option} className={styles.option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  );
+};

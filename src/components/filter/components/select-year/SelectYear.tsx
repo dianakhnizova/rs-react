@@ -2,9 +2,9 @@ import { useSelector } from 'react-redux';
 import { selectYears } from '@/store/slices/year/selectors';
 import { useActions } from '@/utils/hooks/useActions';
 import { Select } from '@/components/select/Select';
-import { useCallback, useMemo } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
-export const SelectYear = () => {
+export const SelectYear = memo(() => {
   const years = useSelector(selectYears);
   const { setSelectedYear } = useActions();
 
@@ -16,4 +16,4 @@ export const SelectYear = () => {
   );
 
   return <Select options={reversedYears} setSelectedValue={handleSelect} />;
-};
+});

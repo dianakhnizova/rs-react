@@ -76,8 +76,8 @@ Initial profiling was performed using **React DevTools Profiler**.
 
   ### - Sorting a column:
 
-  - **Commit Duration: 1.9s**
-  - **Render Duration: 2.7ms**
+  - **Commit Duration: 1.8s**
+  - **Render Duration: 3.4ms**
   - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
 ### - Screenshots:
@@ -86,11 +86,11 @@ Initial profiling was performed using **React DevTools Profiler**.
 ![Profiler Flame Graph](docs/images/flame-sort-after.png)
 
 #### Ranked Chart for sorting
-![Profiler Ranked Chart](docs/images/ranked-sort-before.png)
+![Profiler Ranked Chart](docs/images/ranked-sort-after.png)
 
   ### - Searching for a country:
 
-  - **Commit Duration: 2.6s**
+  - **Commit Duration: 1.1s**
   - **Render Duration: 0.6ms**
   - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
@@ -104,8 +104,8 @@ Initial profiling was performed using **React DevTools Profiler**.
 
   ### - Selecting a year:
 
-  - **Commit Duration: 1.9s**
-  - **Render Duration: 62.7ms**
+  - **Commit Duration: 0.5s**
+  - **Render Duration: 48.5ms**
   - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
 ### - Screenshots:
@@ -118,8 +118,8 @@ Initial profiling was performed using **React DevTools Profiler**.
 
   ### - Adding/removing columns:
 
-  - **Commit Duration: 0.9s**
-  - **Render Duration: 13.3ms**
+  - **Commit Duration: 1s**
+  - **Render Duration: 50ms**
   - **Interactions:** Not recorded (Profiler did not capture explicit interactions, but commit and render times were analyzed instead)
 
 ### - Screenshots:

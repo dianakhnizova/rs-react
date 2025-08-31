@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from 'react';
-import { useLayoutEffect } from 'react';
+import { memo, useLayoutEffect } from 'react';
 import styles from './Modal.module.scss';
 import { messages } from '@/sources/messages';
 import ReactPortal from '../react-portal/ReactPortal';
@@ -13,7 +13,7 @@ interface Props {
   children?: ReactNode;
 }
 
-export const Modal: FC<Props> = ({ isOpen, onClose, children }) => {
+export const Modal: FC<Props> = memo(({ isOpen, onClose, children }) => {
   useEscapeKey(() => onClose?.(), isOpen);
 
   useLayoutEffect(() => {
@@ -45,4 +45,4 @@ export const Modal: FC<Props> = ({ isOpen, onClose, children }) => {
       </div>
     </ReactPortal>
   );
-};
+});

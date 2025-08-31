@@ -1,7 +1,7 @@
 import { WRAPPER_ROOT_PORTAL_ID } from '@/sources/constants';
 import { createWrapperPortal } from '@/utils/createWrapperPortal';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface Props {
@@ -9,27 +9,26 @@ interface Props {
   wrapperId?: string;
 }
 
-export const ReactPortal: FC<Props> = ({
-  children,
-  wrapperId = WRAPPER_ROOT_PORTAL_ID,
-}) => {
-  const [wrapperElement, setWrapperElement] = useState<HTMLElement | null>(
-    null
-  );
+export const ReactPortal: FC<Props> = memo(
+  ({ children, wrapperId = WRAPPER_ROOT_PORTAL_ID }) => {
+    const [wrapperElement, setWrapperElement] = useState<HTMLElement | null>(
+      null
+    );
 
-  useEffect(() => {
-    let portalElement = document.getElementById(wrapperId);
+    useEffect(() => {
+      let portalElement = document.getElementById(wrapperId);
 
-    if (!portalElement) {
-      portalElement = createWrapperPortal(wrapperId);
-    }
+      if (!portalElement) {
+        portalElement = createWrapperPortal(wrapperId);
+      }
 
-    setWrapperElement(portalElement);
-  }, [wrapperId]);
+      setWrapperElement(portalElement);
+    }, [wrapperId]);
 
-  if (!wrapperElement) return null;
+    if (!wrapperElement) return null;
 
-  return createPortal(children, wrapperElement);
-};
+    return createPortal(children, wrapperElement);
+  }
+);
 
 export default ReactPortal;

@@ -2,7 +2,7 @@ import { useEffect, useState, type FC } from 'react';
 import styles from './Table.module.scss';
 import { useSelector } from 'react-redux';
 import { selectSelectedYear } from '@/store/slices/year/selectors';
-import { TableRow } from './components/TableRow';
+import classNames from 'classnames';
 
 interface Props {
   headers: (string | number)[];
@@ -36,12 +36,19 @@ export const Table: FC<Props> = ({ headers, rows, highlightIndex }) => {
 
       <tbody>
         {rows.map((row, rowIndex) => (
-          <TableRow
-            key={rowIndex}
-            row={row}
-            highlightIndex={highlightIndex}
-            isHighlighted={isHighlighted}
-          />
+          <tr key={rowIndex}>
+            {row.map((cell, i) => (
+              <td
+                key={i}
+                className={classNames({
+                  [styles.highlighted]:
+                    isHighlighted && highlightIndex?.includes(i),
+                })}
+              >
+                {cell}
+              </td>
+            ))}
+          </tr>
         ))}
       </tbody>
     </table>

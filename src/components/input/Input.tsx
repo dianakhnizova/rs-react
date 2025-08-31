@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import styles from './Input.module.scss';
-import { FC, memo } from 'react';
+import { FC, memo, useCallback } from 'react';
 import { messages } from '@/sources/messages';
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -27,12 +27,15 @@ export const Input: FC<Props> = memo(
     onChange,
     ...rest
   }) => {
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
+    const handleInputChange = useCallback(
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
 
-      setInput?.(value);
-      onChange?.(event);
-    };
+        setInput?.(value);
+        onChange?.(event);
+      },
+      [setInput, onChange]
+    );
 
     return (
       <div className={styles.container}>
