@@ -1,0 +1,22 @@
+.container {
+  width: 95%;
+  border-collapse: collapse;
+  box-shadow: var(--shadow-4);
+  table-layout: fixed;
+}
+
+.header {
+  color: var(--clr-bg-button);
+}
+
+td,
+th {
+  border: 1px solid var(--clr-bg-3);
+  padding: 8px;
+  text-align: center;
+  word-break: break-word;
+}
+
+.highlighted {
+  color: var(--clr-bg-button);
+}
