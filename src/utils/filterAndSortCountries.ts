@@ -4,7 +4,8 @@ import { CountryData } from '@/sources/interfaces';
 export const filterAndSortCountries = (
   countries: CountryData[],
   searchTerm: string,
-  sortOrder: SortOrder | null
+  sortOrder: SortOrder | null,
+  selectedYear: number | null
 ) => {
   let result = countries.filter(country =>
     country.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -23,20 +24,57 @@ export const filterAndSortCountries = (
     }
     case SortOrder.POPULATION_ASC: {
       result = [...result].sort((a, b) => {
-        const aPop = Number(a.data.at(-1)?.population ?? null);
-        const bPop = Number(b.data.at(-1)?.population ?? null);
+        const dataA = selectedYear
+          ? a.data.find(d => d.year === selectedYear)
+          : a.data.at(-1);
+        const dataB = selectedYear
+          ? b.data.find(d => d.year === selectedYear)
+          : b.data.at(-1);
 
-        return aPop - bPop;
+        const popA =
+          dataA?.population &&
+          !Number.isNaN(Number.parseFloat(dataA.population))
+            ? Number.parseFloat(dataA.population)
+            : null;
+        const popB =
+          dataB?.population &&
+          !Number.isNaN(Number.parseFloat(dataB.population))
+            ? Number.parseFloat(dataB.population)
+            : null;
+
+        if (popA === null && popB === null) return 0;
+        if (popA === null) return -1;
+        if (popB === null) return 1;
+
+        return popA - popB;
       });
-
       break;
     }
     case SortOrder.POPULATION_DESC: {
       result = [...result].sort((a, b) => {
-        const aPop = Number(a.data.at(-1)?.population ?? null);
-        const bPop = Number(b.data.at(-1)?.population ?? null);
+        const dataA = selectedYear
+          ? a.data.find(d => d.year === selectedYear)
+          : a.data.at(-1);
+        const dataB = selectedYear
+          ? b.data.find(d => d.year === selectedYear)
+          : b.data.at(-1);
 
-        return bPop - aPop;
+        const popA =
+          dataA?.population &&
+          !Number.isNaN(Number.parseFloat(dataA.population))
+            ? Number.parseFloat(dataA.population)
+            : null;
+        const popB =
+          dataB?.population &&
+          !Number.isNaN(Number.parseFloat(dataB.population))
+            ? Number.parseFloat(dataB.population)
+            : null;
+
+        if (popA === null && popB === null) return 0;
+        if (popA === null) return 1;
+        if (popB === null) return -1;
+
+        return popB - popA;
       });
 
       break;

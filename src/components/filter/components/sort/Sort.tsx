@@ -25,6 +25,10 @@ export const Sort = () => {
 
       setSelectedField(value);
       setDirection(null);
+
+      if (value === messages.sort.sortBy) {
+        setSortOrder(null);
+      }
     },
     [setSortOrder]
   );

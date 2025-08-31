@@ -7,6 +7,7 @@ import { selectSearchTerm } from '@/store/slices/search-term/selectors';
 import { selectSelectedSortOrder } from '@/store/slices/sort/selectors';
 import { filterAndSortCountries } from '@/utils/filterAndSortCountries';
 import { getUniqueYears } from '@/utils/getUniqueYears';
+import { selectSelectedYear } from '@/store/slices/year/selectors';
 
 const resource = createCo2Data();
 
@@ -15,11 +16,17 @@ export const CountryListWrapper = () => {
 
   const searchTerm = useSelector(selectSearchTerm);
   const sortOrder = useSelector(selectSelectedSortOrder);
+  const selectedYear = useSelector(selectSelectedYear);
   const { setYears } = useActions();
 
   const displayCountries = useMemo(() => {
-    return filterAndSortCountries(countryList, searchTerm, sortOrder);
-  }, [searchTerm, sortOrder]);
+    return filterAndSortCountries(
+      countryList,
+      searchTerm,
+      sortOrder,
+      selectedYear
+    );
+  }, [countryList, searchTerm, sortOrder, selectedYear]);
 
   const years = useMemo(() => getUniqueYears(countryList), [countryList]);
 
